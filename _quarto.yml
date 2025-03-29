@@ -1,0 +1,54 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Statistics"
+  author: "Yair Mau"
+  repo-url: https://github.com/yairmau/statistics/
+  favicon: archive/logo.png
+
+  date: "29.3.2025"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+  sidebar:
+    collapse-level: 1
+    tools:
+      - icon: house-fill
+        href: https://yairmau.com/
+      - icon: bookmark-fill
+        href: /sources.html
+    logo: archive/logo.png
+  search: true
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+    - flatly
+    - custom.scss
+    # - font_defs.css
+    # css: styles.css
+    fontsize: 1.2em
+    highlight-style: kate-custom.theme #kate #solarized # kate # tango # breeze # ayu # monokai # breezedark # espresso
+    include-in-header:
+      - includes.html
+    code-line-numbers: true
+    code-tools:
+      source: repo  # https://quarto.org/docs/output-formats/html-code.html#code-tools
+    callout-icon: false
+    fig-align: center
+    # the default MathJax rendering option yields ugly results, use katex
+    html-math-method: katex
+  
+  pdf:
+    documentclass: scrreprt
+    include-in-header:
+      - latex_preamble.tex
+
+
+
