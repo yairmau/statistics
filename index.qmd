@@ -1,3 +1,3 @@
 # Preface {.unnumbered}
 
-I read Mike X Cohen's excellent book "Modern Statistics", and now it's time to practice myself.
+I read Mike X Cohen's excellent book "Modern Statistics", and now it's time to practice.

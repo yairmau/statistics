@@ -16,7 +16,7 @@ book:
         - data/height.ipynb
     # - references.qmd
   sidebar:
-    collapse-level: 1
+    collapse-level: 2
     tools:
       - icon: house-fill
         href: https://yairmau.com/
