@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.41">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; weight data – Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../data/height.html" rel="prev">
+<link href="../archive/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-b288e077f13cdc2375eec65dc093508f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-6a8a67aa413140400b4e9ec066258cc0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../data/height.html">data</a></li><li class="breadcrumb-item"><a href="../data/weight.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://yairmau.com/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
+    <a href="https://github.com/yairmau/statistics/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/height.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/weight.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../data/height.html">data</a></li><li class="breadcrumb-item"><a href="../data/weight.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/data/weight.ipynb">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Now that we have height data covered, it’s time we deal with weight data.</p>
+<p>Yes, I am <strong>VERY WELL AWARE</strong> that weight is a force, and it is not measured in kg. Nevertheless, I will use the word weight in the colloquial sense, and for all purposes it is a synonym for mass.</p>
+<p>This analysis will follow the same steps we used for height data, therefore I will skip some of the intermediate steps. Whenever there are differences, I will point them out.</p>
+<div id="cell-2" class="cell" data-execution_count="41">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> scipy.special <span class="im">import</span> erf</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> UnivariateSpline</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="im">import</span> matplotlib.animation <span class="im">as</span> animation</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="im">from</span> scipy.stats <span class="im">import</span> lognorm</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
+<span id="cb1-14"><a href="#cb1-14"></a>pio.renderers.default <span class="op">=</span> <span class="st">'notebook'</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="op">%</span>matplotlib widget</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-3" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>define useful arrays</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>age_list <span class="op">=</span> np.<span class="bu">round</span>(np.arange(<span class="fl">2.0</span>, <span class="fl">20.1</span>, <span class="fl">0.1</span>), <span class="dv">1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>weight_list <span class="op">=</span> np.<span class="bu">round</span>(np.arange(<span class="dv">10</span>, <span class="dv">100</span>, <span class="fl">0.1</span>), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We will load all the digitized data for the weight curves, and will interpolate.</p>
+<div id="cell-5" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>interpolate all growth curves</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>col_names <span class="op">=</span> [<span class="st">'p05'</span>, <span class="st">'p10'</span>, <span class="st">'p25'</span>, <span class="st">'p50'</span>, <span class="st">'p75'</span>, <span class="st">'p90'</span>, <span class="st">'p95'</span>]</span>
+<span id="cb3-2"><a href="#cb3-2"></a>file_names_boys <span class="op">=</span> [<span class="st">'boys-p05.csv'</span>, <span class="st">'boys-p10.csv'</span>, <span class="st">'boys-p25.csv'</span>, <span class="st">'boys-p50.csv'</span>,</span>
+<span id="cb3-3"><a href="#cb3-3"></a>                   <span class="st">'boys-p75.csv'</span>, <span class="st">'boys-p90.csv'</span>, <span class="st">'boys-p95.csv'</span>,]</span>
+<span id="cb3-4"><a href="#cb3-4"></a>file_names_girls <span class="op">=</span> [<span class="st">'girls-p05.csv'</span>, <span class="st">'girls-p10.csv'</span>, <span class="st">'girls-p25.csv'</span>, <span class="st">'girls-p50.csv'</span>,</span>
+<span id="cb3-5"><a href="#cb3-5"></a>                   <span class="st">'girls-p75.csv'</span>, <span class="st">'girls-p90.csv'</span>, <span class="st">'girls-p95.csv'</span>,]</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># create dataframe with age column</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>df_boys <span class="op">=</span> pd.DataFrame({<span class="st">'age'</span>: age_list})</span>
+<span id="cb3-9"><a href="#cb3-9"></a>df_girls <span class="op">=</span> pd.DataFrame({<span class="st">'age'</span>: age_list})</span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co"># loop over file names and read in data</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="cf">for</span> i, file_name <span class="kw">in</span> <span class="bu">enumerate</span>(file_names_boys):</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="co"># read in data</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>    df_temp <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/weight/'</span> <span class="op">+</span> file_name, names<span class="op">=</span>[<span class="st">'age'</span>,<span class="st">'weight'</span>])</span>
+<span id="cb3-14"><a href="#cb3-14"></a>    spline <span class="op">=</span> UnivariateSpline(df_temp[<span class="st">'age'</span>], df_temp[<span class="st">'weight'</span>], s<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb3-15"><a href="#cb3-15"></a>    df_boys[col_names[i]] <span class="op">=</span> spline(age_list)</span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="cf">for</span> i, file_name <span class="kw">in</span> <span class="bu">enumerate</span>(file_names_girls):</span>
+<span id="cb3-17"><a href="#cb3-17"></a>    <span class="co"># read in data</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>    df_temp <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/weight/'</span> <span class="op">+</span> file_name, names<span class="op">=</span>[<span class="st">'age'</span>,<span class="st">'weight'</span>])</span>
+<span id="cb3-19"><a href="#cb3-19"></a>    spline <span class="op">=</span> UnivariateSpline(df_temp[<span class="st">'age'</span>], df_temp[<span class="st">'weight'</span>], s<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    df_girls[col_names[i]] <span class="op">=</span> spline(age_list)</span>
+<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="co"># make age index</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>df_boys.set_index(<span class="st">'age'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-24"><a href="#cb3-24"></a>df_boys.index <span class="op">=</span> df_boys.index.<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb3-25"><a href="#cb3-25"></a>df_boys.to_csv(<span class="st">'../archive/data/weight/boys_weight_vs_age_combined.csv'</span>, index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-26"><a href="#cb3-26"></a>df_girls.set_index(<span class="st">'age'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-27"><a href="#cb3-27"></a>df_girls.index <span class="op">=</span> df_girls.index.<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb3-28"><a href="#cb3-28"></a>df_girls.to_csv(<span class="st">'../archive/data/weight/girls_weight_vs_age_combined.csv'</span>, index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s see now the results:</p>
+<div id="cell-7" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>df_girls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">p05</th>
+<th data-quarto-table-cell-role="th">p10</th>
+<th data-quarto-table-cell-role="th">p25</th>
+<th data-quarto-table-cell-role="th">p50</th>
+<th data-quarto-table-cell-role="th">p75</th>
+<th data-quarto-table-cell-role="th">p90</th>
+<th data-quarto-table-cell-role="th">p95</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2.0</td>
+<td>10.169139</td>
+<td>10.527385</td>
+<td>11.117607</td>
+<td>12.111512</td>
+<td>12.934594</td>
+<td>13.970137</td>
+<td>14.662625</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2.1</td>
+<td>10.312243</td>
+<td>10.674421</td>
+<td>11.291813</td>
+<td>12.276811</td>
+<td>13.155592</td>
+<td>14.191386</td>
+<td>14.907424</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2.2</td>
+<td>10.455176</td>
+<td>10.821547</td>
+<td>11.465113</td>
+<td>12.443392</td>
+<td>13.376209</td>
+<td>14.415799</td>
+<td>15.155615</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2.3</td>
+<td>10.597984</td>
+<td>10.968806</td>
+<td>11.637596</td>
+<td>12.611299</td>
+<td>13.596546</td>
+<td>14.643380</td>
+<td>15.407214</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2.4</td>
+<td>10.740711</td>
+<td>11.116243</td>
+<td>11.809350</td>
+<td>12.780573</td>
+<td>13.816707</td>
+<td>14.874137</td>
+<td>15.662236</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">19.6</td>
+<td>46.015792</td>
+<td>48.041956</td>
+<td>52.097485</td>
+<td>57.744985</td>
+<td>65.357860</td>
+<td>74.916720</td>
+<td>82.545975</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19.7</td>
+<td>46.008755</td>
+<td>48.085732</td>
+<td>52.168559</td>
+<td>57.855278</td>
+<td>65.511084</td>
+<td>75.011896</td>
+<td>82.648322</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">19.8</td>
+<td>45.997560</td>
+<td>48.129771</td>
+<td>52.240501</td>
+<td>57.969161</td>
+<td>65.669232</td>
+<td>75.094395</td>
+<td>82.748961</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19.9</td>
+<td>45.982282</td>
+<td>48.174284</td>
+<td>52.313500</td>
+<td>58.086892</td>
+<td>65.832528</td>
+<td>75.162729</td>
+<td>82.847851</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20.0</td>
+<td>45.962995</td>
+<td>48.219480</td>
+<td>52.387740</td>
+<td>58.208729</td>
+<td>66.001197</td>
+<td>75.215412</td>
+<td>82.944949</td>
+</tr>
+</tbody>
+</table>
+
+<p>181 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>show all interpolated curves for girls</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># loop over col_names and plot each column</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>colors <span class="op">=</span> sns.color_palette(<span class="st">"Oranges"</span>, <span class="bu">len</span>(col_names))</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="cf">for</span> col, color <span class="kw">in</span> <span class="bu">zip</span>(col_names, colors):</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    ax.plot(df_girls.index, df_girls[col], label<span class="op">=</span>col, color<span class="op">=</span>color)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'age (years)'</span>,</span>
+<span id="cb5-7"><a href="#cb5-7"></a>       ylabel<span class="op">=</span><span class="st">'weight (kg)'</span>,</span>
+<span id="cb5-8"><a href="#cb5-8"></a>       xticks<span class="op">=</span>np.arange(<span class="dv">2</span>, <span class="dv">21</span>, <span class="dv">2</span>),</span>
+<span id="cb5-9"><a href="#cb5-9"></a>       title<span class="op">=</span><span class="st">"weight curves for girls</span><span class="ch">\n</span><span class="st">percentile curves: 5, 10, 25, 50, 75, 90, 95"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="weight_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s now see the percentiles for girls age 20.</p>
+<div id="cell-10" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>plot cdf for girls, age 20</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb6-2"><a href="#cb6-2"></a>percentile_list <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">90</span>, <span class="dv">95</span>])</span>
+<span id="cb6-3"><a href="#cb6-3"></a>data <span class="op">=</span> df_girls.loc[<span class="fl">20.0</span>]</span>
+<span id="cb6-4"><a href="#cb6-4"></a>ax.plot(data, percentile_list, ls<span class="op">=</span><span class="st">''</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>, color<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'weight (kg)'</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>         ylabel<span class="op">=</span><span class="st">'percentile'</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>         yticks<span class="op">=</span>percentile_list,</span>
+<span id="cb6-8"><a href="#cb6-8"></a>         title<span class="op">=</span><span class="st">"cdf for girls, age 20"</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>         )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="weight_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This time, I am not so sure that a normal (gaussian) distribution is a good fit for the data. I check if a log-normal distribution does the job.</p>
+<div id="cell-12" class="cell" data-execution_count="58">
+<details class="code-fold">
+<summary>define functions</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">def</span> erf_model(x, mu, sigma):</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="cf">return</span> <span class="dv">50</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> erf((x <span class="op">-</span> mu) <span class="op">/</span> (sigma <span class="op">*</span> np.sqrt(<span class="dv">2</span>))) )</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">def</span> erf_lognormal_model(x, mu, sigma):</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="cf">return</span> <span class="dv">50</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> erf((np.log(x) <span class="op">-</span> mu) <span class="op">/</span> (sigma <span class="op">*</span> np.sqrt(<span class="dv">2</span>))) )</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="kw">def</span> pdf_lognormal(x, mu, sigma):</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="cf">return</span> (<span class="dv">1</span> <span class="op">/</span> (x <span class="op">*</span> sigma <span class="op">*</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi))) <span class="op">*</span> np.exp(<span class="op">-</span>((np.log(x) <span class="op">-</span> mu) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> sigma <span class="op">**</span> <span class="dv">2</span>))</span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># initial guess for parameters: [mu, sigma]</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>p0 <span class="op">=</span> np.array([<span class="dv">50</span>, <span class="dv">3</span>])</span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co"># Calculate R-squared</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="kw">def</span> calculate_r2(y_true, y_pred):</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    ss_res <span class="op">=</span> np.<span class="bu">sum</span>((y_true <span class="op">-</span> y_pred) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    ss_tot <span class="op">=</span> np.<span class="bu">sum</span>((y_true <span class="op">-</span> np.mean(y_true)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb7-13"><a href="#cb7-13"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">-</span> (ss_res <span class="op">/</span> ss_tot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-13" class="cell" data-execution_count="47">
+<details class="code-fold">
+<summary>fit model to data</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>data <span class="op">=</span> df_girls.loc[<span class="fl">20.0</span>]</span>
+<span id="cb8-2"><a href="#cb8-2"></a>params, _ <span class="op">=</span> curve_fit(erf_model, data, percentile_list, p0<span class="op">=</span>p0,</span>
+<span id="cb8-3"><a href="#cb8-3"></a>                        bounds<span class="op">=</span>([<span class="dv">10</span>, <span class="dv">1</span>],   <span class="co"># lower bounds for mu and sigma</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>                                [<span class="dv">100</span>, <span class="dv">20</span>])  <span class="co"># upper bounds for mu and sigma</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>                        )</span>
+<span id="cb8-6"><a href="#cb8-6"></a>params2, _ <span class="op">=</span> curve_fit(erf_model, np.log(data), percentile_list, p0<span class="op">=</span>np.log(p0),</span>
+<span id="cb8-7"><a href="#cb8-7"></a>                        bounds<span class="op">=</span>([np.log(<span class="dv">10</span>), <span class="dv">0</span>],   <span class="co"># lower bounds for mu and sigma</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>                                [np.log(<span class="dv">100</span>), np.log(<span class="dv">20</span>)])  <span class="co"># upper bounds for mu and sigma</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a>                        )</span>
+<span id="cb8-10"><a href="#cb8-10"></a>params3, _ <span class="op">=</span> curve_fit(erf_lognormal_model, data, percentile_list, p0<span class="op">=</span>p0,</span>
+<span id="cb8-11"><a href="#cb8-11"></a>                        bounds<span class="op">=</span>([<span class="dv">10</span>, <span class="dv">1</span>],   <span class="co"># lower bounds for mu and sigma</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>                                [<span class="dv">100</span>, <span class="dv">20</span>])  <span class="co"># upper bounds for mu and sigma</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a>                        )</span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co"># store the parameters in the dataframe</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a>percentile_predicted <span class="op">=</span> erf_model(data, <span class="op">*</span>params)</span>
+<span id="cb8-16"><a href="#cb8-16"></a>percentile_predicted2 <span class="op">=</span> erf_model(np.log(data), <span class="op">*</span>params2)</span>
+<span id="cb8-17"><a href="#cb8-17"></a>percentile_predicted3 <span class="op">=</span> erf_model(np.log(data), <span class="op">*</span>params3)</span>
+<span id="cb8-18"><a href="#cb8-18"></a></span>
+<span id="cb8-19"><a href="#cb8-19"></a></span>
+<span id="cb8-20"><a href="#cb8-20"></a><span class="co"># R-squared value</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a>r2 <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted)</span>
+<span id="cb8-22"><a href="#cb8-22"></a>r2b <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted2)</span>
+<span id="cb8-23"><a href="#cb8-23"></a>r2c <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-14" class="cell" data-execution_count="48">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>np.log(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>p05    3.827837
+p10    3.875763
+p25    3.958673
+p50    4.064035
+p75    4.189673
+p90    4.320356
+p95    4.418177
+Name: 20.0, dtype: float64</code></pre>
+</div>
+</div>
+<div id="cell-15" class="cell" data-execution_count="49">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="bu">print</span>(params, r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[59.26016626  9.79523675] 0.9902149628457501</code></pre>
+</div>
+</div>
+<div id="cell-16" class="cell" data-execution_count="50">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="bu">print</span>(np.exp(params2),r2b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[58.87878053  1.18549324] 0.9963888462453959</code></pre>
+</div>
+</div>
+<div id="cell-17" class="cell" data-execution_count="51">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="bu">print</span>(np.exp(params3),r2c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[5.18470553e+21 2.00855369e+01] -2.0588235294117645</code></pre>
+</div>
+</div>
+<div id="cell-18" class="cell" data-execution_count="57">
+<details class="code-fold">
+<summary>show results</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb17-2"><a href="#cb17-2"></a>percentile_list <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">90</span>, <span class="dv">95</span>])</span>
+<span id="cb17-3"><a href="#cb17-3"></a>data <span class="op">=</span> df_girls.loc[<span class="fl">20.0</span>]</span>
+<span id="cb17-4"><a href="#cb17-4"></a>ax.plot(data, percentile_list, ls<span class="op">=</span><span class="st">''</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>, color<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">'data'</span>)</span>
+<span id="cb17-5"><a href="#cb17-5"></a>fit <span class="op">=</span> erf_model(weight_list, <span class="op">*</span>params)</span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="co"># fit2 = np.exp(erf_model(np.log(weight_list), *(np.log(params))))</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a>ax.plot(weight_list, fit, label<span class="op">=</span><span class="st">'fit'</span>, color<span class="op">=</span><span class="st">"red"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="co"># ax.plot(weight_list, 100*lognorm.cdf(weight_list, loc=np.exp(params2[0]), s=1*np.exp(params2[1]) ), label='fit2', color="orange", linewidth=2)</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a>ax.plot(weight_list, <span class="dv">100</span><span class="op">*</span>lognorm.cdf(weight_list, loc<span class="op">=</span>params2[<span class="dv">0</span>], s<span class="op">=</span>params2[<span class="dv">1</span>] ), label<span class="op">=</span><span class="st">'fit2'</span>, color<span class="op">=</span><span class="st">"orange"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb17-10"><a href="#cb17-10"></a></span>
+<span id="cb17-11"><a href="#cb17-11"></a><span class="co"># ax.text(150, 75, f'$\mu$ = {params[0]:.1f} cm\n$\sigma$ = {params[1]:.1f} cm\nR$^2$ = {r2:.6f}',</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a>        <span class="co"># fontsize=14, bbox=dict(facecolor='white', alpha=0.5))</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-14"><a href="#cb17-14"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'weight (kg)'</span>,</span>
+<span id="cb17-15"><a href="#cb17-15"></a>    <span class="co">#    xlim=(140, 190),</span></span>
+<span id="cb17-16"><a href="#cb17-16"></a>         ylabel<span class="op">=</span><span class="st">'percentile'</span>,</span>
+<span id="cb17-17"><a href="#cb17-17"></a>         yticks<span class="op">=</span>percentile_list,</span>
+<span id="cb17-18"><a href="#cb17-18"></a>        <span class="co">#  title="the data is very well fitted by a normal distribution"</span></span>
+<span id="cb17-19"><a href="#cb17-19"></a>         )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"792a2ac8e8c94e389f0472baf2e788b9","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div id="cell-19" class="cell" data-execution_count="54">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>np.exp(params2[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="54">
+<pre><code>np.float64(1.1854932445401833)</code></pre>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../data/height.html" class="pagination-link" aria-label="height data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
