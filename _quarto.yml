@@ -15,6 +15,9 @@ book:
       chapters:
         - data/height.ipynb
         - data/weight.ipynb
+    - part: "quick questions"
+      chapters:
+        - quick/t_test_one_sample.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2

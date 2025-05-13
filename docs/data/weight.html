@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.41">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; weight data – Statistics</title>
+<title>Statistics - 2&nbsp; weight data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../quick/t_test_one_sample.html" rel="next">
 <link href="../data/height.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -71,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-b288e077f13cdc2375eec65dc093508f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-6a8a67aa413140400b4e9ec066258cc0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -117,13 +118,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../data/height.html">data</a></li><li class="breadcrumb-item"><a href="../data/weight.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -160,9 +161,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -181,12 +182,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">quick questions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quick/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t test</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
     </div>
 <!-- main -->
@@ -214,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now that we have height data covered, it’s time we deal with weight data.</p>
 <p>Yes, I am <strong>VERY WELL AWARE</strong> that weight is a force, and it is not measured in kg. Nevertheless, I will use the word weight in the colloquial sense, and for all purposes it is a synonym for mass.</p>
 <p>This analysis will follow the same steps we used for height data, therefore I will skip some of the intermediate steps. Whenever there are differences, I will point them out.</p>
-<div id="cell-2" class="cell" data-execution_count="41">
+<div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -242,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>We will load all the digitized data for the weight curves, and will interpolate.</p>
-<div id="cell-5" class="cell" data-execution_count="9">
+<div id="cell-5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>interpolate all growth curves</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>col_names <span class="op">=</span> [<span class="st">'p05'</span>, <span class="st">'p10'</span>, <span class="st">'p25'</span>, <span class="st">'p50'</span>, <span class="st">'p75'</span>, <span class="st">'p90'</span>, <span class="st">'p95'</span>]</span>
@@ -276,13 +294,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Let’s see now the results:</p>
-<div id="cell-7" class="cell" data-execution_count="10">
+<div id="cell-7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>df_girls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -294,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">p90</th>
 <th data-quarto-table-cell-role="th">p95</th>
 </tr>
-<tr class="even">
+<tr class="odd">
 <th data-quarto-table-cell-role="th">age</th>
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th"></th>
@@ -423,7 +442,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="cell-8" class="cell" data-execution_count="11">
+</div>
+<div id="cell-8" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>show all interpolated curves for girls</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
@@ -438,15 +458,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-10"><a href="#cb5-10"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="weight_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"6b64eccd6c2a4d089ac96376e8f688e1","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
 </div>
 </div>
 <p>Let’s now see the percentiles for girls age 20.</p>
-<div id="cell-10" class="cell" data-execution_count="12">
+<div id="cell-10" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>plot cdf for girls, age 20</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
@@ -460,33 +478,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-9"><a href="#cb6-9"></a>         )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="weight_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"4d88a3e54efa4516b4cecccc463b023a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
 </div>
 </div>
 <p>This time, I am not so sure that a normal (gaussian) distribution is a good fit for the data. I check if a log-normal distribution does the job.</p>
-<div id="cell-12" class="cell" data-execution_count="58">
+<div id="cell-12" class="cell" data-execution_count="74">
 <details class="code-fold">
 <summary>define functions</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">def</span> erf_model(x, mu, sigma):</span>
 <span id="cb7-2"><a href="#cb7-2"></a>    <span class="cf">return</span> <span class="dv">50</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> erf((x <span class="op">-</span> mu) <span class="op">/</span> (sigma <span class="op">*</span> np.sqrt(<span class="dv">2</span>))) )</span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="kw">def</span> erf_lognormal_model(x, mu, sigma):</span>
 <span id="cb7-4"><a href="#cb7-4"></a>    <span class="cf">return</span> <span class="dv">50</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> erf((np.log(x) <span class="op">-</span> mu) <span class="op">/</span> (sigma <span class="op">*</span> np.sqrt(<span class="dv">2</span>))) )</span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="kw">def</span> pdf_lognormal(x, mu, sigma):</span>
-<span id="cb7-6"><a href="#cb7-6"></a>    <span class="cf">return</span> (<span class="dv">1</span> <span class="op">/</span> (x <span class="op">*</span> sigma <span class="op">*</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi))) <span class="op">*</span> np.exp(<span class="op">-</span>((np.log(x) <span class="op">-</span> mu) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> sigma <span class="op">**</span> <span class="dv">2</span>))</span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># initial guess for parameters: [mu, sigma]</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>p0 <span class="op">=</span> np.array([<span class="dv">50</span>, <span class="dv">3</span>])</span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co"># Calculate R-squared</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="kw">def</span> calculate_r2(y_true, y_pred):</span>
-<span id="cb7-11"><a href="#cb7-11"></a>    ss_res <span class="op">=</span> np.<span class="bu">sum</span>((y_true <span class="op">-</span> y_pred) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb7-12"><a href="#cb7-12"></a>    ss_tot <span class="op">=</span> np.<span class="bu">sum</span>((y_true <span class="op">-</span> np.mean(y_true)) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb7-13"><a href="#cb7-13"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">-</span> (ss_res <span class="op">/</span> ss_tot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="kw">def</span> cdf_lognormal(x, mu, sigma):</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="cf">return</span> <span class="dv">100</span><span class="op">*</span>lognorm.cdf(x, s<span class="op">=</span>sigma, scale<span class="op">=</span>mu)</span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="kw">def</span> cdf_gamma(x, a, b):</span>
+<span id="cb7-8"><a href="#cb7-8"></a>    <span class="cf">return</span> <span class="dv">100</span><span class="op">*</span>gamma.cdf(x, a<span class="op">=</span>a, scale<span class="op">=</span>b)</span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co"># initial guess for parameters: [mu, sigma]</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>p0 <span class="op">=</span> np.array([<span class="dv">50</span>, <span class="dv">3</span>])</span>
+<span id="cb7-11"><a href="#cb7-11"></a>p0_ln <span class="op">=</span> np.array([<span class="dv">50</span>, <span class="fl">0.2</span>])</span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co"># Calculate R-squared</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="kw">def</span> calculate_r2(y_true, y_pred):</span>
+<span id="cb7-14"><a href="#cb7-14"></a>    ss_res <span class="op">=</span> np.<span class="bu">sum</span>((y_true <span class="op">-</span> y_pred) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a>    ss_tot <span class="op">=</span> np.<span class="bu">sum</span>((y_true <span class="op">-</span> np.mean(y_true)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">-</span> (ss_res <span class="op">/</span> ss_tot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-13" class="cell" data-execution_count="47">
+<div id="cell-13" class="cell" data-execution_count="105">
 <details class="code-fold">
 <summary>fit model to data</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>data <span class="op">=</span> df_girls.loc[<span class="fl">20.0</span>]</span>
@@ -498,101 +517,666 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-7"><a href="#cb8-7"></a>                        bounds<span class="op">=</span>([np.log(<span class="dv">10</span>), <span class="dv">0</span>],   <span class="co"># lower bounds for mu and sigma</span></span>
 <span id="cb8-8"><a href="#cb8-8"></a>                                [np.log(<span class="dv">100</span>), np.log(<span class="dv">20</span>)])  <span class="co"># upper bounds for mu and sigma</span></span>
 <span id="cb8-9"><a href="#cb8-9"></a>                        )</span>
-<span id="cb8-10"><a href="#cb8-10"></a>params3, _ <span class="op">=</span> curve_fit(erf_lognormal_model, data, percentile_list, p0<span class="op">=</span>p0,</span>
-<span id="cb8-11"><a href="#cb8-11"></a>                        bounds<span class="op">=</span>([<span class="dv">10</span>, <span class="dv">1</span>],   <span class="co"># lower bounds for mu and sigma</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a>                                [<span class="dv">100</span>, <span class="dv">20</span>])  <span class="co"># upper bounds for mu and sigma</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>params3, _ <span class="op">=</span> curve_fit(cdf_lognormal, data, percentile_list, p0<span class="op">=</span>p0_ln,</span>
+<span id="cb8-11"><a href="#cb8-11"></a>                        bounds<span class="op">=</span>([<span class="dv">10</span>, <span class="fl">0.05</span>],   <span class="co"># lower bounds for mu and sigma</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>                                [<span class="dv">100</span>, <span class="fl">1.00</span>])  <span class="co"># upper bounds for mu and sigma</span></span>
 <span id="cb8-13"><a href="#cb8-13"></a>                        )</span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co"># store the parameters in the dataframe</span></span>
-<span id="cb8-15"><a href="#cb8-15"></a>percentile_predicted <span class="op">=</span> erf_model(data, <span class="op">*</span>params)</span>
-<span id="cb8-16"><a href="#cb8-16"></a>percentile_predicted2 <span class="op">=</span> erf_model(np.log(data), <span class="op">*</span>params2)</span>
-<span id="cb8-17"><a href="#cb8-17"></a>percentile_predicted3 <span class="op">=</span> erf_model(np.log(data), <span class="op">*</span>params3)</span>
-<span id="cb8-18"><a href="#cb8-18"></a></span>
-<span id="cb8-19"><a href="#cb8-19"></a></span>
-<span id="cb8-20"><a href="#cb8-20"></a><span class="co"># R-squared value</span></span>
-<span id="cb8-21"><a href="#cb8-21"></a>r2 <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted)</span>
-<span id="cb8-22"><a href="#cb8-22"></a>r2b <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted2)</span>
-<span id="cb8-23"><a href="#cb8-23"></a>r2c <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-14"><a href="#cb8-14"></a>p0_gamma <span class="op">=</span> np.array([<span class="dv">50</span>, <span class="fl">0.9</span>])</span>
+<span id="cb8-15"><a href="#cb8-15"></a>params4, _ <span class="op">=</span> curve_fit(cdf_gamma, data, percentile_list, p0<span class="op">=</span>p0_gamma,</span>
+<span id="cb8-16"><a href="#cb8-16"></a>                        bounds<span class="op">=</span>([<span class="dv">30</span>, <span class="fl">0.5</span>],   <span class="co"># lower bounds for mu and sigma</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a>                                [<span class="dv">80</span>, <span class="fl">1.5</span>])  <span class="co"># upper bounds for mu and sigma</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>                        )</span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="co"># store the parameters in the dataframe</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a>percentile_predicted <span class="op">=</span> erf_model(data, <span class="op">*</span>params)</span>
+<span id="cb8-21"><a href="#cb8-21"></a>percentile_predicted2 <span class="op">=</span> erf_model(np.log(data), <span class="op">*</span>params2)</span>
+<span id="cb8-22"><a href="#cb8-22"></a>percentile_predicted3 <span class="op">=</span> cdf_lognormal(data, <span class="op">*</span>params3)</span>
+<span id="cb8-23"><a href="#cb8-23"></a>percentile_predicted4 <span class="op">=</span> cdf_gamma(data, <span class="op">*</span>params4)</span>
+<span id="cb8-24"><a href="#cb8-24"></a></span>
+<span id="cb8-25"><a href="#cb8-25"></a></span>
+<span id="cb8-26"><a href="#cb8-26"></a><span class="co"># R-squared value</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a>r2 <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted)</span>
+<span id="cb8-28"><a href="#cb8-28"></a>r2b <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted2)</span>
+<span id="cb8-29"><a href="#cb8-29"></a>r2c <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted3)</span>
+<span id="cb8-30"><a href="#cb8-30"></a>r2d <span class="op">=</span> calculate_r2(percentile_list, percentile_predicted4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-14" class="cell" data-execution_count="48">
+<div id="cell-14" class="cell" data-execution_count="79">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>np.log(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>params4, r2d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="48">
-<pre><code>p05    3.827837
-p10    3.875763
-p25    3.958673
-p50    4.064035
-p75    4.189673
-p90    4.320356
-p95    4.418177
-Name: 20.0, dtype: float64</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="79">
+<pre><code>(array([38.66428713,  1.46253451]), 0.9924311256135725)</code></pre>
 </div>
 </div>
-<div id="cell-15" class="cell" data-execution_count="49">
+<div id="cell-15" class="cell" data-execution_count="61">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="bu">print</span>(params, r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>params3, r2c, percentile_predicted3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[59.26016626  9.79523675] 0.9902149628457501</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="61">
+<pre><code>(array([55.95300497,  0.16283376]),
+ 0.9944470433169026,
+ array([ 7.97666653, 12.25680131, 24.25581653, 47.087817  , 74.72185354,
+        93.52040652, 98.42654193]))</code></pre>
 </div>
 </div>
-<div id="cell-16" class="cell" data-execution_count="50">
+<div id="cell-16" class="cell" data-execution_count="63">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="bu">print</span>(np.exp(params2),r2b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> gamma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[58.87878053  1.18549324] 0.9963888462453959</code></pre>
 </div>
-</div>
-<div id="cell-17" class="cell" data-execution_count="51">
+<div id="cell-17" class="cell" data-execution_count="104">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="bu">print</span>(np.exp(params3),r2c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>percentile_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[5.18470553e+21 2.00855369e+01] -2.0588235294117645</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="104">
+<pre><code>array([ 5, 10, 25, 50, 75, 90, 95])</code></pre>
 </div>
 </div>
-<div id="cell-18" class="cell" data-execution_count="57">
+<div id="cell-18" class="cell" data-execution_count="130">
 <details class="code-fold">
 <summary>show results</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb17-2"><a href="#cb17-2"></a>percentile_list <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">90</span>, <span class="dv">95</span>])</span>
-<span id="cb17-3"><a href="#cb17-3"></a>data <span class="op">=</span> df_girls.loc[<span class="fl">20.0</span>]</span>
-<span id="cb17-4"><a href="#cb17-4"></a>ax.plot(data, percentile_list, ls<span class="op">=</span><span class="st">''</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>, color<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">'data'</span>)</span>
-<span id="cb17-5"><a href="#cb17-5"></a>fit <span class="op">=</span> erf_model(weight_list, <span class="op">*</span>params)</span>
-<span id="cb17-6"><a href="#cb17-6"></a><span class="co"># fit2 = np.exp(erf_model(np.log(weight_list), *(np.log(params))))</span></span>
-<span id="cb17-7"><a href="#cb17-7"></a>ax.plot(weight_list, fit, label<span class="op">=</span><span class="st">'fit'</span>, color<span class="op">=</span><span class="st">"red"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb17-8"><a href="#cb17-8"></a><span class="co"># ax.plot(weight_list, 100*lognorm.cdf(weight_list, loc=np.exp(params2[0]), s=1*np.exp(params2[1]) ), label='fit2', color="orange", linewidth=2)</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a>ax.plot(weight_list, <span class="dv">100</span><span class="op">*</span>lognorm.cdf(weight_list, loc<span class="op">=</span>params2[<span class="dv">0</span>], s<span class="op">=</span>params2[<span class="dv">1</span>] ), label<span class="op">=</span><span class="st">'fit2'</span>, color<span class="op">=</span><span class="st">"orange"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb17-10"><a href="#cb17-10"></a></span>
-<span id="cb17-11"><a href="#cb17-11"></a><span class="co"># ax.text(150, 75, f'$\mu$ = {params[0]:.1f} cm\n$\sigma$ = {params[1]:.1f} cm\nR$^2$ = {r2:.6f}',</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a>        <span class="co"># fontsize=14, bbox=dict(facecolor='white', alpha=0.5))</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb17-14"><a href="#cb17-14"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'weight (kg)'</span>,</span>
-<span id="cb17-15"><a href="#cb17-15"></a>    <span class="co">#    xlim=(140, 190),</span></span>
-<span id="cb17-16"><a href="#cb17-16"></a>         ylabel<span class="op">=</span><span class="st">'percentile'</span>,</span>
-<span id="cb17-17"><a href="#cb17-17"></a>         yticks<span class="op">=</span>percentile_list,</span>
-<span id="cb17-18"><a href="#cb17-18"></a>        <span class="co">#  title="the data is very well fitted by a normal distribution"</span></span>
-<span id="cb17-19"><a href="#cb17-19"></a>         )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb16-2"><a href="#cb16-2"></a>percentile_list <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">90</span>, <span class="dv">95</span>])</span>
+<span id="cb16-3"><a href="#cb16-3"></a>ax.plot(data, percentile_list, ls<span class="op">=</span><span class="st">''</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>, color<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">'data'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a>fit <span class="op">=</span> erf_model(weight_list, <span class="op">*</span>params)</span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="co"># fit2 = np.exp(erf_model(np.log(weight_list), *(np.log(params))))</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>ax.plot(weight_list, fit, label<span class="op">=</span><span class="st">'fit'</span>, color<span class="op">=</span><span class="st">"red"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co"># ax.plot(weight_list, 100*lognorm.cdf(weight_list, loc=np.exp(params2[0]), s=1*np.exp(params2[1]) ), label='fit2', color="orange", linewidth=2)</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>ax.plot(weight_list, <span class="dv">100</span><span class="op">*</span>lognorm.cdf(weight_list, scale<span class="op">=</span>params3[<span class="dv">0</span>], s<span class="op">=</span>params3[<span class="dv">1</span>] ), label<span class="op">=</span><span class="st">'fit3'</span>, color<span class="op">=</span><span class="st">"orange"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-9"><a href="#cb16-9"></a>ax.plot(weight_list, <span class="dv">100</span><span class="op">*</span>gamma.cdf(weight_list, a<span class="op">=</span>params4[<span class="dv">0</span>], scale<span class="op">=</span>params4[<span class="dv">1</span>] ), label<span class="op">=</span><span class="st">'fit4'</span>, color<span class="op">=</span><span class="st">"blue"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-10"><a href="#cb16-10"></a></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="co"># ax.plot(weight_list, 100*lognorm.cdf(weight_list, scale=58, s=0.18 ), label='fit2', color="orange", linewidth=2)</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="co"># ax.text(150, 75, f'$\mu$ = {params[0]:.1f} cm\n$\sigma$ = {params[1]:.1f} cm\nR$^2$ = {r2:.6f}',</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a>        <span class="co"># fontsize=14, bbox=dict(facecolor='white', alpha=0.5))</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a></span>
+<span id="cb16-15"><a href="#cb16-15"></a></span>
+<span id="cb16-16"><a href="#cb16-16"></a></span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="co"># ax.plot(weight_list, 100*gamma.cdf(weight_list, a=68, scale=0.8), label='gamma', color="blue", linewidth=2)</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a>cdc_percentile <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">90</span>, <span class="dv">95</span>, <span class="dv">97</span>]</span>
+<span id="cb16-19"><a href="#cb16-19"></a>ax.plot(cdc_vals[<span class="dv">0</span>], cdc_percentile, ls<span class="op">=</span><span class="st">''</span>, marker<span class="op">=</span><span class="st">'x'</span>, markersize<span class="op">=</span><span class="dv">6</span>, color<span class="op">=</span><span class="st">"olive"</span>, label<span class="op">=</span><span class="st">'CDC data'</span>)</span>
+<span id="cb16-20"><a href="#cb16-20"></a>lms <span class="op">=</span> women.loc[<span class="fl">240.0</span>, [<span class="st">'L'</span>, <span class="st">'M'</span>, <span class="st">'S'</span>]].values</span>
+<span id="cb16-21"><a href="#cb16-21"></a>ax.plot(weight_list, Zscore_to_percentile(cdc_eq(weight_list, <span class="op">*</span>lms)))</span>
+<span id="cb16-22"><a href="#cb16-22"></a></span>
+<span id="cb16-23"><a href="#cb16-23"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-24"><a href="#cb16-24"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'weight (kg)'</span>,</span>
+<span id="cb16-25"><a href="#cb16-25"></a>    <span class="co">#    xlim=(140, 190),</span></span>
+<span id="cb16-26"><a href="#cb16-26"></a>         ylabel<span class="op">=</span><span class="st">'percentile'</span>,</span>
+<span id="cb16-27"><a href="#cb16-27"></a>         yticks<span class="op">=</span>percentile_list,</span>
+<span id="cb16-28"><a href="#cb16-28"></a>        <span class="co">#  title="the data is very well fitted by a normal distribution"</span></span>
+<span id="cb16-29"><a href="#cb16-29"></a>         )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"792a2ac8e8c94e389f0472baf2e788b9","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"8971e3a3603a449db046f7479d5ff605","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 </div>
-<div id="cell-19" class="cell" data-execution_count="54">
+<div id="cell-19" class="cell" data-execution_count="131">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>np.exp(params2[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>https:<span class="op">//</span>www.cdc.gov<span class="op">/</span>growthcharts<span class="op">/</span>cdc<span class="op">-</span>data<span class="op">-</span>files.htm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="54">
-<pre><code>np.float64(1.1854932445401833)</code></pre>
+<div class="cell-output cell-output-error">
+<pre><code>SyntaxError: invalid syntax (1102385488.py, line 1)</code></pre>
+</div>
+</div>
+<div id="cell-20" class="cell" data-execution_count="129">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">def</span> Zscore_to_percentile(z):</span>
+<span id="cb19-2"><a href="#cb19-2"></a>    <span class="cf">return</span> <span class="dv">100</span> <span class="op">*</span> norm.cdf(z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-21" class="cell" data-execution_count="111">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>cdc_vals[<span class="dv">0</span>], percentile_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="111">
+<pre><code>(array([45.04654822, 46.28963394, 48.38346004, 52.47876433, 58.21897289,
+        65.85237979, 75.35164989, 82.95375457, 89.04485133]),
+ array([ 5, 10, 25, 50, 75, 90, 95]))</code></pre>
+</div>
+</div>
+<div id="cell-22" class="cell" data-execution_count="85">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>df_cdc <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/cdc_wt_age.csv'</span>)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>df_cdc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="85">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Agemos</th>
+<th data-quarto-table-cell-role="th">L</th>
+<th data-quarto-table-cell-role="th">M</th>
+<th data-quarto-table-cell-role="th">S</th>
+<th data-quarto-table-cell-role="th">P3</th>
+<th data-quarto-table-cell-role="th">P5</th>
+<th data-quarto-table-cell-role="th">P10</th>
+<th data-quarto-table-cell-role="th">P25</th>
+<th data-quarto-table-cell-role="th">P50</th>
+<th data-quarto-table-cell-role="th">P75</th>
+<th data-quarto-table-cell-role="th">P90</th>
+<th data-quarto-table-cell-role="th">P95</th>
+<th data-quarto-table-cell-role="th">P97</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>24.0</td>
+<td>-0.206152</td>
+<td>12.670763</td>
+<td>0.108126</td>
+<td>10.382090</td>
+<td>10.640090</td>
+<td>11.052656</td>
+<td>11.785975</td>
+<td>12.670763</td>
+<td>13.636919</td>
+<td>14.583398</td>
+<td>15.187773</td>
+<td>15.596483</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>24.5</td>
+<td>-0.216501</td>
+<td>12.741544</td>
+<td>0.108166</td>
+<td>10.441442</td>
+<td>10.700513</td>
+<td>11.114904</td>
+<td>11.851817</td>
+<td>12.741544</td>
+<td>13.713860</td>
+<td>14.667158</td>
+<td>15.276296</td>
+<td>15.688406</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>25.5</td>
+<td>-0.239790</td>
+<td>12.881023</td>
+<td>0.108275</td>
+<td>10.558473</td>
+<td>10.819575</td>
+<td>11.237473</td>
+<td>11.981419</td>
+<td>12.881023</td>
+<td>13.865896</td>
+<td>14.833316</td>
+<td>15.452424</td>
+<td>15.871699</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>26.5</td>
+<td>-0.266316</td>
+<td>13.018424</td>
+<td>0.108421</td>
+<td>10.673803</td>
+<td>10.936812</td>
+<td>11.358059</td>
+<td>12.108888</td>
+<td>13.018424</td>
+<td>14.016230</td>
+<td>14.998478</td>
+<td>15.628189</td>
+<td>16.055142</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>27.5</td>
+<td>-0.295755</td>
+<td>13.154497</td>
+<td>0.108605</td>
+<td>10.787982</td>
+<td>11.052801</td>
+<td>11.477280</td>
+<td>12.234907</td>
+<td>13.154497</td>
+<td>14.165672</td>
+<td>15.163512</td>
+<td>15.804500</td>
+<td>16.239671</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">431</td>
+<td>2</td>
+<td>236.5</td>
+<td>-1.558179</td>
+<td>58.030397</td>
+<td>0.165698</td>
+<td>45.012603</td>
+<td>46.238515</td>
+<td>48.304379</td>
+<td>52.349208</td>
+<td>58.030397</td>
+<td>65.612151</td>
+<td>75.100412</td>
+<td>82.744477</td>
+<td>88.906346</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">432</td>
+<td>2</td>
+<td>237.5</td>
+<td>-1.543846</td>
+<td>58.094532</td>
+<td>0.165985</td>
+<td>45.027517</td>
+<td>46.258911</td>
+<td>48.333695</td>
+<td>52.394603</td>
+<td>58.094532</td>
+<td>65.692518</td>
+<td>75.183669</td>
+<td>82.813450</td>
+<td>88.951645</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">433</td>
+<td>2</td>
+<td>238.5</td>
+<td>-1.530642</td>
+<td>58.151036</td>
+<td>0.166260</td>
+<td>45.038521</td>
+<td>46.274976</td>
+<td>48.357997</td>
+<td>52.433762</td>
+<td>58.151036</td>
+<td>65.764133</td>
+<td>75.258306</td>
+<td>82.875461</td>
+<td>88.992530</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">434</td>
+<td>2</td>
+<td>239.5</td>
+<td>-1.518754</td>
+<td>58.198771</td>
+<td>0.166520</td>
+<td>45.045100</td>
+<td>46.286116</td>
+<td>48.376568</td>
+<td>52.465761</td>
+<td>58.198771</td>
+<td>65.825742</td>
+<td>75.323211</td>
+<td>82.929752</td>
+<td>89.028669</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">435</td>
+<td>2</td>
+<td>240.0</td>
+<td>-1.513362</td>
+<td>58.218973</td>
+<td>0.166645</td>
+<td>45.046548</td>
+<td>46.289634</td>
+<td>48.383460</td>
+<td>52.478764</td>
+<td>58.218973</td>
+<td>65.852380</td>
+<td>75.351650</td>
+<td>82.953755</td>
+<td>89.044851</td>
+</tr>
+</tbody>
+</table>
+
+<p>436 rows × 14 columns</p>
+</div>
+</div>
+</div>
+</div>
+<div id="cell-23" class="cell" data-execution_count="114">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">def</span> cdc_eq(age, L, M, S):</span>
+<span id="cb23-2"><a href="#cb23-2"></a>    <span class="cf">if</span> L <span class="op">!=</span> <span class="dv">0</span>:</span>
+<span id="cb23-3"><a href="#cb23-3"></a>        <span class="cf">return</span> ((age<span class="op">/</span>M)<span class="op">**</span>L <span class="op">-</span><span class="dv">1</span>) <span class="op">/</span> (L<span class="op">*</span>S)</span>
+<span id="cb23-4"><a href="#cb23-4"></a>    <span class="cf">else</span>:</span>
+<span id="cb23-5"><a href="#cb23-5"></a>        <span class="cf">return</span> np.log(age<span class="op">/</span>M) <span class="op">/</span> S</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-24" class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># women.set_index('Agemos', inplace=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="125">
+<pre><code>array([-1.51336185, 58.21897289,  0.16664475])</code></pre>
+</div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="96">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>women <span class="op">=</span> df_cdc[df_cdc[<span class="st">'Sex'</span>]<span class="op">==</span><span class="dv">2</span>]</span>
+<span id="cb26-2"><a href="#cb26-2"></a>women240 <span class="op">=</span> women[women[<span class="st">'Agemos'</span>]<span class="op">==</span><span class="fl">240.0</span>]</span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="co"># women240</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>women240</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="96">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Agemos</th>
+<th data-quarto-table-cell-role="th">L</th>
+<th data-quarto-table-cell-role="th">M</th>
+<th data-quarto-table-cell-role="th">S</th>
+<th data-quarto-table-cell-role="th">P3</th>
+<th data-quarto-table-cell-role="th">P5</th>
+<th data-quarto-table-cell-role="th">P10</th>
+<th data-quarto-table-cell-role="th">P25</th>
+<th data-quarto-table-cell-role="th">P50</th>
+<th data-quarto-table-cell-role="th">P75</th>
+<th data-quarto-table-cell-role="th">P90</th>
+<th data-quarto-table-cell-role="th">P95</th>
+<th data-quarto-table-cell-role="th">P97</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">435</td>
+<td>2</td>
+<td>240.0</td>
+<td>-1.513362</td>
+<td>58.218973</td>
+<td>0.166645</td>
+<td>45.046548</td>
+<td>46.289634</td>
+<td>48.38346</td>
+<td>52.478764</td>
+<td>58.218973</td>
+<td>65.85238</td>
+<td>75.35165</td>
+<td>82.953755</td>
+<td>89.044851</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="cell-26" class="cell" data-execution_count="102">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>cols <span class="op">=</span> women240.columns[<span class="dv">5</span>:]</span>
+<span id="cb27-2"><a href="#cb27-2"></a>cdc_vals <span class="op">=</span> women240.loc[:, cols].values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-27" class="cell" data-execution_count="94">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>df_cdc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="94">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Agemos</th>
+<th data-quarto-table-cell-role="th">L</th>
+<th data-quarto-table-cell-role="th">M</th>
+<th data-quarto-table-cell-role="th">S</th>
+<th data-quarto-table-cell-role="th">P3</th>
+<th data-quarto-table-cell-role="th">P5</th>
+<th data-quarto-table-cell-role="th">P10</th>
+<th data-quarto-table-cell-role="th">P25</th>
+<th data-quarto-table-cell-role="th">P50</th>
+<th data-quarto-table-cell-role="th">P75</th>
+<th data-quarto-table-cell-role="th">P90</th>
+<th data-quarto-table-cell-role="th">P95</th>
+<th data-quarto-table-cell-role="th">P97</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>24.0</td>
+<td>-0.206152</td>
+<td>12.670763</td>
+<td>0.108126</td>
+<td>10.382090</td>
+<td>10.640090</td>
+<td>11.052656</td>
+<td>11.785975</td>
+<td>12.670763</td>
+<td>13.636919</td>
+<td>14.583398</td>
+<td>15.187773</td>
+<td>15.596483</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>24.5</td>
+<td>-0.216501</td>
+<td>12.741544</td>
+<td>0.108166</td>
+<td>10.441442</td>
+<td>10.700513</td>
+<td>11.114904</td>
+<td>11.851817</td>
+<td>12.741544</td>
+<td>13.713860</td>
+<td>14.667158</td>
+<td>15.276296</td>
+<td>15.688406</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>25.5</td>
+<td>-0.239790</td>
+<td>12.881023</td>
+<td>0.108275</td>
+<td>10.558473</td>
+<td>10.819575</td>
+<td>11.237473</td>
+<td>11.981419</td>
+<td>12.881023</td>
+<td>13.865896</td>
+<td>14.833316</td>
+<td>15.452424</td>
+<td>15.871699</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>26.5</td>
+<td>-0.266316</td>
+<td>13.018424</td>
+<td>0.108421</td>
+<td>10.673803</td>
+<td>10.936812</td>
+<td>11.358059</td>
+<td>12.108888</td>
+<td>13.018424</td>
+<td>14.016230</td>
+<td>14.998478</td>
+<td>15.628189</td>
+<td>16.055142</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>27.5</td>
+<td>-0.295755</td>
+<td>13.154497</td>
+<td>0.108605</td>
+<td>10.787982</td>
+<td>11.052801</td>
+<td>11.477280</td>
+<td>12.234907</td>
+<td>13.154497</td>
+<td>14.165672</td>
+<td>15.163512</td>
+<td>15.804500</td>
+<td>16.239671</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">431</td>
+<td>2</td>
+<td>236.5</td>
+<td>-1.558179</td>
+<td>58.030397</td>
+<td>0.165698</td>
+<td>45.012603</td>
+<td>46.238515</td>
+<td>48.304379</td>
+<td>52.349208</td>
+<td>58.030397</td>
+<td>65.612151</td>
+<td>75.100412</td>
+<td>82.744477</td>
+<td>88.906346</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">432</td>
+<td>2</td>
+<td>237.5</td>
+<td>-1.543846</td>
+<td>58.094532</td>
+<td>0.165985</td>
+<td>45.027517</td>
+<td>46.258911</td>
+<td>48.333695</td>
+<td>52.394603</td>
+<td>58.094532</td>
+<td>65.692518</td>
+<td>75.183669</td>
+<td>82.813450</td>
+<td>88.951645</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">433</td>
+<td>2</td>
+<td>238.5</td>
+<td>-1.530642</td>
+<td>58.151036</td>
+<td>0.166260</td>
+<td>45.038521</td>
+<td>46.274976</td>
+<td>48.357997</td>
+<td>52.433762</td>
+<td>58.151036</td>
+<td>65.764133</td>
+<td>75.258306</td>
+<td>82.875461</td>
+<td>88.992530</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">434</td>
+<td>2</td>
+<td>239.5</td>
+<td>-1.518754</td>
+<td>58.198771</td>
+<td>0.166520</td>
+<td>45.045100</td>
+<td>46.286116</td>
+<td>48.376568</td>
+<td>52.465761</td>
+<td>58.198771</td>
+<td>65.825742</td>
+<td>75.323211</td>
+<td>82.929752</td>
+<td>89.028669</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">435</td>
+<td>2</td>
+<td>240.0</td>
+<td>-1.513362</td>
+<td>58.218973</td>
+<td>0.166645</td>
+<td>45.046548</td>
+<td>46.289634</td>
+<td>48.383460</td>
+<td>52.478764</td>
+<td>58.218973</td>
+<td>65.852380</td>
+<td>75.351650</td>
+<td>82.953755</td>
+<td>89.044851</td>
+</tr>
+</tbody>
+</table>
+
+<p>436 rows × 14 columns</p>
+</div>
+</div>
 </div>
 </div>
 
@@ -634,7 +1218,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -666,27 +1261,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -745,7 +1320,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -842,6 +1417,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1074,6 +1650,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../quick/t_test_one_sample.html" class="pagination-link" aria-label="one-sample t test">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t test</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
