@@ -14,10 +14,11 @@ book:
     - part: "data"
       chapters:
         - data/height.ipynb
-        - data/weight.ipynb
-    - part: "quick questions"
+        # - data/weight.ipynb
+    - part: "hypothesis testing"
       chapters:
-        - quick/t_test_one_sample.ipynb
+        - t_test/t_test_one_sample.ipynb
+        - t_test/t_test_independent_samples.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
