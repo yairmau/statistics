@@ -19,6 +19,10 @@ book:
       chapters:
         - t_test/t_test_one_sample.ipynb
         - t_test/t_test_independent_samples.ipynb
+    - part: "confidence interval"
+      chapters:
+        - confidence_interval/basic_concepts.ipynb
+        - confidence_interval/analytical_confidence_interval.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
