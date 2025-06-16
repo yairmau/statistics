@@ -23,6 +23,10 @@ book:
       chapters:
         - confidence_interval/basic_concepts.ipynb
         - confidence_interval/analytical_confidence_interval.ipynb
+        - confidence_interval/empirical_confidence_interval.ipynb
+    - part: "svd"
+      chapters:
+        - svd/widget.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2

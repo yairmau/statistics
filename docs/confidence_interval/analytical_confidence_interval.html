@@ -65,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../confidence_interval/empirical_confidence_interval.html" rel="next">
 <link href="../confidence_interval/basic_concepts.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -260,6 +261,29 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">svd</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../svd/widget.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">svd</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -275,6 +299,8 @@ window.Quarto = {
   <li><a href="#clt" id="toc-clt" class="nav-link active" data-scroll-target="#clt"><span class="header-section-number">5.1</span> CLT</a></li>
   <li><a href="#confidence-interval-1" id="toc-confidence-interval-1" class="nav-link" data-scroll-target="#confidence-interval-1"><span class="header-section-number">5.2</span> confidence interval 1</a></li>
   <li><a href="#confidence-interval-2" id="toc-confidence-interval-2" class="nav-link" data-scroll-target="#confidence-interval-2"><span class="header-section-number">5.3</span> confidence interval 2</a></li>
+  <li><a href="#the-solution" id="toc-the-solution" class="nav-link" data-scroll-target="#the-solution"><span class="header-section-number">5.4</span> the solution</a></li>
+  <li><a href="#a-few-points-to-stress" id="toc-a-few-points-to-stress" class="nav-link" data-scroll-target="#a-few-points-to-stress"><span class="header-section-number">5.5</span> a few points to stress</a></li>
   </ul>
 </nav>
     </div>
@@ -300,7 +326,7 @@ window.Quarto = {
 </header>
 
 
-<div id="497edcd4" class="cell" data-execution_count="95">
+<div id="497edcd4" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -327,7 +353,7 @@ window.Quarto = {
 </span></p>
 <p>where <span class="math inline">\mu</span> and <span class="math inline">\sigma^2</span> are the population mean and variance, respectively. When talking about samples, we use <span class="math inline">\bar{x}</span> and <span class="math inline">s^2</span> to denote the sample mean and variance.</p>
 <p>Let’s visualize this. The graph below shows how the sample size <span class="math inline">N</span> affects the sampling distribution of the sample mean <span class="math inline">\bar{X}</span>. The higher the sample size, the more concentrated the distribution becomes around the population mean <span class="math inline">\mu</span>. If we take <span class="math inline">N</span> to be infinity, the sampling distribution of the sample mean becomes a delta function at <span class="math inline">\mu</span>, and we will know the exact value of the population mean.</p>
-<div id="65c29bad" class="cell" data-execution_count="96">
+<div id="65c29bad" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>load data</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
@@ -335,7 +361,7 @@ window.Quarto = {
 <span id="cb2-3"><a href="#cb2-3"></a>sigma_boys <span class="op">=</span> df_boys.loc[<span class="fl">7.0</span>, <span class="st">'sigma'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="937e7573" class="cell" data-execution_count="97">
+<div id="937e7573" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>plot pdfs as function of sample size</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
@@ -357,30 +383,31 @@ window.Quarto = {
 <span id="cb3-17"><a href="#cb3-17"></a>    mean_list_100.append(np.mean(norm.rvs(size<span class="op">=</span><span class="dv">100</span>, loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>sigma_boys)))</span>
 <span id="cb3-18"><a href="#cb3-18"></a></span>
 <span id="cb3-19"><a href="#cb3-19"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a>z_alpha_over_two <span class="op">=</span> norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).ppf(<span class="dv">1</span> <span class="op">-</span> alpha <span class="op">/</span> <span class="dv">2</span>)</span>
-<span id="cb3-21"><a href="#cb3-21"></a>z_alpha_over_two <span class="op">=</span> np.<span class="bu">round</span>(z_alpha_over_two, <span class="dv">2</span>)</span>
-<span id="cb3-22"><a href="#cb3-22"></a></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="cf">for</span> i,N <span class="kw">in</span> <span class="bu">enumerate</span>(N_list):</span>
-<span id="cb3-24"><a href="#cb3-24"></a>    SE <span class="op">=</span> sigma_boys <span class="op">/</span> np.sqrt(N)</span>
-<span id="cb3-25"><a href="#cb3-25"></a>    ax[<span class="dv">0</span>].plot(height_list, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).pdf(height_list),</span>
-<span id="cb3-26"><a href="#cb3-26"></a>            color<span class="op">=</span>colors[i], label<span class="op">=</span><span class="ss">f"N=</span><span class="sc">{</span>N<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-27"><a href="#cb3-27"></a>    </span>
-<span id="cb3-28"><a href="#cb3-28"></a>ax[<span class="dv">1</span>].hist(mean_list_10, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>colors[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"N=10"</span>, align<span class="op">=</span><span class="st">'mid'</span>, histtype<span class="op">=</span><span class="st">'step'</span>)</span>
-<span id="cb3-29"><a href="#cb3-29"></a>ax[<span class="dv">1</span>].hist(mean_list_30, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>colors[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"N=10"</span>, align<span class="op">=</span><span class="st">'mid'</span>, histtype<span class="op">=</span><span class="st">'step'</span>)</span>
-<span id="cb3-30"><a href="#cb3-30"></a>ax[<span class="dv">1</span>].hist(mean_list_100, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>colors[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"N=10"</span>, align<span class="op">=</span><span class="st">'mid'</span>, histtype<span class="op">=</span><span class="st">'step'</span>)</span>
-<span id="cb3-31"><a href="#cb3-31"></a></span>
-<span id="cb3-32"><a href="#cb3-32"></a>ax[<span class="dv">1</span>].text(<span class="fl">0.99</span>, <span class="fl">0.98</span>, <span class="st">"number of samples</span><span class="ch">\n</span><span class="st">1000"</span>, ha<span class="op">=</span><span class="st">'right'</span>, va<span class="op">=</span><span class="st">'top'</span>, transform<span class="op">=</span>ax[<span class="dv">1</span>].transAxes, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
-<span id="cb3-33"><a href="#cb3-33"></a></span>
-<span id="cb3-34"><a href="#cb3-34"></a>ax[<span class="dv">0</span>].legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-35"><a href="#cb3-35"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
-<span id="cb3-36"><a href="#cb3-36"></a>       ylabel<span class="op">=</span><span class="st">"pdf"</span>,</span>
-<span id="cb3-37"><a href="#cb3-37"></a>       title<span class="op">=</span><span class="st">"analytical"</span></span>
-<span id="cb3-38"><a href="#cb3-38"></a>       )</span>
-<span id="cb3-39"><a href="#cb3-39"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
-<span id="cb3-40"><a href="#cb3-40"></a>          title<span class="op">=</span><span class="st">"numerical"</span></span>
-<span id="cb3-41"><a href="#cb3-41"></a>          )</span>
-<span id="cb3-42"><a href="#cb3-42"></a><span class="co"># title that hovers over both subplots</span></span>
-<span id="cb3-43"><a href="#cb3-43"></a>fig.suptitle(<span class="ss">f"Distribution of the sample means for 3 different sample sizes"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-20"><a href="#cb3-20"></a></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co"># z_alpha_over_two = norm(loc=mu_boys, scale=SE).ppf(1 - alpha / 2)</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="co"># z_alpha_over_two = np.round(z_alpha_over_two, 2)</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="cf">for</span> i,N <span class="kw">in</span> <span class="bu">enumerate</span>(N_list):</span>
+<span id="cb3-25"><a href="#cb3-25"></a>    SE <span class="op">=</span> sigma_boys <span class="op">/</span> np.sqrt(N)</span>
+<span id="cb3-26"><a href="#cb3-26"></a>    ax[<span class="dv">0</span>].plot(height_list, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).pdf(height_list),</span>
+<span id="cb3-27"><a href="#cb3-27"></a>            color<span class="op">=</span>colors[i], label<span class="op">=</span><span class="ss">f"N=</span><span class="sc">{</span>N<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28"></a>    </span>
+<span id="cb3-29"><a href="#cb3-29"></a>ax[<span class="dv">1</span>].hist(mean_list_10, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>colors[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"N=10"</span>, align<span class="op">=</span><span class="st">'mid'</span>, histtype<span class="op">=</span><span class="st">'step'</span>)</span>
+<span id="cb3-30"><a href="#cb3-30"></a>ax[<span class="dv">1</span>].hist(mean_list_30, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>colors[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"N=10"</span>, align<span class="op">=</span><span class="st">'mid'</span>, histtype<span class="op">=</span><span class="st">'step'</span>)</span>
+<span id="cb3-31"><a href="#cb3-31"></a>ax[<span class="dv">1</span>].hist(mean_list_100, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>colors[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"N=10"</span>, align<span class="op">=</span><span class="st">'mid'</span>, histtype<span class="op">=</span><span class="st">'step'</span>)</span>
+<span id="cb3-32"><a href="#cb3-32"></a></span>
+<span id="cb3-33"><a href="#cb3-33"></a>ax[<span class="dv">1</span>].text(<span class="fl">0.99</span>, <span class="fl">0.98</span>, <span class="st">"number of samples</span><span class="ch">\n</span><span class="st">1000"</span>, ha<span class="op">=</span><span class="st">'right'</span>, va<span class="op">=</span><span class="st">'top'</span>, transform<span class="op">=</span>ax[<span class="dv">1</span>].transAxes, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb3-34"><a href="#cb3-34"></a></span>
+<span id="cb3-35"><a href="#cb3-35"></a>ax[<span class="dv">0</span>].legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-36"><a href="#cb3-36"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
+<span id="cb3-37"><a href="#cb3-37"></a>       ylabel<span class="op">=</span><span class="st">"pdf"</span>,</span>
+<span id="cb3-38"><a href="#cb3-38"></a>       title<span class="op">=</span><span class="st">"analytical"</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a>       )</span>
+<span id="cb3-40"><a href="#cb3-40"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
+<span id="cb3-41"><a href="#cb3-41"></a>          title<span class="op">=</span><span class="st">"numerical"</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a>          )</span>
+<span id="cb3-43"><a href="#cb3-43"></a><span class="co"># title that hovers over both subplots</span></span>
+<span id="cb3-44"><a href="#cb3-44"></a>fig.suptitle(<span class="ss">f"Distribution of the sample means for 3 different sample sizes"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -393,8 +420,8 @@ window.Quarto = {
 </section>
 <section id="confidence-interval-1" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="confidence-interval-1"><span class="header-section-number">5.2</span> confidence interval 1</h2>
-<p>Let’s use now the sample size <span class="math inline">N=30</span>. The confidence interval for a significance level <span class="math inline">\alpha=0.05</span> the the interval that leaves <span class="math inline">\alpha/2</span> of the pdf area in each tail of the distribution.</p>
-<div id="24877c6e" class="cell">
+<p>Let’s use now the sample size <span class="math inline">N=30</span>. The confidence interval for a significance level <span class="math inline">\alpha=0.05</span> is the interval that leaves <span class="math inline">\alpha/2</span> of the pdf area in each tail of the distribution.</p>
+<div id="24877c6e" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
@@ -424,31 +451,22 @@ window.Quarto = {
 <span id="cb4-25"><a href="#cb4-25"></a>               xytext<span class="op">=</span>(z_alpha_over_two_lo, <span class="fl">0.02</span>),</span>
 <span id="cb4-26"><a href="#cb4-26"></a>               arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"&lt;-&gt;"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, color<span class="op">=</span><span class="st">'black'</span>, shrinkA<span class="op">=</span><span class="fl">0.0</span>, shrinkB<span class="op">=</span><span class="fl">0.0</span>),</span>
 <span id="cb4-27"><a href="#cb4-27"></a>               )</span>
-<span id="cb4-28"><a href="#cb4-28"></a></span>
-<span id="cb4-29"><a href="#cb4-29"></a>ax[<span class="dv">1</span>].annotate(<span class="ss">f""</span>,</span>
-<span id="cb4-30"><a href="#cb4-30"></a>               xy<span class="op">=</span>(z_alpha_over_two_hi, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).cdf(z_alpha_over_two_hi)),</span>
-<span id="cb4-31"><a href="#cb4-31"></a>               xytext<span class="op">=</span>(h_max, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).cdf(z_alpha_over_two_hi)),</span>
-<span id="cb4-32"><a href="#cb4-32"></a>               arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"&lt;-"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, color<span class="op">=</span><span class="st">'black'</span>, shrinkA<span class="op">=</span><span class="fl">0.0</span>, shrinkB<span class="op">=</span><span class="fl">0.0</span>),</span>
-<span id="cb4-33"><a href="#cb4-33"></a>               )</span>
-<span id="cb4-34"><a href="#cb4-34"></a>ax[<span class="dv">1</span>].annotate(<span class="ss">f""</span>,</span>
-<span id="cb4-35"><a href="#cb4-35"></a>               xy<span class="op">=</span>(z_alpha_over_two_lo, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).cdf(z_alpha_over_two_lo)),</span>
-<span id="cb4-36"><a href="#cb4-36"></a>               xytext<span class="op">=</span>(h_max, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).cdf(z_alpha_over_two_lo)),</span>
-<span id="cb4-37"><a href="#cb4-37"></a>               arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"&lt;-"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, color<span class="op">=</span><span class="st">'black'</span>, shrinkA<span class="op">=</span><span class="fl">0.0</span>, shrinkB<span class="op">=</span><span class="fl">0.0</span>),</span>
-<span id="cb4-38"><a href="#cb4-38"></a>               )</span>
-<span id="cb4-39"><a href="#cb4-39"></a>ax[<span class="dv">1</span>].text(h_max<span class="op">+</span><span class="fl">0.15</span>, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).cdf(z_alpha_over_two_lo), <span class="vs">r"</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha/2</span><span class="dv">$</span><span class="vs">"</span>,</span>
-<span id="cb4-40"><a href="#cb4-40"></a>           ha<span class="op">=</span><span class="st">"left"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb4-41"><a href="#cb4-41"></a>ax[<span class="dv">1</span>].text(h_max<span class="op">+</span><span class="fl">0.15</span>, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).cdf(z_alpha_over_two_hi), <span class="vs">r"</span><span class="dv">$</span><span class="vs">1-</span><span class="ch">\a</span><span class="vs">lpha/2</span><span class="dv">$</span><span class="vs">"</span>,</span>
-<span id="cb4-42"><a href="#cb4-42"></a>           ha<span class="op">=</span><span class="st">"left"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb4-43"><a href="#cb4-43"></a>ax[<span class="dv">0</span>].text(mu_boys, <span class="fl">0.03</span>, <span class="st">"95</span><span class="sc">% c</span><span class="st">onfidence interval"</span>, ha<span class="op">=</span><span class="st">"center"</span>)</span>
-<span id="cb4-44"><a href="#cb4-44"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.42</span>),</span>
-<span id="cb4-45"><a href="#cb4-45"></a>          ylabel<span class="op">=</span><span class="st">"pdf"</span>,</span>
-<span id="cb4-46"><a href="#cb4-46"></a>          title<span class="op">=</span><span class="vs">r"significance level </span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs"> = 0</span><span class="dv">.</span><span class="vs">05"</span>,</span>
-<span id="cb4-47"><a href="#cb4-47"></a>          )</span>
-<span id="cb4-48"><a href="#cb4-48"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">1.1</span>),</span>
-<span id="cb4-49"><a href="#cb4-49"></a>          xlim<span class="op">=</span>(h_min, h_max),</span>
-<span id="cb4-50"><a href="#cb4-50"></a>          ylabel<span class="op">=</span><span class="st">"cdf"</span>,</span>
-<span id="cb4-51"><a href="#cb4-51"></a>          xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
-<span id="cb4-52"><a href="#cb4-52"></a>          )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-28"><a href="#cb4-28"></a>ax[<span class="dv">1</span>].text(h_max<span class="op">+</span><span class="fl">0.15</span>, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).cdf(z_alpha_over_two_lo), <span class="vs">r"</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha/2</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb4-29"><a href="#cb4-29"></a>           ha<span class="op">=</span><span class="st">"left"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb4-30"><a href="#cb4-30"></a>ax[<span class="dv">1</span>].text(h_max<span class="op">+</span><span class="fl">0.15</span>, norm(loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>SE).cdf(z_alpha_over_two_hi), <span class="vs">r"</span><span class="dv">$</span><span class="vs">1-</span><span class="ch">\a</span><span class="vs">lpha/2</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb4-31"><a href="#cb4-31"></a>           ha<span class="op">=</span><span class="st">"left"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb4-32"><a href="#cb4-32"></a>ax[<span class="dv">1</span>].axhline(alpha<span class="op">/</span><span class="dv">2</span>, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
+<span id="cb4-33"><a href="#cb4-33"></a>ax[<span class="dv">1</span>].axhline(<span class="dv">1</span><span class="op">-</span>alpha<span class="op">/</span><span class="dv">2</span>, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
+<span id="cb4-34"><a href="#cb4-34"></a>ax[<span class="dv">0</span>].text(mu_boys, <span class="fl">0.03</span>, <span class="st">"95</span><span class="sc">% c</span><span class="st">onfidence interval"</span>, ha<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb4-35"><a href="#cb4-35"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.42</span>),</span>
+<span id="cb4-36"><a href="#cb4-36"></a>          ylabel<span class="op">=</span><span class="st">"pdf"</span>,</span>
+<span id="cb4-37"><a href="#cb4-37"></a>          title<span class="op">=</span><span class="vs">r"significance level </span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs"> = 0</span><span class="dv">.</span><span class="vs">05"</span>,</span>
+<span id="cb4-38"><a href="#cb4-38"></a>          )</span>
+<span id="cb4-39"><a href="#cb4-39"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">1.1</span>),</span>
+<span id="cb4-40"><a href="#cb4-40"></a>          xlim<span class="op">=</span>(h_min, h_max),</span>
+<span id="cb4-41"><a href="#cb4-41"></a>          ylabel<span class="op">=</span><span class="st">"cdf"</span>,</span>
+<span id="cb4-42"><a href="#cb4-42"></a>          xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
+<span id="cb4-43"><a href="#cb4-43"></a>          )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -471,7 +489,7 @@ window.Quarto = {
 <p><span class="math display">
 Z = \frac{\bar{x} - \mu}{\sigma/\sqrt{N}} \sim N(0,1).
 </span></p>
-<p>Why is this useful? Because we usually use the same significance level <span class="math inline">\alpha</span> for all confidence intervals, and we can compute the confidence interval for <span class="math inline">Z</span> once and use it for all confidence intervals. For <span class="math inline">Z \sim N(0,1)</span> and <span class="math inline">\alpha=0.05</span>, the top and bottom of the confidence interval are <span class="math inline">Z\_{\alpha/2}=\pm 1.96</span>. Now we only have to invert the expression above to get the confidence interval for <span class="math inline">\bar{X}</span>:</p>
+<p>Why is this useful? Because we usually use the same significance level <span class="math inline">\alpha</span> for all confidence intervals, and we can compute the confidence interval for <span class="math inline">Z</span> once and use it for all confidence intervals. For <span class="math inline">Z \sim N(0,1)</span> and <span class="math inline">\alpha=0.05</span>, the top and bottom of the confidence interval are <span class="math inline">Z_{\alpha/2}=\pm 1.96</span>. Now we only have to invert the expression above to get the confidence interval for <span class="math inline">\bar{X}</span>:</p>
 <p><span class="math display">
 X_{1,2} = \mu \pm Z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{N}}.
 </span></p>
@@ -480,6 +498,62 @@ X_{1,2} = \mu \pm Z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{N}}.
 X_{1,2} = \bar{x} \pm t^*_{N-1} \cdot \frac{s}{\sqrt{N}},
 </span></p>
 <p>where <span class="math inline">t^*_{N-1}</span> is the critical value from the t-distribution with <span class="math inline">N-1</span> degrees of freedom.</p>
+</section>
+<section id="the-solution" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="the-solution"><span class="header-section-number">5.4</span> the solution</h2>
+<p>Let’s say I measured the heights of 30 7-year-old boys, and this is the data I got:</p>
+<div id="304a700f" class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>N <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>np.random.seed(<span class="dv">271</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>sample <span class="op">=</span> norm.rvs(size<span class="op">=</span>N, loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>sigma_boys)</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="bu">print</span>(<span class="ss">f"Sample mean: </span><span class="sc">{</span>np<span class="sc">.</span>mean(sample)<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="bu">print</span>(sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample mean: 122.60 cm
+[114.15972134 128.21581493 122.9864136  117.94247325 132.11013925
+ 118.69131645 123.67695468 112.03152008 121.59853424 114.8629358
+ 121.90458112 115.68839748 127.18043069 118.33193499 125.28525617
+ 124.5287395  120.72706375 113.10575734 132.229147   129.16820684
+ 125.94682095 126.08299475 125.95056303 125.6858065  115.07854075
+ 124.93539918 125.12886271 126.91366971 120.88030405 127.04777082]</code></pre>
+</div>
+</div>
+<p>Using the formula for the confidence interval we get:</p>
+<div id="6139cea5" class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>z_crit <span class="op">=</span> scipy.stats.t.isf(alpha<span class="op">/</span><span class="dv">2</span>, N<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>CI <span class="op">=</span> z_crit <span class="op">*</span> sample.std(ddof<span class="op">=</span><span class="dv">1</span>) <span class="op">/</span> np.sqrt(N)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>CI_low <span class="op">=</span> np.<span class="bu">round</span>(sample.mean() <span class="op">-</span> CI, <span class="dv">2</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>CI_high <span class="op">=</span> np.<span class="bu">round</span>(sample.mean() <span class="op">+</span> CI, <span class="dv">2</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="bu">print</span>(<span class="ss">f"Sample mean: </span><span class="sc">{</span>np<span class="sc">.</span>mean(sample)<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="bu">print</span>(<span class="st">"The 95</span><span class="sc">% c</span><span class="st">onfidence interval is [</span><span class="sc">{}</span><span class="st">, </span><span class="sc">{}</span><span class="st">] cm"</span>.<span class="bu">format</span>(CI_low, CI_high))</span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="bu">print</span>(<span class="ss">f"The true population mean is </span><span class="sc">{</span>mu_boys<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample mean: 122.60 cm
+The 95% confidence interval is [120.54, 124.67] cm
+The true population mean is 121.74 cm</code></pre>
+</div>
+</div>
+</section>
+<section id="a-few-points-to-stress" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="a-few-points-to-stress"><span class="header-section-number">5.5</span> a few points to stress</h2>
+<p>It is worth commenting on a few points:</p>
+<ul>
+<li><p>If we were to sample a great many number of samples of size <span class="math inline">N=30</span>, and compute the confidence interval for each sample, then approximately 95% of these intervals would contain the true population mean <span class="math inline">\mu</span>.</p></li>
+<li><p>It is not true that the probability that the true population mean <span class="math inline">\mu</span> is in the confidence interval is 95%. The true population mean is either in the interval or not, and it does not have a probability associated with it. The 95% confidence level refers to the long-run frequency of intervals containing the true population mean if we were to repeat the sampling process many times. This is the common <em>frequentist</em> interpretation of confidence intervals.</p></li>
+<li><p>If you want to talk about confidence interval in the <em>Bayesian</em> framework, then first we would have to assign a prior distribution to the population mean <span class="math inline">\mu</span>, and then we would compute the posterior distribution of <span class="math inline">\mu</span> given the data. The credible interval is then the interval that contains 95% of the posterior distribution of <span class="math inline">\mu</span>.</p></li>
+<li><p>To sum up the difference between the frequentist and Bayesian interpretations of confidence intervals:</p>
+<ul>
+<li>Frequentist CI: “I am 95% confident in the method” (long-run frequency).</li>
+<li>Bayesian credible interval: “There is a 95% probability that μ lies in this interval” (degree of belief).</li>
+</ul></li>
+</ul>
 
 
 </section>
@@ -942,6 +1016,9 @@ X_{1,2} = \bar{x} \pm t^*_{N-1} \cdot \frac{s}{\sqrt{N}},
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../confidence_interval/empirical_confidence_interval.html" class="pagination-link" aria-label="empirical confidence interval">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
