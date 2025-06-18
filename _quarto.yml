@@ -24,6 +24,12 @@ book:
         - confidence_interval/basic_concepts.ipynb
         - confidence_interval/analytical_confidence_interval.ipynb
         - confidence_interval/empirical_confidence_interval.ipynb
+    - part: "permutation"
+      chapters:
+        - permutation/problem-with-t-test.ipynb
+        - permutation/permutation.ipynb
+        - permutation/numpy-vs-pandas.ipynb
+        - permutation/exact-vs-montecarlo.ipynb
     - part: "svd"
       chapters:
         - svd/widget.ipynb

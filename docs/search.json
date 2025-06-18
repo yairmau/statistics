@@ -208,14 +208,168 @@
     ]
   },
   {
+    "objectID": "permutation/problem-with-t-test.html",
+    "href": "permutation/problem-with-t-test.html",
+    "title": "7  the problem with t-test",
+    "section": "",
+    "text": "7.1 the normality assumption\nLet’s go back to the example of the independent samples t-test.\nWe sampled 10 boys and 14 girls, age 12, and asked:\nWe then went about answering this question by talking about the means of each sample, and if the differences between the means were large enough to be considered significant.\nThe whole machinery behind the t-test is based on the normality assumption.\nTwo possible interpretations come to mind.\nIn the context of the t-test, the above is a distinction without a difference. Even if the population is not normally distributed, the means of the samples will be normally distributed as long as the sample size is large enough. We then use the t-test and go on with our lives.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>the problem with t-test</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/problem-with-t-test.html#the-normality-assumption",
+    "href": "permutation/problem-with-t-test.html#the-normality-assumption",
+    "title": "7  the problem with t-test",
+    "section": "",
+    "text": "The assumption is that the height of men and women in the population is normally distributed. From these idealized populations we draw samples.\nThe t-test effectively compares the difference between the means of the two samples, and the variability within each sample. Because of the Central Limit Theorem, the means of the samples will approach a normal distribution as the sample size increases. In this interpretation, the normality assumption is about the distribution of the means of the samples, and not the distribution of the population.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>the problem with t-test</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/problem-with-t-test.html#other-statistical-tests",
+    "href": "permutation/problem-with-t-test.html#other-statistical-tests",
+    "title": "7  the problem with t-test",
+    "section": "7.2 other statistical tests",
+    "text": "7.2 other statistical tests\nThe Central Limit Theorem dictates that the means will be normally distributed, but it does not apply to other statistics, such as:\n\nthe median\nthe variance\nthe skewness\nthe maximum\nthe Interquartile Range (IQR)\netc.\n\nIn this case, the t-test can’t be relied upon, and we need another solution.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>the problem with t-test</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/permutation.html",
+    "href": "permutation/permutation.html",
+    "title": "8  permutation test",
+    "section": "",
+    "text": "8.1 hypotheses\nWe wish to compare two samples, and see if they significantly differ regarding some statistic of interest (median, mean, etc.). To make things concrete, let’s talk about the heights of 12-year-old boys and girls. Are girls significantly taller than boys?\nThe basic idea behind the permutation test is that, if the null hypothesis is correct, then it wouldn’t matter if we relabelled the samples. If we randomly permute the labels “girls” and “boys” of the two samples, the statistic of interest should not change significantly. However, if by permuting the labels we get a significantly different statistic, then we can reject the null hypothesis.\nThat’s beautiful, right?",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>permutation test</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/permutation.html#hypotheses",
+    "href": "permutation/permutation.html#hypotheses",
+    "title": "8  permutation test",
+    "section": "",
+    "text": "Null hypothesis (H0): The two samples come from the same distribution.\nAlternative hypothesis (H1): Girls are taller than boys.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>permutation test</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/permutation.html#steps",
+    "href": "permutation/permutation.html#steps",
+    "title": "8  permutation test",
+    "section": "8.2 steps",
+    "text": "8.2 steps\n\nCompute the statistic of interest (e.g., the difference in medians) for the original samples.\nRandomly permute the labels of the two samples.\nCompute the statistic of interest for the permuted samples.\nRepeat steps 2 and 3 many times (e.g., 1000 times) to create a distribution of the statistic under the null hypothesis.\nCompare the original statistic to the distribution of permuted statistics to see if it is significantly different (e.g., by checking if it falls in the top 5% of the distribution). From this, we can numerically compute a p-value.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>permutation test</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/permutation.html#example",
+    "href": "permutation/permutation.html#example",
+    "title": "8  permutation test",
+    "section": "8.3 example",
+    "text": "8.3 example\nLet’s use the very same example as in the independent samples t-test.\n\n\nimport libraries\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nsns.set_theme(style=\"ticks\", font_scale=1.5)\nfrom scipy.stats import norm, ttest_ind, t\n# %matplotlib widget\n\n\n\n\nload data\ndf_boys = pd.read_csv('../archive/data/height/boys_height_stats.csv', index_col=0)\ndf_girls = pd.read_csv('../archive/data/height/girls_height_stats.csv', index_col=0)\nage = 12.0\nmu_boys = df_boys.loc[age, 'mu']\nmu_girls = df_girls.loc[age, 'mu']\nsigma_boys = df_boys.loc[age, 'sigma']\nsigma_girls = df_girls.loc[age, 'sigma']\n\n\n\n\ngenerate data\nN_boys = 10\nN_girls = 14\n# set scipy seed for reproducibility\nnp.random.seed(314)\nsample_boys = norm.rvs(size=N_boys, loc=mu_boys, scale=sigma_boys)\nsample_girls = norm.rvs(size=N_girls, loc=mu_girls, scale=sigma_girls)\n\n\n\n\nplot population and sample data\nheight_list = np.arange(120, 180, 0.1)\npdf_boys = norm.pdf(height_list, loc=mu_boys, scale=sigma_boys)\npdf_girls = norm.pdf(height_list, loc=mu_girls, scale=sigma_girls)\nfig, ax = plt.subplots(figsize=(10, 6))\nax.plot(height_list, pdf_boys, lw=4, alpha=0.3, color='tab:blue', label='boys population')\nax.plot(height_list, pdf_girls, lw=4, alpha=0.3, color='tab:orange', label='girls population')\n\nax.eventplot(sample_boys, orientation=\"horizontal\", lineoffsets=0.03,\n             linewidth=1, linelengths= 0.005,\n             colors='tab:blue', label=f'boys sample, n={N_boys}')\nax.eventplot(sample_girls, orientation=\"horizontal\", lineoffsets=0.023,\n             linewidth=1, linelengths= 0.005,\n             colors='tab:orange', label=f'girls sample, n={N_girls}')\nax.legend(frameon=False)\nax.set(xlabel='height (cm)',\n       ylabel='probability density',\n    );\n\n\n\n\n\n\n\n\n\nThe statistic of interest now is the difference in medians between the two samples.\n\n\ncompute the observed difference in medians\n# define the desired statistic.\n# in can be anything you want, you can even write your own function.\nstatistic = np.median\n# compute the median for each sample and the difference\nmedian_girls = statistic(sample_girls)\nmedian_boys = statistic(sample_boys)\nobserved_diff = median_girls - median_boys\nprint(f\"median height for girls: {median_girls:.2f} cm\")\nprint(f\"median height for boys: {median_boys:.2f} cm\")\nprint(f\"median difference (girls minus boys): {observed_diff:.2f} cm\")\n\n\nmedian height for girls: 150.88 cm\nmedian height for boys: 151.19 cm\nmedian difference (girls minus boys): -0.31 cm\n\n\n\nN_permutations = 1000\n# combine all values in one array\nall_data = np.concatenate([sample_girls, sample_boys])\n# create an array to store the differences\ndiffs = np.empty(N_permutations-1)\n\nfor i in range(N_permutations - 1):    # this \"minus 1\" will be explained later\n    # permute the labels\n    permuted = np.random.permutation(all_data)\n    new_girls = permuted[:N_girls]  # first 14 values are girls\n    new_boys = permuted[N_girls:]   # remaining values are boys\n    diffs[i] = statistic(new_girls) - statistic(new_boys)\n# add the observed difference to the array of differences\ndiffs = np.append(diffs, observed_diff)\n\nNow let’s see the empirical cdf of the permuted statistics, and where the original statistic falls in that distribution.\n\n\nplot empirical distribution of differences\nfig, ax = plt.subplots(figsize=(8, 6))\n\n# compute the empirical CDF\nrank = np.arange(len(diffs)) + 1\ncdf = rank / (len(diffs) + 1)\nsorted_diffs = np.sort(diffs)\n\nax.plot(sorted_diffs, cdf, lw=2, color='tab:blue', label='empirical CDF')\nax.axvline(observed_diff, color='tab:orange', lw=2, ls='--',\n           label=f'obs. median diff. = {observed_diff:.2f} cm')\nax.text(observed_diff + 0.5, 0.3, f'observed difference in\\nmedian height: {observed_diff:.2f} cm',\n        color='tab:orange', fontsize=14, ha='left', va='bottom')\n\nalpha = 0.05\n# for a one-tailed test\nax.axhline(1-alpha, color='k', lw=1, ls='--')\nax.annotate(r\"$1-\\alpha$\", xy=(1.01, 1-alpha), xycoords=('axes fraction', 'data'),\n            ha=\"left\", va=\"center\")\n# for a two-tailed test\n# ax.axhline(alpha/2, color='k', lw=1, ls='--')\n# ax.axhline(1-alpha/2, color='k', lw=1, ls='--')\n# ax.annotate(r\"$\\alpha/2$\", xy=(1.01, alpha/2), xycoords=('axes fraction', 'data'),\n#             ha=\"left\", va=\"center\")\n# ax.annotate(r\"$1-\\alpha/2$\", xy=(1.01, 1-alpha/2), xycoords=('axes fraction', 'data'),\n#             ha=\"left\", va=\"center\")\nax.set(xlabel='difference in median height (cm)',\n         ylabel='empirical CDF',\n         title=f'empirical distribution of differences in median height');\n\n\n\n\n\n\n\n\n\nThe observed statistic is well within the boundaries set by the significance level of 5%. Therefore, we cannot reject the null hypothesis. We conclude that, based on this data, the most probable interpretation is that girls and boys have the same underlying distribution.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>permutation test</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/permutation.html#increase-sample-size",
+    "href": "permutation/permutation.html#increase-sample-size",
+    "title": "8  permutation test",
+    "section": "8.4 increase sample size",
+    "text": "8.4 increase sample size\nLet’s increase the sample size to 200 girls and 300 boys.\n\n\nthe whole process in one cell\n# take samples\nN_boys = 300\nN_girls = 200\n# set scipy seed for reproducibility\nnp.random.seed(314)\nsample_boys = norm.rvs(size=N_boys, loc=mu_boys, scale=sigma_boys)\nsample_girls = norm.rvs(size=N_girls, loc=mu_girls, scale=sigma_girls)\n\n# compute the observed difference in medians\nstatistic = np.median\n# compute the median for each sample and the difference\nmedian_girls = statistic(sample_girls)\nmedian_boys = statistic(sample_boys)\nobserved_diff = median_girls - median_boys\n\n# permutation algorithm\nN_permutations = 1000\n# combine all values in one array\nall_data = np.concatenate([sample_girls, sample_boys])\n# create an array to store the differences\ndiffs = np.empty(N_permutations-1)\nfor i in range(N_permutations - 1):    # this \"minus 1\" will be explained later\n    # permute the labels\n    permuted = np.random.permutation(all_data)\n    new_girls = permuted[:N_girls]  # first 200 values are girls\n    new_boys = permuted[N_girls:]   # remaining values are boys\n    diffs[i] = statistic(new_girls) - statistic(new_boys)\n# add the observed difference to the array of differences\ndiffs = np.append(diffs, observed_diff)\n\n\n\n\nplot empirical distribution of differences\nfig, ax = plt.subplots(figsize=(8, 6))\n\n# compute the empirical CDF\nrank = np.arange(len(diffs)) + 1\ncdf = rank / (len(diffs) + 1)\nsorted_diffs = np.sort(diffs)\n\nax.plot(sorted_diffs, cdf, lw=2, color='tab:blue', label='empirical CDF')\nax.axvline(observed_diff, color='tab:orange', lw=2, ls='--',\n           label=f'obs. median diff. = {observed_diff:.2f} cm')\nax.text(observed_diff - 0.05, 0.3, f'observed difference in\\nmedian height: {observed_diff:.2f} cm',\n        color='tab:orange', fontsize=14, ha='right', va='bottom')\n\nalpha = 0.05\n# for a one-tailed test\nax.axhline(1-alpha, color='k', lw=1, ls='--')\nax.annotate(r\"$1-\\alpha$\", xy=(1.01, 1-alpha), xycoords=('axes fraction', 'data'),\n            ha=\"left\", va=\"center\")\n# for a two-tailed test\n# ax.axhline(alpha/2, color='k', lw=1, ls='--')\n# ax.axhline(1-alpha/2, color='k', lw=1, ls='--')\n# ax.annotate(r\"$\\alpha/2$\", xy=(1.01, alpha/2), xycoords=('axes fraction', 'data'),\n#             ha=\"left\", va=\"center\")\n# ax.annotate(r\"$1-\\alpha/2$\", xy=(1.01, 1-alpha/2), xycoords=('axes fraction', 'data'),\n#             ha=\"left\", va=\"center\")\n\nax.set(xlabel='difference in median height (cm)',\n         ylabel='empirical CDF',\n         title=f'empirical distribution of differences in median height');\n\n\n\n\n\n\n\n\n\nNow the observed statistic is well outside the right boundary set by the significance level of 5%. Therefore, we can reject the null hypothesis. We conclude that, based on this data, girls are significantly taller than boys.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>permutation test</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/permutation.html#p-value",
+    "href": "permutation/permutation.html#p-value",
+    "title": "8  permutation test",
+    "section": "8.5 p-value",
+    "text": "8.5 p-value\nIt is quite easy to compute the p-value from the permutation test. It is simply the fraction of permuted statistics that are more extreme than the observed statistic. In this case, since we are testing whether girls are taller than boys, we have a one-tailed test, and we only consider the right tail of the distribution. If we were testing whether girls are significantly different from boys in their height, we would have a two-tailed test, and we would consider both tails of the distribution.\n\n# one-tailed p-value\np_value = np.mean(diffs &gt;= observed_diff)\n# two-tailed p-value\n# p_value = np.mean(np.abs(diffs) &gt;= np.abs(observed_diff))\nprint(f\"observed difference: {observed_diff:.3f}\")\nprint(f\"p-value (one-tailed): {p_value:.4f}\")\n\nobserved difference: 2.004\np-value (one-tailed): 0.0050\n\n\nWe can now address the fact that we ran only 999 permutations, although I intended to run 1000. See in the code that after the permutation algorithm, I inserted the original statistic in the list of permuted statistics. This is because I want to compute the p-value as the fraction of permuted statistics that are more extreme than the original statistic, and I want to include the original statistic in the distribution. If I had not done this, for a truly extreme observed statistic, we would get that the p-value equals 0, that is, the fraction of permuted statistics that are more extreme than the observed statistic is zero. To avoid this behavior, we include the original statistic in the distribution of permuted statistics.\nA corollary of this is that the smallest p-value we can get is 0.001 (for our example with 1000 permutations).",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>permutation test</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/numpy-vs-pandas.html",
+    "href": "permutation/numpy-vs-pandas.html",
+    "title": "9  numpy vs pandas",
+    "section": "",
+    "text": "9.1 numpy\nIn the previous chapter, we computed the permutation test using numpy. We had two samples of different sizes, and before the permutation test we concatenated the two samples into one array. Then we shuffled the concatenated array and split it back into two samples, according to the original sizes. See a sketch of the code below:\nStore the two samples in numpy arrays:\nDefine the statistic and compute the observed difference:\nRun the permutation test:\nAll this works great if this is how your data looks like. Sometimes, however, you have structured data with more information, such as a DataFrame with multiple columns. In this case, you can leverage the capabilities of pandas.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>numpy vs pandas</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/numpy-vs-pandas.html#numpy",
+    "href": "permutation/numpy-vs-pandas.html#numpy",
+    "title": "9  numpy vs pandas",
+    "section": "",
+    "text": "boys = np.array([121, 123, 124, 125])\ngirls = np.array([120, 121, 121, 122, 123, 123, 128, 129])\nN_boys = len(boys)\nN_girls = len(girls)\n\nstatistic = np.median\n# compute the median for each sample and the difference\nmedian_girls = statistic(sample_girls)\nmedian_boys = statistic(sample_boys)\nobserved_diff = median_girls - median_boys\n\nN_permutations = 1000\n# combine all values in one array\nall_data = np.concatenate([sample_girls, sample_boys])\n# create an array to store the differences\ndiffs = np.empty(N_permutations - 1)\n\nfor i in range(N_permutations - 1):    # this \"minus 1\" will be explained later\n    # permute the labels\n    permuted = np.random.permutation(all_data)\n    new_girls = permuted[:N_girls]  # first N_girls values are girls\n    new_boys = permuted[N_girls:]   # remaining values are boys\n    diffs[i] = statistic(new_girls) - statistic(new_boys)\n# add the observed difference to the array of differences\ndiffs = np.append(diffs, observed_diff)",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>numpy vs pandas</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/numpy-vs-pandas.html#pandas",
+    "href": "permutation/numpy-vs-pandas.html#pandas",
+    "title": "9  numpy vs pandas",
+    "section": "9.2 pandas",
+    "text": "9.2 pandas\nLet’s give an example of structured data. Suppose we have a DataFrame with the following columns: sex, height, and weight.\n\n\nimport libraries\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nsns.set_theme(style=\"ticks\", font_scale=1.5)\nfrom scipy.stats import norm, ttest_ind, t\n# %matplotlib widget\n\n\n\nN_total = 20\nnp.random.seed(3)\nheight_list = norm.rvs(size=N_total, loc=150, scale=7)\nweight_list = norm.rvs(size=N_total, loc=42, scale=5)\nsex_list = np.random.choice(['M', 'F'], size=N_total, replace=True)\ndf = pd.DataFrame({\n    'sex': sex_list,\n    'height (cm)': height_list,\n    'weight (kg)': weight_list\n})\ndf\n\n\n\n\n\n\n\n\nsex\nheight (cm)\nweight (kg)\n\n\n\n\n0\nM\n162.520399\n36.074767\n\n\n1\nM\n153.055569\n40.971751\n\n\n2\nM\n150.675482\n49.430742\n\n\n3\nF\n136.955551\n43.183581\n\n\n4\nF\n148.058283\n36.881074\n\n\n5\nM\n147.516687\n38.435034\n\n\n6\nF\n149.420810\n45.126225\n\n\n7\nF\n145.610995\n41.197433\n\n\n8\nF\n149.693273\n38.155818\n\n\n9\nM\n146.659474\n40.849846\n\n\n10\nM\n140.802947\n45.725281\n\n\n11\nF\n156.192357\n51.880554\n\n\n12\nF\n156.169226\n35.779383\n\n\n13\nM\n161.967011\n38.867915\n\n\n14\nF\n150.350235\n37.981170\n\n\n15\nM\n147.167258\n29.904584\n\n\n16\nM\n146.182480\n37.381040\n\n\n17\nM\n139.174659\n36.880621\n\n\n18\nM\n156.876572\n47.619890\n\n\n19\nM\n142.292527\n41.340429\n\n\n\n\n\n\n\nCalculate sample statistics using groupby:\n\nsample_stats = df.groupby('sex')['height (cm)'].median()\nobserved_diff = sample_stats['F'] - sample_stats['M']\n\nWe can now leverage the pandas.DataFrame.sample method to sample from the DataFrame. Here, we use the following options:\n\nfrac=1 means we want to sample 100% of rows, but shuffled.\nreplace=False means we want to sample without replacement, that is, no duplicate rows.\n\nWe will shuffle the sex column and store the result in a new column called sex_shuffled. Then we can use groupby to compute the median.\n\nN_permutations = 1000\ndiffs = np.empty(N_permutations - 1)\nfor i in range(N_permutations - 1):\n    # shuffle dataframe 'sex' colunn, store it in 'sex_shuffled'\n    df['sex_shuffled'] = df['sex'].sample(frac=1, replace=False).reset_index(drop=True)\n    shuffled_stats = df.groupby('sex_shuffled')['height (cm)'].median()\n    diffs[i] = shuffled_stats['F'] - shuffled_stats['M']  # median(F) - median(M)\n# add the observed difference to the array of differences\ndiffs = np.append(diffs, observed_diff)",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>numpy vs pandas</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/exact-vs-montecarlo.html",
+    "href": "permutation/exact-vs-montecarlo.html",
+    "title": "10  exact vs. Monte Carlo permutation tests",
+    "section": "",
+    "text": "10.1 Monte Carlo permutation tests\nThe permutation tests from before do not sample from the full distribution of the test statistic under the null hypothesis. This would be imppractical if the total number of permutations is large, as it would require computing the test statistic for every possible permutation of the data.\nFor example, if we have 10 boys and 14 girls, the total number of permutations is almost two million:\n\\binom{24}{14} = \\frac{24!}{14!\\cdot(24-14)!} = 1961256\nThe expression above is the binomial coefficient, which counts the number of ways to choose 14 samples from a total of 24, without regard to the order of selection. This is why we say “24 choose 14” to refer to the parenthesis above.\nThere is no preference in “24 choose 14” over “24 choose 10”, as both expressions yield the same result. You can verify this on your own.\nMonte Carlo methods are a class of computational algorithms that rely on repeated random sampling to obtain numerical results. In the context of permutation tests, Monte Carlo methods do not compute the test statistic for every possible permutation of the data. In the examples from before, we computed 1000 permutations only, and from that we estimated the p-value of the test statistic. If we had run the test more than once, we would have obtained a different p-value each time, as the test statistic is computed from a random sample of permutations.\nInstead, they sample from a subset of the distribution, which is why they are called Monte Carlo permutation tests. The exact option in the permutation_test() function will sample from the full distribution, but it is computationally expensive and can take a long time to run.\nimport libraries\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nsns.set_theme(style=\"ticks\", font_scale=1.5)\nfrom scipy.stats import norm, ttest_ind, t\n# %matplotlib widget\nload data\ndf_boys = pd.read_csv('../archive/data/height/boys_height_stats.csv', index_col=0)\ndf_girls = pd.read_csv('../archive/data/height/girls_height_stats.csv', index_col=0)\nage = 12.0\nmu_boys = df_boys.loc[age, 'mu']\nmu_girls = df_girls.loc[age, 'mu']\nsigma_boys = df_boys.loc[age, 'sigma']\nsigma_girls = df_girls.loc[age, 'sigma']\ngenerate data\nN_boys = 10\nN_girls = 14\n# set scipy seed for reproducibility\nnp.random.seed(314)\nsample_boys = norm.rvs(size=N_boys, loc=mu_boys, scale=sigma_boys)\nsample_girls = norm.rvs(size=N_girls, loc=mu_girls, scale=sigma_girls)\ncompute the observed difference in medians\n# define the desired statistic.\n# in can be anything you want, you can even write your own function.\nstatistic = np.median\n# compute the median for each sample and the difference\nmedian_girls = statistic(sample_girls)\nmedian_boys = statistic(sample_boys)\nobserved_diff = median_girls - median_boys\nMonte Carlo permutation test 1\nN_permutations = 1000\n# combine all values in one array\nall_data = np.concatenate([sample_girls, sample_boys])\n# create an array to store the differences\ndiffs = np.empty(N_permutations-1)\n\nfor i in range(N_permutations - 1):    # this \"minus 1\" will be explained later\n    # permute the labels\n    permuted = np.random.permutation(all_data)\n    new_girls = permuted[:N_girls]  # first 14 values are girls\n    new_boys = permuted[N_girls:]   # remaining values are boys\n    diffs[i] = statistic(new_girls) - statistic(new_boys)\n# add the observed difference to the array of differences\ndiffs = np.append(diffs, observed_diff)\n\np_value = np.mean(diffs &gt;= observed_diff)\n# two-tailed p-value\n# p_value = np.mean(np.abs(diffs) &gt;= np.abs(observed_diff))\nprint(\"Monte Carlo permutation test 1\")\nprint(f\"observed difference: {observed_diff:.3f}\")\nprint(f\"p-value (one-tailed): {p_value:.4f}\")\n\n\nMonte Carlo permutation test 1\nobserved difference: -0.314\np-value (one-tailed): 0.5450\nMonte Carlo permutation test 2\nN_permutations = 1000\n# combine all values in one array\nall_data = np.concatenate([sample_girls, sample_boys])\n# create an array to store the differences\ndiffs = np.empty(N_permutations-1)\n\nfor i in range(N_permutations - 1):    # this \"minus 1\" will be explained later\n    # permute the labels\n    permuted = np.random.permutation(all_data)\n    new_girls = permuted[:N_girls]  # first 14 values are girls\n    new_boys = permuted[N_girls:]   # remaining values are boys\n    diffs[i] = statistic(new_girls) - statistic(new_boys)\n# add the observed difference to the array of differences\ndiffs = np.append(diffs, observed_diff)\n\np_value = np.mean(diffs &gt;= observed_diff)\n# two-tailed p-value\n# p_value = np.mean(np.abs(diffs) &gt;= np.abs(observed_diff))\nprint(\"Monte Carlo permutation test 2\")\nprint(f\"observed difference: {observed_diff:.3f}\")\nprint(f\"p-value (one-tailed): {p_value:.4f}\")\n\n\nMonte Carlo permutation test 2\nobserved difference: -0.314\np-value (one-tailed): 0.5340\nAs you can see, the p-value in not exactly the same, but the difference is negligible. This is because both times we sampled 1000 permutations that are representative of the full distribution of the test statistic under the null hypothesis.\nOne more thing. The example above with 10 boys and 14 girls is usually considered small. It is often the case that one has a lot more samples, and the number of permutations can be astronomically large, much much larger than two million.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>exact vs. Monte Carlo permutation tests</span>"
+    ]
+  },
+  {
+    "objectID": "permutation/exact-vs-montecarlo.html#exact-permutation-test",
+    "href": "permutation/exact-vs-montecarlo.html#exact-permutation-test",
+    "title": "10  exact vs. Monte Carlo permutation tests",
+    "section": "10.2 exact permutation test",
+    "text": "10.2 exact permutation test\nIf the total number of permutations is small, we can compute the exact p-value by sampling from the full distribution of the test statistic under the null hypothesis. That is to say, we compute the test statistic for every possible permutation of the data.\nIf we had height measurements of 7 boys and 6 girls, the total number of permutations is:\n\n\\binom{13}{7} = 1716\n\nAny computer can easily handle this number of permutations. How to do it in practice? We will use the itertools.combinations function.\n\n\nShow the code\nimport numpy as np\nfrom itertools import combinations\n\n#| code-summary: \"generate data\"\nN_girls = 6\nN_boys = 7\n# set scipy seed for reproducibility\nnp.random.seed(314)\nsample_girls = norm.rvs(size=N_girls, loc=mu_girls, scale=sigma_girls)\nsample_boys = norm.rvs(size=N_boys, loc=mu_boys, scale=sigma_boys)\n\ncombined = np.concatenate([sample_girls, sample_boys])\nn_total = len(combined)\n\n# observed difference in means\nobserved_diff = np.median(sample_girls) - np.median(sample_boys)\n\n# generate all combinations of indices for group \"girls\"\nindices = np.arange(n_total)\nall_combos = list(combinations(indices, N_girls))\n\n# compute all permutations\ndiffs = []\nfor idx_a in all_combos:\n    mask = np.zeros(n_total, dtype=bool)\n    mask[list(idx_a)] = True\n    sample_g = combined[mask]\n    sample_b = combined[~mask]\n    diffs.append(np.median(sample_g) - np.median(sample_b))\n\ndiffs = np.array(diffs)\n\n# exact one-tailed p-value\np_value = np.mean(diffs &gt;= observed_diff)\nprint(f\"Observed difference: {observed_diff:.3f} cm\")\nprint(f\"Exact p-value (one-tailed): {p_value:.4f}\")\nprint(f\"Total permutations: {len(diffs)}\")\n\n\nObserved difference: 7.620 cm\nExact p-value (one-tailed): 0.0944\nTotal permutations: 1716\n\n\nAttention!\nIf you read the documentation of the itertools library, you might be tempted to use itertools.permutations instead of itertools.combinations.\nDon’t do that.\nAlthough we are conductiong a permutation test, we are not interested in the order of the samples, and that is what the permutations cares about. For instance, if we have 10 people called\n[Alice, Bob, Charlie, David, Eve, Frank, Grace, Heidi, Ivan, Judy]\nand we want to randomly assign the label “girl” to 4 of them, we do not care about the order in which we assign the labels. We just want to know which 4 people are assigned the label “girl”. The permutation function does care about the order, and that is why we should not use it. Instead, we use the combinations function, which return all possible combinations of the data, without regard to the order of selection.",
+    "crumbs": [
+      "permutation",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>exact vs. Monte Carlo permutation tests</span>"
+    ]
+  },
+  {
     "objectID": "svd/widget.html",
     "href": "svd/widget.html",
-    "title": "7  svd",
+    "title": "11  svd",
     "section": "",
     "text": "import libraries\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nsns.set_theme(style=\"ticks\", font_scale=1.5)\nfrom scipy.stats import norm, ttest_ind, t\nimport scipy\nfrom mpl_toolkits.mplot3d import Axes3D\nfrom matplotlib.animation import FuncAnimation, FFMpegWriter\n%load_ext manim\n\nimport os\n%matplotlib widget\n\n\nThe manim module is not an IPython extension.\n\n\n\n\nShow the code\nfig, ax = plt.subplots(figsize=(8, 6))\nx = np.array([1, 2, 3])\ny = np.array([2, 2, 6])\nintercept = np.ones_like(x)\n\n# linear regression\nslope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)\n# plot the regression line\nax.plot(x, intercept + slope * x, color='tab:orange', label='Regression Line')\n\nax.plot(x, y, marker='o', linestyle='None', color='tab:blue')\nax.set(xlim=(0, 4),\n       ylim=(0, 7),\n       xticks=np.arange(0, 5, 1),\n       yticks=np.arange(0, 9, 1),\n       xlabel='X-axis',\n       ylabel='Y-axis');\n\n\n\n\n\n\n\nShow the code\nintercept, slope\n\n\n(np.float64(-0.6666666666666665), np.float64(2.0))",
     "crumbs": [
       "svd",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>svd</span>"
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>svd</span>"
     ]
   }
 ]
