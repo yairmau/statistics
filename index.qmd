@@ -8,7 +8,7 @@ These are the books that I've read and recommend.
 
 ![](/archive/images/modern_statistics_mike_x_cohen.jpg){height=300px}  
 Modern Statistics: Intuition, Math, Python, R  
-by Mike X Cohen
+by Mike X Cohen  
 [Github](https://github.com/mikexcohen/statistics_book)
 
 ---

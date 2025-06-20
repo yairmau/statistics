@@ -335,6 +335,7 @@ window.Quarto = {
   <li><a href="#higher-dimensions" id="toc-higher-dimensions" class="nav-link" data-scroll-target="#higher-dimensions"><span class="header-section-number">11.3</span> higher dimensions</a></li>
   <li><a href="#overdetermined-system" id="toc-overdetermined-system" class="nav-link" data-scroll-target="#overdetermined-system"><span class="header-section-number">11.4</span> overdetermined system</a></li>
   <li><a href="#least-squares" id="toc-least-squares" class="nav-link" data-scroll-target="#least-squares"><span class="header-section-number">11.5</span> least squares</a></li>
+  <li><a href="#many-more-dimensions" id="toc-many-more-dimensions" class="nav-link" data-scroll-target="#many-more-dimensions"><span class="header-section-number">11.6</span> many more dimensions</a></li>
   </ul>
 </nav>
     </div>
@@ -435,7 +436,7 @@ y=
 </section>
 <section id="higher-dimensions" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="higher-dimensions"><span class="header-section-number">11.3</span> higher dimensions</h2>
-<p>It is very informative to think about this problem not as a scatter plot in the <span class="math inline">X-Y</span> plane, but as taking place in a higher-dimensional space. Because we have three data points, we can think of the problem in a three-dimensional space. We want to explain the vector <span class="math inline">y</span> as a linear combination of the vector <span class="math inline">x</span> and a constant vector (this is what out linear model states).</p>
+<p>It is very informative to think about this problem not as a scatter plot in the <span class="math inline">X-Y</span> plane, but as taking place in a higher-dimensional space. Because we have three data points, we can think of the problem in a three-dimensional space. We want to explain the vector <span class="math inline">y</span> as a linear combination of the vector <span class="math inline">x</span> and a constant vector (this is what our linear model states).</p>
 <p>In three dimensions, our building blocks are the vectors <span class="math inline">c</span>, the intercept, and <span class="math inline">x</span>, the data points.</p>
 <p><span class="math display">
 c=
@@ -447,7 +448,7 @@ x=
 1 \\ 2 \\ 3
 \end{pmatrix}.
 </span></p>
-<p>We can combine these two vectors in a matrix called <strong>design matrix</strong>:</p>
+<p>We can combine these <span class="math inline">c</span> and <span class="math inline">x</span> as column vectors in a matrix called <strong>design matrix</strong>:</p>
 <p><span class="math display">
 X=
 \begin{pmatrix}
@@ -490,16 +491,17 @@ X=
 </span></p>
 <p>In short, the linear combination of our two building blocks yields a prediction vector <span class="math inline">\tilde{y}</span>:</p>
 <p><span class="math display">
-\tilde{y} = X \beta
+\tilde{y} = X \beta,
 </span></p>
-<p>This prediction vector <span class="math inline">\tilde{y}</span> lies on a plane in the 3d space, it cannot be anywhere. Mathematically, we say that the vector <span class="math inline">\tilde{y}</span> is in the subspace spanned by the columns of the design matrix <span class="math inline">X</span>.</p>
+<p>where <span class="math inline">\beta</span> is the column vector <span class="math inline">(\beta_0, \beta1)^T</span>.</p>
+<p>This prediction vector <span class="math inline">\tilde{y}</span> lies on a plane in the 3d space, it cannot be anywhere in this 3d space. Mathematically, we say that the vector <span class="math inline">\tilde{y}</span> is in the subspace spanned by the columns of the design matrix <span class="math inline">X</span>.</p>
 <p>It will be extremely improbable that the vector <span class="math inline">y</span> will also lie on this plane, so we will have to find the best prediction <span class="math inline">\tilde{y}</span> that lies on this plane. Geometrically, our goal is to find the point <span class="math inline">\tilde{y}</span> on the plane that is <strong>closest</strong> to the point <span class="math inline">y</span> in the 3d space.</p>
 <ul>
 <li>When the distance <span class="math inline">r=y-\tilde{y}</span> is minimized, the vector <span class="math inline">r</span> is orthogonal to the plane spanned by the columns of the design matrix <span class="math inline">X</span>.</li>
 <li>We call this vector <span class="math inline">r</span> the <strong>residual vector</strong>.</li>
-<li>The residual is orthogonal to the columns of <span class="math inline">X</span>, that is, <span class="math inline">c\cdot r=0</span> and <span class="math inline">x\cdot r=0</span>.</li>
+<li>The residual is orthogonal to each of the columns of <span class="math inline">X</span>, that is, <span class="math inline">c\cdot r=0</span> and <span class="math inline">x\cdot r=0</span>.</li>
 </ul>
-<p>I tried to summarize all the above in the 3d image below:</p>
+<p>I tried to summarize all the above in the 3d image below. This is, for me, the <em>geometry of regression</em>. If you have that in your head, you’ll never forget it.</p>
 <iframe src="https://www.geogebra.org/3d/yjsuhu96?embed" width="800" height="600" allowfullscreen="" style="border: 1px solid #e4e4e4;border-radius: 4px;" frameborder="0">
 </iframe>
 <p>Taking advantage of the matrix notation, we can express the orthogonality condition as follows:</p>
@@ -511,32 +513,35 @@ X=
 X^T r =
 0
 </span></p>
-<p>Let’s substitute <span class="math inline">r = y - \tilde{y} = y - X\beta</span> into the above equation:</p>
+<p>Let’s substitute <span class="math inline">r = y - \tilde{y} = y - X\beta</span> into the equation above.</p>
 <p><span class="math display">
 X^T(y - X\beta) = 0
 </span></p>
-<p>Distributing yields:</p>
+<p>Distributing yields</p>
 <p><span class="math display">
-X^Ty - X^TX\beta = 0
+X^Ty - X^TX\beta = 0,
 </span></p>
 <p>and then</p>
 <p><span class="math display">
-X^TX\beta = X^Ty
+X^TX\beta = X^Ty.
 </span></p>
-<p>We need to solve this equation for <span class="math inline">\beta</span>:</p>
+<p>We need to solve this equation for <span class="math inline">\beta</span>, so we left-multiply both sides by the inverse of <span class="math inline">X^TX</span>,</p>
 <p><span class="math display">
-\beta = (X^TX)^{-1}X^Ty
+\beta = (X^TX)^{-1}X^Ty.
 </span></p>
 <p>That’s it. We’ve done it. Given the data points <span class="math inline">x</span> and <span class="math inline">y</span>, we can compute the parameters <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span> that bring <span class="math inline">\tilde{y}</span> as close as possible to <span class="math inline">y</span>. These parameters are the best fit of the straight line to the data points.</p>
 </section>
 <section id="overdetermined-system" class="level2" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="overdetermined-system"><span class="header-section-number">11.4</span> overdetermined system</h2>
-<p>The <em>design matrix</em> <span class="math inline">X</span> is a tall and skinny matrix, meaning that it has more rows (<span class="math inline">n</span>) than columns (<span class="math inline">m</span>). This is called an <strong>overdetermined system</strong>, because we have more equations (rows) than unknowns (columns), so we have no hope in finding an exact solution $.</p>
+<p>The <em>design matrix</em> <span class="math inline">X</span> is a tall and skinny matrix, meaning that it has more rows (<span class="math inline">n</span>) than columns (<span class="math inline">m</span>). This is called an <strong>overdetermined system</strong>, because we have more equations (rows) than unknowns (columns), so we have no hope in finding an exact solution <span class="math inline">\beta</span>.</p>
 <p>This is to say that, almost certainly, the vector <span class="math inline">y</span> does not lie on the plane spanned by the columns of the design matrix <span class="math inline">X</span>. No combination of the parameters <span class="math inline">\beta</span> will yield a vector <span class="math inline">\tilde{y}</span> that is exactly equal to <span class="math inline">y</span>.</p>
 </section>
 <section id="least-squares" class="level2" data-number="11.5">
 <h2 data-number="11.5" class="anchored" data-anchor-id="least-squares"><span class="header-section-number">11.5</span> least squares</h2>
-<p>The method above for finding the best parameters <span class="math inline">\beta</span> is called <strong>least squares</strong>. The name comes from the fact that we are trying to minimize the length of the residual vector <span class="math inline">r = y - \tilde{y}</span>.</p>
+<p>The method above for finding the best parameters <span class="math inline">\beta</span> is called <strong>least squares</strong>. The name comes from the fact that we are trying to minimize the length of the residual vector</p>
+<p><span class="math display">
+r = y - \tilde{y}.
+</span></p>
 <p>The length of the residual is given by the Euclidean norm (or <span class="math inline">L^2</span> norm), which is a direct generalization of the Pythagorean theorem for many dimensions.</p>
 <p><span class="math display">\begin{align}
 \Vert r\Vert^2 &amp;= \Vert y - \tilde{y}\Vert^2  \\
@@ -578,6 +583,14 @@ X^TX\beta = X^Ty
 </div>
 </div>
 </div>
+</section>
+<section id="many-more-dimensions" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="many-more-dimensions"><span class="header-section-number">11.6</span> many more dimensions</h2>
+<p>The concrete example here dealt with only three data points, therefore we could visualize the problem in a three-dimensional space. However, the same reasoning applies to any number of data points and any number of independent variables.</p>
+<ul>
+<li><strong>any number of data points</strong>: we call the number of data points <span class="math inline">n</span>, and that makes <span class="math inline">y</span> be a vector in an <span class="math inline">n</span>-dimensional space.</li>
+<li><strong>any number of independent variables</strong>: we calculated a regression for a straight line, and thus we had only two building blocks, the intercept <span class="math inline">c</span> and the independent variable <span class="math inline">x</span>. However, we can have any number of independent variables, say <span class="math inline">m</span> of them. For example, we might want to predict the data using a polynomial of degree <span class="math inline">m</span>, or we might have any arbitrary <span class="math inline">m</span> functions that we wish to use: <span class="math inline">\exp(x)</span>, <span class="math inline">\tanh(x^2)</span>, whatever we want. All this will work as long as the parameters <span class="math inline">\beta</span> multibly these building blocks. That’s the topic of the next chapter.</li>
+</ul>
 
 
 </section>
