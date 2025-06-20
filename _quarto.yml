@@ -3,12 +3,12 @@ project:
   output-dir: docs
 
 book:
-  title: "Statistics"
+  title: "Statistics and Machine Learning"
   author: "Yair Mau"
   repo-url: https://github.com/yairmau/statistics/
   favicon: archive/logo.png
 
-  date: "29.3.2025"
+  # date: "29.3.2025"
   chapters:
     - index.qmd
     - part: "data"
@@ -30,9 +30,9 @@ book:
         - permutation/permutation.ipynb
         - permutation/numpy-vs-pandas.ipynb
         - permutation/exact-vs-montecarlo.ipynb
-    - part: "svd"
+    - part: "regression"
       chapters:
-        - svd/widget.ipynb
+        - regression/geometry-of-regression.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2

@@ -1,3 +1,20 @@
-# Preface {.unnumbered}
+# home {.unnumbered}
 
-I read Mike X Cohen's excellent book "Modern Statistics", and now it's time to practice.
+I'm teaching myself statistics and machine learning, and the best way to truly understand is to use the new tools I've acquired. This is what this website is for. It is mainly a reference guide for my future self.
+
+## books
+
+These are the books that I've read and recommend.
+
+![](/archive/images/modern_statistics_mike_x_cohen.jpg){height=300px}  
+Modern Statistics: Intuition, Math, Python, R  
+by Mike X Cohen
+[Github](https://github.com/mikexcohen/statistics_book)
+
+---
+
+![](/archive/images/data-driven-brunton-kutz.jpg){height=300px}  
+
+Data-Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control  
+by Steven L. Brunton, J. Nathan Kutz
+The whole book is available in this [website](https://www.databookuw.com/).

@@ -2,11 +2,21 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Statistics",
+    "title": "Statistics and Machine Learning",
     "section": "",
-    "text": "Preface\nI read Mike X Cohen’s excellent book “Modern Statistics”, and now it’s time to practice.",
+    "text": "home\nI’m teaching myself statistics and machine learning, and the best way to truly understand is to use the new tools I’ve acquired. This is what this website is for. It is mainly a reference guide for my future self.",
     "crumbs": [
-      "Preface"
+      "home"
+    ]
+  },
+  {
+    "objectID": "index.html#books",
+    "href": "index.html#books",
+    "title": "Statistics and Machine Learning",
+    "section": "books",
+    "text": "books\nThese are the books that I’ve read and recommend.\n\nModern Statistics: Intuition, Math, Python, R\nby Mike X Cohen Github\n\n\nData-Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control\nby Steven L. Brunton, J. Nathan Kutz The whole book is available in this website.",
+    "crumbs": [
+      "home"
     ]
   },
   {
@@ -362,14 +372,58 @@
     ]
   },
   {
-    "objectID": "svd/widget.html",
-    "href": "svd/widget.html",
-    "title": "11  svd",
+    "objectID": "regression/geometry-of-regression.html",
+    "href": "regression/geometry-of-regression.html",
+    "title": "11  the geometry of regression",
     "section": "",
-    "text": "import libraries\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nsns.set_theme(style=\"ticks\", font_scale=1.5)\nfrom scipy.stats import norm, ttest_ind, t\nimport scipy\nfrom mpl_toolkits.mplot3d import Axes3D\nfrom matplotlib.animation import FuncAnimation, FFMpegWriter\n%load_ext manim\n\nimport os\n%matplotlib widget\n\n\nThe manim module is not an IPython extension.\n\n\n\n\nShow the code\nfig, ax = plt.subplots(figsize=(8, 6))\nx = np.array([1, 2, 3])\ny = np.array([2, 2, 6])\nintercept = np.ones_like(x)\n\n# linear regression\nslope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)\n# plot the regression line\nax.plot(x, intercept + slope * x, color='tab:orange', label='Regression Line')\n\nax.plot(x, y, marker='o', linestyle='None', color='tab:blue')\nax.set(xlim=(0, 4),\n       ylim=(0, 7),\n       xticks=np.arange(0, 5, 1),\n       yticks=np.arange(0, 9, 1),\n       xlabel='X-axis',\n       ylabel='Y-axis');\n\n\n\n\n\n\n\nShow the code\nintercept, slope\n\n\n(np.float64(-0.6666666666666665), np.float64(2.0))",
+    "text": "11.1 a very simple example\nIt’s almost always best to start with a simple and concrete example.\nGoal: We wish to find the best straight line that describes the following data points:\nimport libraries\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nsns.set_theme(style=\"ticks\", font_scale=1.5)\nimport scipy\n\n# %matplotlib widget\ndefine and plot the simple problem\nx = np.array([1, 2, 3])\ny = np.array([2, 2, 6])\n\nfig, ax = plt.subplots(figsize=(8, 6))\n\nax.scatter(x, y, label='data', facecolors='black', edgecolors='black')\n# linear regression\nslope, intercept, r_value, p_value, std_err = scipy.stats.linregress(x, y)\nx_domain = np.linspace(0, 4, 101)\nax.plot(x_domain, intercept + slope * x_domain, color='black', label='best line')\n\nax.legend(loc='upper left', fontsize=14, frameon=False)\nax.set(xlim=(0, 4),\n       ylim=(0, 7),\n       xticks=np.arange(0, 5, 1),\n       yticks=np.arange(0, 9, 1),\n       xlabel='X-axis',\n       ylabel='Y-axis');",
     "crumbs": [
-      "svd",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>svd</span>"
+      "regression",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>the geometry of regression</span>"
+    ]
+  },
+  {
+    "objectID": "regression/geometry-of-regression.html#formalizing-the-problem",
+    "href": "regression/geometry-of-regression.html#formalizing-the-problem",
+    "title": "11  the geometry of regression",
+    "section": "11.2 formalizing the problem",
+    "text": "11.2 formalizing the problem\nLet’s translate this problem into the language of linear algebra.\nThe independent variable x is the column vector\n\nx=\n\\begin{pmatrix}\n1 \\\\ 2 \\\\ 3\n\\end{pmatrix}\n\nand the dependent variable y is the column vector\n\ny=\n\\begin{pmatrix}\n2 \\\\ 2 \\\\ 6\n\\end{pmatrix}.\n\nBecause we are looking for a straight line, we can express the relationship between x and y as\n\n\\tilde{y} = \\beta_0 + \\beta_1 x.\n\nHere we introduced the notation \\tilde{y} to denote the predicted values of y based on the linear model. It is different from the actual values of y because the straight line usually does not pass exactly on top of y.\nThe parameter \\beta_0 is the intercept and \\beta_1 is the slope of the line.\nWhich values of \\beta_0,\\beta_1 will give us the very best line?",
+    "crumbs": [
+      "regression",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>the geometry of regression</span>"
+    ]
+  },
+  {
+    "objectID": "regression/geometry-of-regression.html#higher-dimensions",
+    "href": "regression/geometry-of-regression.html#higher-dimensions",
+    "title": "11  the geometry of regression",
+    "section": "11.3 higher dimensions",
+    "text": "11.3 higher dimensions\nIt is very informative to think about this problem not as a scatter plot in the X-Y plane, but as taking place in a higher-dimensional space. Because we have three data points, we can think of the problem in a three-dimensional space. We want to explain the vector y as a linear combination of the vector x and a constant vector (this is what out linear model states).\nIn three dimensions, our building blocks are the vectors c, the intercept, and x, the data points.\n\nc=\n\\begin{pmatrix}\n1 \\\\ 1 \\\\ 1\n\\end{pmatrix}, \\qquad\nx=\n\\begin{pmatrix}\n1 \\\\ 2 \\\\ 3\n\\end{pmatrix}.\n\nWe can combine these two vectors in a matrix called design matrix:\n\nX=\n\\begin{pmatrix}\n1 & x_0 \\\\\n| & | \\\\\n1 & x_i \\\\\n| & | \\\\\n1 & x_n\n\\end{pmatrix}\n=\n\\begin{pmatrix}\n| & | \\\\\n1 & x \\\\\n| & |\n\\end{pmatrix}\n\nWhy is this convenient? Because now the linear combination of c and x can be expressed as a matrix multiplication:\n\n\\begin{pmatrix}\n\\tilde{y}_0 \\\\\n\\tilde{y}_1 \\\\\n\\tilde{y}_2\n\\end{pmatrix}\n=\n\\begin{pmatrix}\n1 & x_0 \\\\\n1 & x_1 \\\\\n1 & x_2 \\\\\n\\end{pmatrix}\n\\begin{pmatrix}\n\\beta_0 \\\\\n\\beta_1\n\\end{pmatrix}\n=\n\\begin{pmatrix}\n1\\cdot\\beta_0 + x_0\\cdot\\beta_1 \\\\\n1\\cdot\\beta_0 + x_1\\cdot\\beta_1 \\\\\n1\\cdot\\beta_0 + x_2\\cdot\\beta_1\n\\end{pmatrix}\n\nIn short, the linear combination of our two building blocks yields a prediction vector \\tilde{y}:\n\n\\tilde{y} = X \\beta\n\nThis prediction vector \\tilde{y} lies on a plane in the 3d space, it cannot be anywhere. Mathematically, we say that the vector \\tilde{y} is in the subspace spanned by the columns of the design matrix X.\nIt will be extremely improbable that the vector y will also lie on this plane, so we will have to find the best prediction \\tilde{y} that lies on this plane. Geometrically, our goal is to find the point \\tilde{y} on the plane that is closest to the point y in the 3d space.\n\nWhen the distance r=y-\\tilde{y} is minimized, the vector r is orthogonal to the plane spanned by the columns of the design matrix X.\nWe call this vector r the residual vector.\nThe residual is orthogonal to the columns of X, that is, c\\cdot r=0 and x\\cdot r=0.\n\nI tried to summarize all the above in the 3d image below:\n\n\nTaking advantage of the matrix notation, we can express the orthogonality condition as follows:\n\n\\begin{pmatrix}\n- & c & - \\\\\n- & x & -\n\\end{pmatrix} r =\nX^T r =\n0\n\nLet’s substitute r = y - \\tilde{y} = y - X\\beta into the above equation:\n\nX^T(y - X\\beta) = 0\n\nDistributing yields:\n\nX^Ty - X^TX\\beta = 0\n\nand then\n\nX^TX\\beta = X^Ty\n\nWe need to solve this equation for \\beta:\n\n\\beta = (X^TX)^{-1}X^Ty\n\nThat’s it. We’ve done it. Given the data points x and y, we can compute the parameters \\beta_0 and \\beta_1 that bring \\tilde{y} as close as possible to y. These parameters are the best fit of the straight line to the data points.",
+    "crumbs": [
+      "regression",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>the geometry of regression</span>"
+    ]
+  },
+  {
+    "objectID": "regression/geometry-of-regression.html#overdetermined-system",
+    "href": "regression/geometry-of-regression.html#overdetermined-system",
+    "title": "11  the geometry of regression",
+    "section": "11.4 overdetermined system",
+    "text": "11.4 overdetermined system\nThe design matrix X is a tall and skinny matrix, meaning that it has more rows (n) than columns (m). This is called an overdetermined system, because we have more equations (rows) than unknowns (columns), so we have no hope in finding an exact solution $.\nThis is to say that, almost certainly, the vector y does not lie on the plane spanned by the columns of the design matrix X. No combination of the parameters \\beta will yield a vector \\tilde{y} that is exactly equal to y.",
+    "crumbs": [
+      "regression",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>the geometry of regression</span>"
+    ]
+  },
+  {
+    "objectID": "regression/geometry-of-regression.html#least-squares",
+    "href": "regression/geometry-of-regression.html#least-squares",
+    "title": "11  the geometry of regression",
+    "section": "11.5 least squares",
+    "text": "11.5 least squares\nThe method above for finding the best parameters \\beta is called least squares. The name comes from the fact that we are trying to minimize the length of the residual vector r = y - \\tilde{y}.\nThe length of the residual is given by the Euclidean norm (or L^2 norm), which is a direct generalization of the Pythagorean theorem for many dimensions.\n\\begin{align}\n\\Vert r\\Vert^2 &= \\Vert y - \\tilde{y}\\Vert^2  \\\\\n&= (y_0 - \\tilde{y}_0)^2 + (y_1 - \\tilde{y}_1)^2 + \\cdots +  (y_{n-1} - \\tilde{y}_{n-1})^2 \\\\\n&= r_0^2 + r_1^2 + \\cdots + r_{n-1}^2\n\\end{align}\nThe length (squared) of the residual vector is the sum of the squares of all residuals. The best parameters \\beta are those that yield the least squares, thus the name.\n\n\ndefine and plot the simple problem\nfig, ax = plt.subplots(figsize=(8, 6))\n\nax.scatter(x, y, label='data', facecolors='black', edgecolors='black')\nx_domain = np.linspace(0, 4, 101)\nax.plot(x_domain, intercept + slope * x_domain, color='black', label='best line')\n\ndef linear(x, slope, intercept):\n    return intercept + slope * x\n\nfor i, xi in enumerate(x):\n    ax.plot([xi, xi],\n            [y[i], linear(xi, slope, intercept)],\n            color='black', linestyle='--', linewidth=0.5,\n            label='residuals' if i == 0 else None)\n    \nax.legend(loc='upper left', fontsize=14, frameon=False) \nax.set(xlim=(0, 4),\n       ylim=(0, 7),\n       xticks=np.arange(0, 5, 1),\n       yticks=np.arange(0, 9, 1),\n       xlabel='X-axis',\n       ylabel='Y-axis');",
+    "crumbs": [
+      "regression",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>the geometry of regression</span>"
     ]
   }
 ]
