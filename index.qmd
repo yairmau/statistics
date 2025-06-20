@@ -6,6 +6,8 @@ I'm teaching myself statistics and machine learning, and the best way to truly u
 
 These are the books that I've read and recommend.
 
+---
+
 ![](/archive/images/modern_statistics_mike_x_cohen.jpg){height=300px}  
 Modern Statistics: Intuition, Math, Python, R  
 by Mike X Cohen  

@@ -493,7 +493,7 @@ X=
 <p><span class="math display">
 \tilde{y} = X \beta,
 </span></p>
-<p>where <span class="math inline">\beta</span> is the column vector <span class="math inline">(\beta_0, \beta1)^T</span>.</p>
+<p>where <span class="math inline">\beta</span> is the column vector <span class="math inline">(\beta_0, \beta_1)^T</span>.</p>
 <p>This prediction vector <span class="math inline">\tilde{y}</span> lies on a plane in the 3d space, it cannot be anywhere in this 3d space. Mathematically, we say that the vector <span class="math inline">\tilde{y}</span> is in the subspace spanned by the columns of the design matrix <span class="math inline">X</span>.</p>
 <p>It will be extremely improbable that the vector <span class="math inline">y</span> will also lie on this plane, so we will have to find the best prediction <span class="math inline">\tilde{y}</span> that lies on this plane. Geometrically, our goal is to find the point <span class="math inline">\tilde{y}</span> on the plane that is <strong>closest</strong> to the point <span class="math inline">y</span> in the 3d space.</p>
 <ul>
@@ -589,7 +589,7 @@ r = y - \tilde{y}.
 <p>The concrete example here dealt with only three data points, therefore we could visualize the problem in a three-dimensional space. However, the same reasoning applies to any number of data points and any number of independent variables.</p>
 <ul>
 <li><strong>any number of data points</strong>: we call the number of data points <span class="math inline">n</span>, and that makes <span class="math inline">y</span> be a vector in an <span class="math inline">n</span>-dimensional space.</li>
-<li><strong>any number of independent variables</strong>: we calculated a regression for a straight line, and thus we had only two building blocks, the intercept <span class="math inline">c</span> and the independent variable <span class="math inline">x</span>. However, we can have any number of independent variables, say <span class="math inline">m</span> of them. For example, we might want to predict the data using a polynomial of degree <span class="math inline">m</span>, or we might have any arbitrary <span class="math inline">m</span> functions that we wish to use: <span class="math inline">\exp(x)</span>, <span class="math inline">\tanh(x^2)</span>, whatever we want. All this will work as long as the parameters <span class="math inline">\beta</span> multibly these building blocks. That’s the topic of the next chapter.</li>
+<li><strong>any number of independent variables</strong>: we calculated a regression for a straight line, and thus we had only two building blocks, the intercept <span class="math inline">c</span> and the independent variable <span class="math inline">x</span>. However, we can have any number of independent variables, say <span class="math inline">m</span> of them. For example, we might want to predict the data using a polynomial of degree <span class="math inline">m</span>, or we might have any arbitrary <span class="math inline">m</span> functions that we wish to use: <span class="math inline">\exp(x)</span>, <span class="math inline">\tanh(x^2)</span>, whatever we want. All this will work as long as the parameters <span class="math inline">\beta</span> multiply these building blocks. That’s the topic of the next chapter.</li>
 </ul>
 
 
