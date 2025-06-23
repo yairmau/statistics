@@ -65,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../regression/least-squares.html" rel="next">
 <link href="../permutation/exact-vs-montecarlo.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -318,6 +319,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -365,7 +372,7 @@ window.Quarto = {
 <h2 data-number="11.1" class="anchored" data-anchor-id="a-very-simple-example"><span class="header-section-number">11.1</span> a very simple example</h2>
 <p>It’s almost always best to start with a simple and concrete example.</p>
 <p><strong>Goal:</strong> We wish to find the best straight line that describes the following data points:</p>
-<div id="7990fb1c" class="cell" data-execution_count="19">
+<div id="7990fb1c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -378,7 +385,7 @@ window.Quarto = {
 <span id="cb1-8"><a href="#cb1-8"></a><span class="co"># %matplotlib widget</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cef12573" class="cell" data-execution_count="20">
+<div id="cef12573" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>define and plot the simple problem</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>x <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
@@ -465,12 +472,12 @@ X=
 | &amp; |
 \end{pmatrix}
 </span></p>
-<p>Why is this convenient? Because now the linear combination of <span class="math inline">c</span> and <span class="math inline">x</span> can be expressed as a matrix multiplication:</p>
+<p>Why is this convenient? Because now the linear combination of <span class="math inline">\vec{1}</span> and <span class="math inline">x</span> can be expressed as a matrix multiplication:</p>
 <p><span class="math display">
 \begin{pmatrix}
-\tilde{y}_0 \\
-\tilde{y}_1 \\
-\tilde{y}_2
+\hat{y}_0 \\
+\hat{y}_1 \\
+\hat{y}_2
 \end{pmatrix}
 =
 \begin{pmatrix}
@@ -489,31 +496,32 @@ X=
 1\cdot\beta_0 + x_2\cdot\beta_1
 \end{pmatrix}
 </span></p>
-<p>In short, the linear combination of our two building blocks yields a prediction vector <span class="math inline">\tilde{y}</span>:</p>
+<p>In short, the linear combination of our two building blocks yields a prediction vector <span class="math inline">\hat{y}</span>:</p>
 <p><span class="math display">
-\tilde{y} = X \beta,
+\hat{y} = X \beta,
 </span></p>
 <p>where <span class="math inline">\beta</span> is the column vector <span class="math inline">(\beta_0, \beta_1)^T</span>.</p>
-<p>This prediction vector <span class="math inline">\tilde{y}</span> lies on a plane in the 3d space, it cannot be anywhere in this 3d space. Mathematically, we say that the vector <span class="math inline">\tilde{y}</span> is in the subspace spanned by the columns of the design matrix <span class="math inline">X</span>.</p>
-<p>It will be extremely improbable that the vector <span class="math inline">y</span> will also lie on this plane, so we will have to find the best prediction <span class="math inline">\tilde{y}</span> that lies on this plane. Geometrically, our goal is to find the point <span class="math inline">\tilde{y}</span> on the plane that is <strong>closest</strong> to the point <span class="math inline">y</span> in the 3d space.</p>
+<p>This prediction vector <span class="math inline">\hat{y}</span> lies on a plane in the 3d space, it cannot be anywhere in this 3d space. Mathematically, we say that the vector <span class="math inline">\hat{y}</span> is in the subspace spanned by the columns of the design matrix <span class="math inline">X</span>.</p>
+<p>It will be extremely improbable that the vector <span class="math inline">y</span> will also lie on this plane, so we will have to find the best prediction <span class="math inline">\hat{y}</span> that lies on this plane. Geometrically, our goal is to find the point <span class="math inline">\hat{y}</span> on the plane that is <strong>closest</strong> to the point <span class="math inline">y</span> in the 3d space.</p>
 <ul>
-<li>When the distance <span class="math inline">r=y-\tilde{y}</span> is minimized, the vector <span class="math inline">r</span> is orthogonal to the plane spanned by the columns of the design matrix <span class="math inline">X</span>.</li>
+<li>When the distance <span class="math inline">r=y-\hat{y}</span> is minimized, the vector <span class="math inline">r</span> is orthogonal to the plane spanned by the columns of the design matrix <span class="math inline">X</span>.</li>
 <li>We call this vector <span class="math inline">r</span> the <strong>residual vector</strong>.</li>
-<li>The residual is orthogonal to each of the columns of <span class="math inline">X</span>, that is, <span class="math inline">c\cdot r=0</span> and <span class="math inline">x\cdot r=0</span>.</li>
+<li>The residual is orthogonal to each of the columns of <span class="math inline">X</span>, that is, <span class="math inline">\vec{1}\cdot r=0</span> and <span class="math inline">x\cdot r=0</span>.</li>
 </ul>
 <p>I tried to summarize all the above in the 3d image below. This is, for me, the <em>geometry of regression</em>. If you have that in your head, you’ll never forget it.</p>
-<iframe src="https://www.geogebra.org/3d/yjsuhu96?embed" width="800" height="600" allowfullscreen="" style="border: 1px solid #e4e4e4;border-radius: 4px;" frameborder="0">
-</iframe>
+<p><img src="3dplot_A.png" class="img-fluid"></p>
+<p>Another angle of the image above. This time, because the view direction is within the plane, we see that the residual vector <span class="math inline">r</span> is orthogonal to the plane spanned by the columns of the design matrix <span class="math inline">X</span>. <img src="3dplot_B.png" class="img-fluid"></p>
+<p>For a fully interactive version, see this <a href="https://www.geogebra.org/3d/yjsuhu96">Geogebra applet</a>.</p>
 <p>Taking advantage of the matrix notation, we can express the orthogonality condition as follows:</p>
 <p><span class="math display">
 \begin{pmatrix}
-- &amp; c &amp; - \\
+- &amp; 1 &amp; - \\
 - &amp; x &amp; -
 \end{pmatrix} r =
 X^T r =
 0
 </span></p>
-<p>Let’s substitute <span class="math inline">r = y - \tilde{y} = y - X\beta</span> into the equation above.</p>
+<p>Let’s substitute <span class="math inline">r = y - \hat{y} = y - X\beta</span> into the equation above.</p>
 <p><span class="math display">
 X^T(y - X\beta) = 0
 </span></p>
@@ -529,27 +537,27 @@ X^TX\beta = X^Ty.
 <p><span class="math display">
 \beta = (X^TX)^{-1}X^Ty.
 </span></p>
-<p>That’s it. We’ve done it. Given the data points <span class="math inline">x</span> and <span class="math inline">y</span>, we can compute the parameters <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span> that bring <span class="math inline">\tilde{y}</span> as close as possible to <span class="math inline">y</span>. These parameters are the best fit of the straight line to the data points.</p>
+<p>That’s it. We did it. Given the data points <span class="math inline">x</span> and <span class="math inline">y</span>, we can compute the parameters <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span> that bring <span class="math inline">\hat{y}</span> as close as possible to <span class="math inline">y</span>. These parameters are the best fit of the straight line to the data points.</p>
 </section>
 <section id="overdetermined-system" class="level2" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="overdetermined-system"><span class="header-section-number">11.4</span> overdetermined system</h2>
 <p>The <em>design matrix</em> <span class="math inline">X</span> is a tall and skinny matrix, meaning that it has more rows (<span class="math inline">n</span>) than columns (<span class="math inline">m</span>). This is called an <strong>overdetermined system</strong>, because we have more equations (rows) than unknowns (columns), so we have no hope in finding an exact solution <span class="math inline">\beta</span>.</p>
-<p>This is to say that, almost certainly, the vector <span class="math inline">y</span> does not lie on the plane spanned by the columns of the design matrix <span class="math inline">X</span>. No combination of the parameters <span class="math inline">\beta</span> will yield a vector <span class="math inline">\tilde{y}</span> that is exactly equal to <span class="math inline">y</span>.</p>
+<p>This is to say that, almost certainly, the vector <span class="math inline">y</span> does not lie on the plane spanned by the columns of the design matrix <span class="math inline">X</span>. No combination of the parameters <span class="math inline">\beta</span> will yield a vector <span class="math inline">\hat{y}</span> that is exactly equal to <span class="math inline">y</span>.</p>
 </section>
 <section id="least-squares" class="level2" data-number="11.5">
 <h2 data-number="11.5" class="anchored" data-anchor-id="least-squares"><span class="header-section-number">11.5</span> least squares</h2>
 <p>The method above for finding the best parameters <span class="math inline">\beta</span> is called <strong>least squares</strong>. The name comes from the fact that we are trying to minimize the length of the residual vector</p>
 <p><span class="math display">
-r = y - \tilde{y}.
+r = y - \hat{y}.
 </span></p>
 <p>The length of the residual is given by the Euclidean norm (or <span class="math inline">L^2</span> norm), which is a direct generalization of the Pythagorean theorem for many dimensions.</p>
 <p><span class="math display">\begin{align}
-\Vert r\Vert^2 &amp;= \Vert y - \tilde{y}\Vert^2  \\
-&amp;= (y_0 - \tilde{y}_0)^2 + (y_1 - \tilde{y}_1)^2 + \cdots +  (y_{n-1} - \tilde{y}_{n-1})^2 \\
+\Vert r\Vert^2 &amp;= \Vert y - \hat{y}\Vert^2  \\
+&amp;= (y_0 - \hat{y}_0)^2 + (y_1 - \hat{y}_1)^2 + \cdots +  (y_{n-1} - \hat{y}_{n-1})^2 \\
 &amp;= r_0^2 + r_1^2 + \cdots + r_{n-1}^2
 \end{align}</span></p>
 <p>The length (squared) of the residual vector is the sum of the squares of all residuals. The best parameters <span class="math inline">\beta</span> are those that yield the <strong>least squares</strong>, thus the name.</p>
-<div id="0faf6148" class="cell" data-execution_count="22">
+<div id="0faf6148" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>define and plot the simple problem</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
@@ -589,7 +597,7 @@ r = y - \tilde{y}.
 <p>The concrete example here dealt with only three data points, therefore we could visualize the problem in a three-dimensional space. However, the same reasoning applies to any number of data points and any number of independent variables.</p>
 <ul>
 <li><strong>any number of data points</strong>: we call the number of data points <span class="math inline">n</span>, and that makes <span class="math inline">y</span> be a vector in an <span class="math inline">n</span>-dimensional space.</li>
-<li><strong>any number of independent variables</strong>: we calculated a regression for a straight line, and thus we had only two building blocks, the intercept <span class="math inline">c</span> and the independent variable <span class="math inline">x</span>. However, we can have any number of independent variables, say <span class="math inline">m</span> of them. For example, we might want to predict the data using a polynomial of degree <span class="math inline">m</span>, or we might have any arbitrary <span class="math inline">m</span> functions that we wish to use: <span class="math inline">\exp(x)</span>, <span class="math inline">\tanh(x^2)</span>, whatever we want. All this will work as long as the parameters <span class="math inline">\beta</span> multiply these building blocks. That’s the topic of the next chapter.</li>
+<li><strong>any number of independent variables</strong>: we calculated a regression for a straight line, and thus we had only two building blocks, the intercept <span class="math inline">\vec{1}</span> and the independent variable <span class="math inline">x</span>. However, we can have any number of independent variables, say <span class="math inline">m</span> of them. For example, we might want to predict the data using a polynomial of degree <span class="math inline">m</span>, or we might have any arbitrary <span class="math inline">m</span> functions that we wish to use: <span class="math inline">\exp(x)</span>, <span class="math inline">\tanh(x^2)</span>, whatever we want. All this will work as long as the parameters <span class="math inline">\beta</span> multiply these building blocks. That’s the topic of the next chapter.</li>
 </ul>
 
 
@@ -1053,6 +1061,9 @@ r = y - \tilde{y}.
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../regression/least-squares.html" class="pagination-link" aria-label="least squares">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">least squares</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

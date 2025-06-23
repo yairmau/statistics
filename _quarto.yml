@@ -33,6 +33,7 @@ book:
     - part: "regression"
       chapters:
         - regression/geometry-of-regression.ipynb
+        - regression/least-squares.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
