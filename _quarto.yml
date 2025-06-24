@@ -34,6 +34,8 @@ book:
       chapters:
         - regression/geometry-of-regression.ipynb
         - regression/least-squares.ipynb
+        - regression/equivalence.ipynb
+        - regression/mixed-model.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2

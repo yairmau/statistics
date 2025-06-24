@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>14&nbsp; linear mixed effect model – Statistics and Machine Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../regression/equivalence.html" rel="prev">
+<link href="../archive/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/mixed-model.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics and Machine Learning</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://yairmau.com/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
+    <a href="https://github.com/yairmau/statistics/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/height.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">hypothesis testing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../t_test/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../t_test/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">confidence interval</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">permutation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/permutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#practical-example" id="toc-practical-example" class="nav-link active" data-scroll-target="#practical-example"><span class="header-section-number">14.1</span> practical example</a></li>
+  <li><a href="#visualizing-categories-as-toggles" id="toc-visualizing-categories-as-toggles" class="nav-link" data-scroll-target="#visualizing-categories-as-toggles"><span class="header-section-number">14.2</span> visualizing categories as toggles</a></li>
+  <li><a href="#random-effects" id="toc-random-effects" class="nav-link" data-scroll-target="#random-effects"><span class="header-section-number">14.3</span> random effects</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">14.4</span> implementation</a></li>
+  <li><a href="#interpreting-the-results" id="toc-interpreting-the-results" class="nav-link" data-scroll-target="#interpreting-the-results"><span class="header-section-number">14.5</span> interpreting the results</a></li>
+  <li><a href="#back-to-ols" id="toc-back-to-ols" class="nav-link" data-scroll-target="#back-to-ols"><span class="header-section-number">14.6</span> back to OLS</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/mixed-model.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/regression/mixed-model.ipynb">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A mixed effect model is an expansion of the ordinary linear regression model that includes both fixed effects and random effects. The fixed effects are the same as in a standard linear regression (could be with or without interactions), while the random effects account for variability across different groups or clusters in the data.</p>
+<section id="practical-example" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="practical-example"><span class="header-section-number">14.1</span> practical example</h2>
+<p>We are given a dataset of annual income (independent variable) and years of education (independent variable) for individuals that studied different majors in university (categorical variable). We want to predict the annual income based on years of education and the major studied, including an interaction term between years of education and major. One more thing: each individual appears more than once in the dataset, so we can assume that there is a random effect associated with each individual.</p>
+<div id="cell-2" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-3" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>generate synthetic data</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># set seed for reproducibility</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># define parameters</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>majors <span class="op">=</span> [<span class="st">'Juggling'</span>, <span class="st">'Magic'</span>, <span class="st">'Dragon Taming'</span>]</span>
+<span id="cb2-5"><a href="#cb2-5"></a>n_individuals <span class="op">=</span> <span class="dv">90</span>  <span class="co"># 30 per major</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>years_per_person <span class="op">=</span> np.random.randint(<span class="dv">1</span>, <span class="dv">5</span>, size<span class="op">=</span>n_individuals)  <span class="co"># 1 to 4 time points</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># assign majors and person IDs</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>person_ids <span class="op">=</span> [<span class="ss">f'P</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">:03d}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_individuals)]</span>
+<span id="cb2-10"><a href="#cb2-10"></a>major_assignment <span class="op">=</span> np.repeat(majors, n_individuals <span class="op">//</span> <span class="bu">len</span>(majors))</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># simulate data</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>records <span class="op">=</span> []</span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="cf">for</span> i, pid <span class="kw">in</span> <span class="bu">enumerate</span>(person_ids):</span>
+<span id="cb2-15"><a href="#cb2-15"></a>    major <span class="op">=</span> major_assignment[i]</span>
+<span id="cb2-16"><a href="#cb2-16"></a>    n_years <span class="op">=</span> years_per_person[i]</span>
+<span id="cb2-17"><a href="#cb2-17"></a>    years <span class="op">=</span> np.sort(np.random.choice(np.arange(<span class="dv">1</span>, <span class="dv">21</span>), size<span class="op">=</span>n_years, replace<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb2-18"><a href="#cb2-18"></a>    </span>
+<span id="cb2-19"><a href="#cb2-19"></a>    <span class="co"># base intercept and slope by major</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>    <span class="cf">if</span> major <span class="op">==</span> <span class="st">'Juggling'</span>:</span>
+<span id="cb2-21"><a href="#cb2-21"></a>        base_income <span class="op">=</span> <span class="dv">25_000</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a>        growth <span class="op">=</span> <span class="dv">800</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a>    <span class="cf">elif</span> major <span class="op">==</span> <span class="st">'Magic'</span>:</span>
+<span id="cb2-24"><a href="#cb2-24"></a>        base_income <span class="op">=</span> <span class="dv">20_000</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a>        growth <span class="op">=</span> <span class="dv">1500</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a>    <span class="cf">elif</span> major <span class="op">==</span> <span class="st">'Dragon Taming'</span>:</span>
+<span id="cb2-27"><a href="#cb2-27"></a>        base_income <span class="op">=</span> <span class="dv">30_000</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a>        growth <span class="op">=</span> <span class="dv">400</span>  <span class="co"># slower growth</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a>    </span>
+<span id="cb2-30"><a href="#cb2-30"></a>    <span class="co"># add person-specific deviation</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a>    personal_offset <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">5000</span>)</span>
+<span id="cb2-32"><a href="#cb2-32"></a>    slope_offset <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">200</span>)</span>
+<span id="cb2-33"><a href="#cb2-33"></a>    </span>
+<span id="cb2-34"><a href="#cb2-34"></a>    <span class="cf">for</span> y <span class="kw">in</span> years:</span>
+<span id="cb2-35"><a href="#cb2-35"></a>        income <span class="op">=</span> base_income <span class="op">+</span> personal_offset <span class="op">+</span> (growth <span class="op">+</span> slope_offset) <span class="op">*</span> y <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="dv">3000</span>)</span>
+<span id="cb2-36"><a href="#cb2-36"></a>        records.append({</span>
+<span id="cb2-37"><a href="#cb2-37"></a>            <span class="st">'person'</span>: pid,</span>
+<span id="cb2-38"><a href="#cb2-38"></a>            <span class="st">'major'</span>: major,</span>
+<span id="cb2-39"><a href="#cb2-39"></a>            <span class="st">'years_after_grad'</span>: y,</span>
+<span id="cb2-40"><a href="#cb2-40"></a>            <span class="st">'income'</span>: income</span>
+<span id="cb2-41"><a href="#cb2-41"></a>        })</span>
+<span id="cb2-42"><a href="#cb2-42"></a></span>
+<span id="cb2-43"><a href="#cb2-43"></a>df <span class="op">=</span> pd.DataFrame(records)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s take a look at the dataset. There are many data points, so we will only see 15 points in three different places.</p>
+<div id="cell-5" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">print</span>(df[:<span class="dv">5</span>])</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="bu">print</span>(df[<span class="dv">90</span>:<span class="dv">95</span>])</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="bu">print</span>(df[<span class="dv">190</span>:<span class="dv">195</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  person     major  years_after_grad        income
+0   P001  Juggling                 3  37183.719609
+1   P001  Juggling                 5  35238.112407
+2   P001  Juggling                11  37905.435001
+3   P002  Juggling                 2  27432.186391
+4   P002  Juggling                 4  30617.926804
+   person  major  years_after_grad        income
+90   P034  Magic                 1  14151.072305
+91   P034  Magic                 7  19716.656861
+92   P035  Magic                12  41056.576643
+93   P035  Magic                14  46339.987229
+94   P036  Magic                16  41981.131518
+    person          major  years_after_grad        income
+190   P072  Dragon Taming                 7  36173.437735
+191   P073  Dragon Taming                 8  33450.564557
+192   P074  Dragon Taming                 9  35276.927416
+193   P074  Dragon Taming                17  37271.203018
+194   P075  Dragon Taming                 2  31819.051946</code></pre>
+</div>
+</div>
+<p>Now let’s see the data in a plot.</p>
+<div id="cell-7" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>plot income by major</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>gb <span class="op">=</span> df.groupby(<span class="st">'major'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="cf">for</span> major, group <span class="kw">in</span> gb:</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    ax.scatter(group[<span class="st">'years_after_grad'</span>], group[<span class="st">'income'</span>], label<span class="op">=</span>major, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>ax.legend(title<span class="op">=</span><span class="st">'Major'</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'years after graduation'</span>,</span>
+<span id="cb5-9"><a href="#cb5-9"></a>       ylabel<span class="op">=</span><span class="st">'income'</span>,</span>
+<span id="cb5-10"><a href="#cb5-10"></a>       xticks<span class="op">=</span>np.arange(<span class="dv">0</span>, <span class="dv">21</span>, <span class="dv">5</span>)</span>
+<span id="cb5-11"><a href="#cb5-11"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mixed-model_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The model we will use is</p>
+<p><span class="math display">
+y = \underbrace{X \beta}_{\text{fixed effects}} + \underbrace{Z b}_{\text{random effects}} + \underbrace{\varepsilon}_{\text{residuals}}
+</span></p>
+<p>The only new term here is <span class="math inline">Zb</span>, the random effects, where <span class="math inline">Z</span> is the design matrix for the random effects and <span class="math inline">b</span> is the vector of random effects coefficients. We will discuss that a bit later. Let’s start with the fixed effects part:</p>
+<p><span class="math display">
+X \beta = \beta_0 + \beta_1 \cdot \text{years} + \beta_2 \cdot \text{major} + \beta_3 \cdot (\text{years} \cdot \text{major})
+</span></p>
+<p>The “years” variable is continuous, while the “major” variable is categorical. How to include categorical variables in a linear regression model? We can use dummy coding, where we create binary variables for each category of the categorical variable (except one category, which serves as the reference group). In our case, we have three majors: Juggling, Magic, and Dragon Taming. Let’s use “Juggling” as the reference group. We can create two dummy variables that function as toggles.</p>
+<ul>
+<li><code>major_Magic</code>: 1 if the major is Magic, 0 otherwise</li>
+<li><code>major_DragonTaming</code>: 1 if the major is Dragon Taming, 0 otherwise</li>
+</ul>
+</section>
+<section id="visualizing-categories-as-toggles" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="visualizing-categories-as-toggles"><span class="header-section-number">14.2</span> visualizing categories as toggles</h2>
+<p>In the equation above, we have only one parameter for “major” (<span class="math inline">\beta_2</span>), and only one parameter for the interaction terms (<span class="math inline">\beta_3</span>). In reality we have more, see:</p>
+<p><span class="math display">\begin{align*}
+\text{income} &amp;= \beta_0 + \beta_1 \cdot \text{years} \\
+&amp;+ \beta_2 \cdot \text{major\_Magic} + \beta_3 \cdot \text{major\_DragonTaming} \\
+&amp;+ \beta_4 \cdot (\text{years} \cdot \text{major\_Magic}) + \beta_5 \cdot (\text{years} \cdot \text{major\_DragonTaming}) \\
+&amp;+ \epsilon
+\end{align*}</span></p>
+<p>The first line represents the linear relationship between income and education of the reference group (Juggling). The second line adds the effects on the intercept of having studied Magic or Dragon Taming instead, and the third line adds the the effects on the slope of these two majors.</p>
+<p>Let’s see for a few data points how this works. Below, dummy variables represent the pair (major_Magic, major_DragonTaming).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>years_after_grad</th>
+<th>major</th>
+<th>Dummy variables</th>
+<th>income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3</td>
+<td>Juggling</td>
+<td>(0, 0)</td>
+<td>37183.72</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Magic</td>
+<td>(1, 0)</td>
+<td>35101.07</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Dragon Taming</td>
+<td>(0, 1)</td>
+<td>27179.77</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Juggling</td>
+<td>(0, 0)</td>
+<td>26366.80</td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td>Magic</td>
+<td>(1, 0)</td>
+<td>26101.53</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>Dragon Taming</td>
+<td>(0, 1)</td>
+<td>39252.76</td>
+</tr>
+</tbody>
+</table>
+<p>The design matrix <span class="math inline">X</span> would look like this:</p>
+<p><span class="math display">
+X =
+\begin{array}{c}
+  \begin{array}{cccccc}
+    \beta_0 &amp; \beta_1 &amp; \beta_2 &amp; \beta_3 &amp; \beta_4 &amp; \beta_5
+  \end{array} \\
+  \begin{pmatrix}
+    1 &amp; 3 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    1 &amp; 5 &amp; 1 &amp; 0 &amp; 5 &amp; 0 \\
+    1 &amp; 7 &amp; 0 &amp; 1 &amp; 0 &amp; 7 \\
+    1 &amp; 10 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    1 &amp; 12 &amp; 1 &amp; 0 &amp; 12 &amp; 0 \\
+    1 &amp; 16 &amp; 0 &amp; 1 &amp; 0 &amp; 16
+  \end{pmatrix}
+\end{array}.
+</span></p>
+<p>The betas above the matrix are there just to label the columns, they are not really part of the matrix. The 3rd and 4th columns are the dummy variables for the majors, and the 5th and 6th columns are the interaction terms between education and the majors.</p>
+<p>If we were not interested in the random effects, we could stop here, and just use the ordinary least squares (OLS) method already discussed to estimate the coefficients <span class="math inline">\beta</span>.</p>
+</section>
+<section id="random-effects" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="random-effects"><span class="header-section-number">14.3</span> random effects</h2>
+<p>Conceptually, the random effects function in a very similar way to the fixed effects. Instead of a small number of categories, now each person in the dataset is a category. In our example we have 90 different people represented in the dataset, so the quantity <span class="math inline">Z</span> in <span class="math inline">Zb</span> is the design matrix for the random effects, which is a matrix with 90 columns, one for each person, and as many rows as there are data points in the dataset. Each row has a 1 in the column corresponding to the person, and 0s elsewhere. The vector <span class="math inline">b</span> is a vector of random effects coefficients, one for each person.</p>
+</section>
+<section id="implementation" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">14.4</span> implementation</h2>
+<p>We can use <code>statsmodels</code> function <code>smf.mixedlm</code> to do everything for us. We just need to specify the formula, which includes the interaction term, and the data.</p>
+<p>If you don’t mind which category is the reference group, you can skip the cell below. If you want to make sure a give one is the reference group (Juggling in our case), then you should run it.</p>
+<div id="cell-13" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>choose Juggling as reference major</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> pandas.api.types <span class="im">import</span> CategoricalDtype</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># define the desired order: Juggling as reference</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>major_order <span class="op">=</span> CategoricalDtype(categories<span class="op">=</span>[<span class="st">"Juggling"</span>, <span class="st">"Magic"</span>, <span class="st">"Dragon Taming"</span>], ordered<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>df[<span class="st">"major"</span>] <span class="op">=</span> df[<span class="st">"major"</span>].astype(major_order)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The syntax is fairly economic. The formula</p>
+<p><code>income ~ years_after_grad * major</code></p>
+<p>specifies a linear model where both the baseline income (intercept) and the effect of time since graduation (slope) can vary by major. The * operator includes both the main effects (years after graduation and major) and their interaction, allowing the model to fit a different intercept and slope for each major.</p>
+<p>In the line</p>
+<p><code>model = smf.mixedlm(formula, data=df, groups=df["person"])</code></p>
+<p>the <code>groups</code> argument specifies that the random effects are associated with the “person” variable, meaning that each person can have their own random intercept.</p>
+<div id="cell-15" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># formula with interaction</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>formula <span class="op">=</span> <span class="st">"income ~ years_after_grad * major"</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># fit mixed model with random intercept for person</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>model <span class="op">=</span> smf.mixedlm(formula, data<span class="op">=</span>df, groups<span class="op">=</span>df[<span class="st">"person"</span>])</span>
+<span id="cb7-6"><a href="#cb7-6"></a>result <span class="op">=</span> model.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s see the results</p>
+<div id="cell-17" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">print</span>(result.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            Mixed Linear Model Regression Results
+==============================================================================================
+Model:                         MixedLM            Dependent Variable:            income       
+No. Observations:              239                Method:                        REML         
+No. Groups:                    90                 Scale:                         10690821.7105
+Min. group size:               1                  Log-Likelihood:                -2327.5068   
+Max. group size:               4                  Converged:                     Yes          
+Mean group size:               2.7                                                            
+----------------------------------------------------------------------------------------------
+                                           Coef.     Std.Err.   z    P&gt;|z|   [0.025    0.975] 
+----------------------------------------------------------------------------------------------
+Intercept                                  25206.095 1349.760 18.675 0.000 22560.615 27851.575
+major[T.Magic]                             -2999.754 1995.748 -1.503 0.133 -6911.348   911.840
+major[T.Dragon Taming]                      5579.198 1954.661  2.854 0.004  1748.133  9410.263
+years_after_grad                             723.745   72.028 10.048 0.000   582.573   864.917
+years_after_grad:major[T.Magic]              635.180  109.599  5.795 0.000   420.370   849.989
+years_after_grad:major[T.Dragon Taming]     -295.862  106.315 -2.783 0.005  -504.235   -87.488
+Group Var                               33814137.626 2268.953                                 
+==============================================================================================
+</code></pre>
+</div>
+</div>
+</section>
+<section id="interpreting-the-results" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="interpreting-the-results"><span class="header-section-number">14.5</span> interpreting the results</h2>
+<p>To interpret the coefficients, start with the reference group, which in this model is someone who studied Juggling. Their predicted income is:</p>
+<p><span class="math display">
+\text{income} = 25206.10 + 723.75 \times \text{years}
+</span></p>
+<p>Now, for a person who studied Magic, the model <strong>adjusts</strong> both the intercept and the slope:</p>
+<p>Intercept shift: -2999.75 Slope shift: +635.18 So for Magic, the predicted income becomes:</p>
+<p><span class="math display">\begin{align*}
+\text{income} &amp;= (25206.10 - 2999.75) + (723.75 + 635.18) \times \text{years} \\
+       &amp;= 22206.35 + 1358.93 \times \text{years}
+\end{align*}</span></p>
+<p>This means that compared to Jugglers, Magicians start with a lower baseline salary, but their income grows much faster with each year after graduation.</p>
+<p>The <code>Coef.</code> column shows the estimated value of each parameter (e.g., intercepts, slopes, interactions). The <code>Std.Err.</code> column reports the standard error of the estimate, reflecting its uncertainty. The <code>z</code> column is the test statistic (estimate divided by standard error), and <code>P&gt;|z|</code> gives the p-value, which helps assess whether the effect is statistically significant. The final two columns, <code>[0.025 and 0.975]</code>, show the 95% confidence interval for the coefficient — if this interval does not include zero, the effect is likely meaningful.</p>
+<p>The line labeled <code>Group Var</code> shows the estimated variance of the random intercepts — in this case, variation in baseline income between individuals. The second number reported is the standard error associated with this estimate, which indicates how much uncertainty there is in the estimate of the variance.</p>
+<p>If you like, you can print out all the variances for the random effects. They are not explicity shown in the summary, but you can access them through the model’s <code>random_effects</code> attribute:</p>
+<p><code>result.random_effects</code></p>
+<p>Finally, the model as is does not include random slopes, meaning that the effect of years after graduation is assumed to be the same for all individuals. If you want to allow for different slopes for each individual, you can modify the model to include random slopes as well. This would require changing the formula and the <code>groups</code> argument accordingly. Also, <code>result.random_effects</code> will then contain not only the random intercepts, but also the random slopes for each individual.</p>
+<div id="cell-19" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>model <span class="op">=</span> smf.mixedlm(</span>
+<span id="cb10-2"><a href="#cb10-2"></a>    <span class="st">"income ~ years_after_grad * major"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3"></a>    data<span class="op">=</span>df,</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    groups<span class="op">=</span>df[<span class="st">"person"</span>],</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    re_formula<span class="op">=</span><span class="st">"~years_after_grad"</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>)</span>
+<span id="cb10-7"><a href="#cb10-7"></a>result <span class="op">=</span> model.fit()</span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="bu">print</span>(result.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/yairmau/miniforge3/envs/olympus/lib/python3.11/site-packages/statsmodels/base/model.py:607: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/Users/yairmau/miniforge3/envs/olympus/lib/python3.11/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            Mixed Linear Model Regression Results
+==============================================================================================
+Model:                         MixedLM            Dependent Variable:            income       
+No. Observations:              239                Method:                        REML         
+No. Groups:                    90                 Scale:                         10125672.1682
+Min. group size:               1                  Log-Likelihood:                -2323.7559   
+Max. group size:               4                  Converged:                     Yes          
+Mean group size:               2.7                                                            
+----------------------------------------------------------------------------------------------
+                                           Coef.     Std.Err.   z    P&gt;|z|   [0.025    0.975] 
+----------------------------------------------------------------------------------------------
+Intercept                                  25133.841 1208.050 20.805 0.000 22766.106 27501.576
+major[T.Magic]                             -2805.540 1811.051 -1.549 0.121 -6355.135   744.055
+major[T.Dragon Taming]                      5980.367 1767.166  3.384 0.001  2516.786  9443.949
+years_after_grad                             731.399   84.211  8.685 0.000   566.349   896.450
+years_after_grad:major[T.Magic]              611.065  126.072  4.847 0.000   363.969   858.161
+years_after_grad:major[T.Dragon Taming]     -329.530  122.977 -2.680 0.007  -570.561   -88.498
+Group Var                               22392488.656 1835.422                                 
+Group x years_after_grad Cov               90328.607   75.664                                 
+years_after_grad Var                       39074.487    7.401                                 
+==============================================================================================
+</code></pre>
+</div>
+</div>
+</section>
+<section id="back-to-ols" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="back-to-ols"><span class="header-section-number">14.6</span> back to OLS</h2>
+<p>If you went this far, and now realized you don’t care about random effects, you can just use the <code>statsmodels</code> function <code>smf.ols</code> to fit an ordinary least squares regression model. The syntax is similar, but without the <code>groups</code> argument.</p>
+<div id="cell-21" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co"># formula with main effects and interaction</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>formula <span class="op">=</span> <span class="st">"income ~ years_after_grad * major"</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co"># fit the model with OLS (no random effects)</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>ols_model <span class="op">=</span> smf.ols(formula, data<span class="op">=</span>df)</span>
+<span id="cb13-8"><a href="#cb13-8"></a>ols_result <span class="op">=</span> ols_model.fit()</span>
+<span id="cb13-9"><a href="#cb13-9"></a></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co"># print summary</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="bu">print</span>(ols_result.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 income   R-squared:                       0.455
+Model:                            OLS   Adj. R-squared:                  0.443
+Method:                 Least Squares   F-statistic:                     38.85
+Date:                Tue, 24 Jun 2025   Prob (F-statistic):           6.27e-29
+Time:                        16:16:38   Log-Likelihood:                -2437.0
+No. Observations:                 239   AIC:                             4886.
+Df Residuals:                     233   BIC:                             4907.
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================================
+                                              coef    std err          t      P&gt;|t|      [0.025      0.975]
+-----------------------------------------------------------------------------------------------------------
+Intercept                                2.486e+04   1450.267     17.141      0.000     2.2e+04    2.77e+04
+major[T.Magic]                          -4402.0846   2281.475     -1.929      0.055   -8897.041      92.872
+major[T.Dragon Taming]                   7696.8705   2167.061      3.552      0.000    3427.332     1.2e+04
+years_after_grad                          778.4674    123.280      6.315      0.000     535.582    1021.352
+years_after_grad:major[T.Magic]           758.4393    185.397      4.091      0.000     393.170    1123.708
+years_after_grad:major[T.Dragon Taming]  -510.1096    183.456     -2.781      0.006    -871.553    -148.666
+==============================================================================
+Omnibus:                        2.143   Durbin-Watson:                   1.088
+Prob(Omnibus):                  0.343   Jarque-Bera (JB):                2.132
+Skew:                           0.176   Prob(JB):                        0.344
+Kurtosis:                       2.699   Cond. No.                         93.1
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../regression/equivalence.html" class="pagination-link" aria-label="equivalence">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">equivalence</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
