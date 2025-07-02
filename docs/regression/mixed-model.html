@@ -590,6 +590,7 @@ X =
 </section>
 <section id="random-effects" class="level2" data-number="14.3">
 <h2 data-number="14.3" class="anchored" data-anchor-id="random-effects"><span class="header-section-number">14.3</span> random effects</h2>
+<p>The name “mixed effects” comes from the fact that we have both fixed effects and random effects.</p>
 <p>Conceptually, the random effects function in a very similar way to the fixed effects. Instead of a small number of categories, now each person in the dataset is a category. In our example we have 90 different people represented in the dataset, so the quantity <span class="math inline">Z</span> in <span class="math inline">Zb</span> is the design matrix for the random effects, which is a matrix with 90 columns, one for each person, and as many rows as there are data points in the dataset. Each row has a 1 in the column corresponding to the person, and 0s elsewhere. The vector <span class="math inline">b</span> is a vector of random effects coefficients, one for each person.</p>
 </section>
 <section id="implementation" class="level2" data-number="14.4">
