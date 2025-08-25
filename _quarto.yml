@@ -36,6 +36,9 @@ book:
         - regression/least-squares.ipynb
         - regression/equivalence.ipynb
         - regression/mixed-model.ipynb
+    - part: "miscellaneous"
+      chapters:
+        - misc/trend_test.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
