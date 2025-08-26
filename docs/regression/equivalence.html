@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../regression/mixed-model.html" rel="next">
+<link href="../regression/partitioning.html" rel="next">
 <link href="../regression/least-squares.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -297,8 +297,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
   </div>
 </li>
       </ul>
@@ -306,7 +312,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
+ <span class="menu-text">correlation</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -314,8 +320,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -333,6 +362,10 @@ window.Quarto = {
   <li><a href="#orthogonality" id="toc-orthogonality" class="nav-link active" data-scroll-target="#orthogonality"><span class="header-section-number">13.1</span> orthogonality</a></li>
   <li><a href="#optimization" id="toc-optimization" class="nav-link" data-scroll-target="#optimization"><span class="header-section-number">13.2</span> optimization</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">13.3</span> discussion</a></li>
+  <li><a href="#other-properties" id="toc-other-properties" class="nav-link" data-scroll-target="#other-properties"><span class="header-section-number">13.4</span> other properties</a>
+  <ul class="collapse">
+  <li><a href="#the-sum-of-residuals-is-zero" id="toc-the-sum-of-residuals-is-zero" class="nav-link" data-scroll-target="#the-sum-of-residuals-is-zero"><span class="header-section-number">13.4.1</span> the sum of residuals is zero</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -515,8 +548,28 @@ X^TX\beta = X^Ty
 <li>Fourier series: the Fourier coefficients are the least squares solution to the problem of approximating a function by a sum of sines and cosines, where these functions are an orthogonal basis.</li>
 <li>SVD (Singular Value Decomposition): A matrix can be decomposed into orthogonal matrices, and the singular values can be interpreted as the least squares solution to the problem of approximating a matrix by a sum of outer products of orthogonal vectors.</li>
 </ul>
+</section>
+<section id="other-properties" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="other-properties"><span class="header-section-number">13.4</span> other properties</h2>
+<section id="the-sum-of-residuals-is-zero" class="level3" data-number="13.4.1">
+<h3 data-number="13.4.1" class="anchored" data-anchor-id="the-sum-of-residuals-is-zero"><span class="header-section-number">13.4.1</span> the sum of residuals is zero</h3>
+<p>As long as the model includes an intercept term, the sum of the residuals is zero. The model could be anything, not necessarily linear regression. Let’s prove this property.</p>
+<p><span class="math display">
+\hat{y}_i = \beta_0 + f(x_i; \beta_1, \beta_2, \ldots, \beta_p)
+</span></p>
+<p>The Ordinary Least Squares (OLS) estimates of the parameters <span class="math inline">\beta</span> minimize the sum of squared residuals <span class="math inline">L</span>. The equation for <span class="math inline">\beta_0</span> reads:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial L}{\partial \beta_0} &amp;=
+\frac{\partial}{\partial \beta_0} \sum_{i=1}^n \left(y_i - \hat{y}_i \right)^2 \\
+&amp;=
+\frac{\partial}{\partial \beta_0} \sum_{i=1}^n \left[y_i - \beta_0 - f(x_i; \beta_1, \beta_2, \ldots, \beta_p) \right]^2 \\
+&amp;= -2 \sum_{i=1}^n \left[y_i - \beta_0 - f(x_i; \beta_1, \beta_2, \ldots, \beta_p) \right] \\
+&amp;= -2 \sum_{i=1}^n \left(y_i - \hat{y}_i \right) = 0
+\end{align*}</span></p>
+<p>From the last line it follows that the sum of the residuals is zero.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -987,8 +1040,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../regression/mixed-model.html" class="pagination-link" aria-label="linear mixed effect model">
-        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../regression/partitioning.html" class="pagination-link" aria-label="partitioning of the sum of squares">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

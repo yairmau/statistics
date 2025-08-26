@@ -35,7 +35,12 @@ book:
         - regression/geometry-of-regression.ipynb
         - regression/least-squares.ipynb
         - regression/equivalence.ipynb
+        - regression/partitioning.ipynb
         - regression/mixed-model.ipynb
+    - part: "correlation"
+      chapters:
+        - correlation/correlation.ipynb
+        - correlation/linear_regression.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb

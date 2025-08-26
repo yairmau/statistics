@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistics and Machine Learning - 14&nbsp; linear mixed effect model</title>
+<title>Statistics and Machine Learning - 15&nbsp; linear mixed effect model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../misc/trend_test.html" rel="next">
-<link href="../regression/equivalence.html" rel="prev">
+<link href="../correlation/correlation.html" rel="next">
+<link href="../regression/partitioning.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -160,7 +160,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/mixed-model.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/mixed-model.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -331,8 +331,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
   </div>
 </li>
       </ul>
@@ -340,7 +346,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
+ <span class="menu-text">correlation</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -348,8 +354,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -364,21 +393,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#practical-example" id="toc-practical-example" class="nav-link active" data-scroll-target="#practical-example"><span class="header-section-number">14.1</span> practical example</a></li>
-  <li><a href="#visualizing-categories-as-toggles" id="toc-visualizing-categories-as-toggles" class="nav-link" data-scroll-target="#visualizing-categories-as-toggles"><span class="header-section-number">14.2</span> visualizing categories as toggles</a></li>
-  <li><a href="#random-effects" id="toc-random-effects" class="nav-link" data-scroll-target="#random-effects"><span class="header-section-number">14.3</span> random effects</a></li>
-  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">14.4</span> implementation</a></li>
-  <li><a href="#interpreting-the-results" id="toc-interpreting-the-results" class="nav-link" data-scroll-target="#interpreting-the-results"><span class="header-section-number">14.5</span> interpreting the results</a></li>
-  <li><a href="#back-to-ols" id="toc-back-to-ols" class="nav-link" data-scroll-target="#back-to-ols"><span class="header-section-number">14.6</span> back to OLS</a></li>
+  <li><a href="#practical-example" id="toc-practical-example" class="nav-link active" data-scroll-target="#practical-example"><span class="header-section-number">15.1</span> practical example</a></li>
+  <li><a href="#visualizing-categories-as-toggles" id="toc-visualizing-categories-as-toggles" class="nav-link" data-scroll-target="#visualizing-categories-as-toggles"><span class="header-section-number">15.2</span> visualizing categories as toggles</a></li>
+  <li><a href="#random-effects" id="toc-random-effects" class="nav-link" data-scroll-target="#random-effects"><span class="header-section-number">15.3</span> random effects</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">15.4</span> implementation</a></li>
+  <li><a href="#interpreting-the-results" id="toc-interpreting-the-results" class="nav-link" data-scroll-target="#interpreting-the-results"><span class="header-section-number">15.5</span> interpreting the results</a></li>
+  <li><a href="#back-to-ols" id="toc-back-to-ols" class="nav-link" data-scroll-target="#back-to-ols"><span class="header-section-number">15.6</span> back to OLS</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/mixed-model.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/mixed-model.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/regression/mixed-model.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/regression/mixed-model.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -396,8 +425,8 @@ window.Quarto = {
 
 
 <p>A mixed effect model is an expansion of the ordinary linear regression model that includes both fixed effects and random effects. The fixed effects are the same as in a standard linear regression (could be with or without interactions), while the random effects account for variability across different groups or clusters in the data.</p>
-<section id="practical-example" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="practical-example"><span class="header-section-number">14.1</span> practical example</h2>
+<section id="practical-example" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="practical-example"><span class="header-section-number">15.1</span> practical example</h2>
 <p>We are given a dataset of annual income (independent variable) and years of education (independent variable) for individuals that studied different majors in university (categorical variable). We want to predict the annual income based on years of education and the major studied, including an interaction term between years of education and major. One more thing: each individual appears more than once in the dataset, so we can assume that there is a random effect associated with each individual.</p>
 <div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
@@ -525,8 +554,8 @@ X \beta = \beta_0 + \beta_1 \cdot \text{years} + \beta_2 \cdot \text{major} + \b
 <li><code>major_DragonTaming</code>: 1 if the major is Dragon Taming, 0 otherwise</li>
 </ul>
 </section>
-<section id="visualizing-categories-as-toggles" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="visualizing-categories-as-toggles"><span class="header-section-number">14.2</span> visualizing categories as toggles</h2>
+<section id="visualizing-categories-as-toggles" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="visualizing-categories-as-toggles"><span class="header-section-number">15.2</span> visualizing categories as toggles</h2>
 <p>In the equation above, we have only one parameter for “major” (<span class="math inline">\beta_2</span>), and only one parameter for the interaction terms (<span class="math inline">\beta_3</span>). In reality we have more, see:</p>
 <p><span class="math display">\begin{align*}
 \text{income} &amp;= \beta_0 + \beta_1 \cdot \text{years} \\
@@ -604,13 +633,13 @@ X =
 <p>The betas above the matrix are there just to label the columns, they are not really part of the matrix. The 3rd and 4th columns are the dummy variables for the majors, and the 5th and 6th columns are the interaction terms between education and the majors.</p>
 <p>If we were not interested in the random effects, we could stop here, and just use the ordinary least squares (OLS) method already discussed to estimate the coefficients <span class="math inline">\beta</span>.</p>
 </section>
-<section id="random-effects" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="random-effects"><span class="header-section-number">14.3</span> random effects</h2>
+<section id="random-effects" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="random-effects"><span class="header-section-number">15.3</span> random effects</h2>
 <p>The name “mixed effects” comes from the fact that we have both fixed effects and random effects.</p>
 <p>Conceptually, the random effects function in a very similar way to the fixed effects. Instead of a small number of categories, now each person in the dataset is a category. In our example we have 90 different people represented in the dataset, so the quantity <span class="math inline">Z</span> in <span class="math inline">Zb</span> is the design matrix for the random effects, which is a matrix with 90 columns, one for each person, and as many rows as there are data points in the dataset. Each row has a 1 in the column corresponding to the person, and 0s elsewhere. The vector <span class="math inline">b</span> is a vector of random effects coefficients, one for each person.</p>
 </section>
-<section id="implementation" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">14.4</span> implementation</h2>
+<section id="implementation" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">15.4</span> implementation</h2>
 <p>We can use <code>statsmodels</code> function <code>smf.mixedlm</code> to do everything for us. We just need to specify the formula, which includes the interaction term, and the data.</p>
 <p>If you don’t mind which category is the reference group, you can skip the cell below. If you want to make sure a give one is the reference group (Juggling in our case), then you should run it.</p>
 <div id="cell-13" class="cell" data-execution_count="5">
@@ -663,8 +692,8 @@ Group Var                               33814137.626 2268.953
 </div>
 </div>
 </section>
-<section id="interpreting-the-results" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="interpreting-the-results"><span class="header-section-number">14.5</span> interpreting the results</h2>
+<section id="interpreting-the-results" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="interpreting-the-results"><span class="header-section-number">15.5</span> interpreting the results</h2>
 <p>To interpret the coefficients, start with the reference group, which in this model is someone who studied Juggling. Their predicted income is:</p>
 <p><span class="math display">
 \text{income} = 25206.10 + 723.75 \times \text{years}
@@ -722,8 +751,8 @@ years_after_grad Var                       39074.487    7.401
 </div>
 </div>
 </section>
-<section id="back-to-ols" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="back-to-ols"><span class="header-section-number">14.6</span> back to OLS</h2>
+<section id="back-to-ols" class="level2" data-number="15.6">
+<h2 data-number="15.6" class="anchored" data-anchor-id="back-to-ols"><span class="header-section-number">15.6</span> back to OLS</h2>
 <p>If you went this far, and now realized you don’t care about random effects, you can just use the <code>statsmodels</code> function <code>smf.ols</code> to fit an ordinary least squares regression model. The syntax is similar, but without the <code>groups</code> argument.</p>
 <div id="cell-21" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
@@ -1236,13 +1265,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../regression/equivalence.html" class="pagination-link" aria-label="equivalence">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">equivalence</span></span>
+      <a href="../regression/partitioning.html" class="pagination-link" aria-label="partitioning of the sum of squares">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../misc/trend_test.html" class="pagination-link" aria-label="trend test">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">trend test</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../correlation/correlation.html" class="pagination-link" aria-label="correlation">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">correlation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
