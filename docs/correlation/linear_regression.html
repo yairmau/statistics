@@ -355,7 +355,18 @@ window.Quarto = {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prelude-finding-the-intercept-and-slope" id="toc-prelude-finding-the-intercept-and-slope" class="nav-link active" data-scroll-target="#prelude-finding-the-intercept-and-slope"><span class="header-section-number">17.1</span> prelude: finding the intercept and slope</a>
+  <ul class="collapse">
+  <li><a href="#intercept" id="toc-intercept" class="nav-link" data-scroll-target="#intercept"><span class="header-section-number">17.1.1</span> intercept</a></li>
+  <li><a href="#slope" id="toc-slope" class="nav-link" data-scroll-target="#slope"><span class="header-section-number">17.1.2</span> slope</a></li>
+  </ul></li>
+  <li><a href="#slope-and-correlation" id="toc-slope-and-correlation" class="nav-link" data-scroll-target="#slope-and-correlation"><span class="header-section-number">17.2</span> slope and correlation</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -382,19 +393,146 @@ window.Quarto = {
 <p>The correlation coefficient is closely related to linear regression. In simple linear regression, we model the relationship between a dependent variable <span class="math inline">Y</span> and an independent variable <span class="math inline">X</span> as:</p>
 <p><span class="math display">
 Y = \beta_0 + \beta_1 X + \epsilon
-</span> where <span class="math inline">\beta_0</span> is the intercept, <span class="math inline">\beta_1</span> is the slope, and <span class="math inline">\epsilon</span> is the error term. The slope <span class="math inline">\beta_1</span> can be expressed in terms of the correlation coefficient:</p>
+</span> where <span class="math inline">\beta_0</span> is the intercept, <span class="math inline">\beta_1</span> is the slope, and <span class="math inline">\epsilon</span> is the error term.</p>
+<section id="prelude-finding-the-intercept-and-slope" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="prelude-finding-the-intercept-and-slope"><span class="header-section-number">17.1</span> prelude: finding the intercept and slope</h2>
+<p>Let’s derive the formulas for the intercept and slope of the regression line. We want to minimize the sum of squared residuals <span class="math inline">L</span>:</p>
+<p><span class="math display">
+L = \sum_{i=1}^n (y_i - \hat{y}_i)^2,
+\tag{1}
+</span></p>
+<p>where</p>
+<p><span class="math display">
+\hat{y}_i = \beta_0 + \beta_1 x_i.
+\tag{2}
+</span></p>
+<p>To find the optimal values of <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span>, we take the partial derivatives of <span class="math inline">L</span> with respect to <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span>, set them to zero, and solve the resulting equations.</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial L}{\partial \beta_0} &amp;= 0 \tag{3a}\\
+\frac{\partial L}{\partial \beta_1} &amp;= 0 \tag{3b}
+\end{align*}</span></p>
+<section id="intercept" class="level3" data-number="17.1.1">
+<h3 data-number="17.1.1" class="anchored" data-anchor-id="intercept"><span class="header-section-number">17.1.1</span> intercept</h3>
+<p>Let’s start with Eq. (3a):</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial L}{\partial \beta_0} &amp;= \frac{\partial}{\partial \beta_0} (y_i - \hat{y}_i)^2 \tag{4a} \\
+&amp;= \frac{\partial}{\partial \beta_0} (y_i - \beta_0 - \beta_1 x_i)^2 \tag{4b} \\
+&amp;= -2 \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0 \tag{4c}
+\end{align*}</span></p>
+<p>Eliminating the constant factor <span class="math inline">-2</span> and expanding the summation, we get:</p>
+<p><span class="math display">
+\sum_{i=1}^n y_i - n \beta_0 - \beta_1 \sum_{i=1}^n x_i = 0
+\tag{5}
+</span></p>
+<p>We now divide by <span class="math inline">n</span> and rearrange to isolate <span class="math inline">\beta_0</span>:</p>
+<div class="alert alert-primary">
+<p><span class="math display">
+\beta_0 = \bar{y} - \beta_1 \bar{x}
+\tag{6}
+</span></p>
+</div>
+<p>Note: we can rewrite equation (4c) as</p>
+<p><span class="math display">
+\sum_{i=1}^n (y_i - \hat{y}_i) = \sum_{i=1}^n \text{residuals} = 0,
+</span></p>
+<p>which is a nice thing to know.</p>
+</section>
+<section id="slope" class="level3" data-number="17.1.2">
+<h3 data-number="17.1.2" class="anchored" data-anchor-id="slope"><span class="header-section-number">17.1.2</span> slope</h3>
+<p>Now let’s move on to Eq. (3b):</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial L}{\partial \beta_1} &amp;= \frac{\partial}{\partial \beta_1} (y_i - \hat{y}_i)^2 \tag{7a} \\
+&amp;= \frac{\partial}{\partial \beta_1} (y_i - \beta_0 - \beta_1 x_i)^2 \tag{7b} \\
+&amp;= -2 \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) x_i = 0 \tag{7c} \\
+&amp;= -2 \sum_{i=1}^n (y_i - \bar{y} + \beta_1 \bar{x} - \beta_1 x_i) x_i = 0 \tag{7d}
+\end{align*}</span></p>
+<p>Eliminating the constant factor <span class="math inline">2</span> and expanding the summation, we get:</p>
+<p><span class="math display">
+-\sum_{i=1}^n x_i y_i + \sum_{i=1}^n x_i \bar{y} - \beta_1 \sum_{i=1}^n x_i \bar{x} + \beta_1 \sum_{i=1}^n x_i^2 = 0
+\tag{8}
+</span></p>
+<p>Let’s group the terms involving <span class="math inline">\beta_1</span> on one side and the rest on the other side:</p>
+<p><span class="math display">
+\beta_1 \left( \sum_{i=1}^n x_i^2 - \sum_{i=1}^n x_i \bar{x} \right) = \sum_{i=1}^n x_i y_i - \sum_{i=1}^n x_i \bar{y}
+\tag{9}
+</span></p>
+<p>Isolating <span class="math inline">\beta_1</span>, we have:</p>
+<p><span class="math display">
+\beta_1 = \frac{\sum_{i=1}^n x_i y_i - \sum_{i=1}^n x_i \bar{y}}{\sum_{i=1}^n x_i^2 - \sum_{i=1}^n x_i \bar{x}} = \frac{\text{numerator}}{\text{denominator}}
+\tag{10}
+</span></p>
+<p>It’s easier to interpret the numerator and denominator separately. To each we will add and subtract a term that will allow us to express them in simpler forms.</p>
+<p>Numerator:</p>
+<p><span class="math display">
+\text{numerator} = \sum_{i=1}^n x_i y_i - \sum_{i=1}^n x_i \bar{y} + \sum_{i=1}^n \bar{x} y_i - \sum_{i=1}^n \bar{x} y_i
+\tag{11}
+</span></p>
+<p>We express the third term thus:</p>
+<p><span class="math display">
+\text{third term} = \sum_{i=1}^n \bar{x} y_i = \bar{x} \sum_{i=1}^n y_i = n \bar{x} \bar{y} = \sum_{i=1}^n \bar{x} \bar{y}
+\tag{12}
+</span></p>
+<p>The numerator now becomes:</p>
+<p><span class="math display">\begin{align*}
+\text{numerator} &amp;= \sum_{i=1}^n x_i y_i - \sum_{i=1}^n x_i \bar{y} + \sum_{i=1}^n \bar{x} \bar{y} - \sum_{i=1}^n \bar{x} y_i \tag{13a} \\
+&amp;= \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \tag{13b} \\
+\end{align*}</span></p>
+<p>Now the denominator:</p>
+<p><span class="math display">
+\text{denominator} = \sum_{i=1}^n x_i^2 - \sum_{i=1}^n x_i \bar{x} + \sum_{i=1}^n x_i\bar{x} - \sum_{i=1}^n x_i\bar{x}
+\tag{14}
+</span></p>
+<p>We group the second and fourth terms, and express the third term thus:</p>
+<p><span class="math display">
+\text{third term} = \sum_{i=1}^n x_i \bar{x} = \bar{x} \sum_{i=1}^n x_i = n \bar{x}^2 = \sum_{i=1}^n \bar{x}^2
+\tag{15}
+</span></p>
+<p>The denominator now becomes:</p>
+<p><span class="math display">\begin{align*}
+\text{denominator} &amp;= \sum_{i=1}^n x_i^2 - 2 \sum_{i=1}^n x_i \bar{x} + \sum_{i=1}^n \bar{x}^2 \tag{16a} \\
+&amp;= \sum_{i=1}^n (x_i - \bar{x})^2 \tag{16b}
+\end{align*}</span></p>
+<p>Putting it all together, we have:</p>
+<div class="alert alert-primary">
+<p><span class="math display">
+\beta_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2}
+\tag{17}
+</span></p>
+</div>
+</section>
+</section>
+<section id="slope-and-correlation" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="slope-and-correlation"><span class="header-section-number">17.2</span> slope and correlation</h2>
+<p>Let’s divide both the numerator and denominator of Eq. (17) by <span class="math inline">n-1</span>:</p>
+<p><span class="math display">
+\beta_1 = \frac{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}
+\tag{18}
+</span></p>
+<p>The numerator is the sample covariance <span class="math inline">Cov(X, Y)</span>, and the denominator is the sample variance <span class="math inline">Var(X)</span>:</p>
+<p><span class="math display">
+\beta_1 = \frac{Cov(X, Y)}{Var(X)}
+\tag{19}
+</span></p>
+<p>Now, we can express the covariance in terms of the correlation coefficient <span class="math inline">\rho_{X,Y}</span> and the standard deviations <span class="math inline">\sigma_X</span> and <span class="math inline">\sigma_Y</span>:</p>
+<p><span class="math display">
+Cov(X, Y) = \rho_{X,Y} \sigma_X \sigma_Y
+\tag{20}
+</span> Substituting Eq. (20) into Eq. (19), we get:</p>
+<p><span class="math display">
+\beta_1 = \frac{\rho_{X,Y} \sigma_X \sigma_Y}{\sigma_X^2}
+\tag{21}
+</span></p>
+<p>And finally, we have:</p>
+<div class="alert alert-primary">
 <p><span class="math display">
 \beta_1 = \rho_{X,Y} \frac{\sigma_Y}{\sigma_X}
-</span>.</p>
-<p>The proof is as follows:</p>
-<p><span class="math display">\begin{align*}
-\beta_1 &amp;= \frac{Cov(X, Y)}{Var(X)} \\
-&amp;= \frac{\rho_{X,Y} \sigma_X \sigma_Y}{\sigma_X^2} \\
-&amp;= \rho_{X,Y} \frac{\sigma_Y}{\sigma_X}
-\end{align*}</span></p>
+\tag{22}
+</span></p>
+</div>
 <p>This shows that the slope of the regression line is directly proportional to the correlation coefficient. A higher absolute value of the correlation coefficient indicates a steeper slope, while a lower absolute value indicates a flatter slope.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
