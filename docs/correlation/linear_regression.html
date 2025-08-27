@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../misc/trend_test.html" rel="next">
+<link href="../correlation/cosine.html" rel="next">
 <link href="../correlation/correlation.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -330,6 +330,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -344,7 +356,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -365,6 +377,7 @@ window.Quarto = {
   <li><a href="#slope" id="toc-slope" class="nav-link" data-scroll-target="#slope"><span class="header-section-number">17.1.2</span> slope</a></li>
   </ul></li>
   <li><a href="#slope-and-correlation" id="toc-slope-and-correlation" class="nav-link" data-scroll-target="#slope-and-correlation"><span class="header-section-number">17.2</span> slope and correlation</a></li>
+  <li><a href="#r2-square-of-the-correlation-coefficient-r" id="toc-r2-square-of-the-correlation-coefficient-r" class="nav-link" data-scroll-target="#r2-square-of-the-correlation-coefficient-r"><span class="header-section-number">17.3</span> <span class="math inline">R^2=</span> square of the correlation coefficient <span class="math inline">r</span></a></li>
   </ul>
 </nav>
     </div>
@@ -390,10 +403,7 @@ window.Quarto = {
 </header>
 
 
-<p>The correlation coefficient is closely related to linear regression. In simple linear regression, we model the relationship between a dependent variable <span class="math inline">Y</span> and an independent variable <span class="math inline">X</span> as:</p>
-<p><span class="math display">
-Y = \beta_0 + \beta_1 X + \epsilon
-</span> where <span class="math inline">\beta_0</span> is the intercept, <span class="math inline">\beta_1</span> is the slope, and <span class="math inline">\epsilon</span> is the error term.</p>
+<p>The correlation coefficient is closely related to linear regression. We will see below a few instances of this relationship.</p>
 <section id="prelude-finding-the-intercept-and-slope" class="level2" data-number="17.1">
 <h2 data-number="17.1" class="anchored" data-anchor-id="prelude-finding-the-intercept-and-slope"><span class="header-section-number">17.1</span> prelude: finding the intercept and slope</h2>
 <p>Let’s derive the formulas for the intercept and slope of the regression line. We want to minimize the sum of squared residuals <span class="math inline">L</span>:</p>
@@ -411,9 +421,10 @@ L = \sum_{i=1}^n (y_i - \hat{y}_i)^2,
 \frac{\partial L}{\partial \beta_0} &amp;= 0 \tag{3a}\\
 \frac{\partial L}{\partial \beta_1} &amp;= 0 \tag{3b}
 \end{align*}</span></p>
+<p><a href="../regression/equivalence.html#optimization">We already did that for a general case</a>, but the calculation had the variables in vector/matrix form. Here we will do it for the simple case of one predictor variable, so that we can see the relationship with correlation more clearly.</p>
 <section id="intercept" class="level3" data-number="17.1.1">
 <h3 data-number="17.1.1" class="anchored" data-anchor-id="intercept"><span class="header-section-number">17.1.1</span> intercept</h3>
-<p>Let’s start with Eq. (3a):</p>
+<p>Let’s start with Eq. (3a), and substitute into it Eq. (2):</p>
 <p><span class="math display">\begin{align*}
 \frac{\partial L}{\partial \beta_0} &amp;= \frac{\partial}{\partial \beta_0} (y_i - \hat{y}_i)^2 \tag{4a} \\
 &amp;= \frac{\partial}{\partial \beta_0} (y_i - \beta_0 - \beta_1 x_i)^2 \tag{4b} \\
@@ -439,7 +450,7 @@ L = \sum_{i=1}^n (y_i - \hat{y}_i)^2,
 </section>
 <section id="slope" class="level3" data-number="17.1.2">
 <h3 data-number="17.1.2" class="anchored" data-anchor-id="slope"><span class="header-section-number">17.1.2</span> slope</h3>
-<p>Now let’s move on to Eq. (3b):</p>
+<p>Now let’s move on to Eq. (3b), and substitute the result of Eq. (6) into it:</p>
 <p><span class="math display">\begin{align*}
 \frac{\partial L}{\partial \beta_1} &amp;= \frac{\partial}{\partial \beta_1} (y_i - \hat{y}_i)^2 \tag{7a} \\
 &amp;= \frac{\partial}{\partial \beta_1} (y_i - \beta_0 - \beta_1 x_i)^2 \tag{7b} \\
@@ -458,7 +469,7 @@ L = \sum_{i=1}^n (y_i - \hat{y}_i)^2,
 </span></p>
 <p>Isolating <span class="math inline">\beta_1</span>, we have:</p>
 <p><span class="math display">
-\beta_1 = \frac{\sum_{i=1}^n x_i y_i - \sum_{i=1}^n x_i \bar{y}}{\sum_{i=1}^n x_i^2 - \sum_{i=1}^n x_i \bar{x}} = \frac{\text{numerator}}{\text{denominator}}
+\beta_1 = \frac{\sum x_i y_i - \sum x_i \bar{y}}{\sum x_i^2 - \sum x_i \bar{x}} = \frac{\text{numerator}}{\text{denominator}}
 \tag{10}
 </span></p>
 <p>It’s easier to interpret the numerator and denominator separately. To each we will add and subtract a term that will allow us to express them in simpler forms.</p>
@@ -508,14 +519,14 @@ L = \sum_{i=1}^n (y_i - \hat{y}_i)^2,
 \beta_1 = \frac{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}
 \tag{18}
 </span></p>
-<p>The numerator is the sample covariance <span class="math inline">Cov(X, Y)</span>, and the denominator is the sample variance <span class="math inline">Var(X)</span>:</p>
+<p>The numerator is the sample covariance <span class="math inline">\text{cov}(X, Y)</span>, and the denominator is the sample variance <span class="math inline">\text{var}(X)</span>:</p>
 <p><span class="math display">
-\beta_1 = \frac{Cov(X, Y)}{Var(X)}
+\beta_1 = \frac{\text{cov}(X, Y)}{\text{var}(X)}
 \tag{19}
 </span></p>
-<p>Now, we can express the covariance in terms of the correlation coefficient <span class="math inline">\rho_{X,Y}</span> and the standard deviations <span class="math inline">\sigma_X</span> and <span class="math inline">\sigma_Y</span>:</p>
+<p>Now, we can express the covariance in terms of the correlation coefficient <span class="math inline">\rho_{X,Y}</span> and the standard deviations <span class="math inline">\sigma_X</span> and <span class="math inline">\sigma_Y</span> (see <a href="../correlation/correlation.html#correlation">here</a>):</p>
 <p><span class="math display">
-Cov(X, Y) = \rho_{X,Y} \sigma_X \sigma_Y
+\text{cov}(X, Y) = \rho_{X,Y} \sigma_X \sigma_Y
 \tag{20}
 </span> Substituting Eq. (20) into Eq. (19), we get:</p>
 <p><span class="math display">
@@ -530,6 +541,64 @@ Cov(X, Y) = \rho_{X,Y} \sigma_X \sigma_Y
 </span></p>
 </div>
 <p>This shows that the slope of the regression line is directly proportional to the correlation coefficient. A higher absolute value of the correlation coefficient indicates a steeper slope, while a lower absolute value indicates a flatter slope.</p>
+</section>
+<section id="r2-square-of-the-correlation-coefficient-r" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="r2-square-of-the-correlation-coefficient-r"><span class="header-section-number">17.3</span> <span class="math inline">R^2=</span> square of the correlation coefficient <span class="math inline">r</span></h2>
+<p>Let’s start by saying that the correlation coefficient is called <span class="math inline">\rho</span> when referring to the population, and <span class="math inline">r</span> when referring to a sample. I’m playing loose with this convention here, but I hope it’s clear from the context.</p>
+<p>Let’s show now that the coefficient of determination <span class="math inline">R^2</span> is equal to the square of the correlation coefficient <span class="math inline">r</span>.</p>
+<p>We start with the definition of <span class="math inline">R^2</span>:</p>
+<p><span class="math display">
+R^2 = 1 - \frac{\text{SS}_{\text{Error}}}{\text{SS}_{\text{Total}}} = \frac{\text{SS}_{\text{Total}}+\text{SS}_{\text{Error}}}{\text{SS}_{\text{Total}}} =  \frac{\text{SS}_{\text{Model}}}{\text{SS}_{\text{Total}}}
+\tag{23}
+</span></p>
+<p>where we used the fact that <span class="math inline">\text{SS}_{\text{Total}} = \text{SS}_{\text{Model}} + \text{SS}_{\text{Error}}</span>, <a href="../regression/partitioning.html">already seen before</a>.</p>
+<p>We now substitute into Eq. (23) the definitions of <span class="math inline">\text{SS}_{\text{Model}}</span> and <span class="math inline">\text{SS}_{\text{Total}}</span>:</p>
+<p><span class="math display">
+R^2 = \frac{\sum_{i=1}^n (\hat{y}_i - \bar{y})^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
+\tag{24}
+</span></p>
+<p>We now substitute into Eq. (24) the expression of <span class="math inline">\hat{y}_i</span> from Eq. (2):</p>
+<p><span class="math display">
+R^2 = \frac{\sum_{i=1}^n (\beta_0 + \beta_1 x_i - \bar{y})^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
+\tag{25}
+</span></p>
+<p>Now we substitute into Eq. (25) the expression of <span class="math inline">\beta_0</span> from Eq. (6):</p>
+<p><span class="math display">
+R^2 = \frac{\sum_{i=1}^n \left( \bar{y} - \beta_1 \bar{x} + \beta_1 x_i - \bar{y} \right)^2}{\sum_{i=1}^n (y_i - \bar{y})^2} = \frac{\sum_{i=1}^n \left( \beta_1 (x_i - \bar{x}) \right)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
+\tag{26}
+</span></p>
+<p><span class="math inline">\beta_1</span> is a number, so we can take it out of the summation in the numerator:</p>
+<p><span class="math display">
+R^2 = \frac{\beta_1^2 \sum_{i=1}^n (x_i - \bar{x})^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
+\tag{26b}
+</span></p>
+<p>Now, let’s substitute into Eq. (26) the expression of <span class="math inline">\beta_1</span> from Eq. (17):</p>
+<p><span class="math display">
+R^2 = \frac{\left( \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2} \right)^2 \sum_{i=1}^n (x_i - \bar{x})^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
+\tag{27}
+</span></p>
+<p>We can simplify Eq. (27) by canceling one instance of the denominator in the squared term with the factor outside the squared term:</p>
+<p><span class="math display">
+R^2 = \frac{\left[ \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \right]^2}{\sum_{i=1}^n (x_i - \bar{x})^2 \sum_{i=1}^n (y_i - \bar{y})^2}
+\tag{28}
+</span></p>
+<p>Now, let’s multiply both the numerator and denominator of Eq. (28) by <span class="math inline">\frac{1}{(n-1)^2}</span>:</p>
+<p><span class="math display">  
+R^2 = \frac{\left[ \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \right]^2}{\left[ \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2 \right] \left[ \frac{1}{n-1} \sum_{i=1}^n (y_i - \bar{y})^2 \right]}
+\tag{29}
+</span></p>
+<p>The numerator is the square of the sample covariance <span class="math inline">\text{cov}(X, Y)</span>, and the denominator is the product of the sample variances <span class="math inline">\text{var}(X)=\sigma_X^2</span> and <span class="math inline">\text{var}(Y)=\sigma_Y^2</span>:</p>
+<p><span class="math display">
+R^2 = \frac{\text{cov}(X, Y)^2}{\sigma_X^2 \sigma_Y^2} = \left( \frac{\text{cov}(X, Y)}{\sigma_X \sigma_Y} \right)^2
+\tag{30}
+</span></p>
+<p>This is exactly the square of the correlation coefficient <span class="math inline">r</span> (see <a href="../correlation/correlation.html#correlation">here</a>):</p>
+<div class="alert alert-primary">
+<p><span class="math display">
+R^2 = r^2
+\tag{31}
+</span></p>
+</div>
 
 
 </section>
@@ -1002,8 +1071,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../misc/trend_test.html" class="pagination-link" aria-label="trend test">
-        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">trend test</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../correlation/cosine.html" class="pagination-link" aria-label="cosine">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">cosine</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

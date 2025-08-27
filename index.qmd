@@ -6,31 +6,33 @@ I'm teaching myself statistics and machine learning, and the best way to truly u
 
 These are the books that I've read and recommend.
 
----
+
+#### Modern Statistics: Intuition, Math, Python, R  
+by Mike X Cohen
 
 ![](/archive/images/modern_statistics_mike_x_cohen.jpg){height=300px}  
-Modern Statistics: Intuition, Math, Python, R  
-by Mike X Cohen  
+
 [Github](https://github.com/mikexcohen/statistics_book)
 
 This is a really approachable book, the author has a very nice conversational style, and I enjoyed it a lot. Highly recommended
 
 ---
 
+#### Data-Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control  
+by Steven L. Brunton, J. Nathan Kutz
+
 ![](/archive/images/data-driven-brunton-kutz.jpg){height=300px}  
 
-Data-Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control  
-by Steven L. Brunton, J. Nathan Kutz
 The whole book is available in this [website](https://www.databookuw.com/).
 
 This is the sort of books that is suitable for [those who already know the subject](https://aperiodical.com/wp-content/uploads/2022/05/FTBdMZ5XsAAeq8C.png){target="_blank"}. I would not recommend it as a first read. In any case, some chapters gave me new intuition on the subject. I do highly recommend [Steve Brunton's youtube channel](https://www.youtube.com/@Eigensteve/playlists){target="_blank"}, it's fantastic.
 
 ---
 
-![](/archive/images/nielsen-neuralnetworksanddeeplearning.png){height=300px}  
+#### Neural Networks and Deep Learning  
+by Michael Nielsen
 
-Neural Networks and Deep Learning  
-by Michael Nielsen  
+![](/archive/images/nielsen-neuralnetworksanddeeplearning.png){height=300px}  
 
 This is an online book, [freely available here](http://neuralnetworksanddeeplearning.com/index.html){target="_blank"}.
 It can be tiring to read a whole book on a computer screen, so you can find [Anton Vladyka's LaTeX rendition of this book](https://github.com/antonvladyka/neuralnetworksanddeeplearning.com.pdf){target="_blank"} in his GitHub repository. I wanted to read the pdf in my tiny kindle reader, so I recompiled Anton's LaTeX code to make it fit the screen, and on the way changed the font, and corrected typos here and there. [Overleaf project](https://www.overleaf.com/read/hdmntcghxqym#98d001){target="_blank"}. [Download pdf](/archive/deep_learning.pdf){target="_blank"}.

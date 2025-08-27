@@ -41,6 +41,8 @@ book:
       chapters:
         - correlation/correlation.ipynb
         - correlation/linear_regression.ipynb
+        - correlation/cosine.ipynb
+        - correlation/significance.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
