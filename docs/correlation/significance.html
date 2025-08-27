@@ -482,7 +482,7 @@ t = \frac{r - 0}{\sqrt{\frac{1 - r^2}{n - 2}}}
 <span id="cb3-10"><a href="#cb3-10"></a>p <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.t.cdf(np.<span class="bu">abs</span>(t), df<span class="op">=</span>N<span class="op">-</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-6" class="cell" data-execution_count="82">
+<div id="cell-6" class="cell" data-execution_count="86">
 <details class="code-fold">
 <summary>plot</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
@@ -495,13 +495,13 @@ t = \frac{r - 0}{\sqrt{\frac{1 - r^2}{n - 2}}}
 <span id="cb4-8"><a href="#cb4-8"></a></span>
 <span id="cb4-9"><a href="#cb4-9"></a><span class="co"># print p-value</span></span>
 <span id="cb4-10"><a href="#cb4-10"></a><span class="bu">print</span>(<span class="ss">f'our p-value:   </span><span class="sc">{</span>p<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="bu">print</span>(<span class="ss">f'scipy p-value: </span><span class="sc">{</span>p<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="bu">print</span>(<span class="ss">f'scipy p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
 <span id="cb4-12"><a href="#cb4-12"></a></span>
 <span id="cb4-13"><a href="#cb4-13"></a><span class="co"># compute correlation coefficients and their p-values</span></span>
 <span id="cb4-14"><a href="#cb4-14"></a>r <span class="op">=</span> np.corrcoef(x, y)[<span class="dv">0</span>,<span class="dv">1</span>]</span>
 <span id="cb4-15"><a href="#cb4-15"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'x'</span>,</span>
 <span id="cb4-16"><a href="#cb4-16"></a>       ylabel<span class="op">=</span><span class="st">'y'</span>,</span>
-<span id="cb4-17"><a href="#cb4-17"></a>       title<span class="op">=</span><span class="ss">f"Pearson's r = </span><span class="sc">{</span>r<span class="sc">:.3f}</span><span class="ss">, p-value = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-17"><a href="#cb4-17"></a>       title<span class="op">=</span><span class="ss">f"Pearson's r = </span><span class="sc">{</span>rho<span class="sc">:.3f}</span><span class="ss">, p-value = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>our p-value:   0.0458
