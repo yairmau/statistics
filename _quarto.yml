@@ -43,6 +43,10 @@ book:
         - correlation/linear_regression.ipynb
         - correlation/cosine.ipynb
         - correlation/significance.ipynb
+    - part: "bayes"
+      chapters:
+        - bayes/from-the-ground-up.ipynb
+        - bayes/parametric-generative-classification.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb

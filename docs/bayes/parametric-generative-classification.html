@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics and Machine Learning - 21&nbsp; parametric generative classification</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../misc/trend_test.html" rel="next">
+<link href="../bayes/from-the-ground-up.html" rel="prev">
+<link href="../archive/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/parametric-generative-classification.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">parametric generative classification</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics and Machine Learning</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://yairmau.com/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
+    <a href="https://github.com/yairmau/statistics/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/height.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">hypothesis testing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../t_test/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../t_test/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">confidence interval</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">permutation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/permutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">correlation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">bayes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">from the ground up</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question"><span class="header-section-number">21.1</span> question</a></li>
+  <li><a href="#explaining-parametric-generative-classification" id="toc-explaining-parametric-generative-classification" class="nav-link" data-scroll-target="#explaining-parametric-generative-classification"><span class="header-section-number">21.2</span> explaining “parametric generative classification”</a></li>
+  <li><a href="#visualizing-the-problem" id="toc-visualizing-the-problem" class="nav-link" data-scroll-target="#visualizing-the-problem"><span class="header-section-number">21.3</span> visualizing the problem</a></li>
+  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">21.4</span> Bayes’ theorem</a></li>
+  <li><a href="#step-by-step-calculation" id="toc-step-by-step-calculation" class="nav-link" data-scroll-target="#step-by-step-calculation"><span class="header-section-number">21.5</span> Step-by-Step Calculation</a></li>
+  <li><a href="#bonus-connection-with-logistic-regression" id="toc-bonus-connection-with-logistic-regression" class="nav-link" data-scroll-target="#bonus-connection-with-logistic-regression"><span class="header-section-number">21.6</span> Bonus: connection with logistic regression</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/parametric-generative-classification.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">parametric generative classification</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">parametric generative classification</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/bayes/parametric-generative-classification.ipynb">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="question" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="question"><span class="header-section-number">21.1</span> question</h2>
+<p>We are given a list of heights for men and women. Given one more data point (180 cm), could we assign a probability that it belongs to either class?</p>
+<div id="cell-2" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-3" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>generate data</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>df_girls <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/girls_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>age <span class="op">=</span> <span class="fl">20.0</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>mu_boys <span class="op">=</span> df_boys.loc[age, <span class="st">'mu'</span>]</span>
+<span id="cb2-5"><a href="#cb2-5"></a>mu_girls <span class="op">=</span> df_girls.loc[age, <span class="st">'mu'</span>]</span>
+<span id="cb2-6"><a href="#cb2-6"></a>sigma_boys <span class="op">=</span> df_boys.loc[age, <span class="st">'sigma'</span>]</span>
+<span id="cb2-7"><a href="#cb2-7"></a>sigma_girls <span class="op">=</span> df_girls.loc[age, <span class="st">'sigma'</span>]</span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a>N_boys <span class="op">=</span> <span class="dv">150</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>N_girls <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>np.random.seed(<span class="dv">314</span>)  <span class="co"># set scipy seed for reproducibility</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>sample_boys <span class="op">=</span> norm.rvs(size<span class="op">=</span>N_boys, loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>sigma_boys)</span>
+<span id="cb2-13"><a href="#cb2-13"></a>sample_girls <span class="op">=</span> norm.rvs(size<span class="op">=</span>N_girls, loc<span class="op">=</span>mu_girls, scale<span class="op">=</span>sigma_girls)</span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co"># pandas dataframe with the two samples in it</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb2-16"><a href="#cb2-16"></a>    <span class="st">'height (cm)'</span>: np.concatenate([sample_boys, sample_girls]),</span>
+<span id="cb2-17"><a href="#cb2-17"></a>    <span class="st">'sex'</span>: [<span class="st">'M'</span>] <span class="op">*</span> N_boys <span class="op">+</span> [<span class="st">'F'</span>] <span class="op">*</span> N_girls</span>
+<span id="cb2-18"><a href="#cb2-18"></a>})</span>
+<span id="cb2-19"><a href="#cb2-19"></a>df <span class="op">=</span> df.sample(frac<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">314</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-20"><a href="#cb2-20"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">height (cm)</th>
+<th data-quarto-table-cell-role="th">sex</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>178.558416</td>
+<td>M</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>173.334306</td>
+<td>M</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>183.084154</td>
+<td>M</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>178.236047</td>
+<td>F</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>175.868642</td>
+<td>M</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">345</td>
+<td>177.387837</td>
+<td>M</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">346</td>
+<td>157.122325</td>
+<td>F</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">347</td>
+<td>166.891746</td>
+<td>F</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">348</td>
+<td>181.090312</td>
+<td>M</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">349</td>
+<td>171.479631</td>
+<td>M</td>
+</tr>
+</tbody>
+</table>
+
+<p>350 rows × 2 columns</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="explaining-parametric-generative-classification" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="explaining-parametric-generative-classification"><span class="header-section-number">21.2</span> explaining “parametric generative classification”</h2>
+<ul>
+<li><strong>Parametric</strong>: we assume a specific distribution for the data. In this case, we’ll assume a Gaussian distribution. We call this parametric because the distribution can be fully described by a finite set of <strong>parameters</strong> (mean and variance for Gaussian).</li>
+<li><strong>Generative</strong>: we model the distribution of each class separately. This would allow us to <strong>generate</strong> new data points from the learned distributions. “Learned” means estimating the parameters of the distributions from the sample data.</li>
+<li><strong>Classification</strong>: we classify a new data point by comparing the likelihoods of it belonging to each class, given the learned distributions.</li>
+</ul>
+</section>
+<section id="visualizing-the-problem" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="visualizing-the-problem"><span class="header-section-number">21.3</span> visualizing the problem</h2>
+<div id="cell-5" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>are_male <span class="op">=</span> df[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">'M'</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>boys_sample <span class="op">=</span> df[are_male][<span class="st">'height (cm)'</span>].to_numpy()</span>
+<span id="cb3-3"><a href="#cb3-3"></a>girls_sample <span class="op">=</span> df[<span class="op">~</span>are_male][<span class="st">'height (cm)'</span>].to_numpy()</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>xbar_boys <span class="op">=</span> boys_sample.mean()</span>
+<span id="cb3-6"><a href="#cb3-6"></a>xbar_girls <span class="op">=</span> girls_sample.mean()</span>
+<span id="cb3-7"><a href="#cb3-7"></a>s_boys <span class="op">=</span> boys_sample.std(ddof<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a>s_girls <span class="op">=</span> girls_sample.std(ddof<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-6" class="cell" data-execution_count="44">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># plot histogram</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>bins <span class="op">=</span> np.arange(<span class="dv">135</span>, <span class="dv">210</span>, <span class="dv">5</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>ax.hist(boys_sample, bins<span class="op">=</span>bins, alpha<span class="op">=</span><span class="fl">0.3</span>, density<span class="op">=</span><span class="va">True</span>, label<span class="op">=</span><span class="st">'men'</span>, color<span class="op">=</span><span class="st">'tab:blue'</span>, histtype<span class="op">=</span><span class="st">'stepfilled'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>ax.hist(girls_sample, bins<span class="op">=</span>bins, alpha<span class="op">=</span><span class="fl">0.3</span>, density<span class="op">=</span><span class="va">True</span>, label<span class="op">=</span><span class="st">'women'</span>, color<span class="op">=</span><span class="st">'tab:orange'</span>, histtype<span class="op">=</span><span class="st">'stepfilled'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># plot gaussian pdf based on sample mean and std</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>x <span class="op">=</span> np.arange(<span class="dv">135</span>, <span class="dv">210</span>, <span class="fl">0.5</span>)</span>
+<span id="cb4-9"><a href="#cb4-9"></a>pdf_boys <span class="op">=</span> norm.pdf(x, loc<span class="op">=</span>xbar_boys, scale<span class="op">=</span>s_boys)</span>
+<span id="cb4-10"><a href="#cb4-10"></a>pdf_girls <span class="op">=</span> norm.pdf(x, loc<span class="op">=</span>xbar_girls, scale<span class="op">=</span>s_girls)</span>
+<span id="cb4-11"><a href="#cb4-11"></a>ax.plot(x, pdf_boys, color<span class="op">=</span><span class="st">'tab:blue'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>ax.plot(x, pdf_girls, color<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
+<span id="cb4-13"><a href="#cb4-13"></a>h0 <span class="op">=</span> <span class="dv">180</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co"># plot vertical line at h0</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>ax.axvline(h0, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co"># plot circles where each pdf intersects h0</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>likelihood_boys <span class="op">=</span> norm.pdf(h0, loc<span class="op">=</span>xbar_boys, scale<span class="op">=</span>s_boys)</span>
+<span id="cb4-18"><a href="#cb4-18"></a>likelihood_girls <span class="op">=</span> norm.pdf(h0, loc<span class="op">=</span>xbar_girls, scale<span class="op">=</span>s_girls)</span>
+<span id="cb4-19"><a href="#cb4-19"></a>ax.plot(h0, likelihood_boys, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'tab:blue'</span>)</span>
+<span id="cb4-20"><a href="#cb4-20"></a>ax.plot(h0, likelihood_girls, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
+<span id="cb4-21"><a href="#cb4-21"></a></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="bu">print</span>(<span class="ss">f"men:   mean=</span><span class="sc">{</span>xbar_boys<span class="sc">:.1f}</span><span class="ss"> cm, std=</span><span class="sc">{</span>s_boys<span class="sc">:.1f}</span><span class="ss"> cm"</span>)</span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="bu">print</span>(<span class="ss">f"women: mean=</span><span class="sc">{</span>xbar_girls<span class="sc">:.1f}</span><span class="ss"> cm, std=</span><span class="sc">{</span>s_girls<span class="sc">:.1f}</span><span class="ss"> cm"</span>)</span>
+<span id="cb4-24"><a href="#cb4-24"></a></span>
+<span id="cb4-25"><a href="#cb4-25"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-26"><a href="#cb4-26"></a>ax.set_xlabel(<span class="st">'height (cm)'</span>)</span>
+<span id="cb4-27"><a href="#cb4-27"></a>ax.set_ylabel(<span class="st">'pdf'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>men:   mean=177.4 cm, std=6.7 cm
+women: mean=163.5 cm, std=7.3 cm</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parametric-generative-classification_files/figure-html/cell-5-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From the sample data, we can compute the mean and standard deviation for each sex (the generative part). We printed these values above. We can then use these parameters to compute the likelihood of the new data point (180 cm) belonging to each class using the Gaussian probability density function (the parametric part). These are plotted as circles in the graph.</p>
+</section>
+<section id="bayes-theorem" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">21.4</span> Bayes’ theorem</h2>
+<p>We can then use Bayes’ theorem to compute the posterior probabilities of the new data point belonging to each class (the classification part). Bayes’ theorem states that:</p>
+<p><span class="math display">
+P(\text{man} | x) = \frac{P(x | \text{man})}{P(x)} P(\text{man})
+</span></p>
+<ul>
+<li><strong>posterior</strong>, <span class="math inline">P(\text{man} | x)</span>. This is what we are looking for, the probability of a new data point corresponding to a man, given that its height is <span class="math inline">x</span>.</li>
+<li><strong>likelihood</strong>, <span class="math inline">P(x | \text{man})</span>. This is the likelihood of observing a height <span class="math inline">x</span> given that we know it is a man.</li>
+<li><strong>evidence</strong>, <span class="math inline">P(x)</span>. This is the total probability of observing a height <span class="math inline">x</span> across all classes (regardless of sex). It acts as a normalization factor. We calculate the evidence using the law of total probability: <span class="math display">\begin{align*}
+P(x) &amp;= P(x \cap \text{man}) + P(x \cap \text{woman}) \\
+     &amp;=P(x|\text{man})\cdot P(\text{man}) + P(x|\text{woman})\cdot P(\text{woman})
+\end{align*}</span></li>
+<li><strong>prior</strong>, <span class="math inline">P(\text{man})</span>. This is the overall probability of a person being a man in my dataset (regardless of their height).</li>
+</ul>
+<p>Think of this as a “battle of likelihoods,” adjusted for the group sizes. You have two groups, men and women, and you’ve modeled their typical heights. When you get a new height, <span class="math inline">x</span>, you ask two main questions:</p>
+<ol type="1">
+<li><strong>Likelihood Question:</strong> How “typical” is height <span class="math inline">x</span> for a man compared to how typical it is for a woman? If men in your data are generally tall and <span class="math inline">x</span> is a tall height, it’s more likely to be a man. We measure this “typicalness” using a probability distribution.</li>
+<li><strong>Prior Belief Question:</strong> In your dataset, are men or women more common? If your dataset contains 90 women and 10 men, any new person is, initially, more likely to be a woman, regardless of their height.</li>
+</ol>
+</section>
+<section id="step-by-step-calculation" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="step-by-step-calculation"><span class="header-section-number">21.5</span> Step-by-Step Calculation</h2>
+<p><strong>Step 1: Model Your Data</strong></p>
+<p>We assume a Gaussian distribution, and calculate the sample mean and standard deviation for each sex.</p>
+<div id="cell-9" class="cell" data-execution_count="46">
+<div class="cell-output cell-output-stdout">
+<pre><code>men:   mean=177.4 cm, std=6.7 cm
+women: mean=163.5 cm, std=7.3 cm</code></pre>
+</div>
+</div>
+<p><strong>Step 2: Calculate the Priors</strong></p>
+<p>The priors are simply the proportion of each group in the total dataset.</p>
+<p><span class="math display">P(\text{Man}) = \frac{N_\text{men}}{N_\text{men} + N_\text{women}}</span></p>
+<p><span class="math display">P(\text{Woman}) = \frac{N_\text{women}}{N_\text{men} + N_\text{women}}</span></p>
+<p><strong>Step 3: Calculate the Likelihoods</strong></p>
+<p>Using the normal distribution’s probability density function (PDF), find the likelihood of the new height <span class="math inline">h</span> for each model. The PDF formula is:</p>
+<p><span class="math display">f(x | \bar{x}, s) = \frac{1}{s\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\bar{x}}{s}\right)^2}</span></p>
+<ol type="1">
+<li><p><strong>Likelihood for Men:</strong> Plug <span class="math inline">x</span> into the PDF for the men’s model.<br>
+<span class="math inline">P(x | \text{Man}) = f(x | \bar{x}_\text{men}, s_\text{men})</span></p></li>
+<li><p><strong>Likelihood for Women:</strong> Plug <span class="math inline">x</span> into the PDF for the women’s model.<br>
+<span class="math inline">P(x | \text{Woman}) = f(x | \bar{x}_\text{women}, s_\text{women})</span></p></li>
+</ol>
+<p><strong>Step 4: Put It All Together</strong></p>
+<p>Now, apply Bayes’ Theorem. The “evidence” term <span class="math inline">P(x)</span> in the denominator is the sum of all ways you could observe height <span class="math inline">x</span>:</p>
+<p><span class="math display">
+P(x) = P(x | \text{Man}) \cdot P(\text{Man}) + P(x | \text{Woman}) \cdot P(\text{Woman})
+</span></p>
+<p>So, the final calculation for the probability of being a man is:</p>
+<p><span class="math display">
+P(\text{Man} | x) = \frac{P(x | \text{Man}) \cdot P(\text{Man})}{P(x | \text{Man}) \cdot P(\text{Man}) + P(x | \text{Woman}) \cdot P(\text{Woman})}
+</span>.</p>
+<p>Crunching the number gives:</p>
+<div id="cell-11" class="cell" data-execution_count="49">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>h0 <span class="op">=</span> <span class="fl">180.0</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>likelihood_boys <span class="op">=</span> norm.pdf(h0, loc<span class="op">=</span>xbar_boys, scale<span class="op">=</span>s_boys)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>likelihood_girls <span class="op">=</span> norm.pdf(h0, loc<span class="op">=</span>xbar_girls, scale<span class="op">=</span>s_girls)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>prior_boys <span class="op">=</span> N_boys <span class="op">/</span> (N_boys <span class="op">+</span> N_girls)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>prior_girls <span class="op">=</span> N_girls <span class="op">/</span> (N_boys <span class="op">+</span> N_girls)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>evidence <span class="op">=</span> likelihood_boys <span class="op">*</span> prior_boys <span class="op">+</span> likelihood_girls <span class="op">*</span> prior_girls</span>
+<span id="cb7-7"><a href="#cb7-7"></a>p_man_given_180 <span class="op">=</span> likelihood_boys <span class="op">*</span> prior_boys <span class="op">/</span> evidence</span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="bu">print</span>(<span class="ss">f"The probability that the person is a man, given that their height is </span><span class="sc">{</span>h0<span class="sc">:.0f}</span><span class="ss"> cm, is </span><span class="sc">{</span>p_man_given_180 <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>The probability that the person is a man, given that their height is 180 cm, is 90.92%</code></pre>
+</div>
+</div>
+</section>
+<section id="bonus-connection-with-logistic-regression" class="level2" data-number="21.6">
+<h2 data-number="21.6" class="anchored" data-anchor-id="bonus-connection-with-logistic-regression"><span class="header-section-number">21.6</span> Bonus: connection with logistic regression</h2>
+<p>Let’s solve exactly the same problem from a different perspective. Our likelihoods are Gaussian distributions:</p>
+<p><span class="math display">
+P(x|C_k) = \frac{1}{\sqrt{2\pi}\sigma_k} \exp\left(-\frac{(x-\mu_k)^2}{2\sigma_k^2}\right),
+</span></p>
+<p>where <span class="math inline">C_k</span> are the two classes we have, men and women.</p>
+<p>The ratio of the posterior probabilities is often called the odds. Let’s compute its natural logarithm:</p>
+<p><span class="math display">
+a = \ln \frac{P(C_1|x)}{P(C_2|x)} = \ln \frac{P(x|C_1)P(C_1)}{P(x|C_2)P(C_2)}.
+</span></p>
+<p>In this last step, we used Bayes’ theorem to express the posterior probabilities in terms of the likelihoods and priors, and the evidence (denominator) for both terms cancelled out. Continuing:</p>
+<p><span class="math display">\begin{align*}
+a &amp;= \ln \frac{P(x|C_1)}{P(x|C_2)} + \ln \frac{P(C_1)}{P(C_2)} \\
+  &amp;= \ln P(x|C_1) - \ln P(x|C_2) + \ln \frac{P(C_1)}{P(C_2)}.
+\end{align*}</span></p>
+<p>We now calculate the log of the likelihoods:</p>
+<p><span class="math display">
+\ln P(x|C_k) = -\ln \sqrt{2\pi \sigma_k^2} - \frac{(x-\mu_k)^2}{2\sigma_k^2}.
+</span></p>
+<p>We now substitute this into the expression for <span class="math inline">a</span>:</p>
+<p><span class="math display">\begin{align*}
+a &amp;= -\ln \sqrt{2\pi \sigma_1^2} - \frac{(x-\mu_1)^2}{2\sigma_1^2} + \ln \sqrt{2\pi \sigma_2^2} + \frac{(x-\mu_2)^2}{2\sigma_2^2} + \ln \frac{P(C_1)}{P(C_2)} \\
+  &amp;= \ln \frac{\sigma_2}{\sigma_1} + \frac{(x-\mu_2)^2}{2\sigma_2^2} - \frac{(x-\mu_1)^2}{2\sigma_1^2} + \ln \frac{P(C_1)}{P(C_2)}.
+\end{align*}</span></p>
+<p><strong>KEY ASSUMPTION</strong>: if we assume that the two classes have the same variance, <span class="math inline">\sigma_1 = \sigma_2 = \sigma</span>, the expression simplifies to:</p>
+<p><span class="math display">\begin{align*}
+a &amp;= \frac{1}{2\sigma^2} \left( (x-\mu_2)^2 - (x-\mu_1)^2 \right) + \ln \frac{P(C_1)}{P(C_2)} \\
+  &amp;= \frac{1}{2\sigma^2} \left( x^2 - 2x\mu_2 + \mu_2^2 - x^2 + 2x\mu_1 - \mu_1^2 \right) + \ln \frac{P(C_1)}{P(C_2)} \\
+  &amp;= \frac{\mu_1 - \mu_2}{\sigma^2} x + \frac{\mu_2^2 - \mu_1^2}{2\sigma^2} + \ln \frac{P(C_1)}{P(C_2)}.
+\end{align*}</span></p>
+<p>The first term depends on <span class="math inline">x</span> linearly, and the other two terms are constants. We can thus rewrite <span class="math inline">a</span> as:</p>
+<p><span class="math display">
+a = wx + w_0,
+</span></p>
+<p>where <span class="math display">
+w = \frac{\mu_1 - \mu_2}{\sigma^2}, \quad w_0 = \frac{\mu_2^2 - \mu_1^2}{2\sigma^2} + \ln \frac{P(C_1)}{P(C_2)}.
+</span></p>
+<p>Now let’s go back to the definition of <span class="math inline">a</span>:</p>
+<p><span class="math display">\begin{align*}
+a = \ln \frac{P(C_1|x)}{P(C_2|x)} &amp;= wx + w_0 \\
+\ln \frac{P(C_1|x)}{1-P(C_1|x)} &amp;= wx + w_0
+\end{align*}</span></p>
+<p>Here we took advantage of the fact that there are only two categories, so <span class="math inline">P(C_2|x) = 1 - P(C_1|x)</span>. Exponentiating both sides, we get:</p>
+<p><span class="math display">
+\frac{P(C_1|x)}{1-P(C_1|x)} = e^{wx + w_0},
+</span></p>
+<p>and solving for <span class="math inline">P(C_1|x)</span>, we obtain:</p>
+<p><span class="math display">
+P(C_1|x) = \frac{1}{1 + e^{-(wx + w_0)}}.
+</span></p>
+<p>This is exactly the logistic function we use in logistic regression! In other words, under the assumption that the distributions have equal variance, the posterior probability can be expressed as a logistic function of a linear combination of the input feature.</p>
+<p>This is probably the simplest example of a connection between a generative model (Gaussian distributions for each class) and a discriminative model (logistic regression). It would work for other distributions from the exponential family, e.g., Poisson, Bernoulli, Exponential, etc. The one condition they all need to satisfy is that the non-linear part of the log-likelihoods cancels out when we compute the log-odds, leaving a linear function of <span class="math inline">x</span>.</p>
+<p>This page deals with a generative model. We described the data with a pdf and its parameters, from which we could have generated new data points. The logistic regression model is discriminative: it directly models the posterior probabilities without assuming any specific form for the data distribution.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../bayes/from-the-ground-up.html" class="pagination-link" aria-label="from the ground up">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">from the ground up</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../misc/trend_test.html" class="pagination-link" aria-label="trend test">
+        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">trend test</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

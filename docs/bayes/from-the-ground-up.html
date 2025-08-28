@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics and Machine Learning - 20&nbsp; from the ground up</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../bayes/parametric-generative-classification.html" rel="next">
+<link href="../correlation/significance.html" rel="prev">
+<link href="../archive/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">from the ground up</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics and Machine Learning</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://yairmau.com/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
+    <a href="https://github.com/yairmau/statistics/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/height.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">hypothesis testing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../t_test/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../t_test/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">confidence interval</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">permutation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/permutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../permutation/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">correlation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">bayes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">from the ground up</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-scenario" id="toc-the-scenario" class="nav-link active" data-scroll-target="#the-scenario"><span class="header-section-number">20.1</span> the scenario</a></li>
+  <li><a href="#conditional-probability" id="toc-conditional-probability" class="nav-link" data-scroll-target="#conditional-probability"><span class="header-section-number">20.2</span> conditional probability</a></li>
+  <li><a href="#different-perspective" id="toc-different-perspective" class="nav-link" data-scroll-target="#different-perspective"><span class="header-section-number">20.3</span> different perspective</a></li>
+  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">20.4</span> Bayes’ theorem</a></li>
+  <li><a href="#the-law-of-total-probability" id="toc-the-law-of-total-probability" class="nav-link" data-scroll-target="#the-law-of-total-probability"><span class="header-section-number">20.5</span> the law of total probability</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">from the ground up</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">from the ground up</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/bayes/from-the-ground-up.ipynb">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-scenario" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="the-scenario"><span class="header-section-number">20.1</span> the scenario</h2>
+<p>Imagine we’re in a room with a large group of people. We know the group consists of men and women, and we have height measurements for everyone. Someone walks in, we measure their height, but we don’t know if they are a man or a woman. Our goal is to figure out the probability that this person is a man, given their height. For simplicity, let’s say that heights are categorized into three groups: short, medium, and tall. The breakdown of the group is as follows:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Short</th>
+<th>Medium</th>
+<th>Tall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Man</strong></td>
+<td>15</td>
+<td>30</td>
+<td>20</td>
+</tr>
+<tr class="even">
+<td><strong>Woman</strong></td>
+<td>25</td>
+<td>35</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conditional-probability" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="conditional-probability"><span class="header-section-number">20.2</span> conditional probability</h2>
+<p><strong>What is the probability that a person is both a man and tall?</strong></p>
+<p>This is the same as asking: what fraction does the rectangle on the bottom left have with respect to the whole area?</p>
+<div id="cell-3" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-4" class="cell" data-execution_count="57">
+<details class="code-fold">
+<summary>visualize</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb2-2"><a href="#cb2-2"></a>ax.set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>m1, m2, m3 <span class="op">=</span> <span class="dv">15</span>, <span class="dv">30</span>, <span class="dv">20</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>f1, f2, f3 <span class="op">=</span> <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">10</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>m <span class="op">=</span> m1 <span class="op">+</span> m2 <span class="op">+</span> m3</span>
+<span id="cb2-8"><a href="#cb2-8"></a>f <span class="op">=</span> f1 <span class="op">+</span> f2 <span class="op">+</span> f3</span>
+<span id="cb2-9"><a href="#cb2-9"></a>total <span class="op">=</span> m <span class="op">+</span> f</span>
+<span id="cb2-10"><a href="#cb2-10"></a>h1 <span class="op">=</span> m1 <span class="op">+</span> f1</span>
+<span id="cb2-11"><a href="#cb2-11"></a>h2 <span class="op">=</span> m2 <span class="op">+</span> f2</span>
+<span id="cb2-12"><a href="#cb2-12"></a>h3 <span class="op">=</span> m3 <span class="op">+</span> f3</span>
+<span id="cb2-13"><a href="#cb2-13"></a>h <span class="op">=</span> h1 <span class="op">+</span> h2 <span class="op">+</span> h3</span>
+<span id="cb2-14"><a href="#cb2-14"></a></span>
+<span id="cb2-15"><a href="#cb2-15"></a>p_3 <span class="op">=</span> h3 <span class="op">/</span> total</span>
+<span id="cb2-16"><a href="#cb2-16"></a>p_2 <span class="op">=</span> h2 <span class="op">/</span> total</span>
+<span id="cb2-17"><a href="#cb2-17"></a>p_1 <span class="op">=</span> h1 <span class="op">/</span> total</span>
+<span id="cb2-18"><a href="#cb2-18"></a>p_m <span class="op">=</span> m <span class="op">/</span> total</span>
+<span id="cb2-19"><a href="#cb2-19"></a>p_f <span class="op">=</span> f <span class="op">/</span> total</span>
+<span id="cb2-20"><a href="#cb2-20"></a></span>
+<span id="cb2-21"><a href="#cb2-21"></a>p_m_given_1 <span class="op">=</span> m1 <span class="op">/</span> h1</span>
+<span id="cb2-22"><a href="#cb2-22"></a>p_f_given_1 <span class="op">=</span> f1 <span class="op">/</span> h1</span>
+<span id="cb2-23"><a href="#cb2-23"></a>p_m_given_2 <span class="op">=</span> m2 <span class="op">/</span> h2</span>
+<span id="cb2-24"><a href="#cb2-24"></a>p_f_given_2 <span class="op">=</span> f2 <span class="op">/</span> h2</span>
+<span id="cb2-25"><a href="#cb2-25"></a>p_m_given_3 <span class="op">=</span> m3 <span class="op">/</span> h3</span>
+<span id="cb2-26"><a href="#cb2-26"></a>p_f_given_3 <span class="op">=</span> f3 <span class="op">/</span> h3</span>
+<span id="cb2-27"><a href="#cb2-27"></a></span>
+<span id="cb2-28"><a href="#cb2-28"></a>p_1_given_m <span class="op">=</span> m1 <span class="op">/</span> m</span>
+<span id="cb2-29"><a href="#cb2-29"></a>p_2_given_m <span class="op">=</span> m2 <span class="op">/</span> m</span>
+<span id="cb2-30"><a href="#cb2-30"></a>p_3_given_m <span class="op">=</span> m3 <span class="op">/</span> m</span>
+<span id="cb2-31"><a href="#cb2-31"></a>p_1_given_f <span class="op">=</span> f1 <span class="op">/</span> f</span>
+<span id="cb2-32"><a href="#cb2-32"></a>p_2_given_f <span class="op">=</span> f2 <span class="op">/</span> f</span>
+<span id="cb2-33"><a href="#cb2-33"></a>p_3_given_f <span class="op">=</span> f3 <span class="op">/</span> f</span>
+<span id="cb2-34"><a href="#cb2-34"></a></span>
+<span id="cb2-35"><a href="#cb2-35"></a><span class="co"># tall shaded area</span></span>
+<span id="cb2-36"><a href="#cb2-36"></a>ax.fill_between([<span class="dv">0</span>, <span class="dv">1</span>], <span class="dv">0</span>, p_3, color<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb2-37"><a href="#cb2-37"></a><span class="co"># medium shaded area</span></span>
+<span id="cb2-38"><a href="#cb2-38"></a>ax.fill_between([<span class="dv">0</span>, <span class="dv">1</span>], p_3, p_3 <span class="op">+</span> p_2, color<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb2-39"><a href="#cb2-39"></a><span class="co"># man given tall shaded area</span></span>
+<span id="cb2-40"><a href="#cb2-40"></a>ax.fill_between([<span class="dv">0</span>, p_m_given_3], <span class="dv">0</span>, p_3, color<span class="op">=</span><span class="st">"red"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb2-41"><a href="#cb2-41"></a><span class="co"># man given medium shaded area</span></span>
+<span id="cb2-42"><a href="#cb2-42"></a>ax.fill_between([<span class="dv">0</span>, p_m_given_2], p_3, p_3<span class="op">+</span>p_2, color<span class="op">=</span><span class="st">"red"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb2-43"><a href="#cb2-43"></a><span class="co"># man given short shaded area</span></span>
+<span id="cb2-44"><a href="#cb2-44"></a>ax.fill_between([<span class="dv">0</span>, p_m_given_1], p_3<span class="op">+</span>p_2, <span class="fl">1.0</span>, color<span class="op">=</span><span class="st">"red"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb2-45"><a href="#cb2-45"></a></span>
+<span id="cb2-46"><a href="#cb2-46"></a></span>
+<span id="cb2-47"><a href="#cb2-47"></a>sns.despine(ax<span class="op">=</span>ax, top<span class="op">=</span><span class="va">True</span>, right<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-48"><a href="#cb2-48"></a></span>
+<span id="cb2-49"><a href="#cb2-49"></a><span class="co"># tall arrow</span></span>
+<span id="cb2-50"><a href="#cb2-50"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb2-51"><a href="#cb2-51"></a>            (<span class="fl">1.05</span>, <span class="dv">0</span>),</span>
+<span id="cb2-52"><a href="#cb2-52"></a>            (<span class="fl">1.05</span>, p_3),</span>
+<span id="cb2-53"><a href="#cb2-53"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-54"><a href="#cb2-54"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb2-55"><a href="#cb2-55"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb2-56"><a href="#cb2-56"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb2-57"><a href="#cb2-57"></a>                            ),</span>
+<span id="cb2-58"><a href="#cb2-58"></a>)</span>
+<span id="cb2-59"><a href="#cb2-59"></a>ax.text(<span class="fl">1.05</span>, p_3 <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f" tall, </span><span class="sc">{</span>p_3<span class="sc">:.2f}</span><span class="ss">"</span>, va<span class="op">=</span><span class="st">"center"</span>, rotation<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-60"><a href="#cb2-60"></a><span class="co"># medium arrow</span></span>
+<span id="cb2-61"><a href="#cb2-61"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb2-62"><a href="#cb2-62"></a>            (<span class="fl">1.05</span>, p_3),</span>
+<span id="cb2-63"><a href="#cb2-63"></a>            (<span class="fl">1.05</span>, p_2<span class="op">+</span>p_3),</span>
+<span id="cb2-64"><a href="#cb2-64"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-65"><a href="#cb2-65"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb2-66"><a href="#cb2-66"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb2-67"><a href="#cb2-67"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb2-68"><a href="#cb2-68"></a>                            ),</span>
+<span id="cb2-69"><a href="#cb2-69"></a>)</span>
+<span id="cb2-70"><a href="#cb2-70"></a>ax.text(<span class="fl">1.05</span>, p_3 <span class="op">+</span> (p_2) <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f" medium, </span><span class="sc">{</span>p_2<span class="sc">:.2f}</span><span class="ss">"</span>, va<span class="op">=</span><span class="st">"center"</span>, rotation<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-71"><a href="#cb2-71"></a><span class="co"># short arrow</span></span>
+<span id="cb2-72"><a href="#cb2-72"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb2-73"><a href="#cb2-73"></a>            (<span class="fl">1.05</span>, p_2<span class="op">+</span>p_3),</span>
+<span id="cb2-74"><a href="#cb2-74"></a>            (<span class="fl">1.05</span>, <span class="fl">1.0</span>),</span>
+<span id="cb2-75"><a href="#cb2-75"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-76"><a href="#cb2-76"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb2-77"><a href="#cb2-77"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb2-78"><a href="#cb2-78"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb2-79"><a href="#cb2-79"></a>                            ),</span>
+<span id="cb2-80"><a href="#cb2-80"></a>)</span>
+<span id="cb2-81"><a href="#cb2-81"></a>ax.text(<span class="fl">1.05</span>, <span class="fl">1.0</span> <span class="op">-</span> (<span class="fl">1.0</span> <span class="op">-</span> p_2 <span class="op">-</span> p_3) <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f" short, </span><span class="sc">{</span><span class="fl">1.0</span><span class="op">-</span>p_2<span class="op">-</span>p_3<span class="sc">:.2f}</span><span class="ss">"</span>, va<span class="op">=</span><span class="st">"center"</span>, rotation<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-82"><a href="#cb2-82"></a><span class="co"># man given short arrow</span></span>
+<span id="cb2-83"><a href="#cb2-83"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb2-84"><a href="#cb2-84"></a>            (<span class="dv">0</span>, <span class="fl">0.90</span>),</span>
+<span id="cb2-85"><a href="#cb2-85"></a>            (p_m_given_1, <span class="fl">0.90</span>),</span>
+<span id="cb2-86"><a href="#cb2-86"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-87"><a href="#cb2-87"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb2-88"><a href="#cb2-88"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb2-89"><a href="#cb2-89"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb2-90"><a href="#cb2-90"></a>                            ),</span>
+<span id="cb2-91"><a href="#cb2-91"></a>)</span>
+<span id="cb2-92"><a href="#cb2-92"></a>ax.text(p_m_given_1 <span class="op">/</span> <span class="dv">2</span>, <span class="fl">0.92</span>, <span class="ss">f"man | short, </span><span class="sc">{</span>p_m_given_1<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb2-93"><a href="#cb2-93"></a></span>
+<span id="cb2-94"><a href="#cb2-94"></a><span class="co"># woman given short arrow</span></span>
+<span id="cb2-95"><a href="#cb2-95"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb2-96"><a href="#cb2-96"></a>            (<span class="fl">1.0</span> <span class="op">-</span> p_f_given_1, <span class="fl">0.90</span>),</span>
+<span id="cb2-97"><a href="#cb2-97"></a>            (<span class="fl">1.0</span>, <span class="fl">0.90</span>),</span>
+<span id="cb2-98"><a href="#cb2-98"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-99"><a href="#cb2-99"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb2-100"><a href="#cb2-100"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb2-101"><a href="#cb2-101"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb2-102"><a href="#cb2-102"></a>                            ),</span>
+<span id="cb2-103"><a href="#cb2-103"></a>)</span>
+<span id="cb2-104"><a href="#cb2-104"></a>ax.text(<span class="fl">1.0</span> <span class="op">-</span> (p_f_given_1) <span class="op">/</span> <span class="dv">2</span>, <span class="fl">0.92</span>, <span class="ss">f"woman | short, </span><span class="sc">{</span>p_f_given_1<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb2-105"><a href="#cb2-105"></a></span>
+<span id="cb2-106"><a href="#cb2-106"></a><span class="co"># man given medium arrow</span></span>
+<span id="cb2-107"><a href="#cb2-107"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb2-108"><a href="#cb2-108"></a>            (<span class="dv">0</span>, <span class="fl">0.50</span>),</span>
+<span id="cb2-109"><a href="#cb2-109"></a>            (p_m_given_2, <span class="fl">0.50</span>),</span>
+<span id="cb2-110"><a href="#cb2-110"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-111"><a href="#cb2-111"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb2-112"><a href="#cb2-112"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb2-113"><a href="#cb2-113"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb2-114"><a href="#cb2-114"></a>                            ),</span>
+<span id="cb2-115"><a href="#cb2-115"></a>)</span>
+<span id="cb2-116"><a href="#cb2-116"></a>ax.text(p_m_given_2 <span class="op">/</span> <span class="dv">2</span>, <span class="fl">0.52</span>, <span class="ss">f"man | medium, </span><span class="sc">{</span>p_m_given_2<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb2-117"><a href="#cb2-117"></a></span>
+<span id="cb2-118"><a href="#cb2-118"></a><span class="co"># woman given medium arrow</span></span>
+<span id="cb2-119"><a href="#cb2-119"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb2-120"><a href="#cb2-120"></a>            (<span class="fl">1.0</span> <span class="op">-</span> p_f_given_2, <span class="fl">0.50</span>),</span>
+<span id="cb2-121"><a href="#cb2-121"></a>            (<span class="fl">1.0</span>, <span class="fl">0.50</span>),</span>
+<span id="cb2-122"><a href="#cb2-122"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-123"><a href="#cb2-123"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb2-124"><a href="#cb2-124"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb2-125"><a href="#cb2-125"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb2-126"><a href="#cb2-126"></a>                            ),</span>
+<span id="cb2-127"><a href="#cb2-127"></a>)</span>
+<span id="cb2-128"><a href="#cb2-128"></a>ax.text(<span class="fl">1.0</span> <span class="op">-</span> (p_f_given_2) <span class="op">/</span> <span class="dv">2</span>, <span class="fl">0.52</span>, <span class="ss">f"woman | medium, </span><span class="sc">{</span>p_f_given_2<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb2-129"><a href="#cb2-129"></a></span>
+<span id="cb2-130"><a href="#cb2-130"></a><span class="co"># man given tall arrow</span></span>
+<span id="cb2-131"><a href="#cb2-131"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb2-132"><a href="#cb2-132"></a>            (<span class="dv">0</span>, <span class="fl">0.15</span>),</span>
+<span id="cb2-133"><a href="#cb2-133"></a>            (p_m_given_3, <span class="fl">0.15</span>),</span>
+<span id="cb2-134"><a href="#cb2-134"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-135"><a href="#cb2-135"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb2-136"><a href="#cb2-136"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb2-137"><a href="#cb2-137"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb2-138"><a href="#cb2-138"></a>                            ),</span>
+<span id="cb2-139"><a href="#cb2-139"></a>)</span>
+<span id="cb2-140"><a href="#cb2-140"></a>ax.text(p_m_given_3 <span class="op">/</span> <span class="dv">2</span>, <span class="fl">0.17</span>, <span class="ss">f"man | tall, </span><span class="sc">{</span>p_m_given_3<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb2-141"><a href="#cb2-141"></a></span>
+<span id="cb2-142"><a href="#cb2-142"></a><span class="co"># woman given tall arrow</span></span>
+<span id="cb2-143"><a href="#cb2-143"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb2-144"><a href="#cb2-144"></a>            (<span class="fl">1.0</span> <span class="op">-</span> p_f_given_3, <span class="fl">0.15</span>),</span>
+<span id="cb2-145"><a href="#cb2-145"></a>            (<span class="fl">1.0</span>, <span class="fl">0.15</span>),</span>
+<span id="cb2-146"><a href="#cb2-146"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb2-147"><a href="#cb2-147"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb2-148"><a href="#cb2-148"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb2-149"><a href="#cb2-149"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb2-150"><a href="#cb2-150"></a>                            ),</span>
+<span id="cb2-151"><a href="#cb2-151"></a>)</span>
+<span id="cb2-152"><a href="#cb2-152"></a>ax.text(<span class="fl">1.0</span> <span class="op">-</span> (p_f_given_3) <span class="op">/</span> <span class="dv">2</span>, <span class="fl">0.17</span>, <span class="ss">f"woman | tall, </span><span class="sc">{</span>p_f_given_3<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb2-153"><a href="#cb2-153"></a></span>
+<span id="cb2-154"><a href="#cb2-154"></a></span>
+<span id="cb2-155"><a href="#cb2-155"></a>ax.<span class="bu">set</span>(xticks<span class="op">=</span>[],</span>
+<span id="cb2-156"><a href="#cb2-156"></a>       yticks<span class="op">=</span>[],</span>
+<span id="cb2-157"><a href="#cb2-157"></a>       xlabel<span class="op">=</span><span class="st">"sex"</span>,</span>
+<span id="cb2-158"><a href="#cb2-158"></a>       ylabel<span class="op">=</span><span class="st">"height"</span>,)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="from-the-ground-up_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The numbers next to each category denote the proportions. That makes sense: according to the table, most of tall people are men, and most of the short people are women.</li>
+<li>“men | tall” is a short way to write “men given tall”. In simple words, it is the fraction of men, given that we know the person is tall.</li>
+</ul>
+<p>The answer to the question is obvious now. The probability that a person is both <strong>man</strong> and <strong>tall</strong> the product of 0.22 with 0.67.</p>
+<ul>
+<li>22% of people are tall.</li>
+<li>67% of those are men.</li>
+</ul>
+<p>The answer is 0.22 * 0.67 = 0.1474, or about 15%.</p>
+<p>In mathematical notation, we write this as:</p>
+<p><span class="math display">
+P(\text{man } \cap \text{ tall}) = P(\text{tall}) \cdot P(\text{man|tall}),
+\tag{1}
+</span></p>
+<p>where the symbol <span class="math inline">\cap</span> means “and”.</p>
+<p>When Eq. (1) is rewritten in terms of <span class="math inline">P(\text{man|tall})</span>, it is called the equation for conditional probability:</p>
+<p><span class="math display">
+P(\text{man|tall}) = \frac{P(\text{man } \cap \text{ tall})}{P(\text{tall})}.
+</span></p>
+<div class="alert alert-primary">
+<p>Of course, “man” and “tall” are only labels, the general formula we should remember is:</p>
+<p><span class="math display">
+P(A|B) = \frac{P(A \cap B)}{P(B)}.
+</span></p>
+</div>
+</section>
+<section id="different-perspective" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="different-perspective"><span class="header-section-number">20.3</span> different perspective</h2>
+<p>We could have made sense of the data in a different way. Above, we first categorized people by their height, and only then by sex. Let’s try the opposite.</p>
+<div id="cell-6" class="cell">
+<details class="code-fold">
+<summary>visualize the other way</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb3-2"><a href="#cb3-2"></a>ax.set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># tall given man shaded area</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>ax.fill_between([<span class="dv">0</span>, p_m], <span class="dv">0</span>, p_3_given_m, color<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co"># medium given man shaded area</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>ax.fill_between([<span class="dv">0</span>, p_m], p_3_given_m, p_3_given_m<span class="op">+</span>p_2_given_m, color<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co"># man shaded area</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>ax.fill_between([<span class="dv">0</span>, p_m], <span class="dv">0</span>, <span class="fl">1.0</span>, color<span class="op">=</span><span class="st">"red"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># tall given woman shaded area</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>ax.fill_between([p_m, <span class="fl">1.0</span>], <span class="dv">0</span>, p_3_given_f, color<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># medium given man shaded area</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>ax.fill_between([p_m, <span class="fl">1.0</span>], p_3_given_f, p_3_given_f<span class="op">+</span>p_2_given_f, color<span class="op">=</span><span class="st">"blue"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16"></a></span>
+<span id="cb3-17"><a href="#cb3-17"></a>sns.despine(ax<span class="op">=</span>ax, top<span class="op">=</span><span class="va">True</span>, right<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co"># tall given man arrow</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb3-21"><a href="#cb3-21"></a>            (p_m<span class="op">-</span><span class="fl">0.03</span>, <span class="dv">0</span>),</span>
+<span id="cb3-22"><a href="#cb3-22"></a>            (p_m<span class="op">-</span><span class="fl">0.03</span>, p_3_given_m),</span>
+<span id="cb3-23"><a href="#cb3-23"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-25"><a href="#cb3-25"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb3-26"><a href="#cb3-26"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb3-27"><a href="#cb3-27"></a>                            ),</span>
+<span id="cb3-28"><a href="#cb3-28"></a>)</span>
+<span id="cb3-29"><a href="#cb3-29"></a>ax.text(p_m<span class="op">-</span><span class="fl">0.03</span>, p_3_given_m <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f"tall | man, </span><span class="sc">{</span>p_3_given_m<span class="sc">:.2f}</span><span class="ss">  "</span>, ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="co"># medium given man arrow</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb3-32"><a href="#cb3-32"></a>            (p_m<span class="op">-</span><span class="fl">0.03</span>, p_3_given_m),</span>
+<span id="cb3-33"><a href="#cb3-33"></a>            (p_m<span class="op">-</span><span class="fl">0.03</span>, p_3_given_m<span class="op">+</span>p_2_given_m),</span>
+<span id="cb3-34"><a href="#cb3-34"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-35"><a href="#cb3-35"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-36"><a href="#cb3-36"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb3-37"><a href="#cb3-37"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb3-38"><a href="#cb3-38"></a>                            ),</span>
+<span id="cb3-39"><a href="#cb3-39"></a>)</span>
+<span id="cb3-40"><a href="#cb3-40"></a>ax.text(p_m<span class="op">-</span><span class="fl">0.03</span>, p_3_given_m <span class="op">+</span> p_2_given_m <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f"medium | man, </span><span class="sc">{</span>p_2_given_m<span class="sc">:.2f}</span><span class="ss">  "</span>, ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-41"><a href="#cb3-41"></a><span class="co"># short given man arrow</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb3-43"><a href="#cb3-43"></a>            (p_m<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.0</span>),</span>
+<span id="cb3-44"><a href="#cb3-44"></a>            (p_m<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.0</span><span class="op">-</span>p_1_given_m),</span>
+<span id="cb3-45"><a href="#cb3-45"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-46"><a href="#cb3-46"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-47"><a href="#cb3-47"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb3-48"><a href="#cb3-48"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb3-49"><a href="#cb3-49"></a>                            ),</span>
+<span id="cb3-50"><a href="#cb3-50"></a>)</span>
+<span id="cb3-51"><a href="#cb3-51"></a>ax.text(p_m<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.0</span> <span class="op">-</span> p_1_given_m <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f"short | man, </span><span class="sc">{</span>p_1_given_m<span class="sc">:.2f}</span><span class="ss">  "</span>, ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-52"><a href="#cb3-52"></a></span>
+<span id="cb3-53"><a href="#cb3-53"></a><span class="co"># tall given woman arrow</span></span>
+<span id="cb3-54"><a href="#cb3-54"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb3-55"><a href="#cb3-55"></a>            (<span class="fl">1.0</span><span class="op">-</span><span class="fl">0.03</span>, <span class="dv">0</span>),</span>
+<span id="cb3-56"><a href="#cb3-56"></a>            (<span class="fl">1.0</span><span class="op">-</span><span class="fl">0.03</span>, p_3_given_f),</span>
+<span id="cb3-57"><a href="#cb3-57"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-58"><a href="#cb3-58"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-59"><a href="#cb3-59"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb3-60"><a href="#cb3-60"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb3-61"><a href="#cb3-61"></a>                            ),</span>
+<span id="cb3-62"><a href="#cb3-62"></a>)</span>
+<span id="cb3-63"><a href="#cb3-63"></a>ax.text(<span class="fl">1.0</span><span class="op">-</span><span class="fl">0.03</span>, p_3_given_f <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f"tall | woman, </span><span class="sc">{</span>p_3_given_f<span class="sc">:.2f}</span><span class="ss">  "</span>, ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-64"><a href="#cb3-64"></a><span class="co"># medium given woman arrow</span></span>
+<span id="cb3-65"><a href="#cb3-65"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb3-66"><a href="#cb3-66"></a>            (<span class="fl">1.0</span><span class="op">-</span><span class="fl">0.03</span>, p_3_given_f),</span>
+<span id="cb3-67"><a href="#cb3-67"></a>            (<span class="fl">1.0</span><span class="op">-</span><span class="fl">0.03</span>, p_3_given_f<span class="op">+</span>p_2_given_f),</span>
+<span id="cb3-68"><a href="#cb3-68"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-69"><a href="#cb3-69"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-70"><a href="#cb3-70"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb3-71"><a href="#cb3-71"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb3-72"><a href="#cb3-72"></a>                            ),</span>
+<span id="cb3-73"><a href="#cb3-73"></a>)</span>
+<span id="cb3-74"><a href="#cb3-74"></a>ax.text(<span class="fl">1.0</span><span class="op">-</span><span class="fl">0.03</span>, p_3_given_f <span class="op">+</span> p_2_given_f <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f"medium | woman, </span><span class="sc">{</span>p_2_given_f<span class="sc">:.2f}</span><span class="ss">  "</span>, ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-75"><a href="#cb3-75"></a><span class="co"># short given woman arrow</span></span>
+<span id="cb3-76"><a href="#cb3-76"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb3-77"><a href="#cb3-77"></a>            (<span class="fl">1.0</span><span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.0</span>),</span>
+<span id="cb3-78"><a href="#cb3-78"></a>            (<span class="fl">1.0</span><span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.0</span><span class="op">-</span>p_1_given_f),</span>
+<span id="cb3-79"><a href="#cb3-79"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-80"><a href="#cb3-80"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-81"><a href="#cb3-81"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb3-82"><a href="#cb3-82"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb3-83"><a href="#cb3-83"></a>                            ),</span>
+<span id="cb3-84"><a href="#cb3-84"></a>)</span>
+<span id="cb3-85"><a href="#cb3-85"></a>ax.text(<span class="fl">1.0</span><span class="op">-</span><span class="fl">0.03</span>, <span class="fl">1.0</span> <span class="op">-</span> p_1_given_f <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f"short | woman, </span><span class="sc">{</span>p_1_given_f<span class="sc">:.2f}</span><span class="ss">  "</span>, ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-86"><a href="#cb3-86"></a></span>
+<span id="cb3-87"><a href="#cb3-87"></a></span>
+<span id="cb3-88"><a href="#cb3-88"></a><span class="co"># man arrow</span></span>
+<span id="cb3-89"><a href="#cb3-89"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb3-90"><a href="#cb3-90"></a>            (<span class="dv">0</span>, <span class="fl">1.05</span>),</span>
+<span id="cb3-91"><a href="#cb3-91"></a>            (p_m, <span class="fl">1.05</span>),</span>
+<span id="cb3-92"><a href="#cb3-92"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-93"><a href="#cb3-93"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-94"><a href="#cb3-94"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb3-95"><a href="#cb3-95"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb3-96"><a href="#cb3-96"></a>                            ),</span>
+<span id="cb3-97"><a href="#cb3-97"></a>)</span>
+<span id="cb3-98"><a href="#cb3-98"></a>ax.text(p_m <span class="op">/</span> <span class="dv">2</span>, <span class="fl">1.07</span>, <span class="ss">f"man, </span><span class="sc">{</span>p_m<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-99"><a href="#cb3-99"></a><span class="co"># woman arrow</span></span>
+<span id="cb3-100"><a href="#cb3-100"></a>ax.annotate(<span class="st">""</span>,</span>
+<span id="cb3-101"><a href="#cb3-101"></a>            (<span class="fl">1.0</span> <span class="op">-</span> p_f, <span class="fl">1.05</span>),</span>
+<span id="cb3-102"><a href="#cb3-102"></a>            (<span class="fl">1.0</span>, <span class="fl">1.05</span>),</span>
+<span id="cb3-103"><a href="#cb3-103"></a>            ha<span class="op">=</span><span class="st">"right"</span>, va<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-104"><a href="#cb3-104"></a>            size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-105"><a href="#cb3-105"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>,</span>
+<span id="cb3-106"><a href="#cb3-106"></a>                            color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb3-107"><a href="#cb3-107"></a>                            ),</span>
+<span id="cb3-108"><a href="#cb3-108"></a>)</span>
+<span id="cb3-109"><a href="#cb3-109"></a>ax.text(<span class="fl">1.0</span> <span class="op">-</span> (p_f) <span class="op">/</span> <span class="dv">2</span>, <span class="fl">1.07</span>, <span class="ss">f"woman, </span><span class="sc">{</span>p_f<span class="sc">:.2f}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-110"><a href="#cb3-110"></a></span>
+<span id="cb3-111"><a href="#cb3-111"></a>ax.<span class="bu">set</span>(xticks<span class="op">=</span>[],</span>
+<span id="cb3-112"><a href="#cb3-112"></a>       yticks<span class="op">=</span>[],</span>
+<span id="cb3-113"><a href="#cb3-113"></a>       <span class="co"># xlim=(0, 1),</span></span>
+<span id="cb3-114"><a href="#cb3-114"></a>       <span class="co"># ylim=(0, 1),</span></span>
+<span id="cb3-115"><a href="#cb3-115"></a>       xlabel<span class="op">=</span><span class="st">"sex"</span>,</span>
+<span id="cb3-116"><a href="#cb3-116"></a>       ylabel<span class="op">=</span><span class="st">"height"</span>,)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="from-the-ground-up_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The probability that a person is both <strong>man</strong> and <strong>tall</strong> is still the area of the purple rectangle on the bottom left. The rectangle has a different shape, but it has to have the same area. The answer to our question now can be understood thus:</p>
+<ul>
+<li>48% of people are men.</li>
+<li>31% of those are tall.</li>
+</ul>
+<p>The answer is 0.48 * 0.31 = 15%, exactly the same result as before.</p>
+<p>In mathematical notation, we write this as:</p>
+<p><span class="math display">
+P(\text{tall } \cap \text{ man}) = P(\text{man}) \cdot P(\text{tall|man}).
+\tag{2}
+</span></p>
+<div class="alert alert-primary">
+<p>One thing should become clear from the images above. The probability that a person is a man, given that they are tall, <strong>is not the same</strong> as the probability that a person is tall, given that they are a man. In mathematical notation:</p>
+<p><span class="math display">
+P(\text{man|tall}) \neq P(\text{tall|man}).
+</span></p>
+<ul>
+<li><span class="math inline">P(\text{man|tall})</span>: of all tall people, 67% are men.</li>
+<li><span class="math inline">P(\text{tall|man})</span>: of all men, 31% are tall.</li>
+</ul>
+</div>
+</section>
+<section id="bayes-theorem" class="level2" data-number="20.4">
+<h2 data-number="20.4" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">20.4</span> Bayes’ theorem</h2>
+<p>When two things are true at the same time, it doesn’t matter the order we choose to write them. In mathematical notation:</p>
+<p><span class="math display">
+P(A \cap B) = P(B \cap A).
+</span></p>
+<p>Because of this, we equate the right-hand sides of Eqs. (1) and (2), and we get Bayes’ theorem:</p>
+<div class="alert alert-primary">
+<p><span class="math display">
+P(\text{man|tall}) \cdot P(\text{tall}) = P(\text{tall|man}) \cdot P(\text{man})
+</span></p>
+</div>
+<p>Personally, I choose to remember this equation, because it is symmetric. But the more common way to write Bayes’ theorem is to solve for <span class="math inline">P(\text{man|tall})</span>:</p>
+<p><span class="math display">
+P(\text{man|tall}) = \frac{P(\text{tall|man}) \cdot P(\text{man})}{P(\text{tall})},
+</span></p>
+<p>or in general terms:</p>
+<div class="alert alert-primary">
+<p><span class="math display">
+P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}.
+</span></p>
+</div>
+<p>Each term has a name:</p>
+<ul>
+<li><span class="math inline">P(A|B)</span> is the <strong>posterior</strong>. This is what we are trying to find out: the probability of <span class="math inline">A</span> given that we know <span class="math inline">B</span>.</li>
+<li><span class="math inline">P(B|A)</span> is the <strong>likelihood</strong>. This is the probability of <span class="math inline">B</span> given that we know <span class="math inline">A</span>.</li>
+<li><span class="math inline">P(A)</span> is the <strong>prior</strong>. This is what we know about <span class="math inline">A</span> before we know anything about <span class="math inline">B</span>.</li>
+<li><span class="math inline">P(B)</span> is the <strong>evidence</strong>. This is what we know about <span class="math inline">B</span> before we know anything about <span class="math inline">A</span>.</li>
+</ul>
+</section>
+<section id="the-law-of-total-probability" class="level2" data-number="20.5">
+<h2 data-number="20.5" class="anchored" data-anchor-id="the-law-of-total-probability"><span class="header-section-number">20.5</span> the law of total probability</h2>
+<p>In the example above, we had enough information to plug all the numbers into Bayes’ theorem. But this is not always the case. Sometimes, we don’t know <span class="math inline">P(B)</span>, the evidence. In this case, we can compute it using the law of total probability. It is best to give a concrete example.</p>
+<p>A famous use of Bayes’ theorem is in desease testing.</p>
+<ul>
+<li>A given desease affects 1% of the population.</li>
+<li>A test for the desease is 95% accurate. This means that:
+<ul>
+<li>If a person has the desease, the test will be positive 95% of the time.</li>
+<li>If a person does not have the desease, the test will be negative 95% of the time.</li>
+</ul></li>
+<li>A person is randomly selected from the population, and they test positive. Should they be worried? What is the probability that they actually have the desease?</li>
+</ul>
+<p>Let’s translate this into the language of Bayes’ theorem:</p>
+<ul>
+<li><span class="math inline">A</span> is the event “the person has the desease”.</li>
+<li><span class="math inline">B</span> is the event “the test is positive”.</li>
+<li>We need to find <span class="math inline">P(A|B)</span>, the probability that the person has the desease, given that they tested positive.</li>
+<li><span class="math inline">P(A) = 0.01</span> is the prior, the probability that a random person has the desease.</li>
+<li><span class="math inline">P(B|A) = 0.95</span> is the likelihood, the probability that the test is positive, given that the person has the desease.</li>
+</ul>
+<p>We don’t know <span class="math inline">P(B)</span>, the evidence, the probability that a random person tests positive. But we can compute it using the law of total probability:</p>
+<p><span class="math display">\begin{align*}
+P(\text{test is positive}) &amp;= P(\text{test is positive } \textbf{and} \text{ person has the desease}) \\
+                           &amp;+ P(\text{test is positive } \textbf{and} \text{ person doesn't have the desease}).
+\end{align*}</span></p>
+<p>This has to be true, because a person can either have the desease or not. In a more compact form:</p>
+<p><span class="math display">
+P(B) = P(B \cap A) + P(B \cap A^c),
+</span></p>
+<p>where <span class="math inline">A^c</span> is the complement of <span class="math inline">A</span>, i.e., “the person does not have the desease”.</p>
+<p>Using the definition of conditional probability, we can rewrite this as: <span class="math display">
+P(B) = P(B|A) \cdot P(A) + P(B|A^c) \cdot P(A^c).
+</span> We know all the terms on the right-hand side:</p>
+<ul>
+<li><span class="math inline">P(B|A) = 0.95</span>, the probability that the test is positive, given that the person has the desease.</li>
+<li><span class="math inline">P(A) = 0.01</span>, the probability that a random person has the desease.</li>
+<li><span class="math inline">P(A^c) = 0.99</span>, the probability that a random person does not have the desease.</li>
+<li><span class="math inline">P(B|A^c) = 0.05</span>, the probability that the test is positive, given that the person does not have the desease. This is 1 minus the accuracy of the test for healthy people.</li>
+</ul>
+<p>Plugging in the numbers, we get:</p>
+<p><span class="math display">
+P(B) = 0.95 \cdot 0.01 + 0.05 \cdot 0.99 = 0.059.
+</span></p>
+<p>Now we have everything we need to plug the numbers into Bayes’ theorem:</p>
+<p><span class="math display">
+P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} = \frac{0.95 \cdot 0.01}{0.059} = 0.161.
+</span></p>
+<p>This means that, even if the person tested positive, there is only a 16.1% chance that they actually have the desease. This is counter-intuitive, but it makes sense when we think about it. The desease is very rare, so even if the test is accurate, most of the positive results will be false positives.</p>
+<p>In the case that there are several mutually exclusive ways for <span class="math inline">B</span> to happen, we can generalize the law of total probability:</p>
+<p><span class="math display">
+P(B) = \sum_i P(B \cap A_i) = \sum_i P(B|A_i) \cdot P(A_i),
+</span></p>
+<p>where the <span class="math inline">A_i</span> are all the possible ways for <span class="math inline">B</span> to happen.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../correlation/significance.html" class="pagination-link" aria-label="significance (p-value)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../bayes/parametric-generative-classification.html" class="pagination-link" aria-label="parametric generative classification">
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
