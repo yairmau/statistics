@@ -37,6 +37,7 @@ book:
         - regression/equivalence.ipynb
         - regression/partitioning.ipynb
         - regression/mixed-model.ipynb
+        - regression/logistic-regression.ipynb
     - part: "correlation"
       chapters:
         - correlation/correlation.ipynb
@@ -47,6 +48,7 @@ book:
       chapters:
         - bayes/from-the-ground-up.ipynb
         - bayes/parametric-generative-classification.ipynb
+        - bayes/odds.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
