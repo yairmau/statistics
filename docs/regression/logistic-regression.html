@@ -448,6 +448,7 @@ window.Quarto = {
   <li><a href="#likelihood" id="toc-likelihood" class="nav-link" data-scroll-target="#likelihood"><span class="header-section-number">16.3</span> likelihood</a></li>
   <li><a href="#log-likelihood" id="toc-log-likelihood" class="nav-link" data-scroll-target="#log-likelihood"><span class="header-section-number">16.4</span> log-likelihood</a></li>
   <li><a href="#binary-cross-entropy-or-log-loss" id="toc-binary-cross-entropy-or-log-loss" class="nav-link" data-scroll-target="#binary-cross-entropy-or-log-loss"><span class="header-section-number">16.5</span> binary cross-entropy, or log loss</a></li>
+  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up"><span class="header-section-number">16.6</span> wrapping up</a></li>
   </ul>
 </nav>
     </div>
@@ -789,6 +790,77 @@ Likelihood for worse 2:  0.3173593316343797</code></pre>
 J(\beta_0, \beta_1) = -\ell(\beta_0, \beta_1) = -\sum_{i=1}^{N} \left( y_i \log P_i + (1-y_i) \log (1-P_i) \right).
 </span> This cost function is also known as binary cross-entropy or log loss.</p>
 <p>It turns out that taking the log of the likelihood is very convenient. What was before only a trick to avoid numerical issues, now has a nice interpretation. The cross-entropy can be thought of as a measure of “surprise”. The more the model is surprised by the data, the higher the cross-entropy, and the poorer the fit. The less surprised the model is by the data, the lower the cross-entropy, and the better the fit.</p>
+</section>
+<section id="wrapping-up" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="wrapping-up"><span class="header-section-number">16.6</span> wrapping up</h2>
+<p>From the provided data:</p>
+<ul>
+<li>What is the probability that a person whose height is 180 cm is a man?</li>
+<li>If we had to choose one height to discriminate between men and women, what would it be?</li>
+</ul>
+<p>Let’s run the code for the logistic regression again:</p>
+<div id="cell-16" class="cell" data-execution_count="36">
+<details class="code-fold">
+<summary>compute logistic regression and plot</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>X <span class="op">=</span> df[<span class="st">'height (cm)'</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>y <span class="op">=</span> df[<span class="st">'sex'</span>].<span class="bu">map</span>({<span class="st">'M'</span>: <span class="dv">1</span>, <span class="st">'F'</span>: <span class="dv">0</span>}).values</span>
+<span id="cb10-3"><a href="#cb10-3"></a>log_reg_2 <span class="op">=</span> LogisticRegression(penalty<span class="op">=</span><span class="va">None</span>, solver <span class="op">=</span> <span class="st">'newton-cg'</span>, max_iter<span class="op">=</span> <span class="dv">150</span>).fit(X,y)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>beta1 <span class="op">=</span> log_reg_2.coef_[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb10-5"><a href="#cb10-5"></a>beta0 <span class="op">=</span> log_reg_2.intercept_[<span class="dv">0</span>]</span>
+<span id="cb10-6"><a href="#cb10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co">#| code-summary: "plot " </span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb10-9"><a href="#cb10-9"></a>ax.plot(sample_girls, np.zeros_like(sample_girls),</span>
+<span id="cb10-10"><a href="#cb10-10"></a>        linestyle<span class="op">=</span><span class="st">'None'</span>, marker<span class="op">=</span><span class="st">'o'</span>,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>        markerfacecolor<span class="op">=</span><span class="st">'none'</span>, markeredgecolor<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12"></a>ax.plot(sample_boys, np.ones_like(sample_boys),</span>
+<span id="cb10-13"><a href="#cb10-13"></a>        linestyle<span class="op">=</span><span class="st">'None'</span>, marker<span class="op">=</span><span class="st">'o'</span>,</span>
+<span id="cb10-14"><a href="#cb10-14"></a>        markerfacecolor<span class="op">=</span><span class="st">'none'</span>, markeredgecolor<span class="op">=</span><span class="st">'tab:blue'</span>)</span>
+<span id="cb10-15"><a href="#cb10-15"></a></span>
+<span id="cb10-16"><a href="#cb10-16"></a>x_array <span class="op">=</span> np.linspace(<span class="dv">140</span>, <span class="dv">200</span>, <span class="dv">300</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb10-17"><a href="#cb10-17"></a>y_proba <span class="op">=</span> log_reg_2.predict_proba(x_array)[:, <span class="dv">1</span>]</span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="co"># ax.plot(x_array, y_proba, color='black')</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a>ax.plot(x_array, logistic_function(x_array, beta0, beta1), color<span class="op">=</span><span class="st">'black'</span>, label<span class="op">=</span><span class="st">"best fit"</span>)</span>
+<span id="cb10-20"><a href="#cb10-20"></a></span>
+<span id="cb10-21"><a href="#cb10-21"></a>h <span class="op">=</span> <span class="fl">180.0</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a>p180 <span class="op">=</span> log_reg_2.predict_proba(np.array([[h]]))[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb10-23"><a href="#cb10-23"></a>ax.plot([h, h], [<span class="dv">0</span>, p180], color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
+<span id="cb10-24"><a href="#cb10-24"></a>ax.plot([np.<span class="bu">min</span>(x_array), h], [p180, p180], color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
+<span id="cb10-25"><a href="#cb10-25"></a>ax.text(h<span class="op">+</span><span class="dv">1</span>, p180<span class="op">-</span><span class="fl">0.05</span>, <span class="ss">f"P(</span><span class="sc">{</span>h<span class="sc">}</span><span class="ss"> cm)=</span><span class="sc">{</span>p180<span class="sc">:.2f}</span><span class="ss">"</span>, color<span class="op">=</span><span class="st">'gray'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb10-26"><a href="#cb10-26"></a></span>
+<span id="cb10-27"><a href="#cb10-27"></a>p_50percent <span class="op">=</span> <span class="op">-</span>beta0 <span class="op">/</span> beta1</span>
+<span id="cb10-28"><a href="#cb10-28"></a>ax.plot([p_50percent, p_50percent], [<span class="dv">0</span>, <span class="fl">0.5</span>], color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
+<span id="cb10-29"><a href="#cb10-29"></a>ax.plot([np.<span class="bu">min</span>(x_array), p_50percent], [<span class="fl">0.5</span>, <span class="fl">0.5</span>], color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">':'</span>)</span>
+<span id="cb10-30"><a href="#cb10-30"></a>ax.text(p_50percent<span class="op">-</span><span class="dv">1</span>, <span class="fl">0.5</span><span class="op">+</span><span class="fl">0.05</span>, <span class="ss">f"P(</span><span class="sc">{</span>p_50percent<span class="sc">:.0f}</span><span class="ss"> cm)=0.5"</span>, color<span class="op">=</span><span class="st">'gray'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb10-31"><a href="#cb10-31"></a></span>
+<span id="cb10-32"><a href="#cb10-32"></a></span>
+<span id="cb10-33"><a href="#cb10-33"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="dv">140</span>, <span class="dv">200</span>),</span>
+<span id="cb10-34"><a href="#cb10-34"></a>       xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
+<span id="cb10-35"><a href="#cb10-35"></a>       ylabel<span class="op">=</span><span class="st">"P"</span>,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="logistic-regression_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Answers:</p>
+<ul>
+<li>The probability that a person 180 cm tall is a man is 92%.</li>
+<li>The height that best discriminates between men (above) and women (below) is 171 cm.</li>
+</ul>
+<p>This last result follows directly from:</p>
+<p><span class="math display">\begin{align*}
+P(x) = \frac{1}{1+\exp[-(\beta_0+\beta_1 x)]} &amp;= \frac{1}{2} \\
+&amp; \text{therefore} \\
+1+\exp[-(\beta_0+\beta_1 x)] &amp;= 2 \\
+\exp[-(\beta_0+\beta_1 x)] &amp;= 1 \\
+-(\beta_0+\beta_1 x) &amp;= 0 \\
+x &amp;= -\frac{\beta_0}{\beta_1}
+\end{align*}</span></p>
+<p>Compare this result with the one we obtained with the <a href="../bayes/parametric-generative-classification.html">parametric generative model</a> discussed in the Bayes’ theorem section.</p>
 
 
 </section>

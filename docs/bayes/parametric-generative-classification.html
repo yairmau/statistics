@@ -477,7 +477,7 @@ window.Quarto = {
 <section id="question" class="level2" data-number="22.1">
 <h2 data-number="22.1" class="anchored" data-anchor-id="question"><span class="header-section-number">22.1</span> question</h2>
 <p>We are given a list of heights for men and women. Given one more data point (180 cm), could we assign a probability that it belongs to either class?</p>
-<div id="cell-2" class="cell" data-execution_count="4">
+<div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -488,7 +488,7 @@ window.Quarto = {
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-3" class="cell" data-execution_count="9">
+<div id="cell-3" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>generate data</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
@@ -512,7 +512,7 @@ window.Quarto = {
 <span id="cb2-19"><a href="#cb2-19"></a>df <span class="op">=</span> df.sample(frac<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">314</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb2-20"><a href="#cb2-20"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <div>
 
@@ -600,7 +600,7 @@ window.Quarto = {
 </section>
 <section id="visualizing-the-problem" class="level2" data-number="22.3">
 <h2 data-number="22.3" class="anchored" data-anchor-id="visualizing-the-problem"><span class="header-section-number">22.3</span> visualizing the problem</h2>
-<div id="cell-5" class="cell" data-execution_count="15">
+<div id="cell-5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>are_male <span class="op">=</span> df[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">'M'</span></span>
@@ -613,7 +613,7 @@ window.Quarto = {
 <span id="cb3-8"><a href="#cb3-8"></a>s_girls <span class="op">=</span> girls_sample.std(ddof<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-6" class="cell" data-execution_count="44">
+<div id="cell-6" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
@@ -683,7 +683,7 @@ P(x) &amp;= P(x \cap \text{man}) + P(x \cap \text{woman}) \\
 <h2 data-number="22.5" class="anchored" data-anchor-id="step-by-step-calculation"><span class="header-section-number">22.5</span> Step-by-Step Calculation</h2>
 <p><strong>Step 1: Model Your Data</strong></p>
 <p>We assume a Gaussian distribution, and calculate the sample mean and standard deviation for each sex.</p>
-<div id="cell-9" class="cell" data-execution_count="46">
+<div id="cell-9" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>men:   mean=177.4 cm, std=6.7 cm
 women: mean=163.5 cm, std=7.3 cm</code></pre>
@@ -712,7 +712,7 @@ P(x) = P(x | \text{Man}) \cdot P(\text{Man}) + P(x | \text{Woman}) \cdot P(\text
 P(\text{Man} | x) = \frac{P(x | \text{Man}) \cdot P(\text{Man})}{P(x | \text{Man}) \cdot P(\text{Man}) + P(x | \text{Woman}) \cdot P(\text{Woman})}
 </span>.</p>
 <p>Crunching the number gives:</p>
-<div id="cell-11" class="cell" data-execution_count="49">
+<div id="cell-11" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>h0 <span class="op">=</span> <span class="fl">180.0</span></span>
@@ -722,11 +722,14 @@ P(\text{Man} | x) = \frac{P(x | \text{Man}) \cdot P(\text{Man})}{P(x | \text{Man
 <span id="cb7-5"><a href="#cb7-5"></a>prior_girls <span class="op">=</span> N_girls <span class="op">/</span> (N_boys <span class="op">+</span> N_girls)</span>
 <span id="cb7-6"><a href="#cb7-6"></a>evidence <span class="op">=</span> likelihood_boys <span class="op">*</span> prior_boys <span class="op">+</span> likelihood_girls <span class="op">*</span> prior_girls</span>
 <span id="cb7-7"><a href="#cb7-7"></a>p_man_given_180 <span class="op">=</span> likelihood_boys <span class="op">*</span> prior_boys <span class="op">/</span> evidence</span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="bu">print</span>(<span class="ss">f"The probability that the person is a man, given that their height is </span><span class="sc">{</span>h0<span class="sc">:.0f}</span><span class="ss"> cm, is </span><span class="sc">{</span>p_man_given_180 <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="bu">print</span>(<span class="ss">f"Answer: </span><span class="sc">{</span>p_man_given_180 <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>The probability that the person is a man, given that their height is 180 cm, is 90.92%</code></pre>
+<pre><code>Answer: 90.92%.</code></pre>
 </div>
+</div>
+<div class="alert alert-primary">
+<p>The probability that the person is a man, given that their height is 180 cm, is 90.92%</p>
 </div>
 </section>
 <section id="bonus-connection-with-logistic-regression" class="level2" data-number="22.6">
