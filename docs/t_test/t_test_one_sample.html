@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistics and Machine Learning - 2&nbsp; one-sample t-test</title>
+<title>Statistics and Machine Learning - 3&nbsp; one-sample t-test</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../t_test/t_test_independent_samples.html" rel="next">
-<link href="../data/height.html" rel="prev">
+<link href="../data/weight.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -164,7 +164,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../t_test/t_test_one_sample.html">hypothesis testing</a></li><li class="breadcrumb-item"><a href="../t_test/t_test_one_sample.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">one-sample t-test</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../t_test/t_test_one_sample.html">hypothesis testing</a></li><li class="breadcrumb-item"><a href="../t_test/t_test_one_sample.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -217,6 +217,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/weight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -231,13 +237,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../t_test/t_test_one_sample.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../t_test/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
   </div>
 </li>
       </ul>
@@ -254,19 +260,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
   </div>
 </li>
       </ul>
@@ -283,25 +289,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../permutation/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../permutation/permutation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../permutation/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../permutation/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
   </div>
 </li>
       </ul>
@@ -318,37 +324,43 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
   </div>
 </li>
       </ul>
@@ -365,25 +377,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
   </div>
 </li>
       </ul>
@@ -400,19 +412,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">from the ground up</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">from the ground up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
   </div>
 </li>
       </ul>
@@ -429,7 +441,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -444,20 +456,20 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question"><span class="header-section-number">2.1</span> Question</a></li>
-  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">2.2</span> Hypotheses</a></li>
-  <li><a href="#increase-the-sample-size" id="toc-increase-the-sample-size" class="nav-link" data-scroll-target="#increase-the-sample-size"><span class="header-section-number">2.3</span> increase the sample size</a></li>
-  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2"><span class="header-section-number">2.4</span> Question 2</a></li>
-  <li><a href="#hypotheses-1" id="toc-hypotheses-1" class="nav-link" data-scroll-target="#hypotheses-1"><span class="header-section-number">2.5</span> Hypotheses</a></li>
+  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question"><span class="header-section-number">3.1</span> Question</a></li>
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">3.2</span> Hypotheses</a></li>
+  <li><a href="#increase-the-sample-size" id="toc-increase-the-sample-size" class="nav-link" data-scroll-target="#increase-the-sample-size"><span class="header-section-number">3.3</span> increase the sample size</a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2"><span class="header-section-number">3.4</span> Question 2</a></li>
+  <li><a href="#hypotheses-1" id="toc-hypotheses-1" class="nav-link" data-scroll-target="#hypotheses-1"><span class="header-section-number">3.5</span> Hypotheses</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../t_test/t_test_one_sample.html">hypothesis testing</a></li><li class="breadcrumb-item"><a href="../t_test/t_test_one_sample.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">one-sample t-test</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../t_test/t_test_one_sample.html">hypothesis testing</a></li><li class="breadcrumb-item"><a href="../t_test/t_test_one_sample.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">one-sample t-test</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/t_test/t_test_one_sample.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/t_test/t_test_one_sample.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -474,12 +486,12 @@ window.Quarto = {
 </header>
 
 
-<section id="question" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="question"><span class="header-section-number">2.1</span> Question</h2>
+<section id="question" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="question"><span class="header-section-number">3.1</span> Question</h2>
 <p>I measured the height of 10 adult men. Were they sampled from the general population of men?</p>
 </section>
-<section id="hypotheses" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="hypotheses"><span class="header-section-number">2.2</span> Hypotheses</h2>
+<section id="hypotheses" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="hypotheses"><span class="header-section-number">3.2</span> Hypotheses</h2>
 <ul>
 <li>Null hypothesis: The sample mean is equal to the population mean. In this case, the answer would be “yes”</li>
 <li>Alternative hypothesis: The sample mean is not equal to the population mean. Answer would be “no”.</li>
@@ -628,8 +640,8 @@ t-value (scipy): 1.759</code></pre>
 </div>
 <p>The p value is the fraction of the t distribution that is more extreme than the observed t value. If the p value is less than the significance level, we reject the null hypothesis. In this case, the p value is larger than the significance level, so we fail to reject the null hypothesis. This means that we do not have enough evidence to say that the sample mean is different from the population mean. In other words, we cannot conclude that the 10 men samples were drawn from a distribution different than the general population.</p>
 </section>
-<section id="increase-the-sample-size" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="increase-the-sample-size"><span class="header-section-number">2.3</span> increase the sample size</h2>
+<section id="increase-the-sample-size" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="increase-the-sample-size"><span class="header-section-number">3.3</span> increase the sample size</h2>
 <p>Let’s see what happens when we increase the sample size to 100.</p>
 <div id="cell-12" class="cell" data-execution_count="7">
 <details class="code-fold">
@@ -741,12 +753,12 @@ p-value: 0.009</code></pre>
 </div>
 </div>
 </section>
-<section id="question-2" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="question-2"><span class="header-section-number">2.4</span> Question 2</h2>
+<section id="question-2" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="question-2"><span class="header-section-number">3.4</span> Question 2</h2>
 <p>Can we say that the sampled men are taller than the general population?</p>
 </section>
-<section id="hypotheses-1" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="hypotheses-1"><span class="header-section-number">2.5</span> Hypotheses</h2>
+<section id="hypotheses-1" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="hypotheses-1"><span class="header-section-number">3.5</span> Hypotheses</h2>
 <ul>
 <li>Null hypothesis: The sample mean is equal to the population mean.</li>
 <li>Alternative hypothesis: The sample mean is higher the population mean.</li>
@@ -1279,13 +1291,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../data/height.html" class="pagination-link" aria-label="height data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span>
+      <a href="../data/weight.html" class="pagination-link" aria-label="weight data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../t_test/t_test_independent_samples.html" class="pagination-link" aria-label="independent samples t-test">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

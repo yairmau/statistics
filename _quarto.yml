@@ -14,7 +14,7 @@ book:
     - part: "data"
       chapters:
         - data/height.ipynb
-        # - data/weight.ipynb
+        - data/weight.ipynb
     - part: "hypothesis testing"
       chapters:
         - t_test/t_test_one_sample.ipynb
@@ -38,6 +38,7 @@ book:
         - regression/partitioning.ipynb
         - regression/mixed-model.ipynb
         - regression/logistic-regression.ipynb
+        - regression/logistic_2d.ipynb
     - part: "correlation"
       chapters:
         - correlation/correlation.ipynb

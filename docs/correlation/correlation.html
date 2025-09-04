@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistics and Machine Learning - 17&nbsp; correlation</title>
+<title>Statistics and Machine Learning - 19&nbsp; correlation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../correlation/linear_regression.html" rel="next">
-<link href="../regression/logistic-regression.html" rel="prev">
+<link href="../regression/logistic_2d.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -126,7 +126,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../correlation/correlation.html">correlation</a></li><li class="breadcrumb-item"><a href="../correlation/correlation.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../correlation/correlation.html">correlation</a></li><li class="breadcrumb-item"><a href="../correlation/correlation.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">correlation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -179,6 +179,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/weight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -193,13 +199,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../t_test/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../t_test/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,19 +222,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
   </div>
 </li>
       </ul>
@@ -245,25 +251,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../permutation/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../permutation/permutation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../permutation/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../permutation/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
   </div>
 </li>
       </ul>
@@ -280,37 +286,43 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
   </div>
 </li>
       </ul>
@@ -327,25 +339,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
   </div>
 </li>
       </ul>
@@ -362,19 +374,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">from the ground up</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">from the ground up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
   </div>
 </li>
       </ul>
@@ -391,7 +403,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -406,21 +418,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#variance" id="toc-variance" class="nav-link active" data-scroll-target="#variance"><span class="header-section-number">17.1</span> variance</a></li>
-  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance"><span class="header-section-number">17.2</span> covariance</a></li>
-  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">17.3</span> correlation</a></li>
-  <li><a href="#pearson-correlation-coefficient" id="toc-pearson-correlation-coefficient" class="nav-link" data-scroll-target="#pearson-correlation-coefficient"><span class="header-section-number">17.4</span> Pearson correlation coefficient</a></li>
-  <li><a href="#covariance-of-z-scored-variables" id="toc-covariance-of-z-scored-variables" class="nav-link" data-scroll-target="#covariance-of-z-scored-variables"><span class="header-section-number">17.5</span> covariance of z-scored variables</a></li>
-  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity"><span class="header-section-number">17.6</span> linearity</a></li>
+  <li><a href="#variance" id="toc-variance" class="nav-link active" data-scroll-target="#variance"><span class="header-section-number">19.1</span> variance</a></li>
+  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance"><span class="header-section-number">19.2</span> covariance</a></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">19.3</span> correlation</a></li>
+  <li><a href="#pearson-correlation-coefficient" id="toc-pearson-correlation-coefficient" class="nav-link" data-scroll-target="#pearson-correlation-coefficient"><span class="header-section-number">19.4</span> Pearson correlation coefficient</a></li>
+  <li><a href="#covariance-of-z-scored-variables" id="toc-covariance-of-z-scored-variables" class="nav-link" data-scroll-target="#covariance-of-z-scored-variables"><span class="header-section-number">19.5</span> covariance of z-scored variables</a></li>
+  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity"><span class="header-section-number">19.6</span> linearity</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../correlation/correlation.html">correlation</a></li><li class="breadcrumb-item"><a href="../correlation/correlation.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../correlation/correlation.html">correlation</a></li><li class="breadcrumb-item"><a href="../correlation/correlation.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">correlation</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">correlation</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/correlation/correlation.ipynb"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">correlation</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/correlation/correlation.ipynb"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -437,8 +449,8 @@ window.Quarto = {
 </header>
 
 
-<section id="variance" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="variance"><span class="header-section-number">17.1</span> variance</h2>
+<section id="variance" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="variance"><span class="header-section-number">19.1</span> variance</h2>
 <p>To understand correlation, we need to start with variance. Let’s say <span class="math inline">X</span> is a random variable with mean <span class="math inline">\mu</span>. The variance of <span class="math inline">X</span>, denoted <span class="math inline">\text{var}(X)=\sigma^2</span>, is defined as the expected value of the squared deviation from the mean:</p>
 <p><span class="math display">
 \sigma^2 = \text{var}(X) = E[(X - \mu)^2] = \frac{1}{N} \sum_{i=1}^{N} (X_i - \mu)^2.
@@ -446,16 +458,16 @@ window.Quarto = {
 <p>I should point out that the formula above is for the <em>population</em> variance. If we are working with a <em>sample</em>, we would use <span class="math inline">N-1</span> in the denominator instead of <span class="math inline">N</span> to get an unbiased estimate of the population variance. Also, the mean and variance for the sample are denoted <span class="math inline">\bar{X}</span> and <span class="math inline">s^2</span> respectively. In any case, let’s continue with the population variance for simplicity.</p>
 <p>In simple words, the variance measures how much the values of <span class="math inline">X</span> deviate from the mean <span class="math inline">\mu</span>. A high variance indicates that the data points are spread out over a wider range of values, while a low variance indicates that they are closer to the mean.</p>
 </section>
-<section id="covariance" class="level2" data-number="17.2">
-<h2 data-number="17.2" class="anchored" data-anchor-id="covariance"><span class="header-section-number">17.2</span> covariance</h2>
+<section id="covariance" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="covariance"><span class="header-section-number">19.2</span> covariance</h2>
 <p>Now, let’s consider two random variables, <span class="math inline">X</span> and <span class="math inline">Y</span>, with means <span class="math inline">\mu_X</span> and <span class="math inline">\mu_Y</span>. The covariance between <span class="math inline">X</span> and <span class="math inline">Y</span>, denoted <span class="math inline">\text{cov}(X, Y)</span>, is defined as:</p>
 <p><span class="math display">
 \text{cov}(X, Y) = E[(X - \mu_X)(Y - \mu_Y)] = \frac{1}{N} \sum_{i=1}^{N} (X_i - \mu_X)(Y_i - \mu_Y).
 </span></p>
 <p>A high covariance indicates that when <span class="math inline">X</span> is above its mean, <span class="math inline">Y</span> tends to be above its mean as well (and vice versa). A low (or negative) covariance indicates that when <span class="math inline">X</span> is above its mean, <span class="math inline">Y</span> tends to be below its mean.</p>
 </section>
-<section id="correlation" class="level2" data-number="17.3">
-<h2 data-number="17.3" class="anchored" data-anchor-id="correlation"><span class="header-section-number">17.3</span> correlation</h2>
+<section id="correlation" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="correlation"><span class="header-section-number">19.3</span> correlation</h2>
 <p>The covariance can be any value, making it difficult to interpret. To standardize the measure, we use the correlation coefficient, denoted <span class="math inline">\rho</span> (for population) or <span class="math inline">r</span> (for sample). The correlation coefficient is defined as:</p>
 <p><span class="math display">\begin{align*}
 \rho_{X,Y} &amp;= \frac{\text{cov}(X, Y)}{\sigma_X \sigma_Y} \\
@@ -469,12 +481,12 @@ window.Quarto = {
 </span></p>
 <p>The highest possible correlation is 1, which indicates a perfect positive linear relationship between the two variables. The lowest possible correlation is -1, which indicates a perfect negative linear relationship. A correlation of 0 indicates no linear relationship between the variables.</p>
 </section>
-<section id="pearson-correlation-coefficient" class="level2" data-number="17.4">
-<h2 data-number="17.4" class="anchored" data-anchor-id="pearson-correlation-coefficient"><span class="header-section-number">17.4</span> Pearson correlation coefficient</h2>
+<section id="pearson-correlation-coefficient" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="pearson-correlation-coefficient"><span class="header-section-number">19.4</span> Pearson correlation coefficient</h2>
 <p>When we say “correlation”, we usually mean the Pearson correlation coefficient, which is the formula given above. Pearson invented this, so it’s named after him. There are other types of correlation coefficients, such as Spearman’s rank correlation coefficient and Kendall’s tau coefficient, which are used for non-parametric data or ordinal data.</p>
 </section>
-<section id="covariance-of-z-scored-variables" class="level2" data-number="17.5">
-<h2 data-number="17.5" class="anchored" data-anchor-id="covariance-of-z-scored-variables"><span class="header-section-number">17.5</span> covariance of z-scored variables</h2>
+<section id="covariance-of-z-scored-variables" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="covariance-of-z-scored-variables"><span class="header-section-number">19.5</span> covariance of z-scored variables</h2>
 <p>Notice that the correlation formula can be interpreted as the covariance of the z-scored variables. The z-score of a variable <span class="math inline">X</span> is defined as:</p>
 <p><span class="math display">
 Z_X = \frac{X - \mu_X}{\sigma_X}
@@ -485,8 +497,8 @@ Z_X = \frac{X - \mu_X}{\sigma_X}
 </span></p>
 <p>It is quite easy to compute the correlation on the computer. If <span class="math inline">X</span> and <span class="math inline">Y</span> are two arrays, first we standardize (z-score) them, then we compute their dot product (sum of piecewise multiplication), and finally we divide by <span class="math inline">N</span> (or <span class="math inline">N-1</span> for sample correlation).</p>
 </section>
-<section id="linearity" class="level2" data-number="17.6">
-<h2 data-number="17.6" class="anchored" data-anchor-id="linearity"><span class="header-section-number">17.6</span> linearity</h2>
+<section id="linearity" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="linearity"><span class="header-section-number">19.6</span> linearity</h2>
 <p>The Pearson correlation coefficient measures the strength and direction of a <strong>linear</strong> relationship between two variables. It does not capture non-linear relationships. For example, if <span class="math inline">Y = X^2</span>, the correlation between <span class="math inline">X</span> and <span class="math inline">Y</span> may be low or even zero, despite a clear non-linear relationship. When we say “correlation”, it is usually implicit that we are referring to linear correlation.</p>
 
 
@@ -955,13 +967,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../regression/logistic-regression.html" class="pagination-link" aria-label="logistic regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">logistic regression</span></span>
+      <a href="../regression/logistic_2d.html" class="pagination-link" aria-label="logistic 2d">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic 2d</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../correlation/linear_regression.html" class="pagination-link" aria-label="correlation and linear regression">
-        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
