@@ -54,6 +54,7 @@ book:
     - part: "svd and pca"
       chapters:
         - svd_and_pca/svd_image_compression.ipynb
+        - svd_and_pca/svd_regression.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
@@ -91,6 +92,8 @@ format:
     documentclass: scrreprt
     include-in-header:
       - latex_preamble.tex
+
+
 
 
 
