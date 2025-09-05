@@ -41,3 +41,12 @@ Nielsen writes very well, I really enjoyed this book. The part on backprogation 
 
 ---
 
+## websites
+
+#### Dr. Roi Yehoshua's tutorials
+
+Really good tutorials, you should check this out:  
+<https://towardsdatascience.com/author/roiyeho/>
+
+It seems the he wrote a book, I haven't read it, but should be good:  
+[Machine Learning Foundations, Volume 1: Supervised Learning](https://www.oreilly.com/library/view/machine-learning-foundations/9780135337851/)

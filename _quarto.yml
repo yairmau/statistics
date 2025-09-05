@@ -51,6 +51,9 @@ book:
         - bayes/parametric-generative-classification.ipynb
         - bayes/odds.ipynb
         - bayes/logistic-connection.ipynb
+    - part: "svd and pca"
+      chapters:
+        - svd_and_pca/svd_image_compression.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb

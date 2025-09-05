@@ -437,7 +437,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
+ <span class="menu-text">svd and pca</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -445,8 +445,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -467,6 +484,7 @@ window.Quarto = {
   <li><a href="#log-likelihood" id="toc-log-likelihood" class="nav-link" data-scroll-target="#log-likelihood"><span class="header-section-number">17.4</span> log-likelihood</a></li>
   <li><a href="#binary-cross-entropy-or-log-loss" id="toc-binary-cross-entropy-or-log-loss" class="nav-link" data-scroll-target="#binary-cross-entropy-or-log-loss"><span class="header-section-number">17.5</span> binary cross-entropy, or log loss</a></li>
   <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up"><span class="header-section-number">17.6</span> wrapping up</a></li>
+  <li><a href="#connection-to-neural-networks" id="toc-connection-to-neural-networks" class="nav-link" data-scroll-target="#connection-to-neural-networks"><span class="header-section-number">17.7</span> connection to neural networks</a></li>
   </ul>
 </nav>
     </div>
@@ -879,6 +897,17 @@ P(x) = \frac{1}{1+\exp[-(\beta_0+\beta_1 x)]} &amp;= \frac{1}{2} \\
 x &amp;= -\frac{\beta_0}{\beta_1}
 \end{align*}</span></p>
 <p>Compare this result with the one we obtained with the <a href="../bayes/parametric-generative-classification.html">parametric generative model</a> discussed in the Bayes’ theorem section.</p>
+<p>If you want to see a nice tutorial, see <a href="https://towardsdatascience.com/mastering-logistic-regression-3e502686f0ae/">Dr.&nbsp;Roi Yehoshua’s “Mastering Logistic Regression”</a>.</p>
+</section>
+<section id="connection-to-neural-networks" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="connection-to-neural-networks"><span class="header-section-number">17.7</span> connection to neural networks</h2>
+<p>The logistic regression can be understood as a single-layer perceptron neural network model. This is to say, a neural network with no hidden layers, and a single output neuron that uses the logistic (sigmoid) activation function.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../archive/images/logistic-NN.jpeg" class="img-fluid figure-img"></p>
+<figcaption>“source: https://towardsdatascience.com/mastering-logistic-regression-3e502686f0ae/”</figcaption>
+</figure>
+</div>
 
 
 </section>
