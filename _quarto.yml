@@ -58,6 +58,7 @@ book:
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
+        - misc/entropy.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
