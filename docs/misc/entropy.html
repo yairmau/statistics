@@ -531,7 +531,7 @@ window.Quarto = {
 <p>machine 3:<br>
 <code>🐶 😺 🐶 😺 🐶 🐶 🐶 😺 😺 🐶</code>, 4 cats and 6 dogs</p>
 <p>machine 4:<br>
-<code>🐶 😺 🐶 🐶 😺 😺 😺 😺 🐶 😺 🐶 😺</code>, 5 cats and 5 dogs</p>
+<code>🐶 😺 🐶 🐶 🐶 😺 😺 😺 🐶 😺 🐶 😺</code>, 6 cats and 6 dogs</p>
 </section>
 <section id="surprise" class="level2" data-number="30.2">
 <h2 data-number="30.2" class="anchored" data-anchor-id="surprise"><span class="header-section-number">30.2</span> surprise</h2>
@@ -564,15 +564,15 @@ I(P(x)) = \frac{1}{P(x)}
 <section id="problems-with-the-inverse-formula" class="level2" data-number="30.5">
 <h2 data-number="30.5" class="anchored" data-anchor-id="problems-with-the-inverse-formula"><span class="header-section-number">30.5</span> problems with the inverse formula</h2>
 <p>There are at least two problems with this inverse formula.</p>
-<p><strong>Problem one</strong><br>
-An event with zero probability would provide us with infinite information. Maybe that’s okay, since I could be infinitely surprised if the sun didn’t rise tomorrow. However, a certain event (probability 1) would provide us with only 1 unit of information. That doesn’t seem right. A certain event should provide us with no information at all, zero.</p>
+<p><strong>Problem one</strong></p>
+<p>An event with zero probability would provide us with infinite information. Maybe that’s okay, since I could be infinitely surprised if the sun didn’t rise tomorrow. However, a certain event (probability 1) would provide us with only 1 unit of information. That doesn’t seem right. A certain event should provide us with no information at all, zero.</p>
 <p><strong>Problem two</strong></p>
 <p>Let’s say that we learn about two completely independent events that happened yesterday, <span class="math inline">x</span> and <span class="math inline">y</span>:</p>
 <ul>
 <li><span class="math inline">x</span>: My sister flipped a coin and got “heads”.</li>
 <li><span class="math inline">y</span>: My cousin has won the lottery.</li>
 </ul>
-<p>Since the events are independent, the probability of both have happened is the product of their probabilities:</p>
+<p>Since the events are independent, the probability that both have happened is the product of their probabilities:</p>
 <p><span class="math display">
 P(x \text{ and } y) = P(x)P(y)
 \tag{2}
@@ -645,7 +645,7 @@ H = \sum_i P(x_i) I(P(x_i)) = \sum_i P(x_i) \log\left(\frac{1}{P(x_i)}\right)
 <p><span class="math display">
 H(P) = - P \log(P) - (1-P) \log(1-P)
 </span></p>
-<div id="cell-6" class="cell" data-execution_count="118">
+<div id="cell-6" class="cell" data-execution_count="121">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -656,7 +656,7 @@ H(P) = - P \log(P) - (1-P) \log(1-P)
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> matplotlib.gridspec <span class="im">as</span> gridspec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-7" class="cell" data-execution_count="119">
+<div id="cell-7" class="cell" data-execution_count="122">
 <details class="code-fold">
 <summary>plot</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
@@ -678,7 +678,7 @@ H(P) = - P \log(P) - (1-P) \log(1-P)
 <span id="cb2-17"><a href="#cb2-17"></a>ax.plot([p_machine3], [entropy_H(p_machine3)], marker<span class="op">=</span><span class="st">'o'</span>, ls<span class="op">=</span><span class="st">'none'</span>, color<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
 <span id="cb2-18"><a href="#cb2-18"></a>ax.text(p_machine3<span class="op">-</span><span class="fl">0.05</span>, entropy_H(p_machine3), <span class="st">"M3"</span>, ha<span class="op">=</span><span class="st">'center'</span>, color<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
 <span id="cb2-19"><a href="#cb2-19"></a></span>
-<span id="cb2-20"><a href="#cb2-20"></a>p_machine4 <span class="op">=</span> <span class="dv">5</span><span class="op">/</span><span class="dv">10</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>p_machine4 <span class="op">=</span> <span class="dv">6</span><span class="op">/</span><span class="dv">12</span></span>
 <span id="cb2-21"><a href="#cb2-21"></a>ax.plot([p_machine4], [entropy_H(p_machine4)], marker<span class="op">=</span><span class="st">'o'</span>, ls<span class="op">=</span><span class="st">'none'</span>, color<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
 <span id="cb2-22"><a href="#cb2-22"></a>ax.text(p_machine4, entropy_H(p_machine4)<span class="op">-</span><span class="fl">0.05</span>, <span class="st">"M4"</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'top'</span>, color<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
 <span id="cb2-23"><a href="#cb2-23"></a></span>
@@ -686,7 +686,7 @@ H(P) = - P \log(P) - (1-P) \log(1-P)
 <span id="cb2-25"><a href="#cb2-25"></a>ax.set_ylabel(<span class="st">"bits"</span>)</span>
 <span id="cb2-26"><a href="#cb2-26"></a>ax.set_title(<span class="st">"Binary Entropy Function"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="119">
+<div class="cell-output cell-output-display" data-execution_count="122">
 <pre><code>Text(0.5, 1.0, 'Binary Entropy Function')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -703,7 +703,7 @@ H(P) = - P \log(P) - (1-P) \log(1-P)
 <section id="one-last-example" class="level2" data-number="30.9">
 <h2 data-number="30.9" class="anchored" data-anchor-id="one-last-example"><span class="header-section-number">30.9</span> one last example</h2>
 <p>Consider the frequency of the letters in the Hebrew alphabet (there are 22 letters). The most common letter is “י”, which appears with a frequency of about 11.06%. The least common letter is “ט”, which appears with a frequency of about 1.24%. If we opened a book written in Hebrew to a random page, and picked a random letter on that page, what would be the expected information from that letter?</p>
-<div id="cell-10" class="cell" data-execution_count="120">
+<div id="cell-10" class="cell" data-execution_count="123">
 <details class="code-fold">
 <summary>import data and plot</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../archive/data/letter_frequency_hebrew.csv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
