@@ -517,7 +517,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-scenario" id="toc-the-scenario" class="nav-link active" data-scroll-target="#the-scenario"><span class="header-section-number">23.1</span> the scenario</a></li>
-  <li><a href="#conditional-probability" id="toc-conditional-probability" class="nav-link" data-scroll-target="#conditional-probability"><span class="header-section-number">23.2</span> conditional probability</a></li>
+  <li><a href="#joint-and-conditional-probabilities" id="toc-joint-and-conditional-probabilities" class="nav-link" data-scroll-target="#joint-and-conditional-probabilities"><span class="header-section-number">23.2</span> joint and conditional probabilities</a></li>
   <li><a href="#different-perspective" id="toc-different-perspective" class="nav-link" data-scroll-target="#different-perspective"><span class="header-section-number">23.3</span> different perspective</a></li>
   <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">23.4</span> Bayes’ theorem</a></li>
   <li><a href="#the-law-of-total-probability" id="toc-the-law-of-total-probability" class="nav-link" data-scroll-target="#the-law-of-total-probability"><span class="header-section-number">23.5</span> the law of total probability</a></li>
@@ -574,8 +574,8 @@ window.Quarto = {
 </tbody>
 </table>
 </section>
-<section id="conditional-probability" class="level2" data-number="23.2">
-<h2 data-number="23.2" class="anchored" data-anchor-id="conditional-probability"><span class="header-section-number">23.2</span> conditional probability</h2>
+<section id="joint-and-conditional-probabilities" class="level2" data-number="23.2">
+<h2 data-number="23.2" class="anchored" data-anchor-id="joint-and-conditional-probabilities"><span class="header-section-number">23.2</span> joint and conditional probabilities</h2>
 <p><strong>What is the probability that a person is both a man and tall?</strong></p>
 <p>This is the same as asking: what fraction does the rectangle on the bottom left have with respect to the whole area?</p>
 <div id="cell-3" class="cell" data-execution_count="2">
@@ -774,6 +774,10 @@ P(\text{man } \cap \text{ tall}) = P(\text{tall}) \cdot P(\text{man|tall}),
 \tag{1}
 </span></p>
 <p>where the symbol <span class="math inline">\cap</span> means “and”.</p>
+<ul>
+<li>P( ) is called the <strong>joint probability</strong>, because it describes the probability of two events happening together.</li>
+<li>P() is called the <strong>conditional probability</strong>, because it describes the probability of one event happening, given that another event is already known to have occurred.</li>
+</ul>
 <p>When Eq. (1) is rewritten in terms of <span class="math inline">P(\text{man|tall})</span>, it is called the equation for conditional probability:</p>
 <p><span class="math display">
 P(\text{man|tall}) = \frac{P(\text{man } \cap \text{ tall})}{P(\text{tall})}.
