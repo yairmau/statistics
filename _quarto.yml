@@ -55,13 +55,15 @@ book:
       chapters:
         - svd_and_pca/svd_image_compression.ipynb
         - svd_and_pca/svd_regression.ipynb
-    - part: "random forest"
+    - part: "decision trees"
       chapters:
-        - random_forest/decision_tree.ipynb
+        - decision_trees/CART_classification.ipynb
+        - decision_trees/CART_regression.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
         - misc/entropy.ipynb
+        - misc/cross-entropy.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
@@ -96,8 +98,6 @@ format:
     documentclass: scrreprt
     include-in-header:
       - latex_preamble.tex
-
-
 
 
 

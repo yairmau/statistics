@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistics and Machine Learning - 31&nbsp; entropy</title>
+<title>Statistics and Machine Learning - 32&nbsp; entropy</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../misc/cross-entropy.html" rel="next">
 <link href="../misc/trend_test.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -159,7 +160,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/entropy.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">entropy</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/entropy.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">entropy</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -456,7 +457,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
- <span class="menu-text">random forest</span></a>
+ <span class="menu-text">decision trees</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -464,8 +465,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../random_forest/decision_tree.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">CART</span></span></a>
+  <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">classification with CART</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">regression with CART</span></span></a>
   </div>
 </li>
       </ul>
@@ -482,13 +489,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/entropy.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/cross-entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -503,24 +516,24 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#image-generating-machines" id="toc-image-generating-machines" class="nav-link active" data-scroll-target="#image-generating-machines"><span class="header-section-number">31.1</span> image-generating machines</a></li>
-  <li><a href="#surprise" id="toc-surprise" class="nav-link" data-scroll-target="#surprise"><span class="header-section-number">31.2</span> surprise</a></li>
-  <li><a href="#information" id="toc-information" class="nav-link" data-scroll-target="#information"><span class="header-section-number">31.3</span> information</a></li>
-  <li><a href="#quantifying-surprise-and-information" id="toc-quantifying-surprise-and-information" class="nav-link" data-scroll-target="#quantifying-surprise-and-information"><span class="header-section-number">31.4</span> quantifying surprise and information</a></li>
-  <li><a href="#problems-with-the-inverse-formula" id="toc-problems-with-the-inverse-formula" class="nav-link" data-scroll-target="#problems-with-the-inverse-formula"><span class="header-section-number">31.5</span> problems with the inverse formula</a></li>
-  <li><a href="#a-new-and-better-formula" id="toc-a-new-and-better-formula" class="nav-link" data-scroll-target="#a-new-and-better-formula"><span class="header-section-number">31.6</span> a new and better formula</a></li>
-  <li><a href="#entropy" id="toc-entropy" class="nav-link" data-scroll-target="#entropy"><span class="header-section-number">31.7</span> entropy</a></li>
-  <li><a href="#binary-machines" id="toc-binary-machines" class="nav-link" data-scroll-target="#binary-machines"><span class="header-section-number">31.8</span> binary machines</a></li>
-  <li><a href="#one-last-example" id="toc-one-last-example" class="nav-link" data-scroll-target="#one-last-example"><span class="header-section-number">31.9</span> one last example</a></li>
+  <li><a href="#image-generating-machines" id="toc-image-generating-machines" class="nav-link active" data-scroll-target="#image-generating-machines"><span class="header-section-number">32.1</span> image-generating machines</a></li>
+  <li><a href="#surprise" id="toc-surprise" class="nav-link" data-scroll-target="#surprise"><span class="header-section-number">32.2</span> surprise</a></li>
+  <li><a href="#information" id="toc-information" class="nav-link" data-scroll-target="#information"><span class="header-section-number">32.3</span> information</a></li>
+  <li><a href="#quantifying-surprise-and-information" id="toc-quantifying-surprise-and-information" class="nav-link" data-scroll-target="#quantifying-surprise-and-information"><span class="header-section-number">32.4</span> quantifying surprise and information</a></li>
+  <li><a href="#problems-with-the-inverse-formula" id="toc-problems-with-the-inverse-formula" class="nav-link" data-scroll-target="#problems-with-the-inverse-formula"><span class="header-section-number">32.5</span> problems with the inverse formula</a></li>
+  <li><a href="#a-new-and-better-formula" id="toc-a-new-and-better-formula" class="nav-link" data-scroll-target="#a-new-and-better-formula"><span class="header-section-number">32.6</span> a new and better formula</a></li>
+  <li><a href="#entropy" id="toc-entropy" class="nav-link" data-scroll-target="#entropy"><span class="header-section-number">32.7</span> entropy</a></li>
+  <li><a href="#binary-machines" id="toc-binary-machines" class="nav-link" data-scroll-target="#binary-machines"><span class="header-section-number">32.8</span> binary machines</a></li>
+  <li><a href="#one-last-example" id="toc-one-last-example" class="nav-link" data-scroll-target="#one-last-example"><span class="header-section-number">32.9</span> one last example</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/entropy.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">entropy</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/entropy.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">entropy</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">entropy</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/misc/entropy.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">entropy</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/misc/entropy.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -538,8 +551,8 @@ window.Quarto = {
 
 
 <p>Let’s derive the formula for entropy from first principles.</p>
-<section id="image-generating-machines" class="level2" data-number="31.1">
-<h2 data-number="31.1" class="anchored" data-anchor-id="image-generating-machines"><span class="header-section-number">31.1</span> image-generating machines</h2>
+<section id="image-generating-machines" class="level2" data-number="32.1">
+<h2 data-number="32.1" class="anchored" data-anchor-id="image-generating-machines"><span class="header-section-number">32.1</span> image-generating machines</h2>
 <p>We’re given machines that generate images of cats (😺) and dogs (🐶). See the following outputs from the machines:</p>
 <p>machine 1:<br>
 <code>😺 😺 😺 😺 😺 🐶</code>, 5 cats and 1 dog</p>
@@ -550,15 +563,15 @@ window.Quarto = {
 <p>machine 4:<br>
 <code>🐶 😺 🐶 🐶 🐶 😺 😺 😺 🐶 😺 🐶 😺</code>, 6 cats and 6 dogs</p>
 </section>
-<section id="surprise" class="level2" data-number="31.2">
-<h2 data-number="31.2" class="anchored" data-anchor-id="surprise"><span class="header-section-number">31.2</span> surprise</h2>
+<section id="surprise" class="level2" data-number="32.2">
+<h2 data-number="32.2" class="anchored" data-anchor-id="surprise"><span class="header-section-number">32.2</span> surprise</h2>
 <p>How surprised are we by each output?</p>
 <p>For machine 2, we wouldn’t be surprised at all if the next image it generates is a cat. It’s been generating only cats so far. However, if it generates a dog, that would be quite surprising.</p>
 <p>Machine 4 produced equal numbers of cats and dogs. So we would be equally surprised if the next image is a cat or a dog.</p>
 <p>Machines 1 and 3 are somewhere in between.</p>
 </section>
-<section id="information" class="level2" data-number="31.3">
-<h2 data-number="31.3" class="anchored" data-anchor-id="information"><span class="header-section-number">31.3</span> information</h2>
+<section id="information" class="level2" data-number="32.3">
+<h2 data-number="32.3" class="anchored" data-anchor-id="information"><span class="header-section-number">32.3</span> information</h2>
 <p>We could say similar things about information. If machine 2 generates another cat, we don’t learn anything new, it’s the same machine as ever. But if it generates a dog, we learn a lot about this machine’s behavior. In contrast, machine 4 generates equal amounts of information whether it produces a cat or a dog, since both have had the same number so far.</p>
 <p>To say that we are surprised by an event is the same as saying that we learn some information from it. If an event is not surprising at all, then it doesn’t provide us with any new information.</p>
 <blockquote class="blockquote">
@@ -570,16 +583,16 @@ window.Quarto = {
 </blockquote>
 <p>This is both surprising and informative.</p>
 </section>
-<section id="quantifying-surprise-and-information" class="level2" data-number="31.4">
-<h2 data-number="31.4" class="anchored" data-anchor-id="quantifying-surprise-and-information"><span class="header-section-number">31.4</span> quantifying surprise and information</h2>
+<section id="quantifying-surprise-and-information" class="level2" data-number="32.4">
+<h2 data-number="32.4" class="anchored" data-anchor-id="quantifying-surprise-and-information"><span class="header-section-number">32.4</span> quantifying surprise and information</h2>
 <p>An event that is very likely to happen is not surprising, and doesn’t provide us with much information. An event that is unlikely to happen is surprising, and provides us with a lot of information. It seems reasonable to say that the amount of information <span class="math inline">I</span> we gain from an event <span class="math inline">x</span>, whose probability is <span class="math inline">P(x)</span>, is inversely proportional to the probability:</p>
 <p><span class="math display">
 I(P(x)) = \frac{1}{P(x)}
 \tag{1}
 </span></p>
 </section>
-<section id="problems-with-the-inverse-formula" class="level2" data-number="31.5">
-<h2 data-number="31.5" class="anchored" data-anchor-id="problems-with-the-inverse-formula"><span class="header-section-number">31.5</span> problems with the inverse formula</h2>
+<section id="problems-with-the-inverse-formula" class="level2" data-number="32.5">
+<h2 data-number="32.5" class="anchored" data-anchor-id="problems-with-the-inverse-formula"><span class="header-section-number">32.5</span> problems with the inverse formula</h2>
 <p>There are at least two problems with this inverse formula.</p>
 <p><strong>Problem one</strong></p>
 <p>An event with zero probability would provide us with infinite information. Maybe that’s okay, since I could be infinitely surprised if the sun didn’t rise tomorrow. However, a certain event (probability 1) would provide us with only 1 unit of information. That doesn’t seem right. A certain event should provide us with no information at all, zero.</p>
@@ -605,8 +618,8 @@ I(P(x \text{ and } y)) &amp;= I(P(x)P(y)) \\
 <p>The total information I gained is the product of the information I gained from each event. There’s something wrong with that. Assume that my sister flipped a fair coin, so the probability of heads is 1/2. From the inverse formula, this means that the “heads” outcome <strong>doubled</strong> the information I got from yesterday’s events. My surprise from learning that my cousin won the lottery was multiplied by 2 by a mere coin toss. That’s obviously not ok.</p>
 <p>What would make sense is if the total information I gained from both events was the <strong>sum</strong> of the information I gained from each independent event. Then, if my sister flipped a fair coin, the information I gained from learning that my cousin won the lottery would be increased by a fixed amount, regardless of how surprising the lottery win was.</p>
 </section>
-<section id="a-new-and-better-formula" class="level2" data-number="31.6">
-<h2 data-number="31.6" class="anchored" data-anchor-id="a-new-and-better-formula"><span class="header-section-number">31.6</span> a new and better formula</h2>
+<section id="a-new-and-better-formula" class="level2" data-number="32.6">
+<h2 data-number="32.6" class="anchored" data-anchor-id="a-new-and-better-formula"><span class="header-section-number">32.6</span> a new and better formula</h2>
 <p>We are looking for a function <span class="math inline">I(P(x))</span> such that:</p>
 <ul>
 <li><span class="math inline">I(1) = 0</span><br>
@@ -625,8 +638,8 @@ I(P(x)) = \log\left(\frac{1}{P(x)}\right)
 </ul>
 <p>Claude Shannon, the father of information theory, proposed this formula in his seminal 1948 paper <a href="https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf">“A Mathematical Theory of Communication”</a>. There, he proved (see Appendix 2) that this is the only function that satisfies three properties, related to the two stated above, but more restrictive. See Shannon’s three properties, stated in Section 6 of his paper, titled “Choice, Uncertainty, and Entropy”.</p>
 </section>
-<section id="entropy" class="level2" data-number="31.7">
-<h2 data-number="31.7" class="anchored" data-anchor-id="entropy"><span class="header-section-number">31.7</span> entropy</h2>
+<section id="entropy" class="level2" data-number="32.7">
+<h2 data-number="32.7" class="anchored" data-anchor-id="entropy"><span class="header-section-number">32.7</span> entropy</h2>
 <p>Shannon writes:</p>
 <blockquote class="blockquote">
 <p>Suppose we have a set of possible events whose probabilities of occurrence are <span class="math inline">p_1, p_2, \ldots, p_n</span>. These probabilities are known but that is all we know concerning which event will occur. Can we find a measure of how much “choice” is involved in the selection of the event or of how uncertain we are of the outcome?</p>
@@ -656,8 +669,8 @@ H = \sum_i P(x_i) I(P(x_i)) = \sum_i P(x_i) \log\left(\frac{1}{P(x_i)}\right)
 <p>The information from each possible outcome <span class="math inline">x_i</span> is weighted by the probability of that outcome, and we sum over all possible outcomes.</p>
 <p>For instance, machine 1 produces dogs with a probability of 1/6, and cats with a probability of 5/6. The expected information from the next image is the information from a dog times the probability of getting a dog, plus the information from a cat times the probability of getting a cat. If our machine produced <span class="math inline">N</span> possible images, we would do the same, summing over all <span class="math inline">N</span> possible images with their respective probabilities as weights.</p>
 </section>
-<section id="binary-machines" class="level2" data-number="31.8">
-<h2 data-number="31.8" class="anchored" data-anchor-id="binary-machines"><span class="header-section-number">31.8</span> binary machines</h2>
+<section id="binary-machines" class="level2" data-number="32.8">
+<h2 data-number="32.8" class="anchored" data-anchor-id="binary-machines"><span class="header-section-number">32.8</span> binary machines</h2>
 <p>In the example of the machines that produce only two outcomes, we have that one probability is <span class="math inline">P</span> (say, for getting cats) and the other is <span class="math inline">Q=1-P</span>. So we can write the entropy as a function of a single probability:</p>
 <p><span class="math display">
 H(P) = - P \log(P) - (1-P) \log(1-P)
@@ -717,8 +730,8 @@ H(P) = - P \log(P) - (1-P) \log(1-P)
 <p>The expected information is zero for machine 2, which certainly produces only cats (<span class="math inline">P=1</span>). The expected information is maximal for machine 4, which produces cats and dogs with equal probabilities (<span class="math inline">P=1/2</span>).</p>
 <p>In Equations (5) and (6), we didn’t explicitly say what the base of the logarithm is. It doesn’t matter, since changing the base only changes the units of information. In the example above, we use base 2 because we have a binary choice, and the units for entropy are called bits, suggested by JW Tukey, meaning <em>binary digits</em>.</p>
 </section>
-<section id="one-last-example" class="level2" data-number="31.9">
-<h2 data-number="31.9" class="anchored" data-anchor-id="one-last-example"><span class="header-section-number">31.9</span> one last example</h2>
+<section id="one-last-example" class="level2" data-number="32.9">
+<h2 data-number="32.9" class="anchored" data-anchor-id="one-last-example"><span class="header-section-number">32.9</span> one last example</h2>
 <p>Consider the frequency of the letters in the Hebrew alphabet (there are 22 letters). The most common letter is “י”, which appears with a frequency of about 11.06%. The least common letter is “ט”, which appears with a frequency of about 1.24%. If we opened a book written in Hebrew to a random page, and picked a random letter on that page, what would be the expected information from that letter?</p>
 <div id="cell-10" class="cell" data-execution_count="123">
 <details class="code-fold">
@@ -1286,10 +1299,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../misc/trend_test.html" class="pagination-link" aria-label="trend test">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">trend test</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">trend test</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../misc/cross-entropy.html" class="pagination-link" aria-label="cross-entropy and KL divergence">
+        <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
