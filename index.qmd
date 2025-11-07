@@ -41,6 +41,13 @@ Nielsen writes very well, I really enjoyed this book. The part on backprogation 
 
 ---
 
+#### Introduction to Environmental Data Science
+by William W. Hsieh
+
+![](/archive/images/hsieh-intoduction-to-environmental-data-science.jpg){height=300px}
+
+This book's best quality is that it covers a bunch of topics, methods, techniques. It is not a good book to learn concepts for the first time, it's more useful as a menu of what exists, and maybe a brief reminder of topics you studied in the past but forgot. The "environmental" aspect is completely incidental, in my opinion. Hsieh brings examples from the Environment, but you don't need to have a background in environmental science to be able to read it.
+
 ## websites
 
 #### Dr. Roi Yehoshua's tutorials
