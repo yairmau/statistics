@@ -562,7 +562,7 @@ window.Quarto = {
 <li><strong>Features:</strong> height and weight, continuous, numerical features.</li>
 <li><strong>Categories (Classes):</strong> Koala, Fox, Bonobo</li>
 </ul>
-<div id="cc34f6fe" class="cell" data-execution_count="61">
+<div id="cc34f6fe" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -572,7 +572,8 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier, plot_tree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="481290f7" class="cell" data-execution_count="48">
+<p>We are using the famous Iris dataset structure, but pretending they are animals for this example.</p>
+<div id="481290f7" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>load iris dataset and prepare data</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>iris <span class="op">=</span> load_iris()</span>
@@ -580,7 +581,7 @@ window.Quarto = {
 <span id="cb2-3"><a href="#cb2-3"></a>y <span class="op">=</span> iris.target</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="b80a2152" class="cell" data-execution_count="50">
+<div id="b80a2152" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>plot</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
@@ -597,10 +598,10 @@ window.Quarto = {
 <span id="cb3-12"><a href="#cb3-12"></a>ax.set_ylabel(iris.feature_names[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_5801/3638754974.py:8: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
+<pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_1841/3638754974.py:8: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
   ax.scatter(X[y == i, 0], X[y == i, 1],</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="50">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Text(0, 0.5, 'weight')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -620,7 +621,7 @@ window.Quarto = {
 <li><p><strong>Information Gain (based on Entropy):</strong> This measures how much uncertainty in the data is reduced after the split. A higher information gain means a better split. <span class="math display">
   IG(T, X) = \underbrace{H(T)}_{\text{original entropy}} - \underbrace{\frac{N_\text{left}}{N} H(T_\text{left})}_{\text{left group}} - \underbrace{\frac{N_\text{right}}{N} H(T_\text{right})}_{\text{right group}}
 </span> where <span class="math inline">T_\text{left}</span> and <span class="math inline">T_\text{right}</span> are the subsets after the split, and <span class="math inline">N</span> denotes the total number of samples in a (sub) dataset.</p></li>
-<li><p><strong>Gini Impurity:</strong> This measure is often explained as the impurity of a split. A better point of view is to interpret is as the probability of misclassification. If we picked an element at random from the dataset, what is the probability that we would misclassify it if we labeled it according to the distribution of classes in the dataset? The probabiility of picking an element of class <span class="math inline">i</span> is <span class="math inline">P_i</span>, and we would misclassify it with probability <span class="math inline">1 - P_i</span>. So the total probability of misclassification is <span class="math inline">P_i(1 - P_i)</span>. If we sum this over all classes, we get the Gini Impurity: <span class="math display">
+<li><p><strong>Gini Impurity:</strong> This measure is often explained as the impurity of a split. A better point of view is to interpret is as the probability of misclassification. If we picked an element at random from the dataset, what is the probability that we would misclassify it if we labeled it according to the distribution of classes in the dataset? The probability of picking an element of class <span class="math inline">i</span> is <span class="math inline">P_i</span>, and we would misclassify it with probability <span class="math inline">1 - P_i</span>. So the total probability of misclassification is <span class="math inline">P_i(1 - P_i)</span>. If we sum this over all classes, we get the Gini Impurity: <span class="math display">
   G(T) = \sum_{i=1}^{C} P_i (1 - P_i) = 1 - \sum_{i=1}^{C} P_i^2
 </span></p></li>
 </ul>
@@ -628,7 +629,7 @@ window.Quarto = {
 <section id="entropy" class="level3" data-number="29.2.1">
 <h3 data-number="29.2.1" class="anchored" data-anchor-id="entropy"><span class="header-section-number">29.2.1</span> entropy</h3>
 <p>We will start with the <strong>entropy</strong> metric.</p>
-<div id="54cab10a" class="cell">
+<div id="54cab10a" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>define useful functions</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> calculate_gini(y_subset):</span>
@@ -750,7 +751,7 @@ window.Quarto = {
 <span id="cb6-117"><a href="#cb6-117"></a>    <span class="cf">return</span> np.array(score_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="f1df7d32" class="cell">
+<div id="f1df7d32" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>plot</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
@@ -809,9 +810,9 @@ window.Quarto = {
 <span id="cb7-54"><a href="#cb7-54"></a><span class="bu">print</span>(<span class="ss">f"Weight: highest Information Gain: </span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss"> at weight=</span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_5801/497815874.py:10: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
+<pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_1841/2101311549.py:11: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
   ax_main.scatter(X[y == i, 0], X[y == i, 1],
-/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_5801/497815874.py:51: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_1841/2101311549.py:52: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
   plt.tight_layout()</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -835,7 +836,7 @@ Weight: highest Information Gain: 0.28 at weight=3.35</code></pre>
 <section id="gini-impurity" class="level3" data-number="29.2.2">
 <h3 data-number="29.2.2" class="anchored" data-anchor-id="gini-impurity"><span class="header-section-number">29.2.2</span> Gini impurity</h3>
 <p>Now let’s try the <strong>Gini impurity</strong> metric.</p>
-<div id="0f4937f7" class="cell">
+<div id="0f4937f7" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>plot</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
@@ -894,9 +895,9 @@ Weight: highest Information Gain: 0.28 at weight=3.35</code></pre>
 <span id="cb10-54"><a href="#cb10-54"></a><span class="bu">print</span>(<span class="ss">f"Weight: lowest Gini Impurity: </span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss"> at weight=</span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_5801/1521736366.py:10: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
+<pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_1841/3659548085.py:11: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
   ax_main.scatter(X[y == i, 0], X[y == i, 1],
-/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_5801/1521736366.py:51: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_1841/3659548085.py:52: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
   plt.tight_layout()</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -926,14 +927,14 @@ Weight: lowest Gini Impurity: 0.54 at weight=3.35</code></pre>
 <li>The maximum depth of the tree is reached.</li>
 <li>The number of samples in a node is less than a predefined minimum.</li>
 </ul>
-<p>If find it useful to visualize the decision tree as a series of splits in the feature space: <img src="decision-tree-2d.png" class="img-fluid"></p>
+<p>I find it useful to visualize the decision tree as a series of splits in the feature space: <img src="decision-tree-2d.png" class="img-fluid"></p>
 <p>Source: <a href="https://doi.org/10.1007/s11162-019-09546-y">“Predicting University Students’ Academic Success and Major Using Random Forests”, by Cédric Beaulac and Jeffrey S. Rosenthal</a></p>
-<p>Splitting the feature space with vertical and horizontal lines reminds me of a classing 1990’s computer game, JazzBall. <a href="https://www.youtube.com/watch?v=lKPa9ITMt-g">Check out a video of the game here</a>, and see it reminds you of the basic algorithm discussed so far.</p>
+<p>Splitting the feature space with vertical and horizontal lines reminds me of a classic 1990’s computer game, JazzBall. <a href="https://www.youtube.com/watch?v=lKPa9ITMt-g">Check out a video of the game here</a>, and see it reminds you of the basic algorithm discussed so far.</p>
 </section>
 <section id="sklearn-tree-decisiontreeclassifier" class="level2" data-number="29.4">
 <h2 data-number="29.4" class="anchored" data-anchor-id="sklearn-tree-decisiontreeclassifier"><span class="header-section-number">29.4</span> sklearn tree DecisionTreeClassifier</h2>
 <p>We will now use the <code>DecisionTreeClassifier</code> from <code>sklearn.tree</code> to build a decision tree classifier. Let’s restrict the maximum depth of the tree to 3, so we can visualize it easily. All the hard work was already coded for use, it’ll take us only two lines of code to create and fit the model.</p>
-<div id="8b84927d" class="cell" data-execution_count="97">
+<div id="8b84927d" class="cell" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>build and fit decision tree classifiers</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># using gini impurity</span></span>
@@ -944,9 +945,9 @@ Weight: lowest Gini Impurity: 0.54 at weight=3.35</code></pre>
 <span id="cb13-6"><a href="#cb13-6"></a>classifier_entropy <span class="op">=</span> DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">'entropy'</span>, max_depth<span class="op">=</span><span class="dv">3</span>)<span class="co">#, random_state=42)</span></span>
 <span id="cb13-7"><a href="#cb13-7"></a>classifier_entropy.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="97">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
-<style>#sk-container-id-6 {
+<style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
   --sklearn-color-text-muted: #666;
@@ -977,15 +978,15 @@ Weight: lowest Gini Impurity: 0.54 at weight=3.35</code></pre>
   }
 }
 
-#sk-container-id-6 {
+#sk-container-id-1 {
   color: var(--sklearn-color-text);
 }
 
-#sk-container-id-6 pre {
+#sk-container-id-1 pre {
   padding: 0;
 }
 
-#sk-container-id-6 input.sk-hidden--visually {
+#sk-container-id-1 input.sk-hidden--visually {
   border: 0;
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
@@ -997,7 +998,7 @@ Weight: lowest Gini Impurity: 0.54 at weight=3.35</code></pre>
   width: 1px;
 }
 
-#sk-container-id-6 div.sk-dashed-wrapped {
+#sk-container-id-1 div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -1005,7 +1006,7 @@ Weight: lowest Gini Impurity: 0.54 at weight=3.35</code></pre>
   background-color: var(--sklearn-color-background);
 }
 
-#sk-container-id-6 div.sk-container {
+#sk-container-id-1 div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -1015,7 +1016,7 @@ Weight: lowest Gini Impurity: 0.54 at weight=3.35</code></pre>
   position: relative;
 }
 
-#sk-container-id-6 div.sk-text-repr-fallback {
+#sk-container-id-1 div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -1031,14 +1032,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-#sk-container-id-6 div.sk-parallel-item::after {
+#sk-container-id-1 div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-#sk-container-id-6 div.sk-parallel {
+#sk-container-id-1 div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -1046,28 +1047,28 @@ div.sk-item {
   position: relative;
 }
 
-#sk-container-id-6 div.sk-parallel-item {
+#sk-container-id-1 div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-#sk-container-id-6 div.sk-parallel-item:first-child::after {
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-#sk-container-id-6 div.sk-parallel-item:last-child::after {
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-#sk-container-id-6 div.sk-parallel-item:only-child::after {
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-#sk-container-id-6 div.sk-serial {
+#sk-container-id-1 div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1085,14 +1086,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-#sk-container-id-6 div.sk-toggleable {
+#sk-container-id-1 div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-#sk-container-id-6 label.sk-toggleable__label {
+#sk-container-id-1 label.sk-toggleable__label {
   cursor: pointer;
   display: flex;
   width: 100%;
@@ -1105,13 +1106,13 @@ clickable and can be expanded/collapsed.
   gap: 0.5em;
 }
 
-#sk-container-id-6 label.sk-toggleable__label .caption {
+#sk-container-id-1 label.sk-toggleable__label .caption {
   font-size: 0.6rem;
   font-weight: lighter;
   color: var(--sklearn-color-text-muted);
 }
 
-#sk-container-id-6 label.sk-toggleable__label-arrow:before {
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -1119,25 +1120,25 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-#sk-container-id-6 label.sk-toggleable__label-arrow:hover:before {
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-#sk-container-id-6 div.sk-toggleable__content {
+#sk-container-id-1 div.sk-toggleable__content {
   display: none;
   text-align: left;
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-6 div.sk-toggleable__content.fitted {
+#sk-container-id-1 div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-6 div.sk-toggleable__content pre {
+#sk-container-id-1 div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -1145,79 +1146,79 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-6 div.sk-toggleable__content.fitted pre {
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-6 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   display: block;
   width: 100%;
   overflow: visible;
 }
 
-#sk-container-id-6 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-#sk-container-id-6 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-6 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-#sk-container-id-6 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-6 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-#sk-container-id-6 div.sk-label label.sk-toggleable__label,
-#sk-container-id-6 div.sk-label label {
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-#sk-container-id-6 div.sk-label:hover label.sk-toggleable__label {
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-#sk-container-id-6 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-#sk-container-id-6 div.sk-label label {
+#sk-container-id-1 div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   display: inline-block;
   line-height: 1.2em;
 }
 
-#sk-container-id-6 div.sk-label-container {
+#sk-container-id-1 div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-#sk-container-id-6 div.sk-estimator {
+#sk-container-id-1 div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -1227,18 +1228,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-6 div.sk-estimator.fitted {
+#sk-container-id-1 div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-#sk-container-id-6 div.sk-estimator:hover {
+#sk-container-id-1 div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-6 div.sk-estimator.fitted:hover {
+#sk-container-id-1 div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -1326,7 +1327,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-#sk-container-id-6 a.estimator_doc_link {
+#sk-container-id-1 a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -1341,21 +1342,21 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-#sk-container-id-6 a.estimator_doc_link.fitted {
+#sk-container-id-1 a.estimator_doc_link.fitted {
   /* fitted */
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
   color: var(--sklearn-color-fitted-level-1);
 }
 
 /* On hover */
-#sk-container-id-6 a.estimator_doc_link:hover {
+#sk-container-id-1 a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-#sk-container-id-6 a.estimator_doc_link.fitted:hover {
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
@@ -1423,7 +1424,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     height: 14px;
     cursor: pointer;
 }
-</a></style><div id="sk-container-id-6" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>DecisionTreeClassifier(criterion='entropy', max_depth=3)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" checked=""><label for="sk-estimator-id-6" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>DecisionTreeClassifier</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.tree.DecisionTreeClassifier.html">?<span>Documentation for DecisionTreeClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+</a></style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>DecisionTreeClassifier(criterion='entropy', max_depth=3)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>DecisionTreeClassifier</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.tree.DecisionTreeClassifier.html">?<span>Documentation for DecisionTreeClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -2304,6 +2305,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </div>
 </div>
 </div>
+<p>We can see that some of the regions are very small and specific to the training data points. This means that the model has learned not only the underlying patterns in the data but also the noise and outliers, which can lead to poor performance on new data.</p>
 <p>To avoid overfitting, we can use techniques such as:</p>
 <ul>
 <li>Setting a maximum depth. We limit how deep the tree can grow. Read about <code>max_depth</code>.</li>
