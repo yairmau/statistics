@@ -59,6 +59,7 @@ book:
       chapters:
         - decision_trees/CART_classification.ipynb
         - decision_trees/CART_regression.ipynb
+        - decision_trees/random_forest.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb

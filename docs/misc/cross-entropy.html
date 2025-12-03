@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistics and Machine Learning - 33&nbsp; cross-entropy and KL divergence</title>
+<title>Statistics and Machine Learning - 34&nbsp; cross-entropy and KL divergence</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/cross-entropy.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/cross-entropy.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -431,13 +431,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">classification with CART</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">regression with CART</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
   </div>
 </li>
       </ul>
@@ -454,19 +460,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/cross-entropy.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -481,18 +487,18 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#wrong-model" id="toc-wrong-model" class="nav-link active" data-scroll-target="#wrong-model"><span class="header-section-number">33.1</span> wrong model</a></li>
-  <li><a href="#kullback-leibler-divergence" id="toc-kullback-leibler-divergence" class="nav-link" data-scroll-target="#kullback-leibler-divergence"><span class="header-section-number">33.2</span> Kullback-Leibler divergence</a></li>
-  <li><a href="#model-training-and-objective-functions" id="toc-model-training-and-objective-functions" class="nav-link" data-scroll-target="#model-training-and-objective-functions"><span class="header-section-number">33.3</span> model training and objective functions</a></li>
+  <li><a href="#wrong-model" id="toc-wrong-model" class="nav-link active" data-scroll-target="#wrong-model"><span class="header-section-number">34.1</span> wrong model</a></li>
+  <li><a href="#kullback-leibler-divergence" id="toc-kullback-leibler-divergence" class="nav-link" data-scroll-target="#kullback-leibler-divergence"><span class="header-section-number">34.2</span> Kullback-Leibler divergence</a></li>
+  <li><a href="#model-training-and-objective-functions" id="toc-model-training-and-objective-functions" class="nav-link" data-scroll-target="#model-training-and-objective-functions"><span class="header-section-number">34.3</span> model training and objective functions</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/cross-entropy.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/cross-entropy.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/misc/cross-entropy.ipynb"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/misc/cross-entropy.ipynb"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -510,8 +516,8 @@ window.Quarto = {
 
 
 <p>Assume I live in city A, where it rains 50% of the days. A friend of mine lives in city B, where it rains 10% of the days.</p>
-<section id="wrong-model" class="level2" data-number="33.1">
-<h2 data-number="33.1" class="anchored" data-anchor-id="wrong-model"><span class="header-section-number">33.1</span> wrong model</h2>
+<section id="wrong-model" class="level2" data-number="34.1">
+<h2 data-number="34.1" class="anchored" data-anchor-id="wrong-model"><span class="header-section-number">34.1</span> wrong model</h2>
 <p>What happens when my friend visits me in city A and, not knowing any better, assumes that it rains 10% of the days?</p>
 <p>We have two probability distributions, the true weather distribution <span class="math inline">P</span>, and the assumed weather distribution <span class="math inline">Q</span>:</p>
 <ul>
@@ -542,8 +548,8 @@ H(Q, P) &amp;= - \sum_x Q(x) \log P(x) \\
 \end{align*}</span></p>
 <p>My friend’s expected surprise will be higher when he visits me in city A (1.74 bits) than my expected surprise when I visit him in city B (1 bit).</p>
 </section>
-<section id="kullback-leibler-divergence" class="level2" data-number="33.2">
-<h2 data-number="33.2" class="anchored" data-anchor-id="kullback-leibler-divergence"><span class="header-section-number">33.2</span> Kullback-Leibler divergence</h2>
+<section id="kullback-leibler-divergence" class="level2" data-number="34.2">
+<h2 data-number="34.2" class="anchored" data-anchor-id="kullback-leibler-divergence"><span class="header-section-number">34.2</span> Kullback-Leibler divergence</h2>
 <p>Not all of my friend’s surprise is due to the fact that he has an inaccurate mental model of the weather. Some of his surprise is simply due to the inherent randomness of the weather. This would be the same surprise that I myself experience when I live in city A, and I have the correct mental model of the weather.</p>
 <p>It would make sense to separate the surprise that is due to the inherent randomness of the weather from the surprise that is due to my friend’s wrong mental model. We can do this by subtracting the entropy of the true distribution <span class="math inline">P</span> from the cross-entropy <span class="math inline">H(P, Q)</span>:</p>
 <p><span class="math display">D_{KL}(P \| Q) = H(P, Q) - H(P)</span></p>
@@ -558,8 +564,8 @@ D_{KL}(P \| Q) &amp;= H(P, Q) - H(P)\\
 <p>This is the most common form of the KL divergence.</p>
 <p>When our model is perfect, i.e., when <span class="math inline">P = Q</span>, the KL divergence is zero <span class="math inline">(\log(P/P) = 0)</span>, because there is no extra surprise due to a wrong mental model. When our model is not perfect, the KL divergence is always positive, because we are always more surprised when our mental model is wrong.</p>
 </section>
-<section id="model-training-and-objective-functions" class="level2" data-number="33.3">
-<h2 data-number="33.3" class="anchored" data-anchor-id="model-training-and-objective-functions"><span class="header-section-number">33.3</span> model training and objective functions</h2>
+<section id="model-training-and-objective-functions" class="level2" data-number="34.3">
+<h2 data-number="34.3" class="anchored" data-anchor-id="model-training-and-objective-functions"><span class="header-section-number">34.3</span> model training and objective functions</h2>
 <p>We might want to train a model that classifies photos. We have a dataset of photos, and for each photo we know the correct label (cat, dog, elephant, etc.). The goal of the model is to predict the correct label for each photo.</p>
 <p>At every step of the training process, we need to evaluate how well the model is doing. The true data distribution <span class="math inline">P</span> is given by the labels in the training dataset, while the model’s predicted distribution <span class="math inline">Q</span> is given by the model’s output. Ideally, our model’s predicted distribution <span class="math inline">Q</span> should be as close as possible to the true data distribution <span class="math inline">P</span>. That’s sounds like a job for the KL divergence!</p>
 <p>We will adjust the model’s parameters to minimize the KL divergence between the true data distribution <span class="math inline">P</span> and the model’s predicted distribution <span class="math inline">Q</span>. In practice, we will minimize the cross-entropy <span class="math inline">H(P, Q)</span> instead of the KL divergence <span class="math inline">D_{KL}(P \| Q)</span>, because the entropy <span class="math inline">H(P)</span> does not depend on the model’s parameters, and therefore does not affect the optimization process. Think about it: no matter what the model’s parameters are, the entropy of the true data distribution <span class="math inline">P</span> will always be the same. So minimizing the KL divergence is equivalent to minimizing the cross-entropy. We don’t care if they differ by a constant.</p>
@@ -1031,7 +1037,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../misc/entropy.html" class="pagination-link" aria-label="entropy">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">entropy</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">entropy</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
