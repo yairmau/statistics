@@ -66,6 +66,7 @@ book:
         - misc/entropy.ipynb
         - misc/cross-entropy.ipynb
         - misc/boy-girl-paradox.ipynb
+        - misc/monty-hall.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
