@@ -65,6 +65,7 @@ book:
         - misc/trend_test.ipynb
         - misc/entropy.ipynb
         - misc/cross-entropy.ipynb
+        - misc/boy-girl-paradox.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
