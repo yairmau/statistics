@@ -51,6 +51,8 @@ book:
         - bayes/parametric-generative-classification.ipynb
         - bayes/odds.ipynb
         - bayes/logistic-connection.ipynb
+        - bayes/boy-girl-paradox.ipynb
+        - bayes/monty-hall.ipynb
     - part: "svd and pca"
       chapters:
         - svd_and_pca/svd_image_compression.ipynb
@@ -60,13 +62,18 @@ book:
         - decision_trees/CART_classification.ipynb
         - decision_trees/CART_regression.ipynb
         - decision_trees/random_forest.ipynb
+    - part: "information theory"
+      chapters:
+        - information_theory/entropy.ipynb
+        - information_theory/cross-entropy.ipynb
+    - part: "foundations"
+      chapters:
+        - foundations/probability_and_likelihood.ipynb
+        - foundations/MLE.ipynb
+        # - foundations/bias_variance_tradeoff.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
-        - misc/entropy.ipynb
-        - misc/cross-entropy.ipynb
-        - misc/boy-girl-paradox.ipynb
-        - misc/monty-hall.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
