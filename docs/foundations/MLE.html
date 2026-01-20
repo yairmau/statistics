@@ -72,6 +72,49 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -487,8 +530,24 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#log-likelihood" id="toc-log-likelihood" class="nav-link active" data-scroll-target="#log-likelihood"><span class="header-section-number">37.1</span> log likelihood</a></li>
+  <li><a href="#where-summary-statistics-come-from" id="toc-where-summary-statistics-come-from" class="nav-link" data-scroll-target="#where-summary-statistics-come-from"><span class="header-section-number">37.2</span> where summary statistics come from</a>
+  <ul class="collapse">
+  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link" data-scroll-target="#normal-distribution"><span class="header-section-number">37.2.1</span> normal distribution</a></li>
+  <li><a href="#binomial-distribution" id="toc-binomial-distribution" class="nav-link" data-scroll-target="#binomial-distribution"><span class="header-section-number">37.2.2</span> binomial distribution</a></li>
+  <li><a href="#laplace-distribution" id="toc-laplace-distribution" class="nav-link" data-scroll-target="#laplace-distribution"><span class="header-section-number">37.2.3</span> Laplace distribution</a></li>
+  <li><a href="#poisson-distribution" id="toc-poisson-distribution" class="nav-link" data-scroll-target="#poisson-distribution"><span class="header-section-number">37.2.4</span> Poisson distribution</a></li>
+  <li><a href="#uniform-distribution" id="toc-uniform-distribution" class="nav-link" data-scroll-target="#uniform-distribution"><span class="header-section-number">37.2.5</span> uniform distribution</a></li>
+  <li><a href="#exponential-distribution-revisited" id="toc-exponential-distribution-revisited" class="nav-link" data-scroll-target="#exponential-distribution-revisited"><span class="header-section-number">37.2.6</span> exponential distribution revisited</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">37.2.7</span> summary</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -513,9 +572,178 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p><img src="always-has-been.png" class="img-fluid"></p>
-<p>The one idea that unites all of statistics and machine learning is that of maximum likelihood estimation. I cannot overstate its centrality.</p>
+<p>The one idea that permeates all of statistics and machine learning is that of maximum likelihood estimation. I cannot overstate its centrality.</p>
+<p>In the chapter on <a href="../foundations/probability_and_likelihood.html">probability and likelihood</a>, we solved a practical example of estimating the rate parameter of an exponential distribution using maximum likelihood estimation. For the case where we observed many samples, we found that the formula for the mean naturally emerged as the maximum likelihood estimator for the rate parameter. We will dig deeper into this idea, and show deep connections between maximum likelihood estimation and many other statistical concepts.</p>
+<section id="log-likelihood" class="level2" data-number="37.1">
+<h2 data-number="37.1" class="anchored" data-anchor-id="log-likelihood"><span class="header-section-number">37.1</span> log likelihood</h2>
+<p>We already saw the formula for the likelihood for multiple independent observations:</p>
+<p><span class="math display">
+L(\lambda \mid t_1, t_2, \ldots, t_n) = \prod_{i=1}^{n} L(\lambda \mid t_i),
+</span></p>
+<p>We justified the product form by assuming that the observations are “iid”, meaning independent and identically distributed. Instead of working with the product form, it is often more convenient to work with the log likelihood, which converts the product into a sum:</p>
+<p><span class="math display">
+\ell(\theta \mid x_{1:n}) = \log L(\theta \mid x_{1:n}) = \sum_{i=1}^{n} \log L(\theta \mid x_i) = \sum_{i=1}^{n} \log P( x_i \mid \theta).
+</span></p>
+<p>Here we changed the notation a bit to use <span class="math inline">\theta</span> for the parameters (which could be a vector) and <span class="math inline">x</span> for the data vector, which is more common in statistics. There are a few reasons why we prefer to work with the log likelihood instead of the likelihood itself:</p>
+<ul>
+<li><strong>Numerical Stability (Underflow):</strong> In <a href="../foundations/probability_and_likelihood.html#q3-likelihood-with-multiple-observations">likelihood with multiple observations</a>, we saw that likelihoods are products: <span class="math inline">\prod P(x_i)</span>. If you have 100 observations, you are multiplying 100 small numbers, which can lead to numerical underflow where a computer rounds the result to zero. Summing logs, <span class="math inline">\sum \ln P(x_i​)</span>, keeps the numbers in a range computers can handle.</li>
+<li><strong>Mathematical Elegance:</strong> Many common distributions (like the Exponential or Normal) use <span class="math inline">e</span>, Euler’s number. The natural log cancels the exponent, turning products of complex terms into simple sums that are much easier to differentiate.</li>
+<li><strong>Preservation of the Maximum:</strong> Because ln(x) is a monotonically increasing function, the value of <span class="math inline">\theta</span> that maximizes the log-likelihood is identical to the value that maximizes the likelihood.</li>
+<li><strong>Optimization Surface:</strong> Taking the log reshapes the likelihood surface. It stretches out the extremely steep slopes near the peak, creating a well-behaved “hill” that optimization algorithms can navigate reliably without the fluctuations caused by nearly-vertical gradients.</li>
+</ul>
+</section>
+<section id="where-summary-statistics-come-from" class="level2" data-number="37.2">
+<h2 data-number="37.2" class="anchored" data-anchor-id="where-summary-statistics-come-from"><span class="header-section-number">37.2</span> where summary statistics come from</h2>
+<p>Let’s do the following exercise. Suppose we have <span class="math inline">n</span> iid observations <span class="math inline">x</span> from a model with parameters <span class="math inline">\theta</span>. Using the definition of the log likelihood, derive the maximum likelihood estimator for <span class="math inline">\theta</span>.</p>
+<section id="normal-distribution" class="level3" data-number="37.2.1">
+<h3 data-number="37.2.1" class="anchored" data-anchor-id="normal-distribution"><span class="header-section-number">37.2.1</span> normal distribution</h3>
+<p>The normal distribution is defined by two parameters: the mean <span class="math inline">\mu</span> and the standard deviation <span class="math inline">\sigma</span>. As an example, consider measuring the heights of a group of people. We can assume that the heights are normally distributed with some unknown mean and standard deviation.</p>
+<p>Its probability density function is given by: <span class="math display">
+f(x \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right).
+</span></p>
+<p>The log likelihood reads:</p>
+<p><span class="math display">\begin{align*}
+\ell(\mu, \sigma \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i \mid \mu, \sigma) \\
+&amp;= \sum_{i=1}^{n} \log \left( \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x_i - \mu)^2}{2\sigma^2}\right) \right) \\
+&amp;= \sum_{i=1}^{n} \left( -\log(\sigma \sqrt{2\pi}) - \frac{(x_i - \mu)^2}{2\sigma^2} \right) \\
+&amp;= -n \log(\sigma) -n \log(\sqrt{2\pi}) - \frac{1}{2\sigma^2} \sum_{i=1}^{n} (x_i - \mu)^2.
+\end{align*}</span></p>
+<p>Maximizing the log likelihood with respect to <span class="math inline">\mu</span> and <span class="math inline">\sigma</span> involves taking partial derivatives, setting them to zero, and solving for the parameters.</p>
+<p>For <span class="math inline">\mu</span>, we have:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial \ell}{\partial \mu} &amp;= \frac{1}{\sigma^2} \sum_{i=1}^{n} (x_i - \mu) \\
+&amp;= \frac{1}{\sigma^2} \left( \sum_{i=1}^{n} x_i - n\mu \right) = 0.
+\end{align*}</span></p>
+<p>Solving for <span class="math inline">\mu</span> gives: <span class="math display">
+\hat{\mu} = \frac{1}{n} \sum_{i=1}^{n} x_i,
+</span> which is the sample mean.</p>
+<p>Now, for <span class="math inline">\sigma</span>, we have:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial \ell}{\partial \sigma} &amp;= -\frac{n}{\sigma} + \frac{1}{\sigma^3} \sum_{i=1}^{n} (x_i - \mu)^2 \\
+&amp;= \frac{1}{\sigma^3} \left( -n\sigma^2 + \sum_{i=1}^{n} (x_i - \mu)^2 \right) = 0.
+\end{align*}</span></p>
+<p>Solving for <span class="math inline">\sigma</span> gives: <span class="math display">
+\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \hat{\mu})^2,
+</span> which is the sample variance (using <span class="math inline">n</span> in the denominator for MLE).</p>
+<p>Going back to the height example, our MLEs for the mean and standard deviation of heights are simply the sample mean and sample standard deviation of the observed heights.</p>
+</section>
+<section id="binomial-distribution" class="level3" data-number="37.2.2">
+<h3 data-number="37.2.2" class="anchored" data-anchor-id="binomial-distribution"><span class="header-section-number">37.2.2</span> binomial distribution</h3>
+<p>The binomial distribution models the number of successes in <span class="math inline">n</span> independent Bernoulli trials, each with success probability <span class="math inline">p</span>. A very common example is flipping a biased coin, whose probability of yielding heads is <span class="math inline">p</span>, flipping it <span class="math inline">n</span> times and counting the number of heads <span class="math inline">k</span>. Its probability mass function is given by: <span class="math display">
+P(X = k \mid n, p) = \binom{n}{k} p^k (1 - p)^{n - k}.
+</span> The log likelihood reads:</p>
+<p><span class="math display">\begin{align*}
+\ell(p \mid k, n) &amp;= \log P(X = k \mid n, p) \\
+&amp;= \log \left( \binom{n}{k} p^k (1 - p)^{n - k} \right) \\
+&amp;= \log \binom{n}{k} + k \log p + (n - k) \log (1 - p).
+\end{align*}</span></p>
+<p>To find the maximum likelihood estimator for <span class="math inline">p</span>, we take the derivative of the log likelihood with respect to <span class="math inline">p</span> and set it to zero:</p>
+<p><span class="math display">\begin{align*}
+\frac{d\ell}{dp} &amp;= \frac{k}{p} - \frac{n - k}{1 - p} = 0.
+\end{align*}</span></p>
+<p>Solving for <span class="math inline">p</span> gives: <span class="math display">
+\hat{p} = \frac{k}{n},
+</span> which is the sample proportion of successes. Going back to the coin example, if we flip the coin 100 times and get 60 heads, our MLE for <span class="math inline">p</span> would be <span class="math inline">\hat{p} = 60/100 = 0.6</span>.</p>
+</section>
+<section id="laplace-distribution" class="level3" data-number="37.2.3">
+<h3 data-number="37.2.3" class="anchored" data-anchor-id="laplace-distribution"><span class="header-section-number">37.2.3</span> Laplace distribution</h3>
+<p>The Laplace distribution, also known as the double exponential distribution, is characterized by its location parameter <span class="math inline">\mu</span> and scale parameter <span class="math inline">b</span>. We use the normal distribution for ‘well-behaved’ data like human heights. We use the Laplace distribution for ‘wild’ data like stock market data, where outliers aren’t just mistakes—they are part of the system. For example, most days the price of a stock barely moves, but rare events (market crashes or surges) happen much more often than a Normal distribution would allow.</p>
+<p>Its probability density function is given by: <span class="math display">
+f(x \mid \mu, b) = \frac{1}{2b} \exp\left(-\frac{|x - \mu|}{b}\right).
+</span></p>
+<p>The log likelihood reads:</p>
+<p><span class="math display">\begin{align*}
+\ell(\mu, b \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i \mid \mu, b) \\
+&amp;= \sum_{i=1}^{n} \log \left( \frac{1}{2b} \exp\left(-\frac{|x_i - \mu|}{b}\right) \right) \\
+&amp;= \sum_{i=1}^{n} \left( -\log(2b) - \frac{|x_i - \mu|}{b} \right) \\
+&amp;= -n \log(2b) - \frac{1}{b} \sum_{i=1}^{n} |x_i - \mu|.
+\end{align*}</span></p>
+<p>Maximizing the log likelihood with respect to <span class="math inline">\mu</span> and <span class="math inline">b</span> involves taking partial derivatives, setting them to zero, and solving for the parameters.</p>
+<p>For <span class="math inline">\mu</span>, we have:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial \ell}{\partial \mu} &amp;= \frac{1}{b} \sum_{i=1}^{n} \text{sgn}(x_i - \mu) = 0,
+\end{align*}</span> where <span class="math inline">\text{sgn}(x)</span> is the sign function, which returns -1 for negative values, 1 for positive values, and 0 for zero.</p>
+<p>Solving for <span class="math inline">\mu</span> is essentially a balancing act. It requires us finding a value for <span class="math inline">\mu</span> such that the number of positive ones (points above <span class="math inline">\mu</span>) exactly cancels out the number of negative ones (points below <span class="math inline">\mu</span>). This happens when <span class="math inline">\mu</span> is the median of the data: <span class="math display">
+\hat{\mu} = \text{median}(x_{1:n}).
+</span></p>
+<p>Now, for <span class="math inline">b</span>, we have:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial \ell}{\partial b} &amp;= -\frac{n}{b} + \frac{1}{b^2} \sum_{i=1}^{n} |x_i - \mu| = 0.
+\end{align*}</span></p>
+<p>Solving for <span class="math inline">b</span> gives: <span class="math display">
+\hat{b} = \frac{1}{n} \sum_{i=1}^{n} |x_i - \hat{\mu}|,
+</span> which is the mean absolute deviation (MAD) from the median. This measure of spread is more robust to outliers than the standard deviation.</p>
+<p>Going back to the stock market example, our MLEs for the location and scale parameters are simply the sample median and mean absolute deviation from the median of the observed returns.</p>
+</section>
+<section id="poisson-distribution" class="level3" data-number="37.2.4">
+<h3 data-number="37.2.4" class="anchored" data-anchor-id="poisson-distribution"><span class="header-section-number">37.2.4</span> Poisson distribution</h3>
+<p>The Poisson distribution models the number of events occurring in a fixed interval of time or space, given a known average rate of occurrence <span class="math inline">\lambda</span>. A common example is counting the number of emails received in an hour, or the number of radioactive decays detected in a piece of radioactive material over a certain period. Its probability mass function is given by: <span class="math display">
+P(X = k \mid \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}.
+</span> The log likelihood reads:</p>
+<p><span class="math display">\begin{align*}
+\ell(\lambda \mid k_{1:n}) &amp;= \sum_{i=1}^{n} \log P(X = k_i \mid \lambda) \\
+&amp;= \sum_{i=1}^{n} \left( k_i \log \lambda - \lambda - \log(k_i!) \right) \\
+&amp;= \left(\sum_{i=1}^{n} k_i \right) \log \lambda - n \lambda - \sum_{i=1}^{n} \log(k_i!).
+\end{align*}</span></p>
+<p>To find the maximum likelihood estimator for <span class="math inline">\lambda</span>, we take the derivative of the log likelihood with respect to <span class="math inline">\lambda</span> and set it to zero:</p>
+<p><span class="math display">\begin{align*}
+\frac{d\ell}{d\lambda} &amp;= \frac{\sum_{i=1}^{n} k_i}{\lambda} - n = 0.
+\end{align*}</span></p>
+<p>Solving for <span class="math inline">\lambda</span> gives: <span class="math display">
+\hat{\lambda} = \frac{1}{n} \sum_{i=1}^{n} k_i,
+</span> which is the sample mean of the observed counts.</p>
+</section>
+<section id="uniform-distribution" class="level3" data-number="37.2.5">
+<h3 data-number="37.2.5" class="anchored" data-anchor-id="uniform-distribution"><span class="header-section-number">37.2.5</span> uniform distribution</h3>
+<p>The uniform distribution models a situation where all outcomes in a given range are equally likely. A common example is rolling a fair die, where each face (1 through 6) has an equal probability of landing face up. Its probability density function is given by: <span class="math display">
+f(x \mid a, b) = \frac{1}{b - a} \text{ for } a \leq x \leq b.
+</span></p>
+<p>The log likelihood reads:</p>
+<p><span class="math display">\begin{align*}
+\ell(a, b \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i \mid a, b) \\
+&amp;= \sum_{i=1}^{n} \log \left( \frac{1}{b - a} \right) \\
+&amp;= -n \log(b - a).
+\end{align*}</span></p>
+<p>In this instance, it is much easier to find the maximum likelihood estimators for <span class="math inline">a</span> and <span class="math inline">b</span> using the probability density function directly, rather than taking derivatives of the log likelihood. The likelihood reads: <span class="math display">
+L(a, b \mid x_{1:n}) = \left( \frac{1}{b - a} \right)^n.
+</span></p>
+<p>The likelihood doesn’t have a peak in the usual sense; it increases as the interval <span class="math inline">[a, b]</span> narrows. In order to maximize the likelihood, the interval must be as small as possible while still containing all observed data points. If at least one data point falls outside the interval, the likelihood becomes zero, because the uniform distribution assigns zero probability to values outside <span class="math inline">[a, b]</span>, and the product of probabilities will include a zero term. The smallest interval that contains all observed data points is defined by the minimum and maximum of the data. Therefore, <span class="math display">
+\hat{a} = \min(x_{1:n}), \quad \hat{b} = \max(x_{1:n}).
+</span></p>
+</section>
+<section id="exponential-distribution-revisited" class="level3" data-number="37.2.6">
+<h3 data-number="37.2.6" class="anchored" data-anchor-id="exponential-distribution-revisited"><span class="header-section-number">37.2.6</span> exponential distribution revisited</h3>
+<p>We can now revisit our original example of estimating the rate parameter <span class="math inline">\lambda</span> of an exponential distribution using maximum likelihood estimation. Recall that the probability density function of the exponential distribution is given by: <span class="math display">
+f(x \mid \lambda) = \lambda e^{-\lambda x}.
+</span> The log likelihood reads:</p>
+<p><span class="math display">\begin{align*}
+\ell(\lambda \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i \mid \lambda) \\
+&amp;= \sum_{i=1}^{n} \left( \log \lambda - \lambda x_i \right) \\
+&amp;= n \log \lambda - \lambda \sum_{i=1}^{n} x_i.
+\end{align*}</span> To find the maximum likelihood estimator for <span class="math inline">\lambda</span>, we take the derivative of the log likelihood with respect to <span class="math inline">\lambda</span> and set it to zero:</p>
+<p><span class="math display">\begin{align*}
+\frac{d\ell}{d\lambda} &amp;= \frac{n}{\lambda} - \sum_{i=1}^{n} x_i = 0.
+\end{align*}</span></p>
+<p>Solving for <span class="math inline">\lambda</span> gives: <span class="math display">
+\hat{\lambda} = \frac{n}{\sum_{i=1}^{n} x_i} = \frac{1}{\bar{x}},
+</span> where <span class="math inline">\bar{x}</span> is the sample mean of the observed data. This result aligns with our previous derivation using the likelihood function directly.</p>
+</section>
+<section id="summary" class="level3" data-number="37.2.7">
+<h3 data-number="37.2.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">37.2.7</span> summary</h3>
+<p>By appliying the reasoning of maximum likelihood estimation to various probability distributions, we have derived the maximum likelihood estimators for their parameters. Notably, we found that:</p>
+<ul>
+<li>For the <strong>normal</strong> distribution, the MLEs are the sample mean and sample standard deviation.</li>
+<li>For the <strong>binomial</strong> distribution, the MLE is the sample proportion of successes.</li>
+<li>For the <strong>Laplace</strong> distribution, the MLEs are the sample median and mean absolute deviation from the median.</li>
+<li>For the <strong>Poisson</strong> distribution, the MLE is the sample mean of the observed counts.</li>
+<li>For the <strong>uniform</strong> distribution, the MLEs are the sample minimum and sample maximum.</li>
+<li>For the <strong>exponential</strong> distribution, the MLE is the reciprocal of the sample mean.</li>
+</ul>
+<p>All these estimators are intuitive and align with common summary statistics used in data analysis, highlighting the deep connection between maximum likelihood estimation and descriptive statistics.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

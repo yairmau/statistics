@@ -611,7 +611,7 @@ window.Quarto = {
 </header>
 
 
-<p>In the bus stop next to where I live, buses arrive on average every 20 minutes. The timing is not exact, due to traffic, wheather, or the number of passengers getting on and off.</p>
+<p>In the bus stop next to where I live, buses arrive on average every 20 minutes. The timing is not exact, due to traffic, weather, or the number of passengers getting on and off.</p>
 <ul>
 <li>Q1: What is the probability that I will have to wait more than 30 minutes for the next bus?</li>
 <li>Q2: Assume now that we don’t know the average interval between buses. Given that I waited 15 minutes today, what is the most likely average interval between buses?</li>
@@ -719,7 +719,8 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>I will make the follwing assumption: every minute has the same chance of seeing a bus arrive. No matter how long I already waited, the chance of seeing a bus in the next minute is the same. What is the probability that I will have to wait more than t minutes?</p>
+<p>I will make the follwing assumption: every minute has the same chance of seeing a bus arrive. No matter how long I already waited, the chance of seeing a bus in the next minute is the same. This is called the <strong>memoryless property</strong>. It means that the bus arrival process has no memory of what happened before. This can be a reasonable assumption for buses arriving randomly, but it would not be reasonable for something like a train schedule, where if I just missed a train, I know I will have to wait a long time for the next one.</p>
+<p>What is the probability that I will have to wait more than t minutes?</p>
 </section>
 <section id="full-derivation" class="level3" data-number="36.1.3">
 <h3 data-number="36.1.3" class="anchored" data-anchor-id="full-derivation"><span class="header-section-number">36.1.3</span> full derivation</h3>
@@ -727,10 +728,10 @@ window.Quarto = {
 <p>Let’s start by imagining the 20-minute average wait. Instead of looking at the full 20 minutes, let’s slice time into tiny, microscopic intervals of size <span class="math inline">\Delta t</span> (e.g., one millisecond). In each tiny slice, only two things can happen, either the bus arrives, or it does not. Since the average wait is 20 minutes, the rate <span class="math inline">\lambda</span> is 1/20 buses per minute. In a tiny slice of time <span class="math inline">\Delta t</span>, the probability p of a bus arriving is <span class="math inline">p\approx \lambda \Delta t</span>.</p>
 <p>If I am waiting for the bus at time <span class="math inline">t</span>, it means the bus failed to show up in every single tiny slice of time from <span class="math inline">0</span> up to <span class="math inline">t</span>. If each slice is <span class="math inline">\Delta t</span>, the number of slices in time t is <span class="math inline">n=t/\Delta t</span>. The probability of <strong>not</strong> seeing a bus in one slice is <span class="math inline">(1−p)</span>. Therefore, the probability of not seeing a bus in <span class="math inline">n</span> consecutive slices is:</p>
 <p><span class="math display">
-P(\text{wait} &gt; t) = (1 - p)^n = (1 - \lambda \Delta t)^{t/\Delta t}.
+Pr(T &gt; t) = (1 - p)^n = (1 - \lambda \Delta t)^{t/\Delta t}.
 </span></p>
 <p>To make this accurate, we want the slices to be “infinitely small” <span class="math inline">(\Delta t\rightarrow 0)</span>. As <span class="math inline">\Delta t</span> gets smaller, <span class="math inline">n</span> gets larger. Let’s rewrite the exponent to use the definition of e: <span class="math display">
-P(\text{wait} &gt; t) = \left[(1 - \lambda \Delta t)^{\frac{1}{\lambda \Delta t}}\right]^{\lambda t}.
+Pr(T &gt; t) = \left[(1 - \lambda \Delta t)^{\frac{1}{\lambda \Delta t}}\right]^{\lambda t}.
 </span></p>
 <p>Recall the fundamental definition of the exponential constant:</p>
 <p><span class="math display">
@@ -738,15 +739,15 @@ P(\text{wait} &gt; t) = \left[(1 - \lambda \Delta t)^{\frac{1}{\lambda \Delta t}
 </span></p>
 <p>As <span class="math inline">\Delta t \to 0</span>, the term inside the brackets becomes <span class="math inline">e^{-1}</span>.</p>
 <p><span class="math display">
-P(T&gt;t)=e^{-\lambda t}
+Pr(T&gt;t)=e^{-\lambda t}
 </span></p>
 <p>What we just found is the Survival Function (the chance you are still waiting at time t). To get the Cumulative Distribution Function (CDF)—the chance the bus has arrived by time t:</p>
 <p><span class="math display">
-F(t) = P(T \leq t) = 1 - P(T &gt; t) = 1 - e^{-\lambda t}
+F(t) = Pr(T \leq t) = 1 - Pr(T &gt; t) = 1 - e^{-\lambda t}
 </span></p>
 <p>Finally, the Probability Density Function (PDF) is the rate of change (derivative) of the CDF:</p>
 <p><span class="math display">\begin{align*}
-f(t) &amp;= \frac{d}{dt}F(t) \\
+P(t) &amp;= \frac{d}{dt}F(t) \\
 &amp;= \frac{d}{dt}\left(1 - e^{-\lambda t}\right) \\
 &amp;= \lambda e^{-\lambda t}
 \end{align*}</span></p>
@@ -757,18 +758,18 @@ f(t) &amp;= \frac{d}{dt}F(t) \\
 <p>Q1: What is the probability that I will have to wait more than 30 minutes for the next bus?</p>
 <p>Now that we have the probability density function,</p>
 <p><span class="math display">
-f(t) = \lambda e^{-\lambda t}
+P(t) = \lambda e^{-\lambda t}
 </span></p>
-<p>we can calculate the probability of waiting more than T minutes as the integral of the PDF from T to infinity:</p>
+<p>we can calculate the probability of waiting more than t minutes as the integral of the PDF from T to infinity:</p>
 <p><span class="math display">\begin{align*}
-P(t &gt; T) &amp;= \int_{T}^{\infty} \lambda e^{-\lambda t} dt\\
-&amp;= \left[-e^{-\lambda t}\right]_{T}^{\infty} \\
-&amp;= 0 - \left(-e^{-\lambda \cdot T}\right) \\
-&amp;= e^{-\lambda \cdot T}
+Pr(T &gt; t) &amp;= \int_{t}^{\infty} \lambda e^{-\lambda t} dt\\
+&amp;= \left[-e^{-\lambda t}\right]_{t}^{\infty} \\
+&amp;= 0 - \left(-e^{-\lambda \cdot t}\right) \\
+&amp;= e^{-\lambda \cdot t}
 \end{align*}</span></p>
-<p>For our specific case, with an average wait of 20 minutes (<span class="math inline">\lambda=1/20</span>) and <span class="math inline">T=30</span> minutes:</p>
+<p>For our specific case, with an average wait of 20 minutes (<span class="math inline">\lambda=1/20</span>) and <span class="math inline">t=30</span> minutes:</p>
 <p><span class="math display">
-P(t &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
+Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 </span></p>
 <p>There is a 22% chance that I will have to wait more than 30 minutes for the next bus. <span class="math inline">\square</span></p>
 </section>
@@ -784,29 +785,29 @@ P(t &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <p>It is clear from the reasoning above that there is a sweet spot, an intermediate value of <span class="math inline">\lambda</span> that makes waiting 15 minutes most likely.</p>
 <p>The likelihood is written as:</p>
 <p><span class="math display">
-L(\lambda \mid t).
+\mathcal{L}(\lambda \mid t).
 </span></p>
 <p>It should <strong>not</strong> be read as “the probability of <span class="math inline">\lambda</span> given t”, because <span class="math inline">\lambda</span> is not a random variable. Instead, it should be read as “the likelihood of <span class="math inline">\lambda</span> given t”, meaning how plausible is the value of <span class="math inline">\lambda</span> in light of the observed data t.</p>
 <p>For given observed wait time t=15, the likelihood function is equal to the probability density function evaluated at t=15:</p>
 <p><span class="math display">
-L(\lambda \mid t=15) = f(t=15 \mid \lambda)
+\mathcal{L}(\lambda \mid t=15) = P(t=15 \mid \lambda)
 </span></p>
 <p>Let’s see this in action. On the left plot below we see the PDF for a few different values of <span class="math inline">\lambda</span>. For each curve, I marked the observed wait time of 15 minutes with a circle. It is hard to see which value of <span class="math inline">\lambda</span> makes waiting 15 minutes most likely just by looking at the left plot.</p>
 <p>On the right plot we see the likelihood function for the observed wait time of 15 minutes. Clearly there is a peak for the likelihood.</p>
-<div id="9a08d32e" class="cell" data-execution_count="7">
+<div id="9a08d32e" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">40</span>, <span class="dv">101</span>)</span>
 <span id="cb3-3"><a href="#cb3-3"></a>f <span class="op">=</span> <span class="kw">lambda</span> t, lam: lam <span class="op">*</span> np.exp(<span class="op">-</span>lam <span class="op">*</span> t)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>tau <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>])</span>
-<span id="cb3-5"><a href="#cb3-5"></a>lam <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> tau</span>
+<span id="cb3-4"><a href="#cb3-4"></a>time <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>])</span>
+<span id="cb3-5"><a href="#cb3-5"></a>lam <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> time</span>
 <span id="cb3-6"><a href="#cb3-6"></a></span>
 <span id="cb3-7"><a href="#cb3-7"></a>color_min <span class="op">=</span> <span class="fl">0.4</span></span>
 <span id="cb3-8"><a href="#cb3-8"></a>color_max <span class="op">=</span> <span class="fl">0.99</span></span>
 <span id="cb3-9"><a href="#cb3-9"></a>colors <span class="op">=</span> plt.cm.Blues(np.linspace(color_min, color_max, <span class="bu">len</span>(lam)))</span>
 <span id="cb3-10"><a href="#cb3-10"></a><span class="cf">for</span> i,l <span class="kw">in</span> <span class="bu">enumerate</span>(lam):</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    ax[<span class="dv">0</span>].plot(t, f(t, l), lw<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="ss">f'λ=</span><span class="sc">{</span>l<span class="sc">:.3f}</span><span class="ss"> (τ=</span><span class="sc">{</span><span class="dv">1</span><span class="op">/</span>l<span class="sc">:.0f}</span><span class="ss"> min)'</span>, color<span class="op">=</span>colors[i])</span>
+<span id="cb3-11"><a href="#cb3-11"></a>    ax[<span class="dv">0</span>].plot(t, f(t, l), lw<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="ss">f'λ=</span><span class="sc">{</span>l<span class="sc">:.3f}</span><span class="ss"> (time=</span><span class="sc">{</span><span class="dv">1</span><span class="op">/</span>l<span class="sc">:.0f}</span><span class="ss"> min)'</span>, color<span class="op">=</span>colors[i])</span>
 <span id="cb3-12"><a href="#cb3-12"></a>    ax[<span class="dv">0</span>].plot([<span class="dv">15</span>], [f(<span class="dv">15</span>, l)], ls<span class="op">=</span><span class="va">None</span>, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>colors[i], markersize<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb3-13"><a href="#cb3-13"></a>ax[<span class="dv">0</span>].legend()</span>
 <span id="cb3-14"><a href="#cb3-14"></a><span class="co"># ax.plot(t, f(t, lam), color='blue', lw=2)</span></span>
@@ -840,13 +841,13 @@ L(\lambda \mid t=15) = f(t=15 \mid \lambda)
 <h3 data-number="36.2.1" class="anchored" data-anchor-id="maximum-likelihood"><span class="header-section-number">36.2.1</span> maximum likelihood</h3>
 <p>The final step here is obvious. We need to find which lambda maximizes the likelihood function. This value is called the Maximum Likelihood Estimate (MLE) of lambda, denoted <span class="math inline">\hat{\lambda}</span>:</p>
 <p><span class="math display">
-\hat{\lambda} = \underset{\lambda}{\mathrm{argmax}} \ L(\lambda \mid t=15),
+\hat{\lambda} = \underset{\lambda}{\mathrm{argmax}} \ \mathcal{L}(\lambda \mid t=15),
 </span></p>
 <p>or in English, “the value of lambda that maximizes the argument of the likelihood function, given the observation t=15.”</p>
 <p>Let’s take the derivative of the likelihood function with respect to lambda, set it to zero, and solve for lambda:</p>
 <p><span class="math display">\begin{align*}
-L(\lambda \mid t) &amp;= \lambda e^{-\lambda t} \\
-\frac{d}{d\lambda} L(\lambda \mid t) &amp;= e^{-\lambda t} - \lambda t e^{-\lambda t} \\
+\mathcal{L}(\lambda \mid t) &amp;= \lambda e^{-\lambda t} \\
+\frac{d}{d\lambda} \mathcal{L}(\lambda \mid t) &amp;= e^{-\lambda t} - \lambda t e^{-\lambda t} \\
 0 &amp;= e^{-\lambda t} - \lambda t e^{-\lambda t} \\
 \lambda t e^{-\lambda t} &amp;= e^{-\lambda t} \\
 \lambda t &amp;= 1 \\
@@ -856,11 +857,11 @@ L(\lambda \mid t) &amp;= \lambda e^{-\lambda t} \\
 </section>
 <section id="likelihood-surface" class="level3" data-number="36.2.2">
 <h3 data-number="36.2.2" class="anchored" data-anchor-id="likelihood-surface"><span class="header-section-number">36.2.2</span> likelihood surface</h3>
-<p>I find it useful to visualize both the probability and likelihood functions together in a 3D surface plot. The surface represents the exponential distribution’s PDF across a range of wait times (<span class="math inline">t</span>) and rate parameters (<span class="math inline">\lambda</span>). The common expression we see when we learn about probability and likelihood is: <span class="math display">
-L(\theta \mid x) = P(x \mid \theta),
-</span> where <span class="math inline">x</span> is the data and <span class="math inline">\theta</span> is the parameter (wait time <span class="math inline">t</span> and rate <span class="math inline">\lambda</span> in our example). At first this seemed baffling to me to define the likelihood function using the same formula as the probability density function. What’s the point of having two names for the same formula? I now picture the probability and likelihood functions as slices (projections) of the same surface. Keeping the parameters fixed and varying the data gives us the probability function. Keeping the data fixed and varying the parameters gives us the likelihood function.</p>
+<p>I find it useful to visualize both the probability and likelihood functions together in a 3D surface plot. The <strong>joint probability distribution</strong> can be visualized as a surface, representing the exponential distribution’s PDF across a range of wait times (<span class="math inline">t</span>) and rate parameters (<span class="math inline">\lambda</span>). The common expression we see when we learn about probability and likelihood is: <span class="math display">
+\mathcal{L}(\theta \mid x) = P(x \mid \theta),
+</span>* where <span class="math inline">x</span> is the data and <span class="math inline">\theta</span> is the parameter (wait time <span class="math inline">t</span> and rate <span class="math inline">\lambda</span> in our example). At first this seemed baffling to me to define the likelihood function using the same formula as the probability density function. What’s the point of having two names for the same formula? I now picture the probability and likelihood functions as slices (projections) of the same surface. Keeping the parameters fixed and varying the data gives us the probability function. Keeping the data fixed and varying the parameters gives us the likelihood function.</p>
 <p>This also helps me understand why the likelihood function is not a valid probability distribution over the parameters. For a fixed data point, the area under the likelihood curve over all possible parameter values does not equal 1. Instead, it can take any value, depending on the observed data.</p>
-<div id="7257e110" class="cell" data-execution_count="8">
+<div id="7257e110" class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Define ranges</span></span>
@@ -883,12 +884,12 @@ L(\theta \mid x) = P(x \mid \theta),
 <span id="cb4-18"><a href="#cb4-18"></a><span class="co"># Probability slice (fixed lambda, varying t)</span></span>
 <span id="cb4-19"><a href="#cb4-19"></a>t_slice <span class="op">=</span> t</span>
 <span id="cb4-20"><a href="#cb4-20"></a>z_prob <span class="op">=</span> fixed_lambda <span class="op">*</span> np.exp(<span class="op">-</span>fixed_lambda <span class="op">*</span> t_slice)</span>
-<span id="cb4-21"><a href="#cb4-21"></a>ax.plot(t_slice, [fixed_lambda]<span class="op">*</span><span class="bu">len</span>(t_slice), z_prob, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f'Probability Slice ($</span><span class="er">\</span><span class="ss">lambda$=1/15)'</span>)</span>
+<span id="cb4-21"><a href="#cb4-21"></a>ax.plot(t_slice, [fixed_lambda]<span class="op">*</span><span class="bu">len</span>(t_slice), z_prob, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f'Probability Slice $f(t|</span><span class="er">\</span><span class="ss">lambda=1/15)$'</span>)</span>
 <span id="cb4-22"><a href="#cb4-22"></a></span>
 <span id="cb4-23"><a href="#cb4-23"></a><span class="co"># Likelihood slice (fixed t, varying lambda)</span></span>
 <span id="cb4-24"><a href="#cb4-24"></a>l_slice <span class="op">=</span> lmbda</span>
 <span id="cb4-25"><a href="#cb4-25"></a>z_lik <span class="op">=</span> l_slice <span class="op">*</span> np.exp(<span class="op">-</span>l_slice <span class="op">*</span> fixed_t)</span>
-<span id="cb4-26"><a href="#cb4-26"></a>ax.plot([fixed_t]<span class="op">*</span><span class="bu">len</span>(l_slice), l_slice, z_lik, color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f'Likelihood Slice ($t$=</span><span class="sc">{</span>fixed_t<span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb4-26"><a href="#cb4-26"></a>ax.plot([fixed_t]<span class="op">*</span><span class="bu">len</span>(l_slice), l_slice, z_lik, color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f'Likelihood Slice $L(</span><span class="er">\</span><span class="ss">lambda|t=</span><span class="sc">{</span>fixed_t<span class="sc">}</span><span class="ss">)$'</span>)</span>
 <span id="cb4-27"><a href="#cb4-27"></a></span>
 <span id="cb4-28"><a href="#cb4-28"></a>ax.set_xlabel(<span class="st">'Wait Time ($t$)'</span>)</span>
 <span id="cb4-29"><a href="#cb4-29"></a>ax.set_ylabel(<span class="st">'Rate ($</span><span class="er">\</span><span class="st">lambda$)'</span>)</span>
@@ -912,21 +913,21 @@ L(\theta \mid x) = P(x \mid \theta),
 <p>This week I waited 10, 25, 30, 2, and 20 minutes for the bus on different days. Given this data, what is the most likely average interval between buses?</p>
 <p>We will now make an important assumption: the wait times on different days are independent of each other. This means that the likelihood of observing all the wait times is the product of the individual likelihoods:</p>
 <p><span class="math display">
-L(\lambda \mid t_1, t_2, \ldots, t_n) = \prod_{i=1}^{n} L(\lambda \mid t_i).
+\mathcal{L}(\lambda \mid t_1, t_2, \ldots, t_n) = \prod_{i=1}^{n} \mathcal{L}(\lambda \mid t_i) = \prod_{i=1}^{n} P( t_i \mid \lambda).
 </span></p>
 <p>Given</p>
 <p><span class="math display">
-f(t) = \lambda e^{-\lambda t}
+P(t) = \lambda e^{-\lambda t}
 </span></p>
 <p>we have</p>
 <p><span class="math display">\begin{align*}
-L(\lambda \mid t_1, t_2, \ldots, t_n) &amp;= \prod_{i=1}^{n} \lambda e^{-\lambda t_i} \\
+\mathcal{L}(\lambda \mid t_1, t_2, \ldots, t_n) &amp;= \prod_{i=1}^{n} \lambda e^{-\lambda t_i} \\
 &amp;= \lambda^n e^{-\lambda \sum_{i=1}^{n} t_i}
 \end{align*}</span></p>
 <p>Let’s take the derivative of the likelihood function with respect to lambda, set it to zero, and solve for lambda:</p>
 <p><span class="math display">\begin{align*}
-L(\lambda \mid t_1, t_2, \ldots, t_n) &amp;= \lambda^n e^{-\lambda \sum_{i=1}^{n} t_i} \\
-\frac{d}{d\lambda} L(\lambda \mid t_1, t_2, \ldots, t_n) &amp;= n \lambda^{n-1} e^{-\lambda \sum t_i} - \lambda^n \left(\sum t_i\right) e^{-\lambda \sum t_i} \\
+\mathcal{L}(\lambda \mid t_1, t_2, \ldots, t_n) &amp;= \lambda^n e^{-\lambda \sum_{i=1}^{n} t_i} \\
+\frac{d}{d\lambda} \mathcal{L}(\lambda \mid t_1, t_2, \ldots, t_n) &amp;= n \lambda^{n-1} e^{-\lambda \sum t_i} - \lambda^n \left(\sum t_i\right) e^{-\lambda \sum t_i} \\
 0 &amp;= n \lambda^{n-1} e^{-\lambda \sum t_i} - \lambda^n \left(\sum t_i\right) e^{-\lambda \sum t_i} \\
 \lambda^n \left(\sum t_i\right) e^{-\lambda \sum t_i} &amp;= n \lambda^{n-1} e^{-\lambda \sum t_i} \\
 \lambda \left(\sum t_i\right) &amp;= n \\
