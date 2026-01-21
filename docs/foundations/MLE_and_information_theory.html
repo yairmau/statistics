@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,14 +35,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-79d7efe2808b62b914fc0576c7e86ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,6 +73,49 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -99,7 +143,8 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -523,8 +568,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#implication" id="toc-implication" class="nav-link active" data-scroll-target="#implication"><span class="header-section-number">40.1</span> implication</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -548,8 +599,52 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>We will show here how the maximizing the log likelihood naturally connects to minimizing the Kullback-Leibler (KL) divergence.</p>
+<p>We will start from a true data generating distribution <span class="math inline">P(x)</span>, and we will assume we have <span class="math inline">n</span> independent and identically distributed (i.i.d.) observations <span class="math inline">x_1, x_2, \ldots, x_n</span> drawn from it. We model the data using a parametric family of distributions <span class="math inline">Q(x | \theta)</span>, where <span class="math inline">\theta</span> is the parameter we want to estimate. Our goal is to find the parameters <span class="math inline">\theta</span> that make the model distribution <span class="math inline">Q(x | \theta)</span> as close as possible to the true distribution <span class="math inline">P(x)</span>. This set of parameters is typically found using Maximum Likelihood Estimation (MLE):</p>
+<p><span class="math display">
+\hat{\theta} = \arg\max_{\theta} \ell(\theta \mid x_{1:n})
+</span></p>
+<p>In English: our best estimation of the parameters <span class="math inline">\theta</span> is the one that maximizes the parameters (also called arguments) of the log likelihood of the observed data <span class="math inline">x_{1:n} = (x_1, x_2, \ldots, x_n)</span>.</p>
+<p>The log likelihood function for the observed data given the parameters <span class="math inline">\theta</span> is defined as:</p>
+<p><span class="math display">
+\ell(\theta \mid x_{1:n}) = \sum_{i=1}^{n} \log Q(x_i | \theta)
+</span></p>
+<p>Here we used <span class="math inline">Q</span> to denote the model distribution, to distinguish it from the true data generating distribution <span class="math inline">P</span>. We will now divide both sides by <span class="math inline">n</span> to express the average log likelihood per observation:</p>
+<p><span class="math display">
+\frac{1}{n} \ell(\theta \mid x_{1:n}) = \frac{1}{n} \sum_{i=1}^{n} \log Q(x_i | \theta)
+</span></p>
+<p>This step can be justified in a few ways:</p>
+<ul>
+<li>Dividing by a constant does not change the location of the maximum.</li>
+<li>It is clear that <span class="math inline">\ell</span> scales linearly with <span class="math inline">n</span>, that is, the more data we have, the larger the log likelihood will be. Dividing by <span class="math inline">n</span> normalizes this effect.</li>
+<li>I already know where I want to go with this, and this steps helps me :)</li>
+</ul>
+<p>Note that now the right-hand side is the sample mean of the log probabilities <span class="math inline">\log Q(x | \theta)</span> evaluated at the observed data points <span class="math inline">x_i</span>. This sample mean can also be understood as an empirical expectation over the observed data, where each data point is given equal weight <span class="math inline">1/n</span>:</p>
+<p><span class="math display">\begin{align*}
+\frac{1}{n} \ell(\theta \mid x_{1:n}) &amp;= \frac{1}{n} \sum_{i=1}^{n} \log Q(x_i | \theta) \\
+&amp;= \mathbb{E}_{x \sim \hat{P}_n}[\log Q(x | \theta)],
+\end{align*}</span></p>
+<p>where the subscript <span class="math inline">x \sim \hat{P}_n</span> indicates that the expectation <span class="math inline">(\mathbb{E})</span> is taken with respect to the empirical distribution <span class="math inline">\hat{P}_n</span> defined by the observed data points <span class="math inline">x_1, x_2, \ldots, x_n</span>.</p>
+<p>Now, what happens as we collect more and more data, i.e., as <span class="math inline">n</span> approaches infinity? Our “data-driven” distribution <span class="math inline">\hat{P}_n</span> starts to look exactly like the “true” distribution <span class="math inline">P</span>, therefore:</p>
+<p><span class="math display">\begin{align*}
+\lim_{n \to \infty} \mathbb{E}_{x \sim \hat{P}_n}[\log Q(x | \theta)] &amp;= \mathbb{E}_{x \sim P}[\log Q(x | \theta)] \\
+&amp;= \sum_{x} P(x) \log Q(x | \theta)
+\end{align*}</span></p>
+<p>We’re almost there. Remember when we defined the cross-entropy in the chapter <a href="../information_theory/cross-entropy.html">cross-entropy and KL divergence</a>? It was defined as:</p>
+<p><span class="math display">
+H(P, Q) = - \sum_x P(x) \log Q(x),
+</span></p>
+<p>which is exactly the negative of what we got before. We have shown so far that maximizing the average log likelihood is equivalent to minimizing the cross-entropy between the true distribution <span class="math inline">P</span> and the model distribution <span class="math inline">Q</span>. The caveat for this statement is that this equivalence holds in the limit of infinite data. The very last step is to connect this to the KL divergence, which we defined as:</p>
+<p><span class="math display">
+D_{KL}(P \| Q) = H(P, Q) - H(P).
+</span></p>
+<p>The term <span class="math inline">H(P)</span> is the entropy of the true distribution <span class="math inline">P</span>, which does not depend on the model parameters <span class="math inline">\theta</span>. Therefore, minimizing the cross-entropy <span class="math inline">H(P, Q)</span> is equivalent to minimizing the KL divergence <span class="math inline">D_{KL}(P \| Q)</span>.</p>
+<section id="implication" class="level2" data-number="40.1">
+<h2 data-number="40.1" class="anchored" data-anchor-id="implication"><span class="header-section-number">40.1</span> implication</h2>
+<p>The minimization of the KL divergence is ubiquitous in machine learning, and it is often used as a loss function to train models. This connection between MLE and KL divergence provides a theoretical foundation for many machine learning algorithms.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -603,13 +698,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

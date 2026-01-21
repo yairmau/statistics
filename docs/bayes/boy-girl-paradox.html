@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-79d7efe2808b62b914fc0576c7e86ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -135,7 +136,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -177,7 +178,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -821,15 +823,15 @@ P(B_1 \cap B_2 \mid Q_1 \cup Q_2) = \frac{\frac{p}{4}(2 - p)}{\frac{p}{4}\left(4
 <div id="2de53b8c" class="cell">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="4ac9d5af" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>visualizing Q0</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a>N <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>a <span class="op">=</span> np.ones((N,N))</span>
 <span id="cb2-4"><a href="#cb2-4"></a>a[<span class="dv">0</span>,<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
@@ -853,7 +855,7 @@ P(B_1 \cap B_2 \mid Q_1 \cup Q_2) = \frac{\frac{p}{4}(2 - p)}{\frac{p}{4}\left(4
 <span id="cb2-22"><a href="#cb2-22"></a><span class="co"># Remove minor ticks</span></span>
 <span id="cb2-23"><a href="#cb2-23"></a>ax.tick_params(which<span class="op">=</span><span class="st">'minor'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb2-24"><a href="#cb2-24"></a></span>
-<span id="cb2-25"><a href="#cb2-25"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys?"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-25"><a href="#cb2-25"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys?"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -872,7 +874,7 @@ P(B_1 \cap B_2 \mid Q_1 \cup Q_2) = \frac{\frac{p}{4}(2 - p)}{\frac{p}{4}\left(4
 <div id="7d6dcc98" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a>N <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>a <span class="op">=</span> np.ones((N,N))</span>
 <span id="cb3-4"><a href="#cb3-4"></a>a[<span class="dv">0</span>,<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
@@ -911,7 +913,7 @@ P(B_1 \cap B_2 \mid Q_1 \cup Q_2) = \frac{\frac{p}{4}(2 - p)}{\frac{p}{4}\left(4
 <span id="cb3-37"><a href="#cb3-37"></a>                         zorder<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb3-38"><a href="#cb3-38"></a>ax.add_patch(rect)</span>
 <span id="cb3-39"><a href="#cb3-39"></a></span>
-<span id="cb3-40"><a href="#cb3-40"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys</span><span class="ch">\n</span><span class="st">given that at least one is a boy?"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-40"><a href="#cb3-40"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys</span><span class="ch">\n</span><span class="st">given that at least one is a boy?"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -940,7 +942,7 @@ P = \frac{N}{D} = \frac{1}{3} \approx 0.333.
 <div id="ad77ec28" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb4-2"><a href="#cb4-2"></a>N <span class="op">=</span> <span class="dv">4</span>  <span class="co"># 2*2</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>a <span class="op">=</span> np.ones((N,N))</span>
 <span id="cb4-4"><a href="#cb4-4"></a>a[<span class="dv">0</span>:<span class="dv">2</span>,<span class="dv">0</span>:<span class="dv">2</span>] <span class="op">=</span> <span class="dv">0</span></span>
@@ -982,7 +984,7 @@ P = \frac{N}{D} = \frac{1}{3} \approx 0.333.
 <span id="cb4-40"><a href="#cb4-40"></a>                         zorder<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb4-41"><a href="#cb4-41"></a>ax.add_patch(rect)</span>
 <span id="cb4-42"><a href="#cb4-42"></a></span>
-<span id="cb4-43"><a href="#cb4-43"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys</span><span class="ch">\n</span><span class="st">given that at least one is a boy born during daytime?"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-43"><a href="#cb4-43"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys</span><span class="ch">\n</span><span class="st">given that at least one is a boy born during daytime?"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1017,7 +1019,7 @@ P = \frac{N}{D} = \frac{3}{7} \approx 0.429.
 <div id="c079bd01" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb5-2"><a href="#cb5-2"></a>N <span class="op">=</span> <span class="dv">2</span><span class="op">*</span><span class="dv">7</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a>a <span class="op">=</span> np.ones((N,N))</span>
 <span id="cb5-4"><a href="#cb5-4"></a>a[<span class="dv">0</span>:<span class="dv">7</span>,<span class="dv">0</span>:<span class="dv">7</span>] <span class="op">=</span> <span class="dv">0</span></span>
@@ -1060,7 +1062,7 @@ P = \frac{N}{D} = \frac{3}{7} \approx 0.429.
 <span id="cb5-41"><a href="#cb5-41"></a>                         zorder<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb5-42"><a href="#cb5-42"></a>ax.add_patch(rect)</span>
 <span id="cb5-43"><a href="#cb5-43"></a></span>
-<span id="cb5-44"><a href="#cb5-44"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys</span><span class="ch">\n</span><span class="st">given that at least one is a boy born on a Sunday?"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-44"><a href="#cb5-44"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys</span><span class="ch">\n</span><span class="st">given that at least one is a boy born on a Sunday?"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1100,7 +1102,7 @@ P = \frac{2 - p}{4 - p}.
 <div id="fc6491cb" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb6-2"><a href="#cb6-2"></a>N <span class="op">=</span> <span class="dv">2</span><span class="op">*</span><span class="dv">30</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a>a <span class="op">=</span> np.ones((N,N))</span>
 <span id="cb6-4"><a href="#cb6-4"></a>a[<span class="dv">0</span>:<span class="dv">30</span>,<span class="dv">0</span>:<span class="dv">30</span>] <span class="op">=</span> <span class="dv">0</span></span>
@@ -1143,7 +1145,7 @@ P = \frac{2 - p}{4 - p}.
 <span id="cb6-41"><a href="#cb6-41"></a>                         zorder<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb6-42"><a href="#cb6-42"></a>ax.add_patch(rect)</span>
 <span id="cb6-43"><a href="#cb6-43"></a></span>
-<span id="cb6-44"><a href="#cb6-44"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys</span><span class="ch">\n</span><span class="st">given that at least one is a boy born on the 1st of the month?"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-44"><a href="#cb6-44"></a>ax.set_title(<span class="st">"Mary has two children. Probability that both are boys</span><span class="ch">\n</span><span class="st">given that at least one is a boy born on the 1st of the month?"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1192,7 +1194,7 @@ D_{KL}(\mathbf{p} \| \mathbf{q}) = \frac{2 - p}{4 - p} \log\left(\frac{2 - p}{4 
 <div id="0d7532f2" class="cell" data-execution_count="59">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>,figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>,figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb7-2"><a href="#cb7-2"></a>fig.subplots_adjust(hspace<span class="op">=</span><span class="fl">0.1</span>)</span>
 <span id="cb7-3"><a href="#cb7-3"></a></span>
 <span id="cb7-4"><a href="#cb7-4"></a>p <span class="op">=</span> np.linspace(<span class="fl">0.001</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
@@ -1227,7 +1229,7 @@ D_{KL}(\mathbf{p} \| \mathbf{q}) = \frac{2 - p}{4 - p} \log\left(\frac{2 - p}{4 
 <span id="cb7-33"><a href="#cb7-33"></a>    ax[<span class="dv">2</span>].text(p_val<span class="op">-</span><span class="fl">0.06</span>, DKL_B(p_val), labels[i], ha<span class="op">=</span><span class="st">'left'</span>)</span>
 <span id="cb7-34"><a href="#cb7-34"></a></span>
 <span id="cb7-35"><a href="#cb7-35"></a>ax[<span class="dv">1</span>].text(<span class="fl">0.5</span>, <span class="fl">0.98</span>, <span class="st">"Prior: other child is equally likely to be a boy or a girl"</span>, ha<span class="op">=</span><span class="st">'center'</span>, transform<span class="op">=</span>ax[<span class="dv">1</span>].transAxes, va<span class="op">=</span><span class="st">'top'</span>)</span>
-<span id="cb7-36"><a href="#cb7-36"></a>ax[<span class="dv">2</span>].text(<span class="fl">0.5</span>, <span class="fl">0.98</span>, <span class="st">"Prior: joint distribution of both children"</span>, ha<span class="op">=</span><span class="st">'center'</span>, transform<span class="op">=</span>ax[<span class="dv">2</span>].transAxes, va<span class="op">=</span><span class="st">'top'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-36"><a href="#cb7-36"></a>ax[<span class="dv">2</span>].text(<span class="fl">0.5</span>, <span class="fl">0.98</span>, <span class="st">"Prior: joint distribution of both children"</span>, ha<span class="op">=</span><span class="st">'center'</span>, transform<span class="op">=</span>ax[<span class="dv">2</span>].transAxes, va<span class="op">=</span><span class="st">'top'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1310,13 +1312,14 @@ D_{KL}(\mathbf{p} \| \mathbf{q}) = \frac{2 - p}{4 - p} \log\left(\frac{2 - p}{4 
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

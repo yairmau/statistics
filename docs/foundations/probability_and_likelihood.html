@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-79d7efe2808b62b914fc0576c7e86ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -138,7 +139,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -180,7 +181,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -691,17 +693,17 @@ window.Quarto = {
 <section id="a-slightly-different-situation" class="level3" data-number="36.1.1">
 <h3 data-number="36.1.1" class="anchored" data-anchor-id="a-slightly-different-situation"><span class="header-section-number">36.1.1</span> A slightly different situation</h3>
 <p>If we knew that buses arrive exactly every 20 minutes, the question would be quite easy to answer. The probability of waiting more than 30 minutes would be zero. The only uncertainty would be when we arrive at the bus stop relative to the bus schedule. We can assume that we arrive uniformly at random between two bus arrivals, so the probability density of us waiting <span class="math inline">x</span> minutes would look like this:</p>
-<div id="8641f550" class="cell" data-execution_count="5">
+<div id="8641f550" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="4cc6f4f8" class="cell" data-execution_count="6">
+<div id="4cc6f4f8" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="dv">41</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>pdf <span class="op">=</span> np.where(x <span class="op">&lt;</span> <span class="dv">20</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">20</span>, <span class="dv">0</span>)</span>
 <span id="cb2-4"><a href="#cb2-4"></a>ax.plot(x, pdf, drawstyle<span class="op">=</span><span class="st">'steps-post'</span>, color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
@@ -710,7 +712,7 @@ window.Quarto = {
 <span id="cb2-7"><a href="#cb2-7"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Probability Density Function for Bus Wait Time'</span>,</span>
 <span id="cb2-8"><a href="#cb2-8"></a>       xlabel<span class="op">=</span><span class="st">'Wait Time (minutes)'</span>,</span>
 <span id="cb2-9"><a href="#cb2-9"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb2-10"><a href="#cb2-10"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">40</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-10"><a href="#cb2-10"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">40</span>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -830,10 +832,10 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 </span></p>
 <p>Let’s see this in action. On the left plot below we see the PDF for a few different values of <span class="math inline">\lambda</span>. For each curve, I marked the observed wait time of 15 minutes with a circle. It is hard to see which value of <span class="math inline">\lambda</span> makes waiting 15 minutes most likely just by looking at the left plot.</p>
 <p>On the right plot we see the likelihood function for the observed wait time of 15 minutes. Clearly there is a peak for the likelihood.</p>
-<div id="9a08d32e" class="cell" data-execution_count="9">
+<div id="9a08d32e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">40</span>, <span class="dv">101</span>)</span>
 <span id="cb3-3"><a href="#cb3-3"></a>f <span class="op">=</span> <span class="kw">lambda</span> t, lam: lam <span class="op">*</span> np.exp(<span class="op">-</span>lam <span class="op">*</span> t)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>time <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>])</span>
@@ -863,7 +865,7 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <span id="cb3-28"><a href="#cb3-28"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.03</span>)</span>
 <span id="cb3-29"><a href="#cb3-29"></a>       )<span class="op">;</span></span>
 <span id="cb3-30"><a href="#cb3-30"></a>ax[<span class="dv">1</span>].yaxis.tick_right()</span>
-<span id="cb3-31"><a href="#cb3-31"></a>ax[<span class="dv">1</span>].yaxis.set_label_position(<span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-31"><a href="#cb3-31"></a>ax[<span class="dv">1</span>].yaxis.set_label_position(<span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -897,10 +899,10 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 \mathcal{L}(\theta \mid x) = P(x \mid \theta),
 </span>* where <span class="math inline">x</span> is the data and <span class="math inline">\theta</span> is the parameter (wait time <span class="math inline">t</span> and rate <span class="math inline">\lambda</span> in our example). At first this seemed baffling to me to define the likelihood function using the same formula as the probability density function. What’s the point of having two names for the same formula? I now picture the probability and likelihood functions as slices (projections) of the same surface. Keeping the parameters fixed and varying the data gives us the probability function. Keeping the data fixed and varying the parameters gives us the likelihood function.</p>
 <p>This also helps me understand why the likelihood function is not a valid probability distribution over the parameters. For a fixed data point, the area under the likelihood curve over all possible parameter values does not equal 1. Instead, it can take any value, depending on the observed data.</p>
-<div id="7257e110" class="cell">
+<div id="7257e110" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Define ranges</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Define ranges</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">100</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>lmbda <span class="op">=</span> np.linspace(<span class="dv">1</span><span class="op">/</span><span class="dv">120</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, <span class="dv">100</span>)</span>
 <span id="cb4-4"><a href="#cb4-4"></a>T, L <span class="op">=</span> np.meshgrid(t, lmbda)</span>
@@ -932,7 +934,7 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <span id="cb4-30"><a href="#cb4-30"></a>ax.set_zlabel(<span class="st">'Density / Likelihood'</span>)</span>
 <span id="cb4-31"><a href="#cb4-31"></a>ax.legend()</span>
 <span id="cb4-32"><a href="#cb4-32"></a>ax.view_init(elev<span class="op">=</span><span class="dv">15</span>, azim<span class="op">=-</span><span class="dv">20</span>)</span>
-<span id="cb4-33"><a href="#cb4-33"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-33"><a href="#cb4-33"></a>fig.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1029,13 +1031,14 @@ P(t) = \lambda e^{-\lambda t}
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-79d7efe2808b62b914fc0576c7e86ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -106,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -138,7 +139,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -180,7 +181,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -654,19 +656,19 @@ window.Quarto = {
 <div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-5"><a href="#cb1-5"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="cell-3" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>generate data</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>df_girls <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/girls_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>age <span class="op">=</span> <span class="fl">20.0</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a>mu_boys <span class="op">=</span> df_boys.loc[age, <span class="st">'mu'</span>]</span>
@@ -685,13 +687,13 @@ window.Quarto = {
 <span id="cb2-17"><a href="#cb2-17"></a>    <span class="st">'sex'</span>: [<span class="st">'M'</span>] <span class="op">*</span> N_boys <span class="op">+</span> [<span class="st">'F'</span>] <span class="op">*</span> N_girls</span>
 <span id="cb2-18"><a href="#cb2-18"></a>})</span>
 <span id="cb2-19"><a href="#cb2-19"></a>df <span class="op">=</span> df.sample(frac<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">314</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-20"><a href="#cb2-20"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-20"><a href="#cb2-20"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -701,57 +703,57 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>178.558416</td>
 <td>M</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>173.334306</td>
 <td>M</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>183.084154</td>
 <td>M</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>178.236047</td>
 <td>F</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>175.868642</td>
 <td>M</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
+<th data-quarto-table-cell-role="th">...</th>
 <td>...</td>
 <td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">345</td>
+<th data-quarto-table-cell-role="th">345</th>
 <td>177.387837</td>
 <td>M</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">346</td>
+<th data-quarto-table-cell-role="th">346</th>
 <td>157.122325</td>
 <td>F</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">347</td>
+<th data-quarto-table-cell-role="th">347</th>
 <td>166.891746</td>
 <td>F</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">348</td>
+<th data-quarto-table-cell-role="th">348</th>
 <td>181.090312</td>
 <td>M</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">349</td>
+<th data-quarto-table-cell-role="th">349</th>
 <td>171.479631</td>
 <td>M</td>
 </tr>
@@ -763,18 +765,18 @@ window.Quarto = {
 </div>
 </div>
 <div id="cell-4" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>X <span class="op">=</span> df[<span class="st">'height (cm)'</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>X <span class="op">=</span> df[<span class="st">'height (cm)'</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
 <span id="cb3-2"><a href="#cb3-2"></a>y <span class="op">=</span> df[<span class="st">'sex'</span>].<span class="bu">map</span>({<span class="st">'M'</span>: <span class="dv">1</span>, <span class="st">'F'</span>: <span class="dv">0</span>}).values</span>
 <span id="cb3-3"><a href="#cb3-3"></a>log_reg_2 <span class="op">=</span> LogisticRegression(penalty<span class="op">=</span><span class="va">None</span>, solver <span class="op">=</span> <span class="st">'newton-cg'</span>, max_iter<span class="op">=</span> <span class="dv">150</span>).fit(X,y)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>beta1 <span class="op">=</span> log_reg_2.coef_[<span class="dv">0</span>][<span class="dv">0</span>]</span>
 <span id="cb3-5"><a href="#cb3-5"></a>beta0 <span class="op">=</span> log_reg_2.intercept_[<span class="dv">0</span>]</span>
 <span id="cb3-6"><a href="#cb3-6"></a><span class="kw">def</span> logistic_function(x, beta0, beta1):</span>
-<span id="cb3-7"><a href="#cb3-7"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(beta0 <span class="op">+</span> beta1 <span class="op">*</span> x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a href="#cb3-7"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(beta0 <span class="op">+</span> beta1 <span class="op">*</span> x)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-5" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb4-2"><a href="#cb4-2"></a>ax.plot(sample_girls, np.zeros_like(sample_girls),</span>
 <span id="cb4-3"><a href="#cb4-3"></a>        linestyle<span class="op">=</span><span class="st">'None'</span>, marker<span class="op">=</span><span class="st">'o'</span>,</span>
 <span id="cb4-4"><a href="#cb4-4"></a>        markerfacecolor<span class="op">=</span><span class="st">'none'</span>, markeredgecolor<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
@@ -788,7 +790,7 @@ window.Quarto = {
 <span id="cb4-12"><a href="#cb4-12"></a>ax.plot(x_array, logistic_function(x_array, beta0, beta1), color<span class="op">=</span><span class="st">'black'</span>, label<span class="op">=</span><span class="st">"best fit"</span>)</span>
 <span id="cb4-13"><a href="#cb4-13"></a>ax.plot(x_array, logistic_function(x_array, beta0<span class="op">+</span><span class="dv">2</span>, beta1), color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">"worse 1"</span>)</span>
 <span id="cb4-14"><a href="#cb4-14"></a>ax.plot(x_array, logistic_function(x_array, beta0, beta1<span class="op">-</span><span class="fl">0.02</span>), color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, label<span class="op">=</span><span class="st">"worse 2"</span>)</span>
-<span id="cb4-15"><a href="#cb4-15"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-15"><a href="#cb4-15"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -810,17 +812,17 @@ window.Quarto = {
 <div id="cell-7" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>recalculate logistic regression with 3 points</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>x3 <span class="op">=</span> np.array([<span class="fl">180.0</span>, <span class="fl">170.0</span>, <span class="fl">165.0</span>])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>x3 <span class="op">=</span> np.array([<span class="fl">180.0</span>, <span class="fl">170.0</span>, <span class="fl">165.0</span>])</span>
 <span id="cb5-2"><a href="#cb5-2"></a>y3 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>])</span>
 <span id="cb5-3"><a href="#cb5-3"></a>log_reg_3 <span class="op">=</span> LogisticRegression(penalty<span class="op">=</span><span class="va">None</span>, solver <span class="op">=</span> <span class="st">'newton-cg'</span>, max_iter<span class="op">=</span> <span class="dv">150</span>).fit(x3.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>),y3)</span>
 <span id="cb5-4"><a href="#cb5-4"></a>beta1 <span class="op">=</span> log_reg_3.coef_[<span class="dv">0</span>][<span class="dv">0</span>]</span>
-<span id="cb5-5"><a href="#cb5-5"></a>beta0 <span class="op">=</span> log_reg_3.intercept_[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5"></a>beta0 <span class="op">=</span> log_reg_3.intercept_[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="cell-8" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb6-2"><a href="#cb6-2"></a>x_array <span class="op">=</span> np.linspace(<span class="dv">140</span>, <span class="dv">200</span>, <span class="dv">300</span>)</span>
 <span id="cb6-3"><a href="#cb6-3"></a></span>
 <span id="cb6-4"><a href="#cb6-4"></a>ya <span class="op">=</span> logistic_function(x_array, beta0, beta1)</span>
@@ -850,7 +852,7 @@ window.Quarto = {
 <span id="cb6-28"><a href="#cb6-28"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
 <span id="cb6-29"><a href="#cb6-29"></a>          title<span class="op">=</span><span class="st">"worse 1"</span>)</span>
 <span id="cb6-30"><a href="#cb6-30"></a>ax[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
-<span id="cb6-31"><a href="#cb6-31"></a>            title<span class="op">=</span><span class="st">"worse 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-31"><a href="#cb6-31"></a>            title<span class="op">=</span><span class="st">"worse 2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -866,7 +868,7 @@ window.Quarto = {
 <div id="cell-10" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="cf">for</span> axi <span class="kw">in</span> ax:</span>
 <span id="cb7-4"><a href="#cb7-4"></a>    axi.plot(x3, y3,</span>
@@ -895,7 +897,7 @@ window.Quarto = {
 <span id="cb7-27"><a href="#cb7-27"></a>          title<span class="op">=</span><span class="st">"worse 1"</span>)</span>
 <span id="cb7-28"><a href="#cb7-28"></a>ax[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
 <span id="cb7-29"><a href="#cb7-29"></a>            title<span class="op">=</span><span class="st">"worse 2"</span>)</span>
-<span id="cb7-30"><a href="#cb7-30"></a>ax[<span class="dv">2</span>].legend(frameon<span class="op">=</span><span class="va">False</span>, loc<span class="op">=</span><span class="st">'center left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="dv">1</span>, <span class="fl">0.5</span>), fontsize<span class="op">=</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-30"><a href="#cb7-30"></a>ax[<span class="dv">2</span>].legend(frameon<span class="op">=</span><span class="va">False</span>, loc<span class="op">=</span><span class="st">'center left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="dv">1</span>, <span class="fl">0.5</span>), fontsize<span class="op">=</span><span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -918,7 +920,7 @@ L(\beta_0, \beta_1) = \prod_{i=1}^{N} P_i^{y_i} (1-P_i)^{1-y_i}.
 <div id="cell-12" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>compute likelihoods</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>La <span class="op">=</span> <span class="fl">1.0</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>La <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb8-2"><a href="#cb8-2"></a>Lb <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>Lc <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb8-4"><a href="#cb8-4"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x3)):</span>
@@ -927,7 +929,7 @@ L(\beta_0, \beta_1) = \prod_{i=1}^{N} P_i^{y_i} (1-P_i)^{1-y_i}.
 <span id="cb8-7"><a href="#cb8-7"></a>    Lc <span class="op">=</span> Lc <span class="op">*</span> yhat3c[i]<span class="op">**</span>y3[i] <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>yhat3c[i])<span class="op">**</span>(<span class="dv">1</span><span class="op">-</span>y3[i])</span>
 <span id="cb8-8"><a href="#cb8-8"></a><span class="bu">print</span>(<span class="st">"Likelihood for best fit: "</span>, La)</span>
 <span id="cb8-9"><a href="#cb8-9"></a><span class="bu">print</span>(<span class="st">"Likelihood for worse 1: "</span>, Lb)</span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="bu">print</span>(<span class="st">"Likelihood for worse 2: "</span>, Lc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="bu">print</span>(<span class="st">"Likelihood for worse 2: "</span>, Lc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Likelihood for best fit:  0.9984099891897481
@@ -967,7 +969,7 @@ J(\beta_0, \beta_1) = -\ell(\beta_0, \beta_1) = -\sum_{i=1}^{N} \left( y_i \log 
 <div id="cell-16" class="cell" data-execution_count="36">
 <details class="code-fold">
 <summary>compute logistic regression and plot</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>X <span class="op">=</span> df[<span class="st">'height (cm)'</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>X <span class="op">=</span> df[<span class="st">'height (cm)'</span>].values.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
 <span id="cb10-2"><a href="#cb10-2"></a>y <span class="op">=</span> df[<span class="st">'sex'</span>].<span class="bu">map</span>({<span class="st">'M'</span>: <span class="dv">1</span>, <span class="st">'F'</span>: <span class="dv">0</span>}).values</span>
 <span id="cb10-3"><a href="#cb10-3"></a>log_reg_2 <span class="op">=</span> LogisticRegression(penalty<span class="op">=</span><span class="va">None</span>, solver <span class="op">=</span> <span class="st">'newton-cg'</span>, max_iter<span class="op">=</span> <span class="dv">150</span>).fit(X,y)</span>
 <span id="cb10-4"><a href="#cb10-4"></a>beta1 <span class="op">=</span> log_reg_2.coef_[<span class="dv">0</span>][<span class="dv">0</span>]</span>
@@ -1001,7 +1003,7 @@ J(\beta_0, \beta_1) = -\ell(\beta_0, \beta_1) = -\sum_{i=1}^{N} \left( y_i \log 
 <span id="cb10-32"><a href="#cb10-32"></a></span>
 <span id="cb10-33"><a href="#cb10-33"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="dv">140</span>, <span class="dv">200</span>),</span>
 <span id="cb10-34"><a href="#cb10-34"></a>       xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
-<span id="cb10-35"><a href="#cb10-35"></a>       ylabel<span class="op">=</span><span class="st">"P"</span>,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-35"><a href="#cb10-35"></a>       ylabel<span class="op">=</span><span class="st">"P"</span>,)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1093,13 +1095,14 @@ x &amp;= -\frac{\beta_0}{\beta_1}
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

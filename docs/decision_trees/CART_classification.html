@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-79d7efe2808b62b914fc0576c7e86ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -106,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -138,7 +139,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -180,7 +181,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -655,26 +657,26 @@ window.Quarto = {
 <div id="cc34f6fe" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.gridspec <span class="im">as</span> gridspec</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier, plot_tree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier, plot_tree</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>We are using the famous Iris dataset structure, but pretending they are animals for this example.</p>
 <div id="481290f7" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>load iris dataset and prepare data</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>iris <span class="op">=</span> load_iris()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>iris <span class="op">=</span> load_iris()</span>
 <span id="cb2-2"><a href="#cb2-2"></a>X <span class="op">=</span> iris.data[:, [<span class="dv">0</span>, <span class="dv">1</span>]]</span>
-<span id="cb2-3"><a href="#cb2-3"></a>y <span class="op">=</span> iris.target</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3"></a>y <span class="op">=</span> iris.target</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="b80a2152" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a>markers <span class="op">=</span> [<span class="st">'o'</span>, <span class="st">'s'</span>, <span class="st">'+'</span>]</span>
 <span id="cb3-3"><a href="#cb3-3"></a>colors <span class="op">=</span> [<span class="st">'black'</span>, <span class="st">'None'</span>, <span class="st">'tab:red'</span>]</span>
 <span id="cb3-4"><a href="#cb3-4"></a>iris.target_names <span class="op">=</span> [<span class="st">'koala'</span>, <span class="st">'fox'</span>, <span class="st">'bonobo'</span>]</span>
@@ -685,7 +687,7 @@ window.Quarto = {
 <span id="cb3-9"><a href="#cb3-9"></a>               edgecolor<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">30</span>, marker<span class="op">=</span>marker, label<span class="op">=</span>iris.target_names[i])</span>
 <span id="cb3-10"><a href="#cb3-10"></a>ax.legend()</span>
 <span id="cb3-11"><a href="#cb3-11"></a>ax.set_xlabel(iris.feature_names[<span class="dv">0</span>])</span>
-<span id="cb3-12"><a href="#cb3-12"></a>ax.set_ylabel(iris.feature_names[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12"></a>ax.set_ylabel(iris.feature_names[<span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_10048/3638754974.py:8: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
@@ -722,7 +724,7 @@ window.Quarto = {
 <div id="54cab10a" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>define useful functions</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> calculate_gini(y_subset):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">def</span> calculate_gini(y_subset):</span>
 <span id="cb6-2"><a href="#cb6-2"></a>    <span class="co">"""Calculates the Gini Impurity for a given subset of class labels."""</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a>    <span class="co"># If the subset is empty, there's no impurity.</span></span>
 <span id="cb6-4"><a href="#cb6-4"></a>    <span class="cf">if</span> <span class="bu">len</span>(y_subset) <span class="op">==</span> <span class="dv">0</span>:</span>
@@ -838,13 +840,13 @@ window.Quarto = {
 <span id="cb6-114"><a href="#cb6-114"></a>        <span class="cf">elif</span> criterion <span class="op">==</span> <span class="st">'gini'</span>:</span>
 <span id="cb6-115"><a href="#cb6-115"></a>            score_list.append((threshold, weighted_score))</span>
 <span id="cb6-116"><a href="#cb6-116"></a></span>
-<span id="cb6-117"><a href="#cb6-117"></a>    <span class="cf">return</span> np.array(score_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-117"><a href="#cb6-117"></a>    <span class="cf">return</span> np.array(score_list)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="f1df7d32" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb7-2"><a href="#cb7-2"></a>gs <span class="op">=</span> gridspec.GridSpec(<span class="dv">2</span>, <span class="dv">2</span>, width_ratios<span class="op">=</span>[<span class="fl">0.2</span>,<span class="dv">1</span>], height_ratios<span class="op">=</span>[<span class="dv">1</span>,<span class="fl">0.2</span>])</span>
 <span id="cb7-3"><a href="#cb7-3"></a>gs.update(left<span class="op">=</span><span class="fl">0.16</span>, right<span class="op">=</span><span class="fl">0.86</span>,top<span class="op">=</span><span class="fl">0.88</span>, bottom<span class="op">=</span><span class="fl">0.13</span>, hspace<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.05</span>)</span>
 <span id="cb7-4"><a href="#cb7-4"></a></span>
@@ -897,7 +899,7 @@ window.Quarto = {
 <span id="cb7-51"><a href="#cb7-51"></a>plt.tight_layout()</span>
 <span id="cb7-52"><a href="#cb7-52"></a></span>
 <span id="cb7-53"><a href="#cb7-53"></a><span class="bu">print</span>(<span class="ss">f"Height: highest Information Gain: </span><span class="sc">{</span>split_feature_height[best_height_split, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss"> at height=</span><span class="sc">{</span>split_feature_height[best_height_split, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb7-54"><a href="#cb7-54"></a><span class="bu">print</span>(<span class="ss">f"Weight: highest Information Gain: </span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss"> at weight=</span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-54"><a href="#cb7-54"></a><span class="bu">print</span>(<span class="ss">f"Weight: highest Information Gain: </span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss"> at weight=</span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_10048/2101311549.py:11: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
@@ -929,7 +931,7 @@ Weight: highest Information Gain: 0.28 at weight=3.35</code></pre>
 <div id="0f4937f7" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>fig <span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb10-2"><a href="#cb10-2"></a>gs <span class="op">=</span> gridspec.GridSpec(<span class="dv">2</span>, <span class="dv">2</span>, width_ratios<span class="op">=</span>[<span class="fl">0.2</span>,<span class="dv">1</span>], height_ratios<span class="op">=</span>[<span class="dv">1</span>,<span class="fl">0.2</span>])</span>
 <span id="cb10-3"><a href="#cb10-3"></a>gs.update(left<span class="op">=</span><span class="fl">0.16</span>, right<span class="op">=</span><span class="fl">0.86</span>,top<span class="op">=</span><span class="fl">0.88</span>, bottom<span class="op">=</span><span class="fl">0.13</span>, hspace<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.05</span>)</span>
 <span id="cb10-4"><a href="#cb10-4"></a></span>
@@ -982,7 +984,7 @@ Weight: highest Information Gain: 0.28 at weight=3.35</code></pre>
 <span id="cb10-51"><a href="#cb10-51"></a>plt.tight_layout()</span>
 <span id="cb10-52"><a href="#cb10-52"></a></span>
 <span id="cb10-53"><a href="#cb10-53"></a><span class="bu">print</span>(<span class="ss">f"Height: lowest Gini Impurity: </span><span class="sc">{</span>split_feature_height[best_height_split, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss"> at height=</span><span class="sc">{</span>split_feature_height[best_height_split, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb10-54"><a href="#cb10-54"></a><span class="bu">print</span>(<span class="ss">f"Weight: lowest Gini Impurity: </span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss"> at weight=</span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-54"><a href="#cb10-54"></a><span class="bu">print</span>(<span class="ss">f"Weight: lowest Gini Impurity: </span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss"> at weight=</span><span class="sc">{</span>split_feature_weight[best_weight_split, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_10048/3659548085.py:11: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
@@ -1027,13 +1029,13 @@ Weight: lowest Gini Impurity: 0.54 at weight=3.35</code></pre>
 <div id="8b84927d" class="cell" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>build and fit decision tree classifiers</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># using gini impurity</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># using gini impurity</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>classifier_gini <span class="op">=</span> DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">'gini'</span>, max_depth<span class="op">=</span><span class="dv">3</span>)<span class="co">#, random_state=42)</span></span>
 <span id="cb13-3"><a href="#cb13-3"></a>classifier_gini.fit(X, y)</span>
 <span id="cb13-4"><a href="#cb13-4"></a></span>
 <span id="cb13-5"><a href="#cb13-5"></a><span class="co"># using entropy</span></span>
 <span id="cb13-6"><a href="#cb13-6"></a>classifier_entropy <span class="op">=</span> DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">'entropy'</span>, max_depth<span class="op">=</span><span class="dv">3</span>)<span class="co">#, random_state=42)</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a>classifier_entropy.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-7"><a href="#cb13-7"></a>classifier_entropy.fit(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <style>#sk-container-id-1 {
@@ -1518,7 +1520,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
             <details>
                 <summary>Parameters</summary>
                 
-<table class="parameters-table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="parameters-table caption-top table table-sm table-striped small">
 <tbody>
 <tr class="user-set odd">
 <td><em></em></td>
@@ -1639,7 +1641,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <div id="132dd2cc" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>define useful functions</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Helper function to plot decision boundaries</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Helper function to plot decision boundaries</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="kw">def</span> plot_decision_boundaries(ax, model, X, y, title):</span>
 <span id="cb14-3"><a href="#cb14-3"></a>    <span class="co">"""</span></span>
 <span id="cb14-4"><a href="#cb14-4"></a><span class="co">    Plots the decision boundaries for a given classifier.</span></span>
@@ -1662,13 +1664,13 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <span id="cb14-21"><a href="#cb14-21"></a>    ax.set_xlabel(iris.feature_names[<span class="dv">0</span>])</span>
 <span id="cb14-22"><a href="#cb14-22"></a>    ax.set_ylabel(iris.feature_names[<span class="dv">1</span>])</span>
 <span id="cb14-23"><a href="#cb14-23"></a>    ax.set_xticks(())</span>
-<span id="cb14-24"><a href="#cb14-24"></a>    ax.set_yticks(())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-24"><a href="#cb14-24"></a>    ax.set_yticks(())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="94dd1435" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>plot boundaries for each criterion</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
 <span id="cb15-2"><a href="#cb15-2"></a>plot_decision_boundaries(ax[<span class="dv">0</span>], classifier_entropy, X, y, <span class="st">"Entropy Criterion"</span>)</span>
 <span id="cb15-3"><a href="#cb15-3"></a><span class="cf">for</span> i, marker <span class="kw">in</span> <span class="bu">enumerate</span>(markers):</span>
 <span id="cb15-4"><a href="#cb15-4"></a>    ax[<span class="dv">0</span>].scatter(X[y <span class="op">==</span> i, <span class="dv">0</span>], X[y <span class="op">==</span> i, <span class="dv">1</span>], </span>
@@ -1679,7 +1681,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <span id="cb15-9"><a href="#cb15-9"></a><span class="cf">for</span> i, marker <span class="kw">in</span> <span class="bu">enumerate</span>(markers):</span>
 <span id="cb15-10"><a href="#cb15-10"></a>    ax[<span class="dv">1</span>].scatter(X[y <span class="op">==</span> i, <span class="dv">0</span>], X[y <span class="op">==</span> i, <span class="dv">1</span>], </span>
 <span id="cb15-11"><a href="#cb15-11"></a>                  c<span class="op">=</span>colors[i], </span>
-<span id="cb15-12"><a href="#cb15-12"></a>                  edgecolor<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">30</span>, marker<span class="op">=</span>marker, label<span class="op">=</span>iris.target_names[i])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-12"><a href="#cb15-12"></a>                  edgecolor<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">30</span>, marker<span class="op">=</span>marker, label<span class="op">=</span>iris.target_names[i])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_10048/759299291.py:5: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
@@ -1700,12 +1702,12 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <div id="69f7acdb" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>predict</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Predict the species of a new animal with height 5.7 and weight 4.0 using the entropy-based classifier</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Predict the species of a new animal with height 5.7 and weight 4.0 using the entropy-based classifier</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a>sample <span class="op">=</span> np.array([[<span class="fl">6.3</span>, <span class="fl">4.0</span>]])</span>
 <span id="cb17-3"><a href="#cb17-3"></a>predicted_class_entropy <span class="op">=</span> classifier_entropy.predict(sample)</span>
 <span id="cb17-4"><a href="#cb17-4"></a>predicted_class_gini <span class="op">=</span> classifier_gini.predict(sample)</span>
 <span id="cb17-5"><a href="#cb17-5"></a><span class="bu">print</span>(<span class="ss">f"Predicted species (Entropy): </span><span class="sc">{</span>iris<span class="sc">.</span>target_names[predicted_class_entropy[<span class="dv">0</span>]]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-6"><a href="#cb17-6"></a><span class="bu">print</span>(<span class="ss">f"Predicted species (Gini): </span><span class="sc">{</span>iris<span class="sc">.</span>target_names[predicted_class_gini   [<span class="dv">0</span>]]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="bu">print</span>(<span class="ss">f"Predicted species (Gini): </span><span class="sc">{</span>iris<span class="sc">.</span>target_names[predicted_class_gini   [<span class="dv">0</span>]]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Predicted species (Entropy): koala
@@ -1716,13 +1718,13 @@ Predicted species (Gini): bonobo</code></pre>
 <div id="3d5a1599" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>plot decision tree for entropy criterion</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
 <span id="cb19-2"><a href="#cb19-2"></a>plot_tree(classifier_entropy,</span>
 <span id="cb19-3"><a href="#cb19-3"></a>          filled<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb19-4"><a href="#cb19-4"></a>          rounded<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb19-5"><a href="#cb19-5"></a>          class_names<span class="op">=</span>iris.target_names,</span>
 <span id="cb19-6"><a href="#cb19-6"></a>          feature_names<span class="op">=</span>[iris.feature_names[<span class="dv">0</span>], iris.feature_names[<span class="dv">1</span>]],</span>
-<span id="cb19-7"><a href="#cb19-7"></a>          ax<span class="op">=</span>ax)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-7"><a href="#cb19-7"></a>          ax<span class="op">=</span>ax)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1735,13 +1737,13 @@ Predicted species (Gini): bonobo</code></pre>
 <div id="13893e97" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>plot decision tree for gini criterion</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
 <span id="cb20-2"><a href="#cb20-2"></a>plot_tree(classifier_gini,</span>
 <span id="cb20-3"><a href="#cb20-3"></a>          filled<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb20-4"><a href="#cb20-4"></a>          rounded<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb20-5"><a href="#cb20-5"></a>          class_names<span class="op">=</span>iris.target_names,</span>
 <span id="cb20-6"><a href="#cb20-6"></a>          feature_names<span class="op">=</span>[iris.feature_names[<span class="dv">0</span>], iris.feature_names[<span class="dv">1</span>]],</span>
-<span id="cb20-7"><a href="#cb20-7"></a>          ax<span class="op">=</span>ax)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-7"><a href="#cb20-7"></a>          ax<span class="op">=</span>ax)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1758,8 +1760,8 @@ Predicted species (Gini): bonobo</code></pre>
 <div id="ad8e2e6c" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>no max_depth, grow until pure</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>classifier_gini <span class="op">=</span> DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">'gini'</span>)</span>
-<span id="cb21-2"><a href="#cb21-2"></a>classifier_gini.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>classifier_gini <span class="op">=</span> DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">'gini'</span>)</span>
+<span id="cb21-2"><a href="#cb21-2"></a>classifier_gini.fit(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <style>#sk-container-id-2 {
@@ -2244,7 +2246,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
             <details>
                 <summary>Parameters</summary>
                 
-<table class="parameters-table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="parameters-table caption-top table table-sm table-striped small">
 <tbody>
 <tr class="default odd">
 <td><em></em></td>
@@ -2364,7 +2366,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <div id="ee37204e" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>plot boundaries and decision tree</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
 <span id="cb22-2"><a href="#cb22-2"></a>plot_decision_boundaries(ax[<span class="dv">0</span>], classifier_gini, X, y, <span class="st">"Decision Boundaries in feature space (Gini Criterion)"</span>)</span>
 <span id="cb22-3"><a href="#cb22-3"></a><span class="cf">for</span> i, marker <span class="kw">in</span> <span class="bu">enumerate</span>(markers):</span>
 <span id="cb22-4"><a href="#cb22-4"></a>    ax[<span class="dv">0</span>].scatter(X[y <span class="op">==</span> i, <span class="dv">0</span>], X[y <span class="op">==</span> i, <span class="dv">1</span>], </span>
@@ -2378,7 +2380,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <span id="cb22-12"><a href="#cb22-12"></a>          feature_names<span class="op">=</span>[iris.feature_names[<span class="dv">0</span>], iris.feature_names[<span class="dv">1</span>]],</span>
 <span id="cb22-13"><a href="#cb22-13"></a>          ax<span class="op">=</span>ax[<span class="dv">1</span>])<span class="op">;</span></span>
 <span id="cb22-14"><a href="#cb22-14"></a>ax[<span class="dv">1</span>].set_title(<span class="st">"Decision Tree (Gini Criterion)"</span>)<span class="op">;</span></span>
-<span id="cb22-15"><a href="#cb22-15"></a>fig.savefig(<span class="st">"decision_boundaries_no_max_depth.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-15"><a href="#cb22-15"></a>fig.savefig(<span class="st">"decision_boundaries_no_max_depth.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_10048/359429702.py:5: UserWarning: You passed a edgecolor/edgecolors ('k') for an unfilled marker ('+').  Matplotlib is ignoring the edgecolor in favor of the facecolor.  This behavior may change in the future.
@@ -2456,13 +2458,14 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

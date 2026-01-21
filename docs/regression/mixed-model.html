@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-79d7efe2808b62b914fc0576c7e86ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -135,7 +136,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -177,7 +178,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -644,18 +646,18 @@ window.Quarto = {
 <div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="cell-3" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>generate synthetic data</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># set seed for reproducibility</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># set seed for reproducibility</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>np.random.seed(<span class="dv">42</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co"># define parameters</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a>majors <span class="op">=</span> [<span class="st">'Juggling'</span>, <span class="st">'Magic'</span>, <span class="st">'Dragon Taming'</span>]</span>
@@ -697,16 +699,16 @@ window.Quarto = {
 <span id="cb2-40"><a href="#cb2-40"></a>            <span class="st">'income'</span>: income</span>
 <span id="cb2-41"><a href="#cb2-41"></a>        })</span>
 <span id="cb2-42"><a href="#cb2-42"></a></span>
-<span id="cb2-43"><a href="#cb2-43"></a>df <span class="op">=</span> pd.DataFrame(records)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-43"><a href="#cb2-43"></a>df <span class="op">=</span> pd.DataFrame(records)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Let’s take a look at the dataset. There are many data points, so we will only see 15 points in three different places.</p>
 <div id="cell-5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">print</span>(df[:<span class="dv">5</span>])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">print</span>(df[:<span class="dv">5</span>])</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="bu">print</span>(df[<span class="dv">90</span>:<span class="dv">95</span>])</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="bu">print</span>(df[<span class="dv">190</span>:<span class="dv">195</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="bu">print</span>(df[<span class="dv">190</span>:<span class="dv">195</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  person     major  years_after_grad        income
@@ -733,7 +735,7 @@ window.Quarto = {
 <div id="cell-7" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>plot income by major</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3"></a>gb <span class="op">=</span> df.groupby(<span class="st">'major'</span>)</span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="cf">for</span> major, group <span class="kw">in</span> gb:</span>
@@ -743,7 +745,7 @@ window.Quarto = {
 <span id="cb5-8"><a href="#cb5-8"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'years after graduation'</span>,</span>
 <span id="cb5-9"><a href="#cb5-9"></a>       ylabel<span class="op">=</span><span class="st">'income'</span>,</span>
 <span id="cb5-10"><a href="#cb5-10"></a>       xticks<span class="op">=</span>np.arange(<span class="dv">0</span>, <span class="dv">21</span>, <span class="dv">5</span>)</span>
-<span id="cb5-11"><a href="#cb5-11"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-11"><a href="#cb5-11"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -858,10 +860,10 @@ X =
 <div id="cell-13" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>choose Juggling as reference major</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> pandas.api.types <span class="im">import</span> CategoricalDtype</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> pandas.api.types <span class="im">import</span> CategoricalDtype</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co"># define the desired order: Juggling as reference</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a>major_order <span class="op">=</span> CategoricalDtype(categories<span class="op">=</span>[<span class="st">"Juggling"</span>, <span class="st">"Magic"</span>, <span class="st">"Dragon Taming"</span>], ordered<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-4"><a href="#cb6-4"></a>df[<span class="st">"major"</span>] <span class="op">=</span> df[<span class="st">"major"</span>].astype(major_order)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4"></a>df[<span class="st">"major"</span>] <span class="op">=</span> df[<span class="st">"major"</span>].astype(major_order)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>The syntax is fairly economic. The formula</p>
@@ -871,16 +873,16 @@ X =
 <p><code>model = smf.mixedlm(formula, data=df, groups=df["person"])</code></p>
 <p>the <code>groups</code> argument specifies that the random effects are associated with the “person” variable, meaning that each person can have their own random intercept.</p>
 <div id="cell-15" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># formula with interaction</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># formula with interaction</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>formula <span class="op">=</span> <span class="st">"income ~ years_after_grad * major"</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a></span>
 <span id="cb7-4"><a href="#cb7-4"></a><span class="co"># fit mixed model with random intercept for person</span></span>
 <span id="cb7-5"><a href="#cb7-5"></a>model <span class="op">=</span> smf.mixedlm(formula, data<span class="op">=</span>df, groups<span class="op">=</span>df[<span class="st">"person"</span>])</span>
-<span id="cb7-6"><a href="#cb7-6"></a>result <span class="op">=</span> model.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-6"><a href="#cb7-6"></a>result <span class="op">=</span> model.fit()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s see the results</p>
 <div id="cell-17" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">print</span>(result.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">print</span>(result.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                            Mixed Linear Model Regression Results
 ==============================================================================================
@@ -924,14 +926,14 @@ Group Var                               33814137.626 2268.953
 <p><code>result.random_effects</code></p>
 <p>Finally, the model as is does not include random slopes, meaning that the effect of years after graduation is assumed to be the same for all individuals. If you want to allow for different slopes for each individual, you can modify the model to include random slopes as well. This would require changing the formula and the <code>groups</code> argument accordingly. Also, <code>result.random_effects</code> will then contain not only the random intercepts, but also the random slopes for each individual.</p>
 <div id="cell-19" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>model <span class="op">=</span> smf.mixedlm(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>model <span class="op">=</span> smf.mixedlm(</span>
 <span id="cb10-2"><a href="#cb10-2"></a>    <span class="st">"income ~ years_after_grad * major"</span>,</span>
 <span id="cb10-3"><a href="#cb10-3"></a>    data<span class="op">=</span>df,</span>
 <span id="cb10-4"><a href="#cb10-4"></a>    groups<span class="op">=</span>df[<span class="st">"person"</span>],</span>
 <span id="cb10-5"><a href="#cb10-5"></a>    re_formula<span class="op">=</span><span class="st">"~years_after_grad"</span></span>
 <span id="cb10-6"><a href="#cb10-6"></a>)</span>
 <span id="cb10-7"><a href="#cb10-7"></a>result <span class="op">=</span> model.fit()</span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="bu">print</span>(result.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="bu">print</span>(result.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/Users/yairmau/miniforge3/envs/olympus/lib/python3.11/site-packages/statsmodels/base/model.py:607: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
   warnings.warn("Maximum Likelihood optimization failed to "
@@ -968,7 +970,7 @@ years_after_grad Var                       39074.487    7.401
 <h2 data-number="16.6" class="anchored" data-anchor-id="back-to-ols"><span class="header-section-number">16.6</span> back to OLS</h2>
 <p>If you went this far, and now realized you don’t care about random effects, you can just use the <code>statsmodels</code> function <code>smf.ols</code> to fit an ordinary least squares regression model. The syntax is similar, but without the <code>groups</code> argument.</p>
 <div id="cell-21" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb13-2"><a href="#cb13-2"></a></span>
 <span id="cb13-3"><a href="#cb13-3"></a><span class="co"># formula with main effects and interaction</span></span>
 <span id="cb13-4"><a href="#cb13-4"></a>formula <span class="op">=</span> <span class="st">"income ~ years_after_grad * major"</span></span>
@@ -978,7 +980,7 @@ years_after_grad Var                       39074.487    7.401
 <span id="cb13-8"><a href="#cb13-8"></a>ols_result <span class="op">=</span> ols_model.fit()</span>
 <span id="cb13-9"><a href="#cb13-9"></a></span>
 <span id="cb13-10"><a href="#cb13-10"></a><span class="co"># print summary</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a><span class="bu">print</span>(ols_result.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="bu">print</span>(ols_result.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                            OLS Regression Results                            
 ==============================================================================
@@ -1067,13 +1069,14 @@ Notes:
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
