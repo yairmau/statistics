@@ -1306,6 +1306,17 @@
     ]
   },
   {
+    "objectID": "bayes/monty-hall.html#the-best-explanations",
+    "href": "bayes/monty-hall.html#the-best-explanations",
+    "title": "28  monty hall",
+    "section": "28.7 the best explanations",
+    "text": "28.7 the best explanations\nA few days after I’ve written this chapter on the Monty Hall problem, I saw the following post by David Deutsch on X:\n\nThe first link is to the paper “Right for the wrong reasons: common bad arguments for the correct answer to the Monty Hall Problem” by Don Fallis and Peter J. Lewis, published on 15 January 2026 (exactly one week ago from when I’m writing this), in the philosophy journal Synthese. This is a great paper, I highly recommend it. There, we find this beautiful argument:\n\nThe Wi-Phi Probability Swap argument\nThere is a 1/3 chance that the car is behind the door that you initially chose. So 1/3 of the times that you play the game you will win by sticking with that door. And 2/3 of the times that you play you will lose by sticking. However if you switch to the door that Monty did not open you will lose all of the times that you would have won by sticking. And you will win all of the times that you would have lost by sticking. (In those cases, there is a car behind one of the two remaining doors and a goat behind the other. So, when Monty opens one of those doors and reveals a goat, you will win by switching to the other door.) So, you should switch to the last remaining door when Monty opens a door and reveals a goat\n\nThe second link is really the mind blowing one. It leads to a very short post in David Deutsch’s website, titled ” Monty Hall Problem”, published on 26 October 2013. There, Deutsch writes:\n\nConsider a different problem first: you’re faced with the same three boxes but now you can choose any one box OR any two boxes, and in the latter case receive the better of the two contents. It’s always better to choose two boxes, right? But the rules of the original game allow you to choose two! Here’s how. First point to the remaining box i.e. the one you’re not going to choose. Then Monty will open the worse of the two boxes you chose, and you take the better one.\n\nBeautiful! Thanks, David 🤯",
+    "crumbs": [
+      "bayes",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>monty hall</span>"
+    ]
+  },
+  {
     "objectID": "svd_and_pca/svd_image_compression.html",
     "href": "svd_and_pca/svd_image_compression.html",
     "title": "29  SVD for image compression",
