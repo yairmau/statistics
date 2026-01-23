@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>36&nbsp; probability and likelihood – Statistics and Machine Learning</title>
+<title>37&nbsp; probability and likelihood – Statistics and Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-79d7efe2808b62b914fc0576c7e86ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -135,7 +136,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -162,7 +163,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">probability and likelihood</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -177,7 +178,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -433,14 +435,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
   </div>
 </li>
       </ul>
@@ -457,13 +465,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -480,19 +488,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
   </div>
 </li>
       </ul>
@@ -509,13 +517,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -532,49 +540,49 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -591,7 +599,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -606,28 +614,28 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#q1-induction-and-probability" id="toc-q1-induction-and-probability" class="nav-link active" data-scroll-target="#q1-induction-and-probability"><span class="header-section-number">36.1</span> Q1: induction and probability</a>
+  <li><a href="#q1-induction-and-probability" id="toc-q1-induction-and-probability" class="nav-link active" data-scroll-target="#q1-induction-and-probability"><span class="header-section-number">37.1</span> Q1: induction and probability</a>
   <ul class="collapse">
-  <li><a href="#a-slightly-different-situation" id="toc-a-slightly-different-situation" class="nav-link" data-scroll-target="#a-slightly-different-situation"><span class="header-section-number">36.1.1</span> A slightly different situation</a></li>
-  <li><a href="#now-the-real-situation" id="toc-now-the-real-situation" class="nav-link" data-scroll-target="#now-the-real-situation"><span class="header-section-number">36.1.2</span> now the real situation</a></li>
-  <li><a href="#full-derivation" id="toc-full-derivation" class="nav-link" data-scroll-target="#full-derivation"><span class="header-section-number">36.1.3</span> full derivation</a></li>
-  <li><a href="#the-result" id="toc-the-result" class="nav-link" data-scroll-target="#the-result"><span class="header-section-number">36.1.4</span> the result</a></li>
+  <li><a href="#a-slightly-different-situation" id="toc-a-slightly-different-situation" class="nav-link" data-scroll-target="#a-slightly-different-situation"><span class="header-section-number">37.1.1</span> A slightly different situation</a></li>
+  <li><a href="#now-the-real-situation" id="toc-now-the-real-situation" class="nav-link" data-scroll-target="#now-the-real-situation"><span class="header-section-number">37.1.2</span> now the real situation</a></li>
+  <li><a href="#full-derivation" id="toc-full-derivation" class="nav-link" data-scroll-target="#full-derivation"><span class="header-section-number">37.1.3</span> full derivation</a></li>
+  <li><a href="#the-result" id="toc-the-result" class="nav-link" data-scroll-target="#the-result"><span class="header-section-number">37.1.4</span> the result</a></li>
   </ul></li>
-  <li><a href="#q2-deduction-and-likelihood" id="toc-q2-deduction-and-likelihood" class="nav-link" data-scroll-target="#q2-deduction-and-likelihood"><span class="header-section-number">36.2</span> Q2: deduction and likelihood</a>
+  <li><a href="#q2-deduction-and-likelihood" id="toc-q2-deduction-and-likelihood" class="nav-link" data-scroll-target="#q2-deduction-and-likelihood"><span class="header-section-number">37.2</span> Q2: deduction and likelihood</a>
   <ul class="collapse">
-  <li><a href="#maximum-likelihood" id="toc-maximum-likelihood" class="nav-link" data-scroll-target="#maximum-likelihood"><span class="header-section-number">36.2.1</span> maximum likelihood</a></li>
-  <li><a href="#likelihood-surface" id="toc-likelihood-surface" class="nav-link" data-scroll-target="#likelihood-surface"><span class="header-section-number">36.2.2</span> likelihood surface</a></li>
+  <li><a href="#maximum-likelihood" id="toc-maximum-likelihood" class="nav-link" data-scroll-target="#maximum-likelihood"><span class="header-section-number">37.2.1</span> maximum likelihood</a></li>
+  <li><a href="#likelihood-surface" id="toc-likelihood-surface" class="nav-link" data-scroll-target="#likelihood-surface"><span class="header-section-number">37.2.2</span> likelihood surface</a></li>
   </ul></li>
-  <li><a href="#q3-likelihood-with-multiple-observations" id="toc-q3-likelihood-with-multiple-observations" class="nav-link" data-scroll-target="#q3-likelihood-with-multiple-observations"><span class="header-section-number">36.3</span> Q3: likelihood with multiple observations</a></li>
+  <li><a href="#q3-likelihood-with-multiple-observations" id="toc-q3-likelihood-with-multiple-observations" class="nav-link" data-scroll-target="#q3-likelihood-with-multiple-observations"><span class="header-section-number">37.3</span> Q3: likelihood with multiple observations</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">probability and likelihood</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">probability and likelihood</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/foundations/probability_and_likelihood.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/foundations/probability_and_likelihood.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -666,22 +674,22 @@ window.Quarto = {
   flowchart RL
   Data/Observations ==> |Likelihood<br>Deduction| Model/Parameters
   ``` --></p>
-<section id="q1-induction-and-probability" class="level2" data-number="36.1">
-<h2 data-number="36.1" class="anchored" data-anchor-id="q1-induction-and-probability"><span class="header-section-number">36.1</span> Q1: induction and probability</h2>
-<section id="a-slightly-different-situation" class="level3" data-number="36.1.1">
-<h3 data-number="36.1.1" class="anchored" data-anchor-id="a-slightly-different-situation"><span class="header-section-number">36.1.1</span> A slightly different situation</h3>
+<section id="q1-induction-and-probability" class="level2" data-number="37.1">
+<h2 data-number="37.1" class="anchored" data-anchor-id="q1-induction-and-probability"><span class="header-section-number">37.1</span> Q1: induction and probability</h2>
+<section id="a-slightly-different-situation" class="level3" data-number="37.1.1">
+<h3 data-number="37.1.1" class="anchored" data-anchor-id="a-slightly-different-situation"><span class="header-section-number">37.1.1</span> A slightly different situation</h3>
 <p>If we knew that buses arrive exactly every 20 minutes, the question would be quite easy to answer. The probability of waiting more than 30 minutes would be zero. The only uncertainty would be when we arrive at the bus stop relative to the bus schedule. We can assume that we arrive uniformly at random between two bus arrivals, so the probability density of us waiting <span class="math inline">x</span> minutes would look like this:</p>
 <div id="8641f550" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="4cc6f4f8" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="dv">41</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>pdf <span class="op">=</span> np.where(x <span class="op">&lt;</span> <span class="dv">20</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">20</span>, <span class="dv">0</span>)</span>
 <span id="cb2-4"><a href="#cb2-4"></a>ax.plot(x, pdf, drawstyle<span class="op">=</span><span class="st">'steps-post'</span>, color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
@@ -690,7 +698,7 @@ window.Quarto = {
 <span id="cb2-7"><a href="#cb2-7"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Probability Density Function for Bus Wait Time'</span>,</span>
 <span id="cb2-8"><a href="#cb2-8"></a>       xlabel<span class="op">=</span><span class="st">'Wait Time (minutes)'</span>,</span>
 <span id="cb2-9"><a href="#cb2-9"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb2-10"><a href="#cb2-10"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">40</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-10"><a href="#cb2-10"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">40</span>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -702,8 +710,8 @@ window.Quarto = {
 </div>
 <p>This is a probability density function (pdf), because the probability that we wait exactly <span class="math inline">x</span> minutes is zero. Instead, we can calculate the probability that we wait between two times, say between 10 and 15 minutes, by calculating the area under the curve between those two times. The shaded region in the plot above has area <span class="math inline">5\times0.05=0.25</span>, meaning that there is a 25% chance that we will wait between 10 and 15 minutes. It would be impossible to wait more than 20 minutes because the area under the curve after 20 minutes is zero. Of course, if we ask what is the probability that we wait for more than zero minutes, the answer is 1=100%, because logically there is no other option. This tells us that the total area under the curve must be equal to 1, not only for this specific example, but for any valid probability density function.</p>
 </section>
-<section id="now-the-real-situation" class="level3" data-number="36.1.2">
-<h3 data-number="36.1.2" class="anchored" data-anchor-id="now-the-real-situation"><span class="header-section-number">36.1.2</span> now the real situation</h3>
+<section id="now-the-real-situation" class="level3" data-number="37.1.2">
+<h3 data-number="37.1.2" class="anchored" data-anchor-id="now-the-real-situation"><span class="header-section-number">37.1.2</span> now the real situation</h3>
 <p>Let’s contrast the real situation with the simplified one from before:</p>
 <table class="caption-top table">
 <colgroup>
@@ -738,8 +746,8 @@ window.Quarto = {
 <p>I will make the follwing assumption: every minute has the same chance of seeing a bus arrive. No matter how long I already waited, the chance of seeing a bus in the next minute is the same. This is called the <strong>memoryless property</strong>. It means that the bus arrival process has no memory of what happened before. This can be a reasonable assumption for buses arriving randomly, but it would not be reasonable for something like a train schedule, where if I just missed a train, I know I will have to wait a long time for the next one.</p>
 <p>What is the probability that I will have to wait more than t minutes?</p>
 </section>
-<section id="full-derivation" class="level3" data-number="36.1.3">
-<h3 data-number="36.1.3" class="anchored" data-anchor-id="full-derivation"><span class="header-section-number">36.1.3</span> full derivation</h3>
+<section id="full-derivation" class="level3" data-number="37.1.3">
+<h3 data-number="37.1.3" class="anchored" data-anchor-id="full-derivation"><span class="header-section-number">37.1.3</span> full derivation</h3>
 <p>This is not strictly necessary to understand the rest of the notebook, but I’m a nerd and these derivations are fun. If you don’t agree just skip to the final result below.</p>
 <p>Let’s start by imagining the 20-minute average wait. Instead of looking at the full 20 minutes, let’s slice time into tiny, microscopic intervals of size <span class="math inline">\Delta t</span> (e.g., one millisecond). In each tiny slice, only two things can happen, either the bus arrives, or it does not. Since the average wait is 20 minutes, the rate <span class="math inline">\lambda</span> is 1/20 buses per minute. In a tiny slice of time <span class="math inline">\Delta t</span>, the probability p of a bus arriving is <span class="math inline">p\approx \lambda \Delta t</span>.</p>
 <p>If I am waiting for the bus at time <span class="math inline">t</span>, it means the bus failed to show up in every single tiny slice of time from <span class="math inline">0</span> up to <span class="math inline">t</span>. If each slice is <span class="math inline">\Delta t</span>, the number of slices in time t is <span class="math inline">n=t/\Delta t</span>. The probability of <strong>not</strong> seeing a bus in one slice is <span class="math inline">(1−p)</span>. Therefore, the probability of not seeing a bus in <span class="math inline">n</span> consecutive slices is:</p>
@@ -768,8 +776,8 @@ P(t) &amp;= \frac{d}{dt}F(t) \\
 &amp;= \lambda e^{-\lambda t}
 \end{align*}</span></p>
 </section>
-<section id="the-result" class="level3" data-number="36.1.4">
-<h3 data-number="36.1.4" class="anchored" data-anchor-id="the-result"><span class="header-section-number">36.1.4</span> the result</h3>
+<section id="the-result" class="level3" data-number="37.1.4">
+<h3 data-number="37.1.4" class="anchored" data-anchor-id="the-result"><span class="header-section-number">37.1.4</span> the result</h3>
 <p>Let’s remember the question:</p>
 <p>Q1: What is the probability that I will have to wait more than 30 minutes for the next bus?</p>
 <p>Now that we have the probability density function,</p>
@@ -790,8 +798,8 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <p>There is a 22% chance that I will have to wait more than 30 minutes for the next bus. <span class="math inline">\square</span></p>
 </section>
 </section>
-<section id="q2-deduction-and-likelihood" class="level2" data-number="36.2">
-<h2 data-number="36.2" class="anchored" data-anchor-id="q2-deduction-and-likelihood"><span class="header-section-number">36.2</span> Q2: deduction and likelihood</h2>
+<section id="q2-deduction-and-likelihood" class="level2" data-number="37.2">
+<h2 data-number="37.2" class="anchored" data-anchor-id="q2-deduction-and-likelihood"><span class="header-section-number">37.2</span> Q2: deduction and likelihood</h2>
 <p>Assume now that we don’t know the average interval between buses. Given that I waited 15 minutes today, what is the most likely average interval between buses?</p>
 <p>In other words, given a specific observed wait time, what is the most likely value of <span class="math inline">\lambda</span>?</p>
 <ul>
@@ -813,7 +821,7 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <div id="9a08d32e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">40</span>, <span class="dv">101</span>)</span>
 <span id="cb3-3"><a href="#cb3-3"></a>f <span class="op">=</span> <span class="kw">lambda</span> t, lam: lam <span class="op">*</span> np.exp(<span class="op">-</span>lam <span class="op">*</span> t)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>time <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>])</span>
@@ -843,7 +851,7 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <span id="cb3-28"><a href="#cb3-28"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.03</span>)</span>
 <span id="cb3-29"><a href="#cb3-29"></a>       )<span class="op">;</span></span>
 <span id="cb3-30"><a href="#cb3-30"></a>ax[<span class="dv">1</span>].yaxis.tick_right()</span>
-<span id="cb3-31"><a href="#cb3-31"></a>ax[<span class="dv">1</span>].yaxis.set_label_position(<span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-31"><a href="#cb3-31"></a>ax[<span class="dv">1</span>].yaxis.set_label_position(<span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -853,8 +861,8 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 </div>
 </div>
 </div>
-<section id="maximum-likelihood" class="level3" data-number="36.2.1">
-<h3 data-number="36.2.1" class="anchored" data-anchor-id="maximum-likelihood"><span class="header-section-number">36.2.1</span> maximum likelihood</h3>
+<section id="maximum-likelihood" class="level3" data-number="37.2.1">
+<h3 data-number="37.2.1" class="anchored" data-anchor-id="maximum-likelihood"><span class="header-section-number">37.2.1</span> maximum likelihood</h3>
 <p>The final step here is obvious. We need to find which lambda maximizes the likelihood function. This value is called the Maximum Likelihood Estimate (MLE) of lambda, denoted <span class="math inline">\hat{\lambda}</span>:</p>
 <p><span class="math display">
 \hat{\lambda} = \underset{\lambda}{\mathrm{argmax}} \ \mathcal{L}(\lambda \mid t=15),
@@ -871,8 +879,8 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 \end{align*}</span></p>
 <p>We found that the MLE of lambda given a single observation t is simply the reciprocal of t. In our case, with t=15 minutes, <span class="math inline">\hat{\lambda} = 1/15</span> buses per minute, meaning that the most likely average interval between buses is 15 minutes. <span class="math inline">\square</span></p>
 </section>
-<section id="likelihood-surface" class="level3" data-number="36.2.2">
-<h3 data-number="36.2.2" class="anchored" data-anchor-id="likelihood-surface"><span class="header-section-number">36.2.2</span> likelihood surface</h3>
+<section id="likelihood-surface" class="level3" data-number="37.2.2">
+<h3 data-number="37.2.2" class="anchored" data-anchor-id="likelihood-surface"><span class="header-section-number">37.2.2</span> likelihood surface</h3>
 <p>I find it useful to visualize both the probability and likelihood functions together in a 3D surface plot. The <strong>joint probability distribution</strong> can be visualized as a surface, representing the exponential distribution’s PDF across a range of wait times (<span class="math inline">t</span>) and rate parameters (<span class="math inline">\lambda</span>). The common expression we see when we learn about probability and likelihood is: <span class="math display">
 \mathcal{L}(\theta \mid x) = P(x \mid \theta),
 </span>* where <span class="math inline">x</span> is the data and <span class="math inline">\theta</span> is the parameter (wait time <span class="math inline">t</span> and rate <span class="math inline">\lambda</span> in our example). At first this seemed baffling to me to define the likelihood function using the same formula as the probability density function. What’s the point of having two names for the same formula? I now picture the probability and likelihood functions as slices (projections) of the same surface. Keeping the parameters fixed and varying the data gives us the probability function. Keeping the data fixed and varying the parameters gives us the likelihood function.</p>
@@ -880,7 +888,7 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <div id="7257e110" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Define ranges</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Define ranges</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">100</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>lmbda <span class="op">=</span> np.linspace(<span class="dv">1</span><span class="op">/</span><span class="dv">120</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, <span class="dv">100</span>)</span>
 <span id="cb4-4"><a href="#cb4-4"></a>T, L <span class="op">=</span> np.meshgrid(t, lmbda)</span>
@@ -912,7 +920,7 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <span id="cb4-30"><a href="#cb4-30"></a>ax.set_zlabel(<span class="st">'Density / Likelihood'</span>)</span>
 <span id="cb4-31"><a href="#cb4-31"></a>ax.legend()</span>
 <span id="cb4-32"><a href="#cb4-32"></a>ax.view_init(elev<span class="op">=</span><span class="dv">15</span>, azim<span class="op">=-</span><span class="dv">20</span>)</span>
-<span id="cb4-33"><a href="#cb4-33"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-33"><a href="#cb4-33"></a>fig.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -924,8 +932,8 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 </div>
 </section>
 </section>
-<section id="q3-likelihood-with-multiple-observations" class="level2" data-number="36.3">
-<h2 data-number="36.3" class="anchored" data-anchor-id="q3-likelihood-with-multiple-observations"><span class="header-section-number">36.3</span> Q3: likelihood with multiple observations</h2>
+<section id="q3-likelihood-with-multiple-observations" class="level2" data-number="37.3">
+<h2 data-number="37.3" class="anchored" data-anchor-id="q3-likelihood-with-multiple-observations"><span class="header-section-number">37.3</span> Q3: likelihood with multiple observations</h2>
 <p>This week I waited 10, 25, 30, 2, and 20 minutes for the bus on different days. Given this data, what is the most likely average interval between buses?</p>
 <p>We will now make an important assumption: the wait times on different days are independent of each other. This means that the likelihood of observing all the wait times is the product of the individual likelihoods:</p>
 <p><span class="math display">
@@ -1009,13 +1017,14 @@ P(t) = \lambda e^{-\lambda t}
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1411,12 +1420,12 @@ P(t) = \lambda e^{-\lambda t}
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../information_theory/cross-entropy.html" class="pagination-link" aria-label="cross-entropy and KL divergence">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../foundations/MLE.html" class="pagination-link" aria-label="maximum likelihood estimation">
-        <span class="nav-page-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

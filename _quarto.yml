@@ -51,6 +51,7 @@ book:
         - bayes/parametric-generative-classification.ipynb
         - bayes/odds.ipynb
         - bayes/logistic-connection.ipynb
+        - bayes/conjugate-prior.ipynb
         - bayes/boy-girl-paradox.ipynb
         - bayes/monty-hall.ipynb
     - part: "svd and pca"
