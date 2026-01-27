@@ -664,14 +664,14 @@ window.Quarto = {
 </li>
 <li><strong>Induction:</strong> In second and third questions we start with the “Evidence” (the Data), and use it to work backward to the “State of the World.” This is the realm of <strong>likelihood</strong>.</li>
 </ul>
-<div id="979521cf" class="cell">
+<div id="979521cf" class="cell" data-execution_count="44">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="f8dd086e" class="cell">
+<div id="f8dd086e" class="cell" data-execution_count="45">
 <details class="code-fold">
 <summary>plot diagram</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
@@ -761,7 +761,7 @@ window.Quarto = {
 <section id="a-slightly-different-situation" class="level3" data-number="37.1.1">
 <h3 data-number="37.1.1" class="anchored" data-anchor-id="a-slightly-different-situation"><span class="header-section-number">37.1.1</span> A slightly different situation</h3>
 <p>If we knew that buses arrive exactly every 20 minutes, the question would be quite easy to answer. The probability of waiting more than 30 minutes would be zero. The only uncertainty would be when we arrive at the bus stop relative to the bus schedule. We can assume that we arrive uniformly at random between two bus arrivals, so the probability density of us waiting <span class="math inline">x</span> minutes would look like this:</p>
-<div id="4cc6f4f8" class="cell" data-execution_count="2">
+<div id="4cc6f4f8" class="cell" data-execution_count="46">
 <details class="code-fold">
 <summary>plot</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
@@ -893,7 +893,7 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 </span></p>
 <p>Let’s see this in action. On the left plot below we see the PDF for a few different values of <span class="math inline">\lambda</span>. For each curve, I marked the observed wait time of 15 minutes with a circle. It is hard to see which value of <span class="math inline">\lambda</span> makes waiting 15 minutes most likely just by looking at the left plot.</p>
 <p>On the right plot we see the likelihood function for the observed wait time of 15 minutes. Clearly there is a peak for the likelihood.</p>
-<div id="9a08d32e" class="cell" data-execution_count="3">
+<div id="9a08d32e" class="cell" data-execution_count="47">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
@@ -960,7 +960,7 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 \mathcal{L}(\theta \mid x) = P(x \mid \theta),
 </span>* where <span class="math inline">x</span> is the data and <span class="math inline">\theta</span> is the parameter (wait time <span class="math inline">t</span> and rate <span class="math inline">\lambda</span> in our example). At first this seemed baffling to me to define the likelihood function using the same formula as the probability density function. What’s the point of having two names for the same formula? I now picture the probability and likelihood functions as slices (projections) of the same surface. Keeping the parameters fixed and varying the data gives us the probability function. Keeping the data fixed and varying the parameters gives us the likelihood function.</p>
 <p>This also helps me understand why the likelihood function is not a valid probability distribution over the parameters. For a fixed data point, the area under the likelihood curve over all possible parameter values does not equal 1. Instead, it can take any value, depending on the observed data.</p>
-<div id="7257e110" class="cell" data-execution_count="4">
+<div id="7257e110" class="cell" data-execution_count="48">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Define ranges</span></span>
