@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>35&nbsp; cross-entropy and KL divergence – Statistics and Machine Learning</title>
+<title>36&nbsp; cross-entropy and KL divergence – Statistics and Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,14 +35,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -100,7 +101,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -127,7 +128,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../information_theory/entropy.html">information theory</a></li><li class="breadcrumb-item"><a href="../information_theory/cross-entropy.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../information_theory/entropy.html">information theory</a></li><li class="breadcrumb-item"><a href="../information_theory/cross-entropy.html"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -142,7 +143,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -398,14 +400,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
   </div>
 </li>
       </ul>
@@ -422,13 +430,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -445,19 +453,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
   </div>
 </li>
       </ul>
@@ -474,13 +482,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -497,49 +505,49 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -556,7 +564,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -571,18 +579,18 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#wrong-model" id="toc-wrong-model" class="nav-link active" data-scroll-target="#wrong-model"><span class="header-section-number">35.1</span> wrong model</a></li>
-  <li><a href="#kullback-leibler-divergence" id="toc-kullback-leibler-divergence" class="nav-link" data-scroll-target="#kullback-leibler-divergence"><span class="header-section-number">35.2</span> Kullback-Leibler divergence</a></li>
-  <li><a href="#model-training-and-objective-functions" id="toc-model-training-and-objective-functions" class="nav-link" data-scroll-target="#model-training-and-objective-functions"><span class="header-section-number">35.3</span> model training and objective functions</a></li>
+  <li><a href="#wrong-model" id="toc-wrong-model" class="nav-link active" data-scroll-target="#wrong-model"><span class="header-section-number">36.1</span> wrong model</a></li>
+  <li><a href="#kullback-leibler-divergence" id="toc-kullback-leibler-divergence" class="nav-link" data-scroll-target="#kullback-leibler-divergence"><span class="header-section-number">36.2</span> Kullback-Leibler divergence</a></li>
+  <li><a href="#model-training-and-objective-functions" id="toc-model-training-and-objective-functions" class="nav-link" data-scroll-target="#model-training-and-objective-functions"><span class="header-section-number">36.3</span> model training and objective functions</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../information_theory/entropy.html">information theory</a></li><li class="breadcrumb-item"><a href="../information_theory/cross-entropy.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../information_theory/entropy.html">information theory</a></li><li class="breadcrumb-item"><a href="../information_theory/cross-entropy.html"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/information_theory/cross-entropy.ipynb"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/information_theory/cross-entropy.ipynb"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -600,8 +608,8 @@ window.Quarto = {
 
 
 <p>Assume I live in city A, where it rains 50% of the days. A friend of mine lives in city B, where it rains 10% of the days.</p>
-<section id="wrong-model" class="level2" data-number="35.1">
-<h2 data-number="35.1" class="anchored" data-anchor-id="wrong-model"><span class="header-section-number">35.1</span> wrong model</h2>
+<section id="wrong-model" class="level2" data-number="36.1">
+<h2 data-number="36.1" class="anchored" data-anchor-id="wrong-model"><span class="header-section-number">36.1</span> wrong model</h2>
 <p>What happens when my friend visits me in city A and, not knowing any better, assumes that it rains 10% of the days?</p>
 <p>We have two probability distributions, the true weather distribution <span class="math inline">P</span>, and the assumed weather distribution <span class="math inline">Q</span>:</p>
 <ul>
@@ -632,8 +640,8 @@ H(Q, P) &amp;= - \sum_x Q(x) \log P(x) \\
 \end{align*}</span></p>
 <p>My friend’s expected surprise will be higher when he visits me in city A (1.74 bits) than my expected surprise when I visit him in city B (1 bit).</p>
 </section>
-<section id="kullback-leibler-divergence" class="level2" data-number="35.2">
-<h2 data-number="35.2" class="anchored" data-anchor-id="kullback-leibler-divergence"><span class="header-section-number">35.2</span> Kullback-Leibler divergence</h2>
+<section id="kullback-leibler-divergence" class="level2" data-number="36.2">
+<h2 data-number="36.2" class="anchored" data-anchor-id="kullback-leibler-divergence"><span class="header-section-number">36.2</span> Kullback-Leibler divergence</h2>
 <p>Not all of my friend’s surprise is due to the fact that he has an inaccurate mental model of the weather. Some of his surprise is simply due to the inherent randomness of the weather. This would be the same surprise that I myself experience when I live in city A, and I have the correct mental model of the weather.</p>
 <p>It would make sense to separate the surprise that is due to the inherent randomness of the weather from the surprise that is due to my friend’s wrong mental model. We can do this by subtracting the entropy of the true distribution <span class="math inline">P</span> from the cross-entropy <span class="math inline">H(P, Q)</span>:</p>
 <p><span class="math display">D_{KL}(P \| Q) = H(P, Q) - H(P)</span></p>
@@ -648,8 +656,8 @@ D_{KL}(P \| Q) &amp;= H(P, Q) - H(P)\\
 <p>This is the most common form of the KL divergence.</p>
 <p>When our model is perfect, i.e., when <span class="math inline">P = Q</span>, the KL divergence is zero <span class="math inline">(\log(P/P) = 0)</span>, because there is no extra surprise due to a wrong mental model. When our model is not perfect, the KL divergence is always positive, because we are always more surprised when our mental model is wrong.</p>
 </section>
-<section id="model-training-and-objective-functions" class="level2" data-number="35.3">
-<h2 data-number="35.3" class="anchored" data-anchor-id="model-training-and-objective-functions"><span class="header-section-number">35.3</span> model training and objective functions</h2>
+<section id="model-training-and-objective-functions" class="level2" data-number="36.3">
+<h2 data-number="36.3" class="anchored" data-anchor-id="model-training-and-objective-functions"><span class="header-section-number">36.3</span> model training and objective functions</h2>
 <p>We might want to train a model that classifies photos. We have a dataset of photos, and for each photo we know the correct label (cat, dog, elephant, etc.). The goal of the model is to predict the correct label for each photo.</p>
 <p>At every step of the training process, we need to evaluate how well the model is doing. The true data distribution <span class="math inline">P</span> is given by the labels in the training dataset, while the model’s predicted distribution <span class="math inline">Q</span> is given by the model’s output. Ideally, our model’s predicted distribution <span class="math inline">Q</span> should be as close as possible to the true data distribution <span class="math inline">P</span>. That’s sounds like a job for the KL divergence!</p>
 <p>We will adjust the model’s parameters to minimize the KL divergence between the true data distribution <span class="math inline">P</span> and the model’s predicted distribution <span class="math inline">Q</span>. In practice, we will minimize the cross-entropy <span class="math inline">H(P, Q)</span> instead of the KL divergence <span class="math inline">D_{KL}(P \| Q)</span>, because the entropy <span class="math inline">H(P)</span> does not depend on the model’s parameters, and therefore does not affect the optimization process. Think about it: no matter what the model’s parameters are, the entropy of the true data distribution <span class="math inline">P</span> will always be the same. So minimizing the KL divergence is equivalent to minimizing the cross-entropy. We don’t care if they differ by a constant.</p>
@@ -709,13 +717,14 @@ D_{KL}(P \| Q) &amp;= H(P, Q) - H(P)\\
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1111,12 +1120,12 @@ D_{KL}(P \| Q) &amp;= H(P, Q) - H(P)\\
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../information_theory/entropy.html" class="pagination-link" aria-label="entropy">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">entropy</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../foundations/probability_and_likelihood.html" class="pagination-link" aria-label="probability and likelihood">
-        <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

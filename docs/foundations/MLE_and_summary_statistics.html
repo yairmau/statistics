@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>38&nbsp; MLE and summary statistics – Statistics and Machine Learning</title>
+<title>39&nbsp; MLE and summary statistics – Statistics and Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -135,7 +136,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -162,7 +163,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/MLE_and_summary_statistics.html"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/MLE_and_summary_statistics.html"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -177,7 +178,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -433,14 +435,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
   </div>
 </li>
       </ul>
@@ -457,13 +465,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -480,19 +488,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
   </div>
 </li>
       </ul>
@@ -509,13 +517,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -532,49 +540,49 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -591,7 +599,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -606,22 +614,22 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#exponential-distribution-revisited" id="toc-exponential-distribution-revisited" class="nav-link active" data-scroll-target="#exponential-distribution-revisited"><span class="header-section-number">38.1</span> exponential distribution revisited</a></li>
-  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link" data-scroll-target="#normal-distribution"><span class="header-section-number">38.2</span> normal distribution</a></li>
-  <li><a href="#binomial-distribution" id="toc-binomial-distribution" class="nav-link" data-scroll-target="#binomial-distribution"><span class="header-section-number">38.3</span> binomial distribution</a></li>
-  <li><a href="#laplace-distribution" id="toc-laplace-distribution" class="nav-link" data-scroll-target="#laplace-distribution"><span class="header-section-number">38.4</span> Laplace distribution</a></li>
-  <li><a href="#poisson-distribution" id="toc-poisson-distribution" class="nav-link" data-scroll-target="#poisson-distribution"><span class="header-section-number">38.5</span> Poisson distribution</a></li>
-  <li><a href="#uniform-distribution" id="toc-uniform-distribution" class="nav-link" data-scroll-target="#uniform-distribution"><span class="header-section-number">38.6</span> uniform distribution</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">38.7</span> summary</a></li>
+  <li><a href="#exponential-distribution-revisited" id="toc-exponential-distribution-revisited" class="nav-link active" data-scroll-target="#exponential-distribution-revisited"><span class="header-section-number">39.1</span> exponential distribution revisited</a></li>
+  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link" data-scroll-target="#normal-distribution"><span class="header-section-number">39.2</span> normal distribution</a></li>
+  <li><a href="#binomial-distribution" id="toc-binomial-distribution" class="nav-link" data-scroll-target="#binomial-distribution"><span class="header-section-number">39.3</span> binomial distribution</a></li>
+  <li><a href="#laplace-distribution" id="toc-laplace-distribution" class="nav-link" data-scroll-target="#laplace-distribution"><span class="header-section-number">39.4</span> Laplace distribution</a></li>
+  <li><a href="#poisson-distribution" id="toc-poisson-distribution" class="nav-link" data-scroll-target="#poisson-distribution"><span class="header-section-number">39.5</span> Poisson distribution</a></li>
+  <li><a href="#uniform-distribution" id="toc-uniform-distribution" class="nav-link" data-scroll-target="#uniform-distribution"><span class="header-section-number">39.6</span> uniform distribution</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">39.7</span> summary</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/MLE_and_summary_statistics.html"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/probability_and_likelihood.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/MLE_and_summary_statistics.html"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/foundations/MLE_and_summary_statistics.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/foundations/MLE_and_summary_statistics.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -639,8 +647,8 @@ window.Quarto = {
 
 
 <p>Let’s do the following exercise. Suppose we have <span class="math inline">n</span> iid observations <span class="math inline">x</span> from a model with parameters <span class="math inline">\theta</span>. Using the definition of the log likelihood, derive the maximum likelihood estimator for <span class="math inline">\theta</span>.</p>
-<section id="exponential-distribution-revisited" class="level2" data-number="38.1">
-<h2 data-number="38.1" class="anchored" data-anchor-id="exponential-distribution-revisited"><span class="header-section-number">38.1</span> exponential distribution revisited</h2>
+<section id="exponential-distribution-revisited" class="level2" data-number="39.1">
+<h2 data-number="39.1" class="anchored" data-anchor-id="exponential-distribution-revisited"><span class="header-section-number">39.1</span> exponential distribution revisited</h2>
 <p>We can now revisit our original example of estimating the rate parameter <span class="math inline">\lambda</span> of an exponential distribution using maximum likelihood estimation. Recall that the probability density function of the exponential distribution is given by: <span class="math display">
 f(x \mid \lambda) = \lambda e^{-\lambda x}.
 </span> The log likelihood reads:</p>
@@ -659,15 +667,15 @@ f(x \mid \lambda) = \lambda e^{-\lambda x}.
 <div id="0b681e45" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> scipy.stats <span class="im">import</span> expon, uniform, norm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> scipy.stats <span class="im">import</span> expon, uniform, norm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="5acfe071" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>pdf_expon <span class="op">=</span> <span class="kw">lambda</span> x, lambd: lambd <span class="op">*</span> np.exp(<span class="op">-</span>lambd <span class="op">*</span> x) <span class="op">*</span> (x <span class="op">&gt;=</span> <span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>pdf_expon <span class="op">=</span> <span class="kw">lambda</span> x, lambd: lambd <span class="op">*</span> np.exp(<span class="op">-</span>lambd <span class="op">*</span> x) <span class="op">*</span> (x <span class="op">&gt;=</span> <span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>), sharex<span class="op">=</span><span class="st">'col'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>fig.subplots_adjust(wspace<span class="op">=</span><span class="fl">0.4</span>, hspace<span class="op">=</span><span class="fl">0.4</span>)</span>
 <span id="cb2-4"><a href="#cb2-4"></a>ax[<span class="dv">1</span>,<span class="dv">0</span>].set_axis_off()</span>
@@ -736,7 +744,7 @@ f(x \mid \lambda) = \lambda e^{-\lambda x}.
 <span id="cb2-67"><a href="#cb2-67"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
 <span id="cb2-68"><a href="#cb2-68"></a>ax[<span class="dv">1</span>,<span class="dv">2</span>].text(<span class="fl">0.97</span>, <span class="fl">0.97</span>, <span class="vs">r"e"</span>, transform<span class="op">=</span>ax[<span class="dv">1</span>,<span class="dv">2</span>].transAxes,</span>
 <span id="cb2-69"><a href="#cb2-69"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,</span>
-<span id="cb2-70"><a href="#cb2-70"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-70"><a href="#cb2-70"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.7 was the ideal lambda used to generate the data.
@@ -769,8 +777,8 @@ f(x \mid \lambda) = \lambda e^{-\lambda x}.
 <p>Because this problem has only one parameter, all we have to do to find the MLE is to find the peak of the curve in panel e. We can do this analytically by taking the derivative of the log likelihood function we derived above, or numerically using optimization methods. For 100 data points drawn from an exponential distribution with <span class="math inline">\lambda=0.7</span>, the MLE estimate of <span class="math inline">\lambda</span> is approximately 0.0.738, which is close to the true value.</p>
 <p>The same ideas shown here apply to all the examples below. For models with more than one parameter, the log likelihood surface becomes a multi-dimensional surface, and we cannot visualize it easily. However, the principles remain the same: we seek the set of parameters <span class="math inline">\{\theta_1, \theta_2, \ldots, \theta_k\}</span> that maximize the log likelihood.</p>
 </section>
-<section id="normal-distribution" class="level2" data-number="38.2">
-<h2 data-number="38.2" class="anchored" data-anchor-id="normal-distribution"><span class="header-section-number">38.2</span> normal distribution</h2>
+<section id="normal-distribution" class="level2" data-number="39.2">
+<h2 data-number="39.2" class="anchored" data-anchor-id="normal-distribution"><span class="header-section-number">39.2</span> normal distribution</h2>
 <p>The normal distribution is defined by two parameters: the mean <span class="math inline">\mu</span> and the standard deviation <span class="math inline">\sigma</span>. As an example, consider measuring the heights of a group of people. We can assume that the heights are normally distributed with some unknown mean and standard deviation.</p>
 <p>Its probability density function is given by: <span class="math display">
 f(x \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right).
@@ -801,8 +809,8 @@ f(x \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x - \mu)^
 </span> which is the sample variance (using <span class="math inline">n</span> in the denominator for MLE).</p>
 <p>Going back to the height example, our MLEs for the mean and standard deviation of heights are simply the sample mean and sample standard deviation of the observed heights.</p>
 </section>
-<section id="binomial-distribution" class="level2" data-number="38.3">
-<h2 data-number="38.3" class="anchored" data-anchor-id="binomial-distribution"><span class="header-section-number">38.3</span> binomial distribution</h2>
+<section id="binomial-distribution" class="level2" data-number="39.3">
+<h2 data-number="39.3" class="anchored" data-anchor-id="binomial-distribution"><span class="header-section-number">39.3</span> binomial distribution</h2>
 <p>The binomial distribution models the number of successes in <span class="math inline">n</span> independent Bernoulli trials, each with success probability <span class="math inline">p</span>. A very common example is flipping a biased coin, whose probability of yielding heads is <span class="math inline">p</span>, flipping it <span class="math inline">n</span> times and counting the number of heads <span class="math inline">k</span>. Its probability mass function is given by: <span class="math display">
 P(X = k \mid n, p) = \binom{n}{k} p^k (1 - p)^{n - k}.
 </span> The log likelihood reads:</p>
@@ -819,8 +827,8 @@ P(X = k \mid n, p) = \binom{n}{k} p^k (1 - p)^{n - k}.
 \hat{p} = \frac{k}{n},
 </span> which is the sample proportion of successes. Going back to the coin example, if we flip the coin 100 times and get 60 heads, our MLE for <span class="math inline">p</span> would be <span class="math inline">\hat{p} = 60/100 = 0.6</span>.</p>
 </section>
-<section id="laplace-distribution" class="level2" data-number="38.4">
-<h2 data-number="38.4" class="anchored" data-anchor-id="laplace-distribution"><span class="header-section-number">38.4</span> Laplace distribution</h2>
+<section id="laplace-distribution" class="level2" data-number="39.4">
+<h2 data-number="39.4" class="anchored" data-anchor-id="laplace-distribution"><span class="header-section-number">39.4</span> Laplace distribution</h2>
 <p>The Laplace distribution, also known as the double exponential distribution, is characterized by its location parameter <span class="math inline">\mu</span> and scale parameter <span class="math inline">b</span>. We use the normal distribution for ‘well-behaved’ data like human heights. We use the Laplace distribution for ‘wild’ data like stock market data, where outliers aren’t just mistakes—they are part of the system. For example, most days the price of a stock barely moves, but rare events (market crashes or surges) happen much more often than a Normal distribution would allow.</p>
 <p>Its probability density function is given by: <span class="math display">
 f(x \mid \mu, b) = \frac{1}{2b} \exp\left(-\frac{|x - \mu|}{b}\right).
@@ -849,8 +857,8 @@ f(x \mid \mu, b) = \frac{1}{2b} \exp\left(-\frac{|x - \mu|}{b}\right).
 </span> which is the mean absolute deviation (MAD) from the median. This measure of spread is more robust to outliers than the standard deviation.</p>
 <p>Going back to the stock market example, our MLEs for the location and scale parameters are simply the sample median and mean absolute deviation from the median of the observed returns.</p>
 </section>
-<section id="poisson-distribution" class="level2" data-number="38.5">
-<h2 data-number="38.5" class="anchored" data-anchor-id="poisson-distribution"><span class="header-section-number">38.5</span> Poisson distribution</h2>
+<section id="poisson-distribution" class="level2" data-number="39.5">
+<h2 data-number="39.5" class="anchored" data-anchor-id="poisson-distribution"><span class="header-section-number">39.5</span> Poisson distribution</h2>
 <p>The Poisson distribution models the number of events occurring in a fixed interval of time or space, given a known average rate of occurrence <span class="math inline">\lambda</span>. A common example is counting the number of emails received in an hour, or the number of radioactive decays detected in a piece of radioactive material over a certain period. Its probability mass function is given by: <span class="math display">
 P(X = k \mid \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}.
 </span> The log likelihood reads:</p>
@@ -867,8 +875,8 @@ P(X = k \mid \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}.
 \hat{\lambda} = \frac{1}{n} \sum_{i=1}^{n} k_i,
 </span> which is the sample mean of the observed counts.</p>
 </section>
-<section id="uniform-distribution" class="level2" data-number="38.6">
-<h2 data-number="38.6" class="anchored" data-anchor-id="uniform-distribution"><span class="header-section-number">38.6</span> uniform distribution</h2>
+<section id="uniform-distribution" class="level2" data-number="39.6">
+<h2 data-number="39.6" class="anchored" data-anchor-id="uniform-distribution"><span class="header-section-number">39.6</span> uniform distribution</h2>
 <p>The uniform distribution models a situation where all outcomes in a given range are equally likely. A common example is rolling a fair die, where each face (1 through 6) has an equal probability of landing face up. Its probability density function is given by: <span class="math display">
 f(x \mid a, b) = \frac{1}{b - a} \text{ for } a \leq x \leq b.
 </span></p>
@@ -885,8 +893,8 @@ L(a, b \mid x_{1:n}) = \left( \frac{1}{b - a} \right)^n.
 \hat{a} = \min(x_{1:n}), \quad \hat{b} = \max(x_{1:n}).
 </span></p>
 </section>
-<section id="summary" class="level2" data-number="38.7">
-<h2 data-number="38.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">38.7</span> summary</h2>
+<section id="summary" class="level2" data-number="39.7">
+<h2 data-number="39.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">39.7</span> summary</h2>
 <p>By appliying the reasoning of maximum likelihood estimation to various probability distributions, we have derived the maximum likelihood estimators for their parameters. Notably, we found that:</p>
 <ul>
 <li>For the <strong>exponential</strong> distribution, the MLE is the reciprocal of the sample mean.</li>
@@ -953,13 +961,14 @@ L(a, b \mid x_{1:n}) = \left( \frac{1}{b - a} \right)^n.
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1355,12 +1364,12 @@ L(a, b \mid x_{1:n}) = \left( \frac{1}{b - a} \right)^n.
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../foundations/MLE.html" class="pagination-link" aria-label="maximum likelihood estimation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../foundations/MLE_and_linear_regression.html" class="pagination-link" aria-label="MLE and linear regression">
-        <span class="nav-page-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

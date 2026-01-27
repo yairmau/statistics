@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>34&nbsp; entropy – Statistics and Machine Learning</title>
+<title>35&nbsp; entropy – Statistics and Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -135,7 +136,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -162,7 +163,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../information_theory/entropy.html">information theory</a></li><li class="breadcrumb-item"><a href="../information_theory/entropy.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">entropy</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../information_theory/entropy.html">information theory</a></li><li class="breadcrumb-item"><a href="../information_theory/entropy.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -177,7 +178,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -433,14 +435,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
   </div>
 </li>
       </ul>
@@ -457,13 +465,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -480,19 +488,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
   </div>
 </li>
       </ul>
@@ -509,13 +517,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -532,49 +540,49 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -591,7 +599,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -606,24 +614,24 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#image-generating-machines" id="toc-image-generating-machines" class="nav-link active" data-scroll-target="#image-generating-machines"><span class="header-section-number">34.1</span> image-generating machines</a></li>
-  <li><a href="#surprise" id="toc-surprise" class="nav-link" data-scroll-target="#surprise"><span class="header-section-number">34.2</span> surprise</a></li>
-  <li><a href="#information" id="toc-information" class="nav-link" data-scroll-target="#information"><span class="header-section-number">34.3</span> information</a></li>
-  <li><a href="#quantifying-surprise-and-information" id="toc-quantifying-surprise-and-information" class="nav-link" data-scroll-target="#quantifying-surprise-and-information"><span class="header-section-number">34.4</span> quantifying surprise and information</a></li>
-  <li><a href="#problems-with-the-inverse-formula" id="toc-problems-with-the-inverse-formula" class="nav-link" data-scroll-target="#problems-with-the-inverse-formula"><span class="header-section-number">34.5</span> problems with the inverse formula</a></li>
-  <li><a href="#a-new-and-better-formula" id="toc-a-new-and-better-formula" class="nav-link" data-scroll-target="#a-new-and-better-formula"><span class="header-section-number">34.6</span> a new and better formula</a></li>
-  <li><a href="#entropy" id="toc-entropy" class="nav-link" data-scroll-target="#entropy"><span class="header-section-number">34.7</span> entropy</a></li>
-  <li><a href="#binary-machines" id="toc-binary-machines" class="nav-link" data-scroll-target="#binary-machines"><span class="header-section-number">34.8</span> binary machines</a></li>
-  <li><a href="#one-last-example" id="toc-one-last-example" class="nav-link" data-scroll-target="#one-last-example"><span class="header-section-number">34.9</span> one last example</a></li>
+  <li><a href="#image-generating-machines" id="toc-image-generating-machines" class="nav-link active" data-scroll-target="#image-generating-machines"><span class="header-section-number">35.1</span> image-generating machines</a></li>
+  <li><a href="#surprise" id="toc-surprise" class="nav-link" data-scroll-target="#surprise"><span class="header-section-number">35.2</span> surprise</a></li>
+  <li><a href="#information" id="toc-information" class="nav-link" data-scroll-target="#information"><span class="header-section-number">35.3</span> information</a></li>
+  <li><a href="#quantifying-surprise-and-information" id="toc-quantifying-surprise-and-information" class="nav-link" data-scroll-target="#quantifying-surprise-and-information"><span class="header-section-number">35.4</span> quantifying surprise and information</a></li>
+  <li><a href="#problems-with-the-inverse-formula" id="toc-problems-with-the-inverse-formula" class="nav-link" data-scroll-target="#problems-with-the-inverse-formula"><span class="header-section-number">35.5</span> problems with the inverse formula</a></li>
+  <li><a href="#a-new-and-better-formula" id="toc-a-new-and-better-formula" class="nav-link" data-scroll-target="#a-new-and-better-formula"><span class="header-section-number">35.6</span> a new and better formula</a></li>
+  <li><a href="#entropy" id="toc-entropy" class="nav-link" data-scroll-target="#entropy"><span class="header-section-number">35.7</span> entropy</a></li>
+  <li><a href="#binary-machines" id="toc-binary-machines" class="nav-link" data-scroll-target="#binary-machines"><span class="header-section-number">35.8</span> binary machines</a></li>
+  <li><a href="#one-last-example" id="toc-one-last-example" class="nav-link" data-scroll-target="#one-last-example"><span class="header-section-number">35.9</span> one last example</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../information_theory/entropy.html">information theory</a></li><li class="breadcrumb-item"><a href="../information_theory/entropy.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">entropy</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../information_theory/entropy.html">information theory</a></li><li class="breadcrumb-item"><a href="../information_theory/entropy.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">entropy</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/information_theory/entropy.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/information_theory/entropy.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -641,8 +649,8 @@ window.Quarto = {
 
 
 <p>Let’s derive the formula for entropy from first principles.</p>
-<section id="image-generating-machines" class="level2" data-number="34.1">
-<h2 data-number="34.1" class="anchored" data-anchor-id="image-generating-machines"><span class="header-section-number">34.1</span> image-generating machines</h2>
+<section id="image-generating-machines" class="level2" data-number="35.1">
+<h2 data-number="35.1" class="anchored" data-anchor-id="image-generating-machines"><span class="header-section-number">35.1</span> image-generating machines</h2>
 <p>We’re given machines that generate images of cats (😺) and dogs (🐶). See the following outputs from the machines:</p>
 <p>machine 1:<br>
 <code>😺 😺 😺 😺 😺 🐶</code>, 5 cats and 1 dog</p>
@@ -653,15 +661,15 @@ window.Quarto = {
 <p>machine 4:<br>
 <code>🐶 😺 🐶 🐶 🐶 😺 😺 😺 🐶 😺 🐶 😺</code>, 6 cats and 6 dogs</p>
 </section>
-<section id="surprise" class="level2" data-number="34.2">
-<h2 data-number="34.2" class="anchored" data-anchor-id="surprise"><span class="header-section-number">34.2</span> surprise</h2>
+<section id="surprise" class="level2" data-number="35.2">
+<h2 data-number="35.2" class="anchored" data-anchor-id="surprise"><span class="header-section-number">35.2</span> surprise</h2>
 <p>How surprised are we by each output?</p>
 <p>For machine 2, we wouldn’t be surprised at all if the next image it generates is a cat. It’s been generating only cats so far. However, if it generates a dog, that would be quite surprising.</p>
 <p>Machine 4 produced equal numbers of cats and dogs. So we would be equally surprised if the next image is a cat or a dog.</p>
 <p>Machines 1 and 3 are somewhere in between.</p>
 </section>
-<section id="information" class="level2" data-number="34.3">
-<h2 data-number="34.3" class="anchored" data-anchor-id="information"><span class="header-section-number">34.3</span> information</h2>
+<section id="information" class="level2" data-number="35.3">
+<h2 data-number="35.3" class="anchored" data-anchor-id="information"><span class="header-section-number">35.3</span> information</h2>
 <p>We could say similar things about information. If machine 2 generates another cat, we don’t learn anything new, it’s the same machine as ever. But if it generates a dog, we learn a lot about this machine’s behavior. In contrast, machine 4 generates equal amounts of information whether it produces a cat or a dog, since both have had the same number so far.</p>
 <p>To say that we are surprised by an event is the same as saying that we learn some information from it. If an event is not surprising at all, then it doesn’t provide us with any new information.</p>
 <blockquote class="blockquote">
@@ -673,16 +681,16 @@ window.Quarto = {
 </blockquote>
 <p>This is both surprising and informative.</p>
 </section>
-<section id="quantifying-surprise-and-information" class="level2" data-number="34.4">
-<h2 data-number="34.4" class="anchored" data-anchor-id="quantifying-surprise-and-information"><span class="header-section-number">34.4</span> quantifying surprise and information</h2>
+<section id="quantifying-surprise-and-information" class="level2" data-number="35.4">
+<h2 data-number="35.4" class="anchored" data-anchor-id="quantifying-surprise-and-information"><span class="header-section-number">35.4</span> quantifying surprise and information</h2>
 <p>An event that is very likely to happen is not surprising, and doesn’t provide us with much information. An event that is unlikely to happen is surprising, and provides us with a lot of information. It seems reasonable to say that the amount of information <span class="math inline">I</span> we gain from an event <span class="math inline">x</span>, whose probability is <span class="math inline">P(x)</span>, is inversely proportional to the probability:</p>
 <p><span class="math display">
 I(P(x)) = \frac{1}{P(x)}
 \tag{1}
 </span></p>
 </section>
-<section id="problems-with-the-inverse-formula" class="level2" data-number="34.5">
-<h2 data-number="34.5" class="anchored" data-anchor-id="problems-with-the-inverse-formula"><span class="header-section-number">34.5</span> problems with the inverse formula</h2>
+<section id="problems-with-the-inverse-formula" class="level2" data-number="35.5">
+<h2 data-number="35.5" class="anchored" data-anchor-id="problems-with-the-inverse-formula"><span class="header-section-number">35.5</span> problems with the inverse formula</h2>
 <p>There are at least two problems with this inverse formula.</p>
 <p><strong>Problem one</strong></p>
 <p>An event with zero probability would provide us with infinite information. Maybe that’s okay, since I could be infinitely surprised if the sun didn’t rise tomorrow. However, a certain event (probability 1) would provide us with only 1 unit of information. That doesn’t seem right. A certain event should provide us with no information at all, zero.</p>
@@ -708,8 +716,8 @@ I(P(x \text{ and } y)) &amp;= I(P(x)P(y)) \\
 <p>The total information I gained is the product of the information I gained from each event. There’s something wrong with that. Assume that my sister flipped a fair coin, so the probability of heads is 1/2. From the inverse formula, this means that the “heads” outcome <strong>doubled</strong> the information I got from yesterday’s events. My surprise from learning that my cousin won the lottery was multiplied by 2 by a mere coin toss. That’s obviously not ok.</p>
 <p>What would make sense is if the total information I gained from both events was the <strong>sum</strong> of the information I gained from each independent event. Then, if my sister flipped a fair coin, the information I gained from learning that my cousin won the lottery would be increased by a fixed amount, regardless of how surprising the lottery win was.</p>
 </section>
-<section id="a-new-and-better-formula" class="level2" data-number="34.6">
-<h2 data-number="34.6" class="anchored" data-anchor-id="a-new-and-better-formula"><span class="header-section-number">34.6</span> a new and better formula</h2>
+<section id="a-new-and-better-formula" class="level2" data-number="35.6">
+<h2 data-number="35.6" class="anchored" data-anchor-id="a-new-and-better-formula"><span class="header-section-number">35.6</span> a new and better formula</h2>
 <p>We are looking for a function <span class="math inline">I(P(x))</span> such that:</p>
 <ul>
 <li><span class="math inline">I(1) = 0</span><br>
@@ -728,8 +736,8 @@ I(P(x)) = \log\left(\frac{1}{P(x)}\right)
 </ul>
 <p>Claude Shannon, the father of information theory, proposed this formula in his seminal 1948 paper <a href="https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf">“A Mathematical Theory of Communication”</a>. There, he proved (see Appendix 2) that this is the only function that satisfies three properties, related to the two stated above, but more restrictive. See Shannon’s three properties, stated in Section 6 of his paper, titled “Choice, Uncertainty, and Entropy”.</p>
 </section>
-<section id="entropy" class="level2" data-number="34.7">
-<h2 data-number="34.7" class="anchored" data-anchor-id="entropy"><span class="header-section-number">34.7</span> entropy</h2>
+<section id="entropy" class="level2" data-number="35.7">
+<h2 data-number="35.7" class="anchored" data-anchor-id="entropy"><span class="header-section-number">35.7</span> entropy</h2>
 <p>Shannon writes:</p>
 <blockquote class="blockquote">
 <p>Suppose we have a set of possible events whose probabilities of occurrence are <span class="math inline">p_1, p_2, \ldots, p_n</span>. These probabilities are known but that is all we know concerning which event will occur. Can we find a measure of how much “choice” is involved in the selection of the event or of how uncertain we are of the outcome?</p>
@@ -759,8 +767,8 @@ H = \sum_i P(x_i) I(P(x_i)) = \sum_i P(x_i) \log\left(\frac{1}{P(x_i)}\right)
 <p>The information from each possible outcome <span class="math inline">x_i</span> is weighted by the probability of that outcome, and we sum over all possible outcomes.</p>
 <p>For instance, machine 1 produces dogs with a probability of 1/6, and cats with a probability of 5/6. The expected information from the next image is the information from a dog times the probability of getting a dog, plus the information from a cat times the probability of getting a cat. If our machine produced <span class="math inline">N</span> possible images, we would do the same, summing over all <span class="math inline">N</span> possible images with their respective probabilities as weights.</p>
 </section>
-<section id="binary-machines" class="level2" data-number="34.8">
-<h2 data-number="34.8" class="anchored" data-anchor-id="binary-machines"><span class="header-section-number">34.8</span> binary machines</h2>
+<section id="binary-machines" class="level2" data-number="35.8">
+<h2 data-number="35.8" class="anchored" data-anchor-id="binary-machines"><span class="header-section-number">35.8</span> binary machines</h2>
 <p>In the example of the machines that produce only two outcomes, we have that one probability is <span class="math inline">P</span> (say, for getting cats) and the other is <span class="math inline">Q=1-P</span>. So we can write the entropy as a function of a single probability:</p>
 <p><span class="math display">
 H(P) = - P \log(P) - (1-P) \log(1-P)
@@ -768,18 +776,18 @@ H(P) = - P \log(P) - (1-P) \log(1-P)
 <div id="cell-6" class="cell" data-execution_count="121">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-4"><a href="#cb1-4"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> matplotlib.gridspec <span class="im">as</span> gridspec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> matplotlib.gridspec <span class="im">as</span> gridspec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="cell-7" class="cell" data-execution_count="122">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb2-2"><a href="#cb2-2"></a>p <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>eps <span class="op">=</span> <span class="fl">1e-10</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="kw">def</span> entropy_H(p):</span>
@@ -804,7 +812,7 @@ H(P) = - P \log(P) - (1-P) \log(1-P)
 <span id="cb2-23"><a href="#cb2-23"></a></span>
 <span id="cb2-24"><a href="#cb2-24"></a>ax.set_xlabel(<span class="st">"P"</span>)</span>
 <span id="cb2-25"><a href="#cb2-25"></a>ax.set_ylabel(<span class="st">"bits"</span>)</span>
-<span id="cb2-26"><a href="#cb2-26"></a>ax.set_title(<span class="st">"Binary Entropy Function"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-26"><a href="#cb2-26"></a>ax.set_title(<span class="st">"Binary Entropy Function"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="122">
 <pre><code>Text(0.5, 1.0, 'Binary Entropy Function')</code></pre>
@@ -820,13 +828,13 @@ H(P) = - P \log(P) - (1-P) \log(1-P)
 <p>The expected information is zero for machine 2, which certainly produces only cats (<span class="math inline">P=1</span>). The expected information is maximal for machine 4, which produces cats and dogs with equal probabilities (<span class="math inline">P=1/2</span>).</p>
 <p>In Equations (5) and (6), we didn’t explicitly say what the base of the logarithm is. It doesn’t matter, since changing the base only changes the units of information. In the example above, we use base 2 because we have a binary choice, and the units for entropy are called bits, suggested by JW Tukey, meaning <em>binary digits</em>.</p>
 </section>
-<section id="one-last-example" class="level2" data-number="34.9">
-<h2 data-number="34.9" class="anchored" data-anchor-id="one-last-example"><span class="header-section-number">34.9</span> one last example</h2>
+<section id="one-last-example" class="level2" data-number="35.9">
+<h2 data-number="35.9" class="anchored" data-anchor-id="one-last-example"><span class="header-section-number">35.9</span> one last example</h2>
 <p>Consider the frequency of the letters in the Hebrew alphabet (there are 22 letters). The most common letter is “י”, which appears with a frequency of about 11.06%. The least common letter is “ט”, which appears with a frequency of about 1.24%. If we opened a book written in Hebrew to a random page, and picked a random letter on that page, what would be the expected information from that letter?</p>
 <div id="cell-10" class="cell" data-execution_count="123">
 <details class="code-fold">
 <summary>import data and plot</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../archive/data/letter_frequency_hebrew.csv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../archive/data/letter_frequency_hebrew.csv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a></span>
 <span id="cb4-3"><a href="#cb4-3"></a>fig<span class="op">=</span> plt.figure(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
 <span id="cb4-4"><a href="#cb4-4"></a></span>
@@ -898,7 +906,7 @@ H(P) = - P \log(P) - (1-P) \log(1-P)
 <span id="cb4-70"><a href="#cb4-70"></a>)</span>
 <span id="cb4-71"><a href="#cb4-71"></a>ax3.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, which<span class="op">=</span><span class="st">'major'</span>, length<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb4-72"><a href="#cb4-72"></a></span>
-<span id="cb4-73"><a href="#cb4-73"></a>fig.tight_layout()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-73"><a href="#cb4-73"></a>fig.tight_layout()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_99634/300921586.py:19: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
@@ -977,13 +985,14 @@ H_\text{max} &amp;= \sum_{i=1}^{22} \frac{1}{22} \log_2\left(\frac{1}{\frac{1}{2
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1379,12 +1388,12 @@ H_\text{max} &amp;= \sum_{i=1}^{22} \frac{1}{22} \log_2\left(\frac{1}{\frac{1}{2
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../decision_trees/random_forest.html" class="pagination-link" aria-label="random forest">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">random forest</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">random forest</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../information_theory/cross-entropy.html" class="pagination-link" aria-label="cross-entropy and KL divergence">
-        <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

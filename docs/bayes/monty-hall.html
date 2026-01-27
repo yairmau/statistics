@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>28&nbsp; monty hall – Statistics and Machine Learning</title>
+<title>29&nbsp; monty hall – Statistics and Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fcf83911b402597c2c5fefaa754962c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -135,7 +136,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -162,7 +163,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/monty-hall.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">monty hall</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/monty-hall.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">monty hall</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -177,7 +178,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -433,14 +435,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
   </div>
 </li>
       </ul>
@@ -457,13 +465,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -480,19 +488,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
   </div>
 </li>
       </ul>
@@ -509,13 +517,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -532,49 +540,49 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -591,7 +599,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -606,27 +614,27 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link active" data-scroll-target="#bayes-theorem"><span class="header-section-number">28.1</span> Bayes’ Theorem</a>
+  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link active" data-scroll-target="#bayes-theorem"><span class="header-section-number">29.1</span> Bayes’ Theorem</a>
   <ul class="collapse">
-  <li><a href="#likelihood" id="toc-likelihood" class="nav-link" data-scroll-target="#likelihood"><span class="header-section-number">28.1.1</span> likelihood</a></li>
-  <li><a href="#prior" id="toc-prior" class="nav-link" data-scroll-target="#prior"><span class="header-section-number">28.1.2</span> prior</a></li>
-  <li><a href="#evidence" id="toc-evidence" class="nav-link" data-scroll-target="#evidence"><span class="header-section-number">28.1.3</span> evidence</a></li>
+  <li><a href="#likelihood" id="toc-likelihood" class="nav-link" data-scroll-target="#likelihood"><span class="header-section-number">29.1.1</span> likelihood</a></li>
+  <li><a href="#prior" id="toc-prior" class="nav-link" data-scroll-target="#prior"><span class="header-section-number">29.1.2</span> prior</a></li>
+  <li><a href="#evidence" id="toc-evidence" class="nav-link" data-scroll-target="#evidence"><span class="header-section-number">29.1.3</span> evidence</a></li>
   </ul></li>
-  <li><a href="#reflections" id="toc-reflections" class="nav-link" data-scroll-target="#reflections"><span class="header-section-number">28.2</span> reflections</a></li>
-  <li><a href="#monty-selects-at-random" id="toc-monty-selects-at-random" class="nav-link" data-scroll-target="#monty-selects-at-random"><span class="header-section-number">28.3</span> Monty selects at random</a></li>
-  <li><a href="#many-doors-to-select-from" id="toc-many-doors-to-select-from" class="nav-link" data-scroll-target="#many-doors-to-select-from"><span class="header-section-number">28.4</span> many doors to select from</a></li>
-  <li><a href="#transfer-of-probability" id="toc-transfer-of-probability" class="nav-link" data-scroll-target="#transfer-of-probability"><span class="header-section-number">28.5</span> transfer of probability</a></li>
-  <li><a href="#information" id="toc-information" class="nav-link" data-scroll-target="#information"><span class="header-section-number">28.6</span> information</a></li>
-  <li><a href="#the-best-explanations" id="toc-the-best-explanations" class="nav-link" data-scroll-target="#the-best-explanations"><span class="header-section-number">28.7</span> the best explanations</a></li>
+  <li><a href="#reflections" id="toc-reflections" class="nav-link" data-scroll-target="#reflections"><span class="header-section-number">29.2</span> reflections</a></li>
+  <li><a href="#monty-selects-at-random" id="toc-monty-selects-at-random" class="nav-link" data-scroll-target="#monty-selects-at-random"><span class="header-section-number">29.3</span> Monty selects at random</a></li>
+  <li><a href="#many-doors-to-select-from" id="toc-many-doors-to-select-from" class="nav-link" data-scroll-target="#many-doors-to-select-from"><span class="header-section-number">29.4</span> many doors to select from</a></li>
+  <li><a href="#transfer-of-probability" id="toc-transfer-of-probability" class="nav-link" data-scroll-target="#transfer-of-probability"><span class="header-section-number">29.5</span> transfer of probability</a></li>
+  <li><a href="#information" id="toc-information" class="nav-link" data-scroll-target="#information"><span class="header-section-number">29.6</span> information</a></li>
+  <li><a href="#the-best-explanations" id="toc-the-best-explanations" class="nav-link" data-scroll-target="#the-best-explanations"><span class="header-section-number">29.7</span> the best explanations</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/monty-hall.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">monty hall</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/monty-hall.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">monty hall</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">monty hall</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/bayes/monty-hall.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">monty hall</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/bayes/monty-hall.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -648,18 +656,18 @@ window.Quarto = {
 <div id="f9022472" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">from</span> matplotlib.offsetbox <span class="im">import</span> OffsetImage, AnnotationBbox</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> urllib.request</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> io</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> io</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="8c021c6c" class="cell">
 <details class="code-fold">
 <summary>function to add emoji images to plots</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> add_emoji(x, y, emoji_code, ax, style<span class="op">=</span><span class="st">'apple'</span>, zoom<span class="op">=</span><span class="fl">0.4</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> add_emoji(x, y, emoji_code, ax, style<span class="op">=</span><span class="st">'apple'</span>, zoom<span class="op">=</span><span class="fl">0.4</span>):</span>
 <span id="cb2-2"><a href="#cb2-2"></a>    <span class="co">"""</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co">    Styles available: </span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co">    'apple'  -&gt; Glossy, high-detail (via EmojiGraph)</span></span>
@@ -693,13 +701,13 @@ window.Quarto = {
 <span id="cb2-32"><a href="#cb2-32"></a>        ab <span class="op">=</span> AnnotationBbox(imagebox, (x, y), frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb2-33"><a href="#cb2-33"></a>        ax.add_artist(ab)</span>
 <span id="cb2-34"><a href="#cb2-34"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb2-35"><a href="#cb2-35"></a>        <span class="bu">print</span>(<span class="ss">f"Error loading </span><span class="sc">{</span>style<span class="sc">}</span><span class="ss"> emoji </span><span class="sc">{</span>emoji_code<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-35"><a href="#cb2-35"></a>        <span class="bu">print</span>(<span class="ss">f"Error loading </span><span class="sc">{</span>style<span class="sc">}</span><span class="ss"> emoji </span><span class="sc">{</span>emoji_code<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="2dbb31bd" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>monty hall figure</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="co"># door</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>add_emoji(<span class="dv">1</span>, <span class="dv">1</span>, <span class="st">"1f6aa"</span>, ax, style<span class="op">=</span><span class="st">"google"</span>, zoom<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>add_emoji(<span class="dv">2</span>, <span class="dv">1</span>, <span class="st">"1f6aa"</span>, ax, style<span class="op">=</span><span class="st">"google"</span>, zoom<span class="op">=</span><span class="dv">1</span>)</span>
@@ -717,7 +725,7 @@ window.Quarto = {
 <span id="cb3-16"><a href="#cb3-16"></a>ax.text(<span class="dv">2</span>, <span class="fl">1.1</span>, <span class="st">"2"</span>, fontsize<span class="op">=</span><span class="dv">24</span>, ha<span class="op">=</span><span class="st">'center'</span>)</span>
 <span id="cb3-17"><a href="#cb3-17"></a>ax.text(<span class="dv">3</span>, <span class="fl">1.1</span>, <span class="st">"3"</span>, fontsize<span class="op">=</span><span class="dv">24</span>, ha<span class="op">=</span><span class="st">'center'</span>)</span>
 <span id="cb3-18"><a href="#cb3-18"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">4</span>), ylim<span class="op">=</span>(<span class="fl">0.25</span>,<span class="dv">2</span>))</span>
-<span id="cb3-19"><a href="#cb3-19"></a>ax.axis(<span class="st">'off'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-19"><a href="#cb3-19"></a>ax.axis(<span class="st">'off'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -727,8 +735,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<section id="bayes-theorem" class="level2" data-number="28.1">
-<h2 data-number="28.1" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">28.1</span> Bayes’ Theorem</h2>
+<section id="bayes-theorem" class="level2" data-number="29.1">
+<h2 data-number="29.1" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">29.1</span> Bayes’ Theorem</h2>
 <p>We can formulate this problem as the conditional probability:</p>
 <p><span class="math display">
 P(\text{car behind 1} \mid \text{Monty opens 2})
@@ -747,18 +755,18 @@ P(A \mid B) = \frac{P(B \mid A) P(A)}{P(B)},
 P(\text{car behind 1} \mid \text{Monty opens 2}) = \frac{P(\text{Monty opens 2} \mid \text{car behind 1}) P(\text{car behind 1})}{P(\text{Monty opens 2})}
 </span></p>
 <p>Let’s compute each term.</p>
-<section id="likelihood" class="level3" data-number="28.1.1">
-<h3 data-number="28.1.1" class="anchored" data-anchor-id="likelihood"><span class="header-section-number">28.1.1</span> likelihood</h3>
+<section id="likelihood" class="level3" data-number="29.1.1">
+<h3 data-number="29.1.1" class="anchored" data-anchor-id="likelihood"><span class="header-section-number">29.1.1</span> likelihood</h3>
 <p><span class="math inline">P(\text{Monty opens 2} \mid \text{car behind 1})</span></p>
 <p>In English: assuming we know the car is behind door 1, what is the probability that Monty opens door 2? In that case, Monty could have opened either door 2 or door 3 with equal probability, so the answer is 1/2.</p>
 </section>
-<section id="prior" class="level3" data-number="28.1.2">
-<h3 data-number="28.1.2" class="anchored" data-anchor-id="prior"><span class="header-section-number">28.1.2</span> prior</h3>
+<section id="prior" class="level3" data-number="29.1.2">
+<h3 data-number="29.1.2" class="anchored" data-anchor-id="prior"><span class="header-section-number">29.1.2</span> prior</h3>
 <p><span class="math inline">P(\text{car behind 1})</span></p>
 <p>Before Monty opened any door, the probability that the car is behind door 1 is 1/3.</p>
 </section>
-<section id="evidence" class="level3" data-number="28.1.3">
-<h3 data-number="28.1.3" class="anchored" data-anchor-id="evidence"><span class="header-section-number">28.1.3</span> evidence</h3>
+<section id="evidence" class="level3" data-number="29.1.3">
+<h3 data-number="29.1.3" class="anchored" data-anchor-id="evidence"><span class="header-section-number">29.1.3</span> evidence</h3>
 <p><span class="math inline">P(\text{Monty opens 2})</span></p>
 <p>We can compute this using the law of total probability. The evidence is a marginal probability, and it is the sum of the joint probabilities over all possible locations of the car:</p>
 <p><span class="math display">\begin{align*}
@@ -784,16 +792,16 @@ P(\text{car behind 1} \mid \text{Monty opens 2}) = \frac{\frac{1}{2} \cdot \frac
 <p>The probability that the car is behind door 1 is still 1/3. The logical conclusion is that the probability that the car is behind door 3 is 2/3, so you should switch!</p>
 </section>
 </section>
-<section id="reflections" class="level2" data-number="28.2">
-<h2 data-number="28.2" class="anchored" data-anchor-id="reflections"><span class="header-section-number">28.2</span> reflections</h2>
+<section id="reflections" class="level2" data-number="29.2">
+<h2 data-number="29.2" class="anchored" data-anchor-id="reflections"><span class="header-section-number">29.2</span> reflections</h2>
 <p>I posed this question to my children, and they said the same thing: “What does it matter if Monty reveals that another door has a goat? That doesn’t change anything! There are now two doors, each equally likely to have the car behind it.” (those weren’t exactly their words, I’m paraphrasing).</p>
 <p>There is both truth and confusion in what they said!</p>
 <p><strong>“It doesn’t change anything!”</strong> This is “sorta” true. Our prior probability that the car is behind door 1 was 1/3, and our posterior probability is still 1/3. The information that Monty revealed a goat behind door 2 did not change our belief about door 1. Nothing changed here!</p>
 <p><strong>“There are now two doors, each equally likely to have the car behind it.”</strong> Since the probability that the car is behind door 1 is 1/3, the probability that it is behind door 3 must be 2/3. The two doors are not equally likely to have the car behind them!</p>
 <p>How could all the probability from door 2 have been fully transferred to door 3?</p>
 </section>
-<section id="monty-selects-at-random" class="level2" data-number="28.3">
-<h2 data-number="28.3" class="anchored" data-anchor-id="monty-selects-at-random"><span class="header-section-number">28.3</span> Monty selects at random</h2>
+<section id="monty-selects-at-random" class="level2" data-number="29.3">
+<h2 data-number="29.3" class="anchored" data-anchor-id="monty-selects-at-random"><span class="header-section-number">29.3</span> Monty selects at random</h2>
 <p>Let’s imagine a different game, where Monty opens a door at random (one you haven’t chosen), and it just so happens that he reveals a goat. How would the calculation change?</p>
 <p>The <strong>likelihood</strong> <span class="math inline">P(\text{Monty opens 2} \mid \text{car behind 1})</span> remains the same (1/2). If the car is behind door 1, Monty could have opened either door 2 or door 3 with equal probability.</p>
 <p>The <strong>prior</strong> <span class="math inline">P(\text{car behind 1})</span> is also the same (1/3).</p>
@@ -816,8 +824,8 @@ P(\text{Monty opens 2}) = \frac{1}{2}\cdot \frac{1}{3} + \frac{1}{2}\cdot \frac{
 <p>Hmmm… I just assumed that the evidence would be different from the original problem, but it turns out to be the same (1/2). All results being the same, the posterior probability that the car is behind door 1 is still 1/3. Where’s the catch?!</p>
 <p>I think that now we know that with a 1/3 probability Monty would have revealed the car behind door 2, ruining the game. But since he revealed a goat, we are in the 2/3 probability case where the car is behind either door 1 or door 3. Since we calculated that the probability that the car is behind door 1 is still 1/3, it follows that the probability that it is behind door 3 is 1/3. When Monty opens a door at random there is no “transfer of probability”, and it doesn’t matter if we switch or not! The transfer of probability happens only when Monty judiciously chooses which door to open. Let’s try another variation.</p>
 </section>
-<section id="many-doors-to-select-from" class="level2" data-number="28.4">
-<h2 data-number="28.4" class="anchored" data-anchor-id="many-doors-to-select-from"><span class="header-section-number">28.4</span> many doors to select from</h2>
+<section id="many-doors-to-select-from" class="level2" data-number="29.4">
+<h2 data-number="29.4" class="anchored" data-anchor-id="many-doors-to-select-from"><span class="header-section-number">29.4</span> many doors to select from</h2>
 <p>What if the game had <span class="math inline">N</span> doors (think 100, something big), and you picked door 1? Let’s call “door 2” the door that Monty opens, revealing a goat. How do the probabilities change now?</p>
 <p><strong>Prior:</strong> <span class="math inline">P(\text{car behind 1}) = \frac{1}{N}</span></p>
 <p><strong>Likelihood:</strong> <span class="math inline">P(\text{Monty opens 2} \mid \text{car behind 1}) = \frac{1}{N-1}</span>. If the car is behind door 1, Monty can open any of the other <span class="math inline">N-1</span> doors with equal probability.</p>
@@ -858,8 +866,8 @@ P(\text{car behind 1} \mid \text{Monty opens 2}) = \frac{\frac{1}{N-1} \cdot \fr
 </span></p>
 <p>The probability that the car is behind door 1 is still 1/N. All remaining doors (3, 4, …, N) are equally likely to have the car behind them, so the probability that the car is behind any of those doors is the complement of <span class="math inline">1/N</span> divided by the number of those doors (<span class="math inline">N-2</span>).</p>
 </section>
-<section id="transfer-of-probability" class="level2" data-number="28.5">
-<h2 data-number="28.5" class="anchored" data-anchor-id="transfer-of-probability"><span class="header-section-number">28.5</span> transfer of probability</h2>
+<section id="transfer-of-probability" class="level2" data-number="29.5">
+<h2 data-number="29.5" class="anchored" data-anchor-id="transfer-of-probability"><span class="header-section-number">29.5</span> transfer of probability</h2>
 <p>The fact that Monty knows where the car is and will never open a door with the car behind it creates a dependency between the doors. The “miraculous” simplification we saw before means that the evidence term cancels out the likelihood term when computing the posterior for door 1, leaving its probability unchanged.</p>
 <p>Bayes’ theorem can be written as:</p>
 <p><span class="math display">
@@ -868,8 +876,8 @@ P(\text{car behind 1} \mid \text{Monty opens 2}) = \frac{\frac{1}{N-1} \cdot \fr
 <p>The term in the parentheses, what we found to be 1 in this case, is called the Bayes factor. In some contexts, this term is also called updating factor, because it tells us how much to update our prior belief based on the evidence we observed. Here, the updating factor for door 1 is 1, meaning that our belief about door 1 does not change.</p>
 <p>When Monty opens door 2, all the probability mass that was assigned to that door is equally redistributed among the remaining doors (except door 1, which we already established remains at <span class="math inline">1/N</span>).</p>
 </section>
-<section id="information" class="level2" data-number="28.6">
-<h2 data-number="28.6" class="anchored" data-anchor-id="information"><span class="header-section-number">28.6</span> information</h2>
+<section id="information" class="level2" data-number="29.6">
+<h2 data-number="29.6" class="anchored" data-anchor-id="information"><span class="header-section-number">29.6</span> information</h2>
 <p>How much information did we get from Monty opening door 2? We can measure this using the <a href="../information_theory/cross-entropy.html#kullback-leibler-divergence">Kullback-Leibler divergence</a> between the prior and posterior distributions:</p>
 <p><span class="math display">
 D_{KL}(\mathbf{p} \| \mathbf{q}) = \sum_i \mathbf{p}(i) \log\frac{\mathbf{p}(i)}{\mathbf{q}(i)},
@@ -892,7 +900,7 @@ D_{KL}(\mathbf{p} \| \mathbf{q}) = (N-2) \cdot \frac{1}{N-2} \cdot \frac{N-1}{N}
 <div id="49cbb673" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
 <span id="cb4-2"><a href="#cb4-2"></a>N <span class="op">=</span> np.arange(<span class="dv">3</span>,<span class="dv">21</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>DKL <span class="op">=</span> ((N<span class="op">-</span><span class="dv">1</span>)<span class="op">/</span>N) <span class="op">*</span> np.log2((N<span class="op">-</span><span class="dv">1</span>)<span class="op">/</span>(N<span class="op">-</span><span class="dv">2</span>))</span>
 <span id="cb4-4"><a href="#cb4-4"></a>ax.plot(N, DKL, marker<span class="op">=</span><span class="st">'o'</span>)</span>
@@ -901,7 +909,7 @@ D_{KL}(\mathbf{p} \| \mathbf{q}) = (N-2) \cdot \frac{1}{N-2} \cdot \frac{N-1}{N}
 <span id="cb4-7"><a href="#cb4-7"></a>       title<span class="op">=</span><span class="st">"Information Gain from Monty Opening a Door"</span>,</span>
 <span id="cb4-8"><a href="#cb4-8"></a>       xticks<span class="op">=</span>N,</span>
 <span id="cb4-9"><a href="#cb4-9"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb4-10"><a href="#cb4-10"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-10"><a href="#cb4-10"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -913,8 +921,8 @@ D_{KL}(\mathbf{p} \| \mathbf{q}) = (N-2) \cdot \frac{1}{N-2} \cdot \frac{N-1}{N}
 </div>
 <p>We learn from computing the posterior that it is equal to the prior after Monty opens door 2. That, of course, is not the whole story. The calculation of the information gain makes it explicit that the posterior is not a number, but a distribution. This is important to remember when we work with Bayesian statistics. Let’s state the first sentence in a more precise way: The probability that the car is behind door 1 remains unchanged, but the probabilities of the other doors change, and we learn something from that change. The more doors there are, the less informative is the revelation that door 2 has a goat behind it, as shown in the plot above.</p>
 </section>
-<section id="the-best-explanations" class="level2" data-number="28.7">
-<h2 data-number="28.7" class="anchored" data-anchor-id="the-best-explanations"><span class="header-section-number">28.7</span> the best explanations</h2>
+<section id="the-best-explanations" class="level2" data-number="29.7">
+<h2 data-number="29.7" class="anchored" data-anchor-id="the-best-explanations"><span class="header-section-number">29.7</span> the best explanations</h2>
 <p>A few days after I’ve written this chapter on the Monty Hall problem, I saw the following post by David Deutsch on X:</p>
 <p><img src="david-deutsch-x-post-monty-hall.jpeg" class="img-fluid"></p>
 <p>The first link is to the paper <a href="http://dx.doi.org/10.1007/s11229-025-05389-6">“Right for the wrong reasons: common bad arguments for the correct answer to the Monty Hall Problem”</a> by Don Fallis and Peter J. Lewis, published on 15 January 2026 (exactly one week ago from when I’m writing this), in the philosophy journal <em>Synthese</em>. This is a great paper, I highly recommend it. There, we find this beautiful argument:</p>
@@ -983,13 +991,14 @@ There is a 1/3 chance that the car is behind the door that you initially chose. 
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1385,12 +1394,12 @@ There is a 1/3 chance that the car is behind the door that you initially chose. 
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../bayes/boy-girl-paradox.html" class="pagination-link" aria-label="the boy-girl paradox">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../svd_and_pca/svd_image_compression.html" class="pagination-link" aria-label="SVD for image compression">
-        <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
