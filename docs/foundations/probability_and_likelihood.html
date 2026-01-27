@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-79d7efe2808b62b914fc0576c7e86ee2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -686,24 +686,77 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<div id="536dda2f" class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="bu">print</span>(<span class="st">"a) </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-cyan-fg">  Cell </span><span class="ansi-green-fg">In[1], line 1</span>
+<span class="ansi-red-fg">    print("a)</span>
+          ^
+<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> unterminated string literal (detected at line 1)
+</pre>
+</div>
+</div>
+</div>
+<div id="97bb4cfb" class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>ax.text(<span class="fl">0.3</span>, <span class="fl">0.6</span>,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>        <span class="st">"Hypothesis,</span><span class="ch">\n</span><span class="st">Model / Parameters"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5"></a>        ha<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>        va</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-8"><a href="#cb3-8"></a>        transform<span class="op">=</span>fig.transFigure,</span>
+<span id="cb3-9"><a href="#cb3-9"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round"</span>, fc<span class="op">=</span><span class="dv">3</span><span class="op">*</span>[<span class="fl">0.85</span>], ec<span class="op">=</span><span class="st">"k"</span>))</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a>ax.text(<span class="fl">0.7</span>, <span class="fl">0.8</span>,</span>
+<span id="cb3-12"><a href="#cb3-12"></a>        <span class="st">"Observations, </span><span class="ch">\n</span><span class="st">Data"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13"></a>        ha<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14"></a>        size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-15"><a href="#cb3-15"></a>        transform<span class="op">=</span>fig.transFigure,</span>
+<span id="cb3-16"><a href="#cb3-16"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round"</span>, fc<span class="op">=</span><span class="st">"w"</span>, ec<span class="op">=</span><span class="st">"k"</span>))</span>
+<span id="cb3-17"><a href="#cb3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18"></a>ax.text(<span class="fl">0.5</span>, <span class="fl">0.6</span>,</span>
+<span id="cb3-19"><a href="#cb3-19"></a>        <span class="st">"Deduction"</span>,</span>
+<span id="cb3-20"><a href="#cb3-20"></a>        ha<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb3-21"><a href="#cb3-21"></a>        size<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb3-22"><a href="#cb3-22"></a>        transform<span class="op">=</span>fig.transFigure,</span>
+<span id="cb3-23"><a href="#cb3-23"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"rarrow"</span>, fc<span class="op">=</span><span class="st">"w"</span>, ec<span class="op">=</span><span class="st">"k"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>Text(0.5, 0.6, 'Deduction')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="probability_and_likelihood_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <div id="4cc6f4f8" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
-<span id="cb2-2"><a href="#cb2-2"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="dv">41</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>pdf <span class="op">=</span> np.where(x <span class="op">&lt;</span> <span class="dv">20</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">20</span>, <span class="dv">0</span>)</span>
-<span id="cb2-4"><a href="#cb2-4"></a>ax.plot(x, pdf, drawstyle<span class="op">=</span><span class="st">'steps-post'</span>, color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a>ax.plot(x, <span class="dv">0</span><span class="op">*</span>pdf, color<span class="op">=</span><span class="st">'black'</span>, lw<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb2-6"><a href="#cb2-6"></a>ax.fill_between(x, <span class="dv">0</span>, pdf, where<span class="op">=</span>((x<span class="op">&gt;=</span><span class="dv">10</span>) <span class="op">&amp;</span> (x<span class="op">&lt;=</span><span class="dv">15</span>)), color<span class="op">=</span><span class="st">'orange'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, step<span class="op">=</span><span class="st">'post'</span>, label<span class="op">=</span><span class="st">'Area = 0.25'</span>)</span>
-<span id="cb2-7"><a href="#cb2-7"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Probability Density Function for Bus Wait Time'</span>,</span>
-<span id="cb2-8"><a href="#cb2-8"></a>       xlabel<span class="op">=</span><span class="st">'Wait Time (minutes)'</span>,</span>
-<span id="cb2-9"><a href="#cb2-9"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb2-10"><a href="#cb2-10"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">40</span>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<span id="cb5-2"><a href="#cb5-2"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="dv">41</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>pdf <span class="op">=</span> np.where(x <span class="op">&lt;</span> <span class="dv">20</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">20</span>, <span class="dv">0</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>ax.plot(x, pdf, drawstyle<span class="op">=</span><span class="st">'steps-post'</span>, color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>ax.plot(x, <span class="dv">0</span><span class="op">*</span>pdf, color<span class="op">=</span><span class="st">'black'</span>, lw<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>ax.fill_between(x, <span class="dv">0</span>, pdf, where<span class="op">=</span>((x<span class="op">&gt;=</span><span class="dv">10</span>) <span class="op">&amp;</span> (x<span class="op">&lt;=</span><span class="dv">15</span>)), color<span class="op">=</span><span class="st">'orange'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, step<span class="op">=</span><span class="st">'post'</span>, label<span class="op">=</span><span class="st">'Area = 0.25'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Probability Density Function for Bus Wait Time'</span>,</span>
+<span id="cb5-8"><a href="#cb5-8"></a>       xlabel<span class="op">=</span><span class="st">'Wait Time (minutes)'</span>,</span>
+<span id="cb5-9"><a href="#cb5-9"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
+<span id="cb5-10"><a href="#cb5-10"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">40</span>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="probability_and_likelihood_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="probability_and_likelihood_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -821,42 +874,42 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <div id="9a08d32e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
-<span id="cb3-2"><a href="#cb3-2"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">40</span>, <span class="dv">101</span>)</span>
-<span id="cb3-3"><a href="#cb3-3"></a>f <span class="op">=</span> <span class="kw">lambda</span> t, lam: lam <span class="op">*</span> np.exp(<span class="op">-</span>lam <span class="op">*</span> t)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>time <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>])</span>
-<span id="cb3-5"><a href="#cb3-5"></a>lam <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> time</span>
-<span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a>color_min <span class="op">=</span> <span class="fl">0.4</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>color_max <span class="op">=</span> <span class="fl">0.99</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>colors <span class="op">=</span> plt.cm.Blues(np.linspace(color_min, color_max, <span class="bu">len</span>(lam)))</span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="cf">for</span> i,l <span class="kw">in</span> <span class="bu">enumerate</span>(lam):</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    ax[<span class="dv">0</span>].plot(t, f(t, l), lw<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="ss">f'λ=</span><span class="sc">{</span>l<span class="sc">:.3f}</span><span class="ss"> (time=</span><span class="sc">{</span><span class="dv">1</span><span class="op">/</span>l<span class="sc">:.0f}</span><span class="ss"> min)'</span>, color<span class="op">=</span>colors[i])</span>
-<span id="cb3-12"><a href="#cb3-12"></a>    ax[<span class="dv">0</span>].plot([<span class="dv">15</span>], [f(<span class="dv">15</span>, l)], ls<span class="op">=</span><span class="va">None</span>, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>colors[i], markersize<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb3-13"><a href="#cb3-13"></a>ax[<span class="dv">0</span>].legend()</span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># ax.plot(t, f(t, lam), color='blue', lw=2)</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># ax.plot(t, 0*t, color='black', lw=1, ls='--')</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Wait Time (minutes)'</span>,</span>
-<span id="cb3-17"><a href="#cb3-17"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb3-18"><a href="#cb3-18"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">40</span>),</span>
-<span id="cb3-19"><a href="#cb3-19"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">0.12</span>))<span class="op">;</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a></span>
-<span id="cb3-21"><a href="#cb3-21"></a>l_array <span class="op">=</span> np.linspace(<span class="fl">0.001</span>, <span class="fl">0.3</span>, <span class="dv">100</span>)</span>
-<span id="cb3-22"><a href="#cb3-22"></a>t_obs <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a>L <span class="op">=</span> l_array <span class="op">*</span> np.exp(<span class="op">-</span>l_array <span class="op">*</span> t_obs)</span>
-<span id="cb3-24"><a href="#cb3-24"></a>ax[<span class="dv">1</span>].plot(l_array, L, color<span class="op">=</span>colors[<span class="op">-</span><span class="dv">1</span>], lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb3-25"><a href="#cb3-25"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Rate ($</span><span class="er">\</span><span class="st">lambda$)'</span>,</span>
-<span id="cb3-26"><a href="#cb3-26"></a>       ylabel<span class="op">=</span><span class="st">'Likelihood'</span>,</span>
-<span id="cb3-27"><a href="#cb3-27"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">0.3</span>),</span>
-<span id="cb3-28"><a href="#cb3-28"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.03</span>)</span>
-<span id="cb3-29"><a href="#cb3-29"></a>       )<span class="op">;</span></span>
-<span id="cb3-30"><a href="#cb3-30"></a>ax[<span class="dv">1</span>].yaxis.tick_right()</span>
-<span id="cb3-31"><a href="#cb3-31"></a>ax[<span class="dv">1</span>].yaxis.set_label_position(<span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<span id="cb6-2"><a href="#cb6-2"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">40</span>, <span class="dv">101</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a>f <span class="op">=</span> <span class="kw">lambda</span> t, lam: lam <span class="op">*</span> np.exp(<span class="op">-</span>lam <span class="op">*</span> t)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>time <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>])</span>
+<span id="cb6-5"><a href="#cb6-5"></a>lam <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> time</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a>color_min <span class="op">=</span> <span class="fl">0.4</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>color_max <span class="op">=</span> <span class="fl">0.99</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>colors <span class="op">=</span> plt.cm.Blues(np.linspace(color_min, color_max, <span class="bu">len</span>(lam)))</span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="cf">for</span> i,l <span class="kw">in</span> <span class="bu">enumerate</span>(lam):</span>
+<span id="cb6-11"><a href="#cb6-11"></a>    ax[<span class="dv">0</span>].plot(t, f(t, l), lw<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="ss">f'λ=</span><span class="sc">{</span>l<span class="sc">:.3f}</span><span class="ss"> (time=</span><span class="sc">{</span><span class="dv">1</span><span class="op">/</span>l<span class="sc">:.0f}</span><span class="ss"> min)'</span>, color<span class="op">=</span>colors[i])</span>
+<span id="cb6-12"><a href="#cb6-12"></a>    ax[<span class="dv">0</span>].plot([<span class="dv">15</span>], [f(<span class="dv">15</span>, l)], ls<span class="op">=</span><span class="va">None</span>, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>colors[i], markersize<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb6-13"><a href="#cb6-13"></a>ax[<span class="dv">0</span>].legend()</span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co"># ax.plot(t, f(t, lam), color='blue', lw=2)</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co"># ax.plot(t, 0*t, color='black', lw=1, ls='--')</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Wait Time (minutes)'</span>,</span>
+<span id="cb6-17"><a href="#cb6-17"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
+<span id="cb6-18"><a href="#cb6-18"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">40</span>),</span>
+<span id="cb6-19"><a href="#cb6-19"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">0.12</span>))<span class="op">;</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a></span>
+<span id="cb6-21"><a href="#cb6-21"></a>l_array <span class="op">=</span> np.linspace(<span class="fl">0.001</span>, <span class="fl">0.3</span>, <span class="dv">100</span>)</span>
+<span id="cb6-22"><a href="#cb6-22"></a>t_obs <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a>L <span class="op">=</span> l_array <span class="op">*</span> np.exp(<span class="op">-</span>l_array <span class="op">*</span> t_obs)</span>
+<span id="cb6-24"><a href="#cb6-24"></a>ax[<span class="dv">1</span>].plot(l_array, L, color<span class="op">=</span>colors[<span class="op">-</span><span class="dv">1</span>], lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb6-25"><a href="#cb6-25"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Rate ($</span><span class="er">\</span><span class="st">lambda$)'</span>,</span>
+<span id="cb6-26"><a href="#cb6-26"></a>       ylabel<span class="op">=</span><span class="st">'Likelihood'</span>,</span>
+<span id="cb6-27"><a href="#cb6-27"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">0.3</span>),</span>
+<span id="cb6-28"><a href="#cb6-28"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.03</span>)</span>
+<span id="cb6-29"><a href="#cb6-29"></a>       )<span class="op">;</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a>ax[<span class="dv">1</span>].yaxis.tick_right()</span>
+<span id="cb6-31"><a href="#cb6-31"></a>ax[<span class="dv">1</span>].yaxis.set_label_position(<span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="probability_and_likelihood_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="probability_and_likelihood_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -888,44 +941,44 @@ Pr(T &gt; 30) = e^{-\frac{1}{20} \cdot 30} = e^{-1.5} \approx 0.22.
 <div id="7257e110" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Define ranges</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">100</span>)</span>
-<span id="cb4-3"><a href="#cb4-3"></a>lmbda <span class="op">=</span> np.linspace(<span class="dv">1</span><span class="op">/</span><span class="dv">120</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, <span class="dv">100</span>)</span>
-<span id="cb4-4"><a href="#cb4-4"></a>T, L <span class="op">=</span> np.meshgrid(t, lmbda)</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Exponential PDF: f(t; lambda) = lambda * exp(-lambda * t)</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>Z <span class="op">=</span> L <span class="op">*</span> np.exp(<span class="op">-</span>L <span class="op">*</span> T)</span>
-<span id="cb4-8"><a href="#cb4-8"></a></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># 1. 3D Surface Plot</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb4-11"><a href="#cb4-11"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
-<span id="cb4-12"><a href="#cb4-12"></a>surf <span class="op">=</span> ax.plot_surface(T, L, Z, cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.2</span>, rcount<span class="op">=</span><span class="dv">20</span>, ccount<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb4-13"><a href="#cb4-13"></a></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co"># Highlight slices</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>fixed_lambda <span class="op">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">15</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a>fixed_t <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co"># Probability slice (fixed lambda, varying t)</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a>t_slice <span class="op">=</span> t</span>
-<span id="cb4-20"><a href="#cb4-20"></a>z_prob <span class="op">=</span> fixed_lambda <span class="op">*</span> np.exp(<span class="op">-</span>fixed_lambda <span class="op">*</span> t_slice)</span>
-<span id="cb4-21"><a href="#cb4-21"></a>ax.plot(t_slice, [fixed_lambda]<span class="op">*</span><span class="bu">len</span>(t_slice), z_prob, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f'Probability Slice $f(t|</span><span class="er">\</span><span class="ss">lambda=1/15)$'</span>)</span>
-<span id="cb4-22"><a href="#cb4-22"></a></span>
-<span id="cb4-23"><a href="#cb4-23"></a><span class="co"># Likelihood slice (fixed t, varying lambda)</span></span>
-<span id="cb4-24"><a href="#cb4-24"></a>l_slice <span class="op">=</span> lmbda</span>
-<span id="cb4-25"><a href="#cb4-25"></a>z_lik <span class="op">=</span> l_slice <span class="op">*</span> np.exp(<span class="op">-</span>l_slice <span class="op">*</span> fixed_t)</span>
-<span id="cb4-26"><a href="#cb4-26"></a>ax.plot([fixed_t]<span class="op">*</span><span class="bu">len</span>(l_slice), l_slice, z_lik, color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f'Likelihood Slice $L(</span><span class="er">\</span><span class="ss">lambda|t=</span><span class="sc">{</span>fixed_t<span class="sc">}</span><span class="ss">)$'</span>)</span>
-<span id="cb4-27"><a href="#cb4-27"></a></span>
-<span id="cb4-28"><a href="#cb4-28"></a>ax.set_xlabel(<span class="st">'Wait Time ($t$)'</span>)</span>
-<span id="cb4-29"><a href="#cb4-29"></a>ax.set_ylabel(<span class="st">'Rate ($</span><span class="er">\</span><span class="st">lambda$)'</span>)</span>
-<span id="cb4-30"><a href="#cb4-30"></a>ax.set_zlabel(<span class="st">'Density / Likelihood'</span>)</span>
-<span id="cb4-31"><a href="#cb4-31"></a>ax.legend()</span>
-<span id="cb4-32"><a href="#cb4-32"></a>ax.view_init(elev<span class="op">=</span><span class="dv">15</span>, azim<span class="op">=-</span><span class="dv">20</span>)</span>
-<span id="cb4-33"><a href="#cb4-33"></a>fig.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Define ranges</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">100</span>)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>lmbda <span class="op">=</span> np.linspace(<span class="dv">1</span><span class="op">/</span><span class="dv">120</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, <span class="dv">100</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>T, L <span class="op">=</span> np.meshgrid(t, lmbda)</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co"># Exponential PDF: f(t; lambda) = lambda * exp(-lambda * t)</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>Z <span class="op">=</span> L <span class="op">*</span> np.exp(<span class="op">-</span>L <span class="op">*</span> T)</span>
+<span id="cb7-8"><a href="#cb7-8"></a></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co"># 1. 3D Surface Plot</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb7-11"><a href="#cb7-11"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>surf <span class="op">=</span> ax.plot_surface(T, L, Z, cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.2</span>, rcount<span class="op">=</span><span class="dv">20</span>, ccount<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb7-13"><a href="#cb7-13"></a></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co"># Highlight slices</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>fixed_lambda <span class="op">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">15</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a>fixed_t <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="co"># Probability slice (fixed lambda, varying t)</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a>t_slice <span class="op">=</span> t</span>
+<span id="cb7-20"><a href="#cb7-20"></a>z_prob <span class="op">=</span> fixed_lambda <span class="op">*</span> np.exp(<span class="op">-</span>fixed_lambda <span class="op">*</span> t_slice)</span>
+<span id="cb7-21"><a href="#cb7-21"></a>ax.plot(t_slice, [fixed_lambda]<span class="op">*</span><span class="bu">len</span>(t_slice), z_prob, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f'Probability Slice $f(t|</span><span class="er">\</span><span class="ss">lambda=1/15)$'</span>)</span>
+<span id="cb7-22"><a href="#cb7-22"></a></span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="co"># Likelihood slice (fixed t, varying lambda)</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a>l_slice <span class="op">=</span> lmbda</span>
+<span id="cb7-25"><a href="#cb7-25"></a>z_lik <span class="op">=</span> l_slice <span class="op">*</span> np.exp(<span class="op">-</span>l_slice <span class="op">*</span> fixed_t)</span>
+<span id="cb7-26"><a href="#cb7-26"></a>ax.plot([fixed_t]<span class="op">*</span><span class="bu">len</span>(l_slice), l_slice, z_lik, color<span class="op">=</span><span class="st">'blue'</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f'Likelihood Slice $L(</span><span class="er">\</span><span class="ss">lambda|t=</span><span class="sc">{</span>fixed_t<span class="sc">}</span><span class="ss">)$'</span>)</span>
+<span id="cb7-27"><a href="#cb7-27"></a></span>
+<span id="cb7-28"><a href="#cb7-28"></a>ax.set_xlabel(<span class="st">'Wait Time ($t$)'</span>)</span>
+<span id="cb7-29"><a href="#cb7-29"></a>ax.set_ylabel(<span class="st">'Rate ($</span><span class="er">\</span><span class="st">lambda$)'</span>)</span>
+<span id="cb7-30"><a href="#cb7-30"></a>ax.set_zlabel(<span class="st">'Density / Likelihood'</span>)</span>
+<span id="cb7-31"><a href="#cb7-31"></a>ax.legend()</span>
+<span id="cb7-32"><a href="#cb7-32"></a>ax.view_init(elev<span class="op">=</span><span class="dv">15</span>, azim<span class="op">=-</span><span class="dv">20</span>)</span>
+<span id="cb7-33"><a href="#cb7-33"></a>fig.tight_layout()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="probability_and_likelihood_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="probability_and_likelihood_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>

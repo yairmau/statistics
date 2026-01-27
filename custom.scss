@@ -8,3 +8,8 @@
     margin: 0 auto;
   }
 
+/* Center table cell text vertically across the site */
+table th,
+table td {
+  vertical-align: middle;
+}
