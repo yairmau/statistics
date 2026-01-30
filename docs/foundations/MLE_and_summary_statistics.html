@@ -649,11 +649,11 @@ window.Quarto = {
 <p>Let’s do the following exercise. Suppose we have <span class="math inline">n</span> iid observations <span class="math inline">x</span> from a model with parameters <span class="math inline">\theta</span>. Using the definition of the log likelihood, derive the maximum likelihood estimator for <span class="math inline">\theta</span>.</p>
 <section id="exponential-distribution-revisited" class="level2" data-number="39.1">
 <h2 data-number="39.1" class="anchored" data-anchor-id="exponential-distribution-revisited"><span class="header-section-number">39.1</span> exponential distribution revisited</h2>
-<p>We can now revisit our original example of estimating the rate parameter <span class="math inline">\lambda</span> of an exponential distribution using maximum likelihood estimation. Recall that the probability density function of the exponential distribution is given by: <span class="math display">
-f(x \mid \lambda) = \lambda e^{-\lambda x}.
+<p>We can now revisit our original example of estimating the rate parameter <span class="math inline">\lambda</span> of an exponential distribution using maximum likelihood estimation. Recall that the joint probability density function of the exponential distribution is given by: <span class="math display">
+f(x, \lambda) = \lambda e^{-\lambda x}.
 </span> The log likelihood reads:</p>
 <p><span class="math display">\begin{align*}
-\ell(\lambda \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i \mid \lambda) \\
+\ell(\lambda \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i, \lambda) \\
 &amp;= \sum_{i=1}^{n} \left( \log \lambda - \lambda x_i \right) \\
 &amp;= n \log \lambda - \lambda \sum_{i=1}^{n} x_i.
 \end{align*}</span> To find the maximum likelihood estimator for <span class="math inline">\lambda</span>, we take the derivative of the log likelihood with respect to <span class="math inline">\lambda</span> and set it to zero:</p>
@@ -664,7 +664,7 @@ f(x \mid \lambda) = \lambda e^{-\lambda x}.
 \hat{\lambda} = \frac{n}{\sum_{i=1}^{n} x_i} = \frac{1}{\bar{x}},
 </span> where <span class="math inline">\bar{x}</span> is the sample mean of the observed data. This result aligns with our previous derivation using the likelihood function directly.</p>
 <p>Let’s plot the log likelihood surface (the joint probability distribution), and we’ll see how the four reasons for using the log likelihood come into play.</p>
-<div id="0b681e45" class="cell" data-execution_count="1">
+<div id="0b681e45" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -672,7 +672,7 @@ f(x \mid \lambda) = \lambda e^{-\lambda x}.
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> scipy.stats <span class="im">import</span> expon, uniform, norm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="5acfe071" class="cell" data-execution_count="2">
+<div id="5acfe071" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>pdf_expon <span class="op">=</span> <span class="kw">lambda</span> x, lambd: lambd <span class="op">*</span> np.exp(<span class="op">-</span>lambd <span class="op">*</span> x) <span class="op">*</span> (x <span class="op">&gt;=</span> <span class="dv">0</span>)</span>
@@ -718,7 +718,7 @@ f(x \mid \lambda) = \lambda e^{-\lambda x}.
 <span id="cb2-41"><a href="#cb2-41"></a>ax[<span class="dv">0</span>,<span class="dv">1</span>].set_ylabel(<span class="vs">r"</span><span class="dv">$</span><span class="vs">x</span><span class="dv">$</span><span class="vs">"</span>, rotation<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-42"><a href="#cb2-42"></a>ax[<span class="dv">0</span>,<span class="dv">2</span>].<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>),</span>
 <span id="cb2-43"><a href="#cb2-43"></a>            xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">3</span>),</span>
-<span id="cb2-44"><a href="#cb2-44"></a>            title<span class="op">=</span><span class="st">"joint pdf"</span>,</span>
+<span id="cb2-44"><a href="#cb2-44"></a>            title<span class="op">=</span><span class="st">"joint pdf, log scale"</span>,</span>
 <span id="cb2-45"><a href="#cb2-45"></a>            xlabel<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="er">\</span><span class="vs">lambda</span><span class="dv">$</span><span class="vs">"</span>,</span>
 <span id="cb2-46"><a href="#cb2-46"></a>            )</span>
 <span id="cb2-47"><a href="#cb2-47"></a>ax[<span class="dv">0</span>,<span class="dv">2</span>].set_ylabel(<span class="vs">r"</span><span class="dv">$</span><span class="vs">x</span><span class="dv">$</span><span class="vs">"</span>, rotation<span class="op">=</span><span class="dv">0</span>)</span>
@@ -780,12 +780,12 @@ f(x \mid \lambda) = \lambda e^{-\lambda x}.
 <section id="normal-distribution" class="level2" data-number="39.2">
 <h2 data-number="39.2" class="anchored" data-anchor-id="normal-distribution"><span class="header-section-number">39.2</span> normal distribution</h2>
 <p>The normal distribution is defined by two parameters: the mean <span class="math inline">\mu</span> and the standard deviation <span class="math inline">\sigma</span>. As an example, consider measuring the heights of a group of people. We can assume that the heights are normally distributed with some unknown mean and standard deviation.</p>
-<p>Its probability density function is given by: <span class="math display">
-f(x \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right).
+<p>Its joint probability density function is given by: <span class="math display">
+f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right).
 </span></p>
 <p>The log likelihood reads:</p>
 <p><span class="math display">\begin{align*}
-\ell(\mu, \sigma \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i \mid \mu, \sigma) \\
+\ell(\mu, \sigma \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i; \mu, \sigma) \\
 &amp;= \sum_{i=1}^{n} \log \left( \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x_i - \mu)^2}{2\sigma^2}\right) \right) \\
 &amp;= \sum_{i=1}^{n} \left( -\log(\sigma \sqrt{2\pi}) - \frac{(x_i - \mu)^2}{2\sigma^2} \right) \\
 &amp;= -n \log(\sigma) -n \log(\sqrt{2\pi}) - \frac{1}{2\sigma^2} \sum_{i=1}^{n} (x_i - \mu)^2.
@@ -811,11 +811,11 @@ f(x \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left(-\frac{(x - \mu)^
 </section>
 <section id="binomial-distribution" class="level2" data-number="39.3">
 <h2 data-number="39.3" class="anchored" data-anchor-id="binomial-distribution"><span class="header-section-number">39.3</span> binomial distribution</h2>
-<p>The binomial distribution models the number of successes in <span class="math inline">n</span> independent Bernoulli trials, each with success probability <span class="math inline">p</span>. A very common example is flipping a biased coin, whose probability of yielding heads is <span class="math inline">p</span>, flipping it <span class="math inline">n</span> times and counting the number of heads <span class="math inline">k</span>. Its probability mass function is given by: <span class="math display">
-P(X = k \mid n, p) = \binom{n}{k} p^k (1 - p)^{n - k}.
+<p>The binomial distribution models the number of successes in <span class="math inline">n</span> independent Bernoulli trials, each with success probability <span class="math inline">p</span>. A very common example is flipping a biased coin, whose probability of yielding heads is <span class="math inline">p</span>, flipping it <span class="math inline">n</span> times and counting the number of heads <span class="math inline">k</span>. Its joint probability mass function is given by: <span class="math display">
+P(X = k; n, p) = \binom{n}{k} p^k (1 - p)^{n - k}.
 </span> The log likelihood reads:</p>
 <p><span class="math display">\begin{align*}
-\ell(p \mid k, n) &amp;= \log P(X = k \mid n, p) \\
+\ell(p \mid k, n) &amp;= \log P(X = k; n, p) \\
 &amp;= \log \left( \binom{n}{k} p^k (1 - p)^{n - k} \right) \\
 &amp;= \log \binom{n}{k} + k \log p + (n - k) \log (1 - p).
 \end{align*}</span></p>
@@ -830,12 +830,12 @@ P(X = k \mid n, p) = \binom{n}{k} p^k (1 - p)^{n - k}.
 <section id="laplace-distribution" class="level2" data-number="39.4">
 <h2 data-number="39.4" class="anchored" data-anchor-id="laplace-distribution"><span class="header-section-number">39.4</span> Laplace distribution</h2>
 <p>The Laplace distribution, also known as the double exponential distribution, is characterized by its location parameter <span class="math inline">\mu</span> and scale parameter <span class="math inline">b</span>. We use the normal distribution for ‘well-behaved’ data like human heights. We use the Laplace distribution for ‘wild’ data like stock market data, where outliers aren’t just mistakes—they are part of the system. For example, most days the price of a stock barely moves, but rare events (market crashes or surges) happen much more often than a Normal distribution would allow.</p>
-<p>Its probability density function is given by: <span class="math display">
-f(x \mid \mu, b) = \frac{1}{2b} \exp\left(-\frac{|x - \mu|}{b}\right).
+<p>Its joint probability density function is given by: <span class="math display">
+f(x; \mu, b) = \frac{1}{2b} \exp\left(-\frac{|x - \mu|}{b}\right).
 </span></p>
 <p>The log likelihood reads:</p>
 <p><span class="math display">\begin{align*}
-\ell(\mu, b \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i \mid \mu, b) \\
+\ell(\mu, b \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i; \mu, b) \\
 &amp;= \sum_{i=1}^{n} \log \left( \frac{1}{2b} \exp\left(-\frac{|x_i - \mu|}{b}\right) \right) \\
 &amp;= \sum_{i=1}^{n} \left( -\log(2b) - \frac{|x_i - \mu|}{b} \right) \\
 &amp;= -n \log(2b) - \frac{1}{b} \sum_{i=1}^{n} |x_i - \mu|.
@@ -859,11 +859,11 @@ f(x \mid \mu, b) = \frac{1}{2b} \exp\left(-\frac{|x - \mu|}{b}\right).
 </section>
 <section id="poisson-distribution" class="level2" data-number="39.5">
 <h2 data-number="39.5" class="anchored" data-anchor-id="poisson-distribution"><span class="header-section-number">39.5</span> Poisson distribution</h2>
-<p>The Poisson distribution models the number of events occurring in a fixed interval of time or space, given a known average rate of occurrence <span class="math inline">\lambda</span>. A common example is counting the number of emails received in an hour, or the number of radioactive decays detected in a piece of radioactive material over a certain period. Its probability mass function is given by: <span class="math display">
-P(X = k \mid \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}.
+<p>The Poisson distribution models the number of events occurring in a fixed interval of time or space, given a known average rate of occurrence <span class="math inline">\lambda</span>. A common example is counting the number of emails received in an hour, or the number of radioactive decays detected in a piece of radioactive material over a certain period. Its joint probability mass function is given by: <span class="math display">
+P(X = k, \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}.
 </span> The log likelihood reads:</p>
 <p><span class="math display">\begin{align*}
-\ell(\lambda \mid k_{1:n}) &amp;= \sum_{i=1}^{n} \log P(X = k_i \mid \lambda) \\
+\ell(\lambda \mid k_{1:n}) &amp;= \sum_{i=1}^{n} \log P(X = k_i, \lambda) \\
 &amp;= \sum_{i=1}^{n} \left( k_i \log \lambda - \lambda - \log(k_i!) \right) \\
 &amp;= \left(\sum_{i=1}^{n} k_i \right) \log \lambda - n \lambda - \sum_{i=1}^{n} \log(k_i!).
 \end{align*}</span></p>
@@ -877,12 +877,12 @@ P(X = k \mid \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}.
 </section>
 <section id="uniform-distribution" class="level2" data-number="39.6">
 <h2 data-number="39.6" class="anchored" data-anchor-id="uniform-distribution"><span class="header-section-number">39.6</span> uniform distribution</h2>
-<p>The uniform distribution models a situation where all outcomes in a given range are equally likely. A common example is rolling a fair die, where each face (1 through 6) has an equal probability of landing face up. Its probability density function is given by: <span class="math display">
-f(x \mid a, b) = \frac{1}{b - a} \text{ for } a \leq x \leq b.
+<p>The uniform distribution models a situation where all outcomes in a given range are equally likely. A common example is rolling a fair die, where each face (1 through 6) has an equal probability of landing face up. Its joint probability density function is given by: <span class="math display">
+f(x; a, b) = \frac{1}{b - a} \text{ for } a \leq x \leq b.
 </span></p>
 <p>The log likelihood reads:</p>
 <p><span class="math display">\begin{align*}
-\ell(a, b \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i \mid a, b) \\
+\ell(a, b \mid x_{1:n}) &amp;= \sum_{i=1}^{n} \log f(x_i; a, b) \\
 &amp;= \sum_{i=1}^{n} \log \left( \frac{1}{b - a} \right) \\
 &amp;= -n \log(b - a).
 \end{align*}</span></p>
