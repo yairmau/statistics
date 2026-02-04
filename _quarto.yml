@@ -7,7 +7,7 @@ book:
   author: "Yair Mau"
   repo-url: https://github.com/yairmau/statistics/
   favicon: archive/logo.png
-
+  google-analytics: "G-TB8VQN4T5W"
   # date: "29.3.2025"
   chapters:
     - index.qmd

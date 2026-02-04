@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -106,6 +105,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TB8VQN4T5W"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
+</script>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
 
@@ -135,8 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -627,42 +634,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="3b69e75c" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-5"><a href="#cb1-5"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm, ttest_ind, t</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># %matplotlib widget</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># %matplotlib widget</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="1266e68a" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>load data</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>df_girls <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/girls_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>age <span class="op">=</span> <span class="fl">12.0</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a>mu_boys <span class="op">=</span> df_boys.loc[age, <span class="st">'mu'</span>]</span>
 <span id="cb2-5"><a href="#cb2-5"></a>mu_girls <span class="op">=</span> df_girls.loc[age, <span class="st">'mu'</span>]</span>
 <span id="cb2-6"><a href="#cb2-6"></a>sigma_boys <span class="op">=</span> df_boys.loc[age, <span class="st">'sigma'</span>]</span>
-<span id="cb2-7"><a href="#cb2-7"></a>sigma_girls <span class="op">=</span> df_girls.loc[age, <span class="st">'sigma'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-7"><a href="#cb2-7"></a>sigma_girls <span class="op">=</span> df_girls.loc[age, <span class="st">'sigma'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="33191fa9" class="cell" data-execution_count="28">
 <details class="code-fold">
 <summary>generate data</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>N_boys <span class="op">=</span> <span class="dv">10</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>N_boys <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>N_girls <span class="op">=</span> <span class="dv">14</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="co"># set scipy seed for reproducibility</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a>np.random.seed(<span class="dv">314</span>)</span>
 <span id="cb3-5"><a href="#cb3-5"></a>sample_boys <span class="op">=</span> norm.rvs(size<span class="op">=</span>N_boys, loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>sigma_boys)</span>
-<span id="cb3-6"><a href="#cb3-6"></a>sample_girls <span class="op">=</span> norm.rvs(size<span class="op">=</span>N_girls, loc<span class="op">=</span>mu_girls, scale<span class="op">=</span>sigma_girls)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-6"><a href="#cb3-6"></a>sample_girls <span class="op">=</span> norm.rvs(size<span class="op">=</span>N_girls, loc<span class="op">=</span>mu_girls, scale<span class="op">=</span>sigma_girls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="711b0613" class="cell" data-execution_count="29">
 <details class="code-fold">
 <summary>plot population and sample data</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>height_list <span class="op">=</span> np.arange(<span class="dv">120</span>, <span class="dv">180</span>, <span class="fl">0.1</span>)</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>height_list <span class="op">=</span> np.arange(<span class="dv">120</span>, <span class="dv">180</span>, <span class="fl">0.1</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a>pdf_boys <span class="op">=</span> norm.pdf(height_list, loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>sigma_boys)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>pdf_girls <span class="op">=</span> norm.pdf(height_list, loc<span class="op">=</span>mu_girls, scale<span class="op">=</span>sigma_girls)</span>
 <span id="cb4-4"><a href="#cb4-4"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -678,7 +685,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-14"><a href="#cb4-14"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb4-15"><a href="#cb4-15"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'height (cm)'</span>,</span>
 <span id="cb4-16"><a href="#cb4-16"></a>       ylabel<span class="op">=</span><span class="st">'probability density'</span>,</span>
-<span id="cb4-17"><a href="#cb4-17"></a>    )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-17"><a href="#cb4-17"></a>    )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -692,7 +699,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="e40e705c" class="cell" data-execution_count="30">
 <details class="code-fold">
 <summary>compute the observed difference in medians</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># define the desired statistic.</span></span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># define the desired statistic.</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="co"># in can be anything you want, you can even write your own function.</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a>statistic <span class="op">=</span> np.median</span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="co"># compute the median for each sample and the difference</span></span>
@@ -701,7 +708,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-7"><a href="#cb5-7"></a>observed_diff <span class="op">=</span> median_girls <span class="op">-</span> median_boys</span>
 <span id="cb5-8"><a href="#cb5-8"></a><span class="bu">print</span>(<span class="ss">f"median height for girls: </span><span class="sc">{</span>median_girls<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span>
 <span id="cb5-9"><a href="#cb5-9"></a><span class="bu">print</span>(<span class="ss">f"median height for boys: </span><span class="sc">{</span>median_boys<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="bu">print</span>(<span class="ss">f"median difference (girls minus boys): </span><span class="sc">{</span>observed_diff<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="bu">print</span>(<span class="ss">f"median difference (girls minus boys): </span><span class="sc">{</span>observed_diff<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>median height for girls: 150.88 cm
@@ -710,7 +717,7 @@ median difference (girls minus boys): -0.31 cm</code></pre>
 </div>
 </div>
 <div id="c14961a8" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>N_permutations <span class="op">=</span> <span class="dv">1000</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>N_permutations <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="co"># combine all values in one array</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a>all_data <span class="op">=</span> np.concatenate([sample_girls, sample_boys])</span>
 <span id="cb7-4"><a href="#cb7-4"></a><span class="co"># create an array to store the differences</span></span>
@@ -723,13 +730,13 @@ median difference (girls minus boys): -0.31 cm</code></pre>
 <span id="cb7-11"><a href="#cb7-11"></a>    new_boys <span class="op">=</span> permuted[N_girls:]   <span class="co"># remaining values are boys</span></span>
 <span id="cb7-12"><a href="#cb7-12"></a>    diffs[i] <span class="op">=</span> statistic(new_girls) <span class="op">-</span> statistic(new_boys)</span>
 <span id="cb7-13"><a href="#cb7-13"></a><span class="co"># add the observed difference to the array of differences</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>diffs <span class="op">=</span> np.append(diffs, observed_diff)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-14"><a href="#cb7-14"></a>diffs <span class="op">=</span> np.append(diffs, observed_diff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s see the empirical cdf of the permuted statistics, and where the original statistic falls in that distribution.</p>
 <div id="d938f096" class="cell" data-execution_count="32">
 <details class="code-fold">
 <summary>plot empirical distribution of differences</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb8-2"><a href="#cb8-2"></a></span>
 <span id="cb8-3"><a href="#cb8-3"></a><span class="co"># compute the empirical CDF</span></span>
 <span id="cb8-4"><a href="#cb8-4"></a>rank <span class="op">=</span> np.arange(<span class="bu">len</span>(diffs)) <span class="op">+</span> <span class="dv">1</span></span>
@@ -756,7 +763,7 @@ median difference (girls minus boys): -0.31 cm</code></pre>
 <span id="cb8-25"><a href="#cb8-25"></a><span class="co">#             ha="left", va="center")</span></span>
 <span id="cb8-26"><a href="#cb8-26"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'difference in median height (cm)'</span>,</span>
 <span id="cb8-27"><a href="#cb8-27"></a>         ylabel<span class="op">=</span><span class="st">'empirical CDF'</span>,</span>
-<span id="cb8-28"><a href="#cb8-28"></a>         title<span class="op">=</span><span class="ss">f'empirical distribution of differences in median height'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-28"><a href="#cb8-28"></a>         title<span class="op">=</span><span class="ss">f'empirical distribution of differences in median height'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -774,7 +781,7 @@ median difference (girls minus boys): -0.31 cm</code></pre>
 <div id="aa47ac1c" class="cell" data-execution_count="33">
 <details class="code-fold">
 <summary>the whole process in one cell</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># take samples</span></span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># take samples</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a>N_boys <span class="op">=</span> <span class="dv">300</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a>N_girls <span class="op">=</span> <span class="dv">200</span></span>
 <span id="cb9-4"><a href="#cb9-4"></a><span class="co"># set scipy seed for reproducibility</span></span>
@@ -802,13 +809,13 @@ median difference (girls minus boys): -0.31 cm</code></pre>
 <span id="cb9-26"><a href="#cb9-26"></a>    new_boys <span class="op">=</span> permuted[N_girls:]   <span class="co"># remaining values are boys</span></span>
 <span id="cb9-27"><a href="#cb9-27"></a>    diffs[i] <span class="op">=</span> statistic(new_girls) <span class="op">-</span> statistic(new_boys)</span>
 <span id="cb9-28"><a href="#cb9-28"></a><span class="co"># add the observed difference to the array of differences</span></span>
-<span id="cb9-29"><a href="#cb9-29"></a>diffs <span class="op">=</span> np.append(diffs, observed_diff)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-29"><a href="#cb9-29"></a>diffs <span class="op">=</span> np.append(diffs, observed_diff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="17868f2b" class="cell" data-execution_count="34">
 <details class="code-fold">
 <summary>plot empirical distribution of differences</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="co"># compute the empirical CDF</span></span>
 <span id="cb10-4"><a href="#cb10-4"></a>rank <span class="op">=</span> np.arange(<span class="bu">len</span>(diffs)) <span class="op">+</span> <span class="dv">1</span></span>
@@ -836,7 +843,7 @@ median difference (girls minus boys): -0.31 cm</code></pre>
 <span id="cb10-26"><a href="#cb10-26"></a></span>
 <span id="cb10-27"><a href="#cb10-27"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'difference in median height (cm)'</span>,</span>
 <span id="cb10-28"><a href="#cb10-28"></a>         ylabel<span class="op">=</span><span class="st">'empirical CDF'</span>,</span>
-<span id="cb10-29"><a href="#cb10-29"></a>         title<span class="op">=</span><span class="ss">f'empirical distribution of differences in median height'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-29"><a href="#cb10-29"></a>         title<span class="op">=</span><span class="ss">f'empirical distribution of differences in median height'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -852,12 +859,12 @@ median difference (girls minus boys): -0.31 cm</code></pre>
 <h2 data-number="9.5" class="anchored" data-anchor-id="p-value"><span class="header-section-number">9.5</span> p-value</h2>
 <p>It is quite easy to compute the p-value from the permutation test. It is simply the fraction of permuted statistics that are more extreme than the observed statistic. In this case, since we are testing whether girls are taller than boys, we have a one-tailed test, and we only consider the right tail of the distribution. If we were testing whether girls are significantly different from boys in their height, we would have a two-tailed test, and we would consider both tails of the distribution.</p>
 <div id="3d87cfaa" class="cell" data-execution_count="35">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># one-tailed p-value</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># one-tailed p-value</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a>p_value <span class="op">=</span> np.mean(diffs <span class="op">&gt;=</span> observed_diff)</span>
 <span id="cb11-3"><a href="#cb11-3"></a><span class="co"># two-tailed p-value</span></span>
 <span id="cb11-4"><a href="#cb11-4"></a><span class="co"># p_value = np.mean(np.abs(diffs) &gt;= np.abs(observed_diff))</span></span>
 <span id="cb11-5"><a href="#cb11-5"></a><span class="bu">print</span>(<span class="ss">f"observed difference: </span><span class="sc">{</span>observed_diff<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb11-6"><a href="#cb11-6"></a><span class="bu">print</span>(<span class="ss">f"p-value (one-tailed): </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="bu">print</span>(<span class="ss">f"p-value (one-tailed): </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>observed difference: 2.004
 p-value (one-tailed): 0.0050</code></pre>
@@ -921,14 +928,13 @@ p-value (one-tailed): 0.0050</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
