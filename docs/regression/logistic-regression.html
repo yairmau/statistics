@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>17&nbsp; logistic regression – Statistics and Machine Learning</title>
+<title>18&nbsp; logistic regression – Statistics and Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +114,9 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </script>
-<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -174,7 +176,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/logistic-regression.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">logistic regression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/logistic-regression.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -246,14 +248,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../t_test/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+  <a href="../hypothesis_testing/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../t_test/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
+  <a href="../hypothesis_testing/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/statistical_power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">statistical power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/permutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
   </div>
 </li>
       </ul>
@@ -270,19 +302,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
   </div>
 </li>
       </ul>
@@ -290,7 +322,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">permutation</span></a>
+ <span class="menu-text">regression</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -298,26 +330,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../permutation/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../permutation/permutation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../permutation/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../permutation/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
   </div>
 </li>
       </ul>
@@ -325,7 +375,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">regression</span></a>
+ <span class="menu-text">correlation</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -333,44 +383,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
+  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
   </div>
 </li>
       </ul>
@@ -378,7 +410,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">correlation</span></a>
+ <span class="menu-text">bayes</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -386,26 +418,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+  <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+  <a href="../bayes/logistic-connection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
   </div>
 </li>
       </ul>
@@ -413,7 +463,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">bayes</span></a>
+ <span class="menu-text">svd and pca</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -421,44 +471,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
+  <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bayes/logistic-connection.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+  <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -466,7 +486,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text">svd and pca</span></a>
+ <span class="menu-text">decision trees</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -474,14 +494,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+  <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+  <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
   </div>
 </li>
       </ul>
@@ -489,7 +515,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text">decision trees</span></a>
+ <span class="menu-text">information theory</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -497,20 +523,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+  <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+  <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -518,7 +538,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">information theory</span></a>
+ <span class="menu-text">foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -526,14 +546,50 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+  <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+  <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -541,7 +597,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
- <span class="menu-text">foundations</span></a>
+ <span class="menu-text">miscellaneous</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -549,67 +605,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -624,22 +621,22 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question"><span class="header-section-number">17.1</span> question</a></li>
-  <li><a href="#discriminative-model" id="toc-discriminative-model" class="nav-link" data-scroll-target="#discriminative-model"><span class="header-section-number">17.2</span> discriminative model</a></li>
-  <li><a href="#likelihood" id="toc-likelihood" class="nav-link" data-scroll-target="#likelihood"><span class="header-section-number">17.3</span> likelihood</a></li>
-  <li><a href="#log-likelihood" id="toc-log-likelihood" class="nav-link" data-scroll-target="#log-likelihood"><span class="header-section-number">17.4</span> log-likelihood</a></li>
-  <li><a href="#binary-cross-entropy-or-log-loss" id="toc-binary-cross-entropy-or-log-loss" class="nav-link" data-scroll-target="#binary-cross-entropy-or-log-loss"><span class="header-section-number">17.5</span> binary cross-entropy, or log loss</a></li>
-  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up"><span class="header-section-number">17.6</span> wrapping up</a></li>
-  <li><a href="#connection-to-neural-networks" id="toc-connection-to-neural-networks" class="nav-link" data-scroll-target="#connection-to-neural-networks"><span class="header-section-number">17.7</span> connection to neural networks</a></li>
+  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question"><span class="header-section-number">18.1</span> question</a></li>
+  <li><a href="#discriminative-model" id="toc-discriminative-model" class="nav-link" data-scroll-target="#discriminative-model"><span class="header-section-number">18.2</span> discriminative model</a></li>
+  <li><a href="#likelihood" id="toc-likelihood" class="nav-link" data-scroll-target="#likelihood"><span class="header-section-number">18.3</span> likelihood</a></li>
+  <li><a href="#log-likelihood" id="toc-log-likelihood" class="nav-link" data-scroll-target="#log-likelihood"><span class="header-section-number">18.4</span> log-likelihood</a></li>
+  <li><a href="#binary-cross-entropy-or-log-loss" id="toc-binary-cross-entropy-or-log-loss" class="nav-link" data-scroll-target="#binary-cross-entropy-or-log-loss"><span class="header-section-number">18.5</span> binary cross-entropy, or log loss</a></li>
+  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up"><span class="header-section-number">18.6</span> wrapping up</a></li>
+  <li><a href="#connection-to-neural-networks" id="toc-connection-to-neural-networks" class="nav-link" data-scroll-target="#connection-to-neural-networks"><span class="header-section-number">18.7</span> connection to neural networks</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/logistic-regression.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">logistic regression</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/logistic-regression.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic regression</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">logistic regression</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/regression/logistic-regression.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic regression</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/regression/logistic-regression.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -656,12 +653,12 @@ window.Quarto = {
 </header>
 
 
-<section id="question" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="question"><span class="header-section-number">17.1</span> question</h2>
+<section id="question" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="question"><span class="header-section-number">18.1</span> question</h2>
 <p>We are given a list of heights for men and women. Given one more data point (180 cm), could we assign a probability that it belongs to either class?</p>
 </section>
-<section id="discriminative-model" class="level2" data-number="17.2">
-<h2 data-number="17.2" class="anchored" data-anchor-id="discriminative-model"><span class="header-section-number">17.2</span> discriminative model</h2>
+<section id="discriminative-model" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="discriminative-model"><span class="header-section-number">18.2</span> discriminative model</h2>
 <p>The idea behind the logistic regression is to find a boundary between our two classes (here men and women). The logistic regression models the probability of a class given a data point, i.e.&nbsp;<span class="math inline">P(y|x)</span>. We can use the logistic function to model this probability:</p>
 <p><span class="math display">P(y=1|x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}}</span></p>
 <p>where <span class="math inline">y</span> is the class (0=women, 1=men), <span class="math inline">x</span> is the data point (height), and <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span> are the parameters of the model.</p>
@@ -814,8 +811,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="likelihood" class="level2" data-number="17.3">
-<h2 data-number="17.3" class="anchored" data-anchor-id="likelihood"><span class="header-section-number">17.3</span> likelihood</h2>
+<section id="likelihood" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="likelihood"><span class="header-section-number">18.3</span> likelihood</h2>
 <p>How do we know the parameters of the <strong>best</strong> s-shaped curve? Let’s pretend we have only three data points:</p>
 <ul>
 <li>Man, 180 cm. Data point <span class="math inline">(180,1)</span>.</li>
@@ -952,8 +949,8 @@ Likelihood for worse 2:  0.3173593316343797</code></pre>
 </div>
 <p>As we increase the number of data points, the likelihood becomes very small (because we are multiplying many numbers between 0 and 1). To avoid numerical issues, we usually work with the log-likelihood.</p>
 </section>
-<section id="log-likelihood" class="level2" data-number="17.4">
-<h2 data-number="17.4" class="anchored" data-anchor-id="log-likelihood"><span class="header-section-number">17.4</span> log-likelihood</h2>
+<section id="log-likelihood" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="log-likelihood"><span class="header-section-number">18.4</span> log-likelihood</h2>
 <p>The log-likelihood is the logarithm of the likelihood:</p>
 <p><span class="math display">
 \ell(\beta_0, \beta_1) = \log L(\beta_0, \beta_1) = \sum_{i=1}^{N} P_i^{y_i} (1-P_i)^{1-y_i}
@@ -963,16 +960,16 @@ Likelihood for worse 2:  0.3173593316343797</code></pre>
 \ell(\beta_0, \beta_1) = \sum_{i=1}^{N} \left( y_i \log P_i + (1-y_i) \log (1-P_i) \right).
 </span></p>
 </section>
-<section id="binary-cross-entropy-or-log-loss" class="level2" data-number="17.5">
-<h2 data-number="17.5" class="anchored" data-anchor-id="binary-cross-entropy-or-log-loss"><span class="header-section-number">17.5</span> binary cross-entropy, or log loss</h2>
+<section id="binary-cross-entropy-or-log-loss" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="binary-cross-entropy-or-log-loss"><span class="header-section-number">18.5</span> binary cross-entropy, or log loss</h2>
 <p>We can use gradient descent to find the parameters that maximize the log-likelihood. Most implementations of gradient descent are designed to minimize a cost function. Therefore, instead of maximizing the log-likelihood, we can minimize the negative log-likelihood:</p>
 <p><span class="math display">
 J(\beta_0, \beta_1) = -\ell(\beta_0, \beta_1) = -\sum_{i=1}^{N} \left( y_i \log P_i + (1-y_i) \log (1-P_i) \right).
 </span> This cost function is also known as binary cross-entropy or log loss.</p>
 <p>It turns out that taking the log of the likelihood is very convenient. What was before only a trick to avoid numerical issues, now has a nice interpretation. The cross-entropy can be thought of as a measure of “surprise”. The more the model is surprised by the data, the higher the cross-entropy, and the poorer the fit. The less surprised the model is by the data, the lower the cross-entropy, and the better the fit.</p>
 </section>
-<section id="wrapping-up" class="level2" data-number="17.6">
-<h2 data-number="17.6" class="anchored" data-anchor-id="wrapping-up"><span class="header-section-number">17.6</span> wrapping up</h2>
+<section id="wrapping-up" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="wrapping-up"><span class="header-section-number">18.6</span> wrapping up</h2>
 <p>From the provided data:</p>
 <ul>
 <li>What is the probability that a person whose height is 180 cm is a man?</li>
@@ -1043,8 +1040,8 @@ x &amp;= -\frac{\beta_0}{\beta_1}
 <p>Compare this result with the one we obtained with the <a href="../bayes/parametric-generative-classification.html">parametric generative model</a> discussed in the Bayes’ theorem section.</p>
 <p>If you want to see a nice tutorial, see <a href="https://towardsdatascience.com/mastering-logistic-regression-3e502686f0ae/">Dr.&nbsp;Roi Yehoshua’s “Mastering Logistic Regression”</a>.</p>
 </section>
-<section id="connection-to-neural-networks" class="level2" data-number="17.7">
-<h2 data-number="17.7" class="anchored" data-anchor-id="connection-to-neural-networks"><span class="header-section-number">17.7</span> connection to neural networks</h2>
+<section id="connection-to-neural-networks" class="level2" data-number="18.7">
+<h2 data-number="18.7" class="anchored" data-anchor-id="connection-to-neural-networks"><span class="header-section-number">18.7</span> connection to neural networks</h2>
 <p>The logistic regression can be understood as a single-layer perceptron neural network model. This is to say, a neural network with no hidden layers, and a single output neuron that uses the logistic (sigmoid) activation function.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1510,12 +1507,12 @@ x &amp;= -\frac{\beta_0}{\beta_1}
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../regression/mixed-model.html" class="pagination-link" aria-label="linear mixed effect model">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../regression/logistic_2d.html" class="pagination-link" aria-label="logistic 2d">
-        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic 2d</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">logistic 2d</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -17,19 +17,18 @@ book:
         - data/weight.ipynb
     - part: "hypothesis testing"
       chapters:
-        - t_test/t_test_one_sample.ipynb
-        - t_test/t_test_independent_samples.ipynb
+        - hypothesis_testing/t_test_one_sample.ipynb
+        - hypothesis_testing/t_test_independent_samples.ipynb
+        - hypothesis_testing/statistical_power.ipynb
+        - hypothesis_testing/problem-with-t-test.ipynb
+        - hypothesis_testing/permutation.ipynb
+        - hypothesis_testing/numpy-vs-pandas.ipynb
+        - hypothesis_testing/exact-vs-montecarlo.ipynb
     - part: "confidence interval"
       chapters:
         - confidence_interval/basic_concepts.ipynb
         - confidence_interval/analytical_confidence_interval.ipynb
         - confidence_interval/empirical_confidence_interval.ipynb
-    - part: "permutation"
-      chapters:
-        - permutation/problem-with-t-test.ipynb
-        - permutation/permutation.ipynb
-        - permutation/numpy-vs-pandas.ipynb
-        - permutation/exact-vs-montecarlo.ipynb
     - part: "regression"
       chapters:
         - regression/geometry-of-regression.ipynb
@@ -111,10 +110,10 @@ format:
     # the default MathJax rendering option yields ugly results, use katex
     html-math-method: katex
   
-  pdf:
-    documentclass: scrreprt
-    include-in-header:
-      - latex_preamble.tex
+  # pdf:
+  #   documentclass: scrreprt
+  #   include-in-header:
+  #     - latex_preamble.tex
 
 
 
