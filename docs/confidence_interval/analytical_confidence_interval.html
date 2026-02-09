@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -146,7 +147,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -188,7 +189,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -535,7 +537,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">foundations</span></a>
+ <span class="menu-text">likelihood</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -543,49 +545,49 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
@@ -594,7 +596,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
+ <span class="menu-text">generalization and model complexity</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -602,8 +604,61 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -651,14 +706,14 @@ window.Quarto = {
 <div id="497edcd4" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-5"><a href="#cb1-5"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm, ttest_ind, t</span>
 <span id="cb1-7"><a href="#cb1-7"></a><span class="im">import</span> scipy</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># %matplotlib widget</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># %matplotlib widget</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>We wish to compute the confidence interval for the mean height of 7-year-old boys, for a sample of size <span class="math inline">N</span>.</p>
@@ -678,15 +733,15 @@ window.Quarto = {
 <div id="65c29bad" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>load data</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>mu_boys <span class="op">=</span> df_boys.loc[<span class="fl">7.0</span>, <span class="st">'mu'</span>]</span>
-<span id="cb2-3"><a href="#cb2-3"></a>sigma_boys <span class="op">=</span> df_boys.loc[<span class="fl">7.0</span>, <span class="st">'sigma'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3"></a>sigma_boys <span class="op">=</span> df_boys.loc[<span class="fl">7.0</span>, <span class="st">'sigma'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="937e7573" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>plot pdfs as function of sample size</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a>height_list <span class="op">=</span> np.arange(mu_boys<span class="op">-</span><span class="dv">12</span>, mu_boys<span class="op">+</span><span class="dv">12</span>, <span class="fl">0.01</span>)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>N_list <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>]</span>
@@ -729,7 +784,7 @@ window.Quarto = {
 <span id="cb3-41"><a href="#cb3-41"></a>          title<span class="op">=</span><span class="st">"numerical"</span></span>
 <span id="cb3-42"><a href="#cb3-42"></a>          )</span>
 <span id="cb3-43"><a href="#cb3-43"></a><span class="co"># title that hovers over both subplots</span></span>
-<span id="cb3-44"><a href="#cb3-44"></a>fig.suptitle(<span class="ss">f"Distribution of the sample means for 3 different sample sizes"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-44"><a href="#cb3-44"></a>fig.suptitle(<span class="ss">f"Distribution of the sample means for 3 different sample sizes"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -746,7 +801,7 @@ window.Quarto = {
 <div id="24877c6e" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a>plt.subplots_adjust(left<span class="op">=</span><span class="fl">0.1</span>, bottom<span class="op">=</span><span class="fl">0.1</span>, right<span class="op">=</span><span class="fl">0.9</span>, top<span class="op">=</span><span class="fl">0.9</span>, wspace<span class="op">=</span><span class="fl">0.0</span>, hspace<span class="op">=</span><span class="fl">0.1</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>N <span class="op">=</span> <span class="dv">30</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>SE <span class="op">=</span> sigma_boys <span class="op">/</span> np.sqrt(N)</span>
@@ -788,7 +843,7 @@ window.Quarto = {
 <span id="cb4-40"><a href="#cb4-40"></a>          xlim<span class="op">=</span>(h_min, h_max),</span>
 <span id="cb4-41"><a href="#cb4-41"></a>          ylabel<span class="op">=</span><span class="st">"cdf"</span>,</span>
 <span id="cb4-42"><a href="#cb4-42"></a>          xlabel<span class="op">=</span><span class="st">"height (cm)"</span>,</span>
-<span id="cb4-43"><a href="#cb4-43"></a>          )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-43"><a href="#cb4-43"></a>          )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -827,11 +882,11 @@ X_{1,2} = \bar{x} \pm t^*_{N-1} \cdot \frac{s}{\sqrt{N}},
 <div id="304a700f" class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>N <span class="op">=</span> <span class="dv">30</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>N <span class="op">=</span> <span class="dv">30</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>np.random.seed(<span class="dv">271</span>)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>sample <span class="op">=</span> norm.rvs(size<span class="op">=</span>N, loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>sigma_boys)</span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="bu">print</span>(<span class="ss">f"Sample mean: </span><span class="sc">{</span>np<span class="sc">.</span>mean(sample)<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="bu">print</span>(sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="bu">print</span>(sample)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sample mean: 122.60 cm
@@ -847,14 +902,14 @@ X_{1,2} = \bar{x} \pm t^*_{N-1} \cdot \frac{s}{\sqrt{N}},
 <div id="6139cea5" class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>z_crit <span class="op">=</span> scipy.stats.t.isf(alpha<span class="op">/</span><span class="dv">2</span>, N<span class="op">-</span><span class="dv">1</span>)</span>
 <span id="cb7-3"><a href="#cb7-3"></a>CI <span class="op">=</span> z_crit <span class="op">*</span> sample.std(ddof<span class="op">=</span><span class="dv">1</span>) <span class="op">/</span> np.sqrt(N)</span>
 <span id="cb7-4"><a href="#cb7-4"></a>CI_low <span class="op">=</span> np.<span class="bu">round</span>(sample.mean() <span class="op">-</span> CI, <span class="dv">2</span>)</span>
 <span id="cb7-5"><a href="#cb7-5"></a>CI_high <span class="op">=</span> np.<span class="bu">round</span>(sample.mean() <span class="op">+</span> CI, <span class="dv">2</span>)</span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="bu">print</span>(<span class="ss">f"Sample mean: </span><span class="sc">{</span>np<span class="sc">.</span>mean(sample)<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span>
 <span id="cb7-7"><a href="#cb7-7"></a><span class="bu">print</span>(<span class="st">"The 95</span><span class="sc">% c</span><span class="st">onfidence interval is [</span><span class="sc">{}</span><span class="st">, </span><span class="sc">{}</span><span class="st">] cm"</span>.<span class="bu">format</span>(CI_low, CI_high))</span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="bu">print</span>(<span class="ss">f"The true population mean is </span><span class="sc">{</span>mu_boys<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="bu">print</span>(<span class="ss">f"The true population mean is </span><span class="sc">{</span>mu_boys<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sample mean: 122.60 cm
@@ -932,13 +987,14 @@ The true population mean is 121.74 cm</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -117,10 +118,10 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -150,7 +151,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -192,7 +193,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -539,7 +541,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">foundations</span></a>
+ <span class="menu-text">likelihood</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -547,49 +549,49 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
@@ -598,7 +600,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
+ <span class="menu-text">generalization and model complexity</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -606,8 +608,61 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -666,37 +721,37 @@ window.Quarto = {
 <div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-5"><a href="#cb1-5"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm, ttest_1samp, t</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="op">%</span>matplotlib widget</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="op">%</span>matplotlib widget</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="cell-3" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>load data</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>mu_boys <span class="op">=</span> df_boys.loc[<span class="fl">20.0</span>, <span class="st">'mu'</span>]</span>
-<span id="cb2-3"><a href="#cb2-3"></a>sigma_boys <span class="op">=</span> df_boys.loc[<span class="fl">20.0</span>, <span class="st">'sigma'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3"></a>sigma_boys <span class="op">=</span> df_boys.loc[<span class="fl">20.0</span>, <span class="st">'sigma'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Let’s start with a sample of 10.</p>
 <div id="cell-5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>generate data</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>N <span class="op">=</span> <span class="dv">10</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>N <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="co"># set scipy seed for reproducibility</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>np.random.seed(<span class="dv">314</span>)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>sample10 <span class="op">=</span> norm.rvs(size<span class="op">=</span>N, loc<span class="op">=</span>mu_boys<span class="op">+</span><span class="dv">2</span>, scale<span class="op">=</span>sigma_boys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4"></a>sample10 <span class="op">=</span> norm.rvs(size<span class="op">=</span>N, loc<span class="op">=</span>mu_boys<span class="op">+</span><span class="dv">2</span>, scale<span class="op">=</span>sigma_boys)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="cell-6" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>plot sample against population pdf</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>height_list <span class="op">=</span> np.arange(<span class="dv">140</span>, <span class="dv">220</span>, <span class="fl">0.1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>height_list <span class="op">=</span> np.arange(<span class="dv">140</span>, <span class="dv">220</span>, <span class="fl">0.1</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a>pdf_boys <span class="op">=</span> norm.pdf(height_list, loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>sigma_boys)</span>
 <span id="cb4-3"><a href="#cb4-3"></a></span>
 <span id="cb4-4"><a href="#cb4-4"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -719,7 +774,7 @@ window.Quarto = {
 <span id="cb4-21"><a href="#cb4-21"></a>       ylabel<span class="op">=</span><span class="st">'probability density'</span>,</span>
 <span id="cb4-22"><a href="#cb4-22"></a>       title<span class="op">=</span><span class="st">"men (age 20)"</span>,</span>
 <span id="cb4-23"><a href="#cb4-23"></a>       xlim<span class="op">=</span>(<span class="dv">140</span>, <span class="dv">220</span>),</span>
-<span id="cb4-24"><a href="#cb4-24"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-24"><a href="#cb4-24"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -741,10 +796,10 @@ t = \frac{\bar{x} - \mu}{s / \sqrt{n}}
 <div id="cell-8" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>calculate t-value</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>t_value_formula <span class="op">=</span> (sample10.mean() <span class="op">-</span> mu_boys) <span class="op">/</span> (sample10.std(ddof<span class="op">=</span><span class="dv">1</span>) <span class="op">/</span> np.sqrt(N))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>t_value_formula <span class="op">=</span> (sample10.mean() <span class="op">-</span> mu_boys) <span class="op">/</span> (sample10.std(ddof<span class="op">=</span><span class="dv">1</span>) <span class="op">/</span> np.sqrt(N))</span>
 <span id="cb5-2"><a href="#cb5-2"></a>t_value_scipy <span class="op">=</span> ttest_1samp(sample10, popmean<span class="op">=</span>mu_boys)</span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="bu">print</span>(<span class="ss">f"t-value (formula): </span><span class="sc">{</span>t_value_formula<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="bu">print</span>(<span class="ss">f"t-value (scipy): </span><span class="sc">{</span>t_value_scipy<span class="sc">.</span>statistic<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="bu">print</span>(<span class="ss">f"t-value (scipy): </span><span class="sc">{</span>t_value_scipy<span class="sc">.</span>statistic<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>t-value (formula): 1.759
@@ -755,7 +810,7 @@ t-value (scipy): 1.759</code></pre>
 <div id="cell-10" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>visualize t-distribution</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># degrees of freedom</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># degrees of freedom</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>dof <span class="op">=</span> N <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb7-4"><a href="#cb7-4"></a></span>
@@ -794,7 +849,7 @@ t-value (scipy): 1.759</code></pre>
 <span id="cb7-37"><a href="#cb7-37"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'t'</span>,</span>
 <span id="cb7-38"><a href="#cb7-38"></a>       ylabel<span class="op">=</span><span class="st">'probability density'</span>,</span>
 <span id="cb7-39"><a href="#cb7-39"></a>       title<span class="op">=</span><span class="st">"t-distribution (N=10)"</span>,</span>
-<span id="cb7-40"><a href="#cb7-40"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-40"><a href="#cb7-40"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -812,16 +867,16 @@ t-value (scipy): 1.759</code></pre>
 <div id="cell-12" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>generate data</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>N <span class="op">=</span> <span class="dv">100</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>N <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb8-2"><a href="#cb8-2"></a><span class="co"># set scipy seed for reproducibility</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>np.random.seed(<span class="dv">628</span>)</span>
-<span id="cb8-4"><a href="#cb8-4"></a>sample100 <span class="op">=</span> norm.rvs(size<span class="op">=</span>N, loc<span class="op">=</span>mu_boys<span class="op">+</span><span class="dv">2</span>, scale<span class="op">=</span>sigma_boys)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4"></a>sample100 <span class="op">=</span> norm.rvs(size<span class="op">=</span>N, loc<span class="op">=</span>mu_boys<span class="op">+</span><span class="dv">2</span>, scale<span class="op">=</span>sigma_boys)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="cell-13" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>plot sample against population pdf</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>height_list <span class="op">=</span> np.arange(<span class="dv">140</span>, <span class="dv">220</span>, <span class="fl">0.1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>height_list <span class="op">=</span> np.arange(<span class="dv">140</span>, <span class="dv">220</span>, <span class="fl">0.1</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a>pdf_boys <span class="op">=</span> norm.pdf(height_list, loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>sigma_boys)</span>
 <span id="cb9-3"><a href="#cb9-3"></a></span>
 <span id="cb9-4"><a href="#cb9-4"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -844,7 +899,7 @@ t-value (scipy): 1.759</code></pre>
 <span id="cb9-21"><a href="#cb9-21"></a>       ylabel<span class="op">=</span><span class="st">'probability density'</span>,</span>
 <span id="cb9-22"><a href="#cb9-22"></a>       title<span class="op">=</span><span class="st">"men (age 20)"</span>,</span>
 <span id="cb9-23"><a href="#cb9-23"></a>       xlim<span class="op">=</span>(<span class="dv">140</span>, <span class="dv">220</span>),</span>
-<span id="cb9-24"><a href="#cb9-24"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-24"><a href="#cb9-24"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -857,9 +912,9 @@ t-value (scipy): 1.759</code></pre>
 <div id="cell-14" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>calculate t-value</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>t_value_scipy <span class="op">=</span> ttest_1samp(sample100, popmean<span class="op">=</span>mu_boys)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>t_value_scipy <span class="op">=</span> ttest_1samp(sample100, popmean<span class="op">=</span>mu_boys)</span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="bu">print</span>(<span class="ss">f"t-value: </span><span class="sc">{</span>t_value_scipy<span class="sc">.</span>statistic<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>t_value_scipy<span class="sc">.</span>pvalue<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>t_value_scipy<span class="sc">.</span>pvalue<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>t-value: 2.675
@@ -869,7 +924,7 @@ p-value: 0.009</code></pre>
 <div id="cell-15" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>visualize t-distribution</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># degrees of freedom</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># degrees of freedom</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a>dof <span class="op">=</span> N <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb12-3"><a href="#cb12-3"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb12-4"><a href="#cb12-4"></a></span>
@@ -908,7 +963,7 @@ p-value: 0.009</code></pre>
 <span id="cb12-37"><a href="#cb12-37"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'t'</span>,</span>
 <span id="cb12-38"><a href="#cb12-38"></a>       ylabel<span class="op">=</span><span class="st">'probability density'</span>,</span>
 <span id="cb12-39"><a href="#cb12-39"></a>       title<span class="op">=</span><span class="st">"t-distribution (N=100)"</span>,</span>
-<span id="cb12-40"><a href="#cb12-40"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-40"><a href="#cb12-40"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -934,9 +989,9 @@ p-value: 0.009</code></pre>
 <div id="cell-17" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>calculate t-value and p-value</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>t_value_scipy <span class="op">=</span> ttest_1samp(sample100, popmean<span class="op">=</span>mu_boys, alternative<span class="op">=</span><span class="st">'greater'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>t_value_scipy <span class="op">=</span> ttest_1samp(sample100, popmean<span class="op">=</span>mu_boys, alternative<span class="op">=</span><span class="st">'greater'</span>)</span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="bu">print</span>(<span class="ss">f"t-value: </span><span class="sc">{</span>t_value_scipy<span class="sc">.</span>statistic<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>t_value_scipy<span class="sc">.</span>pvalue<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>t_value_scipy<span class="sc">.</span>pvalue<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>t-value: 2.675
@@ -946,7 +1001,7 @@ p-value: 0.004</code></pre>
 <div id="cell-18" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>visualize t-distribution</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># degrees of freedom</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># degrees of freedom</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a>dof <span class="op">=</span> N <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb15-3"><a href="#cb15-3"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb15-4"><a href="#cb15-4"></a></span>
@@ -979,7 +1034,7 @@ p-value: 0.004</code></pre>
 <span id="cb15-31"><a href="#cb15-31"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'t'</span>,</span>
 <span id="cb15-32"><a href="#cb15-32"></a>       ylabel<span class="op">=</span><span class="st">'probability density'</span>,</span>
 <span id="cb15-33"><a href="#cb15-33"></a>       title<span class="op">=</span><span class="st">"t-distribution (N=100)"</span>,</span>
-<span id="cb15-34"><a href="#cb15-34"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-34"><a href="#cb15-34"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1046,13 +1101,14 @@ p-value: 0.004</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

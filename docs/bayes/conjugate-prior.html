@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -146,7 +147,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -188,7 +189,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -535,7 +537,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">foundations</span></a>
+ <span class="menu-text">likelihood</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -543,49 +545,49 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../foundations/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
+  <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
@@ -594,7 +596,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
+ <span class="menu-text">generalization and model complexity</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -602,8 +604,61 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -709,18 +764,18 @@ P(R=k|p) = \binom{n}{k} p^k (1-p)^{n-k}.
 <div id="5ef90770" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib <span class="im">as</span> mpl</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> matplotlib.gridspec <span class="im">as</span> grid_spec</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> matplotlib.lines <span class="im">import</span> Line2D</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.stats <span class="im">import</span> beta, norm, uniform, binom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.stats <span class="im">import</span> beta, norm, uniform, binom</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="36fcfe1d" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>plot various possible distributions</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a>location <span class="op">=</span> <span class="fl">0.1</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>p <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>)</span>
 <span id="cb2-4"><a href="#cb2-4"></a>ax.plot(p, beta.pdf(p, <span class="dv">2</span>, <span class="dv">2</span><span class="op">/</span>location<span class="op">-</span><span class="dv">2</span>), label<span class="op">=</span><span class="st">'Beta(2, 18)'</span>, color<span class="op">=</span><span class="st">"black"</span>)</span>
@@ -729,7 +784,7 @@ P(R=k|p) = \binom{n}{k} p^k (1-p)^{n-k}.
 <span id="cb2-7"><a href="#cb2-7"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb2-8"><a href="#cb2-8"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Probability of rain (p)'</span>,</span>
 <span id="cb2-9"><a href="#cb2-9"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb2-10"><a href="#cb2-10"></a>       title<span class="op">=</span><span class="st">'Possible prior distributions for the probability of rain'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-10"><a href="#cb2-10"></a>       title<span class="op">=</span><span class="st">'Possible prior distributions for the probability of rain'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -759,7 +814,7 @@ P(R=k|p) = \binom{n}{k} p^k (1-p)^{n-k}.
 <div id="c62caa2a" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>three beta distributions</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a>location <span class="op">=</span> <span class="fl">0.1</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>p <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>ax.plot(p, beta.pdf(p, <span class="dv">2</span>, <span class="dv">2</span><span class="op">/</span>location<span class="op">-</span><span class="dv">2</span>), label<span class="op">=</span><span class="st">'Beta(2, 18)'</span>, color<span class="op">=</span><span class="st">"black"</span>)</span>
@@ -768,7 +823,7 @@ P(R=k|p) = \binom{n}{k} p^k (1-p)^{n-k}.
 <span id="cb3-7"><a href="#cb3-7"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb3-8"><a href="#cb3-8"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Probability of rain (p)'</span>,</span>
 <span id="cb3-9"><a href="#cb3-9"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb3-10"><a href="#cb3-10"></a>       title<span class="op">=</span><span class="st">'Beta prior distributions with mean at 0.1'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-10"><a href="#cb3-10"></a>       title<span class="op">=</span><span class="st">'Beta prior distributions with mean at 0.1'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -802,14 +857,14 @@ P(p|R=k) &amp;= \frac{1}{\underbrace{P(R=k)}_{\text{evidence}}} \cdot \underbrac
 <div id="e1cb0ea1" class="cell">
 <details class="code-fold">
 <summary>generate binomial data for 52 weeks</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>np.random.seed(<span class="dv">6</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>np.random.seed(<span class="dv">6</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a>N_weeks <span class="op">=</span> <span class="dv">52</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>success_array_daily <span class="op">=</span> binom.rvs(n<span class="op">=</span><span class="dv">1</span>, p<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span>N_weeks<span class="op">*</span><span class="dv">7</span>)  <span class="co"># first generate daily data</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>success_array <span class="op">=</span> success_array_daily.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">7</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)  <span class="co"># aggragate to weekly data</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="co"># success_array = binom.rvs(n=7, p=0.5, size=N_weeks)  # do this if you don't need daily data</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a>failure_array <span class="op">=</span> <span class="dv">7</span> <span class="op">-</span> success_array</span>
 <span id="cb4-7"><a href="#cb4-7"></a>sf_array <span class="op">=</span> np.vstack([success_array, failure_array]).T</span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="bu">print</span>(success_array)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="bu">print</span>(success_array)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[4 4 5 6 4 4 2 3 5 4 2 3 5 3 3 5 4 3 1 3 4 4 2 2 3 5 1 2 6 4 3 2 3 5 6 3 4
@@ -820,7 +875,7 @@ P(p|R=k) &amp;= \frac{1}{\underbrace{P(R=k)}_{\text{evidence}}} \cdot \underbrac
 <div id="f2faabeb" class="cell" data-execution_count="134">
 <details class="code-fold">
 <summary>update priors over 52 weeks and print parameters</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>bobs_parameters <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">18</span>]])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>bobs_parameters <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">18</span>]])</span>
 <span id="cb6-2"><a href="#cb6-2"></a>alices_parameters <span class="op">=</span> np.array([[<span class="dv">100</span>, <span class="dv">400</span>]])</span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\t\t</span><span class="st">Bob</span><span class="ch">\t\t</span><span class="st">Bob</span><span class="ch">\t\t</span><span class="st">Alice</span><span class="ch">\t</span><span class="st">Alice"</span>)</span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="bu">print</span>(<span class="st">"week</span><span class="ch">\t</span><span class="st">alpha</span><span class="ch">\t</span><span class="st">beta</span><span class="ch">\t</span><span class="st">alpha</span><span class="ch">\t</span><span class="st">beta"</span>)</span>
@@ -834,7 +889,7 @@ P(p|R=k) &amp;= \frac{1}{\underbrace{P(R=k)}_{\text{evidence}}} \cdot \underbrac
 <span id="cb6-12"><a href="#cb6-12"></a>    alices_this_weeks_parameters <span class="op">=</span> alices_last_weeks_parameters <span class="op">+</span> sf_array[week]</span>
 <span id="cb6-13"><a href="#cb6-13"></a>    alices_parameters <span class="op">=</span> np.vstack([alices_parameters, alices_this_weeks_parameters])</span>
 <span id="cb6-14"><a href="#cb6-14"></a></span>
-<span id="cb6-15"><a href="#cb6-15"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>week<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>bobs_this_weeks_parameters[<span class="dv">0</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>bobs_this_weeks_parameters[<span class="dv">1</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>alices_this_weeks_parameters[<span class="dv">0</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>alices_this_weeks_parameters[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>week<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>bobs_this_weeks_parameters[<span class="dv">0</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>bobs_this_weeks_parameters[<span class="dv">1</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>alices_this_weeks_parameters[<span class="dv">0</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>alices_this_weeks_parameters[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Bob     Bob     Alice   Alice
@@ -898,7 +953,7 @@ week    alpha   beta    alpha   beta
 <div id="ce792617" class="cell">
 <details class="code-fold">
 <summary>ridge plot</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>N_weeks <span class="op">=</span> <span class="dv">52</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>N_weeks <span class="op">=</span> <span class="dv">52</span></span>
 <span id="cb8-2"><a href="#cb8-2"></a>N_panels <span class="op">=</span> N_weeks <span class="op">+</span> <span class="dv">1</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>gs <span class="op">=</span> grid_spec.GridSpec(N_panels,<span class="dv">1</span>)</span>
 <span id="cb8-4"><a href="#cb8-4"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">12</span>))</span>
@@ -964,7 +1019,7 @@ week    alpha   beta    alpha   beta
 <span id="cb8-64"><a href="#cb8-64"></a>    line <span class="op">=</span> Line2D([fig_coord[<span class="dv">0</span>], fig_coord[<span class="dv">0</span>]],     <span class="co"># x coordinates</span></span>
 <span id="cb8-65"><a href="#cb8-65"></a>                [fig_coord[<span class="dv">1</span>], pos_top[<span class="dv">1</span>]],          <span class="co"># y coordinates</span></span>
 <span id="cb8-66"><a href="#cb8-66"></a>                transform<span class="op">=</span>fig.transFigure, color<span class="op">=</span><span class="st">'black'</span>, ls<span class="op">=</span><span class="st">':'</span>, lw<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb8-67"><a href="#cb8-67"></a>    fig.add_artist(line)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-67"><a href="#cb8-67"></a>    fig.add_artist(line)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -982,7 +1037,7 @@ week    alpha   beta    alpha   beta
 <div id="01315d6d" class="cell">
 <details class="code-fold">
 <summary>Bob and Alice’s estimates over time</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
 <span id="cb9-2"><a href="#cb9-2"></a>t <span class="op">=</span> np.arange(N_weeks<span class="op">+</span><span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3"></a></span>
 <span id="cb9-4"><a href="#cb9-4"></a><span class="kw">def</span> beta_mean(alpha, beta):</span>
@@ -1012,7 +1067,7 @@ week    alpha   beta    alpha   beta
 <span id="cb9-28"><a href="#cb9-28"></a>       ylabel<span class="op">=</span><span class="st">'Estimated Expected Probability of Rain'</span>,</span>
 <span id="cb9-29"><a href="#cb9-29"></a>       title<span class="op">=</span><span class="st">'Convergence of Bob and Alice</span><span class="ch">\'</span><span class="st">s Estimates Over Time'</span>,</span>
 <span id="cb9-30"><a href="#cb9-30"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">0.6</span>),</span>
-<span id="cb9-31"><a href="#cb9-31"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,N_weeks))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-31"><a href="#cb9-31"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,N_weeks))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1025,7 +1080,7 @@ week    alpha   beta    alpha   beta
 </section>
 <section id="comparison-with-frequentist-approach" class="level2" data-number="28.7">
 <h2 data-number="28.7" class="anchored" data-anchor-id="comparison-with-frequentist-approach"><span class="header-section-number">28.7</span> comparison with frequentist approach</h2>
-<p>Let’s add to the graph above one more line, for Charlie, who follows a frequentist approach to estimate the probability of rain over time. Charlie doesn’t have any prior belief; instead, he simply counts the number of rainy days observed so far (<span class="math inline">k</span>) and divides it by the total number of days that passed (<span class="math inline">n</span>). As shown in the chapter <a href="../foundations/MLE_and_summary_statistics.html#binomial-distribution">MLE and summary statistics</a>, when assuming a generative model that is a Bernoulli process (or Binomial distribution for multiple trials), the maximum likelihood estimate (MLE) of the probability of success (rain) is given by the ratio of the number of successes to the total number of trials:</p>
+<p>Let’s add to the graph above one more line, for Charlie, who follows a frequentist approach to estimate the probability of rain over time. Charlie doesn’t have any prior belief; instead, he simply counts the number of rainy days observed so far (<span class="math inline">k</span>) and divides it by the total number of days that passed (<span class="math inline">n</span>). As shown in the chapter <a href="../likelihood/MLE_and_summary_statistics.html#binomial-distribution">MLE and summary statistics</a>, when assuming a generative model that is a Bernoulli process (or Binomial distribution for multiple trials), the maximum likelihood estimate (MLE) of the probability of success (rain) is given by the ratio of the number of successes to the total number of trials:</p>
 <p><span class="math display">
 \hat{p} = \frac{k}{n}.
 </span></p>
@@ -1034,7 +1089,7 @@ week    alpha   beta    alpha   beta
 <div id="938ec66b" class="cell">
 <details class="code-fold">
 <summary>compute daily parameter updates for Bob and Alice</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>failure_array_daily <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> success_array_daily</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>failure_array_daily <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> success_array_daily</span>
 <span id="cb10-2"><a href="#cb10-2"></a>sf_array_daily <span class="op">=</span> np.vstack([success_array_daily, failure_array_daily]).T</span>
 <span id="cb10-3"><a href="#cb10-3"></a></span>
 <span id="cb10-4"><a href="#cb10-4"></a>bobs_parameters_daily <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">18</span>]])</span>
@@ -1046,13 +1101,13 @@ week    alpha   beta    alpha   beta
 <span id="cb10-10"><a href="#cb10-10"></a>    bobs_parameters_daily <span class="op">=</span> np.vstack([bobs_parameters_daily, bobs_todays_parameters])</span>
 <span id="cb10-11"><a href="#cb10-11"></a>    alices_yesterdays_parameters <span class="op">=</span> alices_parameters_daily[<span class="op">-</span><span class="dv">1</span>]</span>
 <span id="cb10-12"><a href="#cb10-12"></a>    alices_todays_parameters <span class="op">=</span> alices_yesterdays_parameters <span class="op">+</span> sf_array_daily[day]</span>
-<span id="cb10-13"><a href="#cb10-13"></a>    alices_parameters_daily <span class="op">=</span> np.vstack([alices_parameters_daily, alices_todays_parameters])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-13"><a href="#cb10-13"></a>    alices_parameters_daily <span class="op">=</span> np.vstack([alices_parameters_daily, alices_todays_parameters])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="c8a1e3cc" class="cell" data-execution_count="156">
 <details class="code-fold">
 <summary>frequentist vs Bayesian daily updates</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
 <span id="cb11-2"><a href="#cb11-2"></a></span>
 <span id="cb11-3"><a href="#cb11-3"></a>t <span class="op">=</span> <span class="dv">7</span><span class="op">*</span>np.arange(N_weeks<span class="op">+</span><span class="dv">1</span>)</span>
 <span id="cb11-4"><a href="#cb11-4"></a>t_day<span class="op">=</span> np.arange(N_weeks<span class="op">*</span><span class="dv">7</span><span class="op">+</span><span class="dv">1</span>)</span>
@@ -1085,7 +1140,7 @@ week    alpha   beta    alpha   beta
 <span id="cb11-31"><a href="#cb11-31"></a>       title<span class="op">=</span><span class="st">'Frequentist vs Bayesian Daily Updates'</span>,</span>
 <span id="cb11-32"><a href="#cb11-32"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>),</span>
 <span id="cb11-33"><a href="#cb11-33"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">150</span>)</span>
-<span id="cb11-34"><a href="#cb11-34"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-34"><a href="#cb11-34"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1107,7 +1162,7 @@ week    alpha   beta    alpha   beta
 <div id="439b5a19" class="cell" data-execution_count="155">
 <details class="code-fold">
 <summary>Laplace vs frequentist vs Bayesian daily updates</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>laplaces_parameters_daily <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">1</span>]])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>laplaces_parameters_daily <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">1</span>]])</span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="cf">for</span> day <span class="kw">in</span> np.arange(N_weeks<span class="op">*</span><span class="dv">7</span>):</span>
 <span id="cb12-3"><a href="#cb12-3"></a>    laplaces_yesterdays_parameters <span class="op">=</span> laplaces_parameters_daily[<span class="op">-</span><span class="dv">1</span>]</span>
 <span id="cb12-4"><a href="#cb12-4"></a>    laplaces_todays_parameters <span class="op">=</span> laplaces_yesterdays_parameters <span class="op">+</span> sf_array_daily[day]</span>
@@ -1153,7 +1208,7 @@ week    alpha   beta    alpha   beta
 <span id="cb12-44"><a href="#cb12-44"></a>ax[<span class="dv">1</span>].legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb12-45"><a href="#cb12-45"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Probability of rain (p)'</span>,</span>
 <span id="cb12-46"><a href="#cb12-46"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb12-47"><a href="#cb12-47"></a>       title<span class="op">=</span><span class="st">'Beta prior distributions with mean at 0.1'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-47"><a href="#cb12-47"></a>       title<span class="op">=</span><span class="st">'Beta prior distributions with mean at 0.1'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1268,13 +1323,14 @@ week    alpha   beta    alpha   beta
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

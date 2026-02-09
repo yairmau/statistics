@@ -66,17 +66,16 @@ book:
       chapters:
         - information_theory/entropy.ipynb
         - information_theory/cross-entropy.ipynb
-    - part: "foundations"
+    - part: "likelihood"
       chapters:
-        - foundations/probability_and_likelihood.ipynb
-        - foundations/MLE.ipynb
-        - foundations/MLE_and_summary_statistics.ipynb
-        - foundations/MLE_and_linear_regression.ipynb
-        - foundations/MLE_and_information_theory.ipynb
-        - foundations/MLE_and_regularization.ipynb
-        - foundations/MLE_and_classification.ipynb
-        - foundations/MLE_and_bayesian_inference.ipynb
-        # - foundations/bias_variance_tradeoff.ipynb
+        - likelihood/probability_and_likelihood.ipynb
+        - likelihood/MLE.ipynb
+        - likelihood/MLE_and_summary_statistics.ipynb
+        - likelihood/MLE_and_linear_regression.ipynb
+        - likelihood/MLE_and_information_theory.ipynb
+        - likelihood/MLE_and_regularization.ipynb
+        - likelihood/MLE_and_classification.ipynb
+        - likelihood/MLE_and_bayesian_inference.ipynb
     - part: "generalization and model complexity"
       chapters:
         - generalization/bias-variance-tradeoff.ipynb
