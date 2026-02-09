@@ -77,6 +77,16 @@ book:
         - foundations/MLE_and_classification.ipynb
         - foundations/MLE_and_bayesian_inference.ipynb
         # - foundations/bias_variance_tradeoff.ipynb
+    - part: "generalization and model complexity"
+      chapters:
+        - generalization/bias-variance-tradeoff.ipynb
+        - generalization/overfitting-and-underfitting.ipynb
+        - generalization/cross-validation.ipynb
+        - generalization/data-splitting.ipynb
+        - generalization/regularization.ipynb
+        - generalization/more-data.ipynb
+        - generalization/double-descent.ipynb
+
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
