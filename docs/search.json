@@ -2140,5 +2140,16 @@
       "miscellaneous",
       "<span class='chapter-number'>53</span>  <span class='chapter-title'>trend test</span>"
     ]
+  },
+  {
+    "objectID": "generalization/bias-variance-tradeoff.html#nerding-out",
+    "href": "generalization/bias-variance-tradeoff.html#nerding-out",
+    "title": "46  bias-variance tradeoff",
+    "section": "46.4 nerding out",
+    "text": "46.4 nerding out\nThe bias–variance–noise decomposition we derived is\n\n\\mathbb{E}_D[(\\hat{f}(x) - y)^2\\mid x] = \\text{Var}\\left[\\hat{f}(x)\\right] + \\text{Bias}^2\\left[\\hat{f}(x)\\right] + \\sigma^2.\n\nThis equation is so similar to the Pythagorean theorem, that we might wonder if there’s anything in common between them. The answer is yes! In a way, the bias–variance–noise decomposition is a stochastic analogue of the sum-of-squares decomposition in linear regression, with orthogonality defined by expectation rather than by Euclidean inner products over data points. Let’s see how this works.\nLet’s call \\omega a specific experimental realization (e.g. 20 pairs of x,y data poins as well as a test point). \\omega is randomly drawn from the distribution of all possible experimental realizations, which we denote by \\Omega. For a fixed input x, we can associate to each of these experimental realizations \\omega a random variable, for example:\n\n\\epsilon(\\omega). Each experimental realization \\omega has its own noise value \\epsilon, and therefore we can think of \\epsilon as a random variable.\n\\hat{f}(x)(\\omega). Each experimental realization \\omega has its own fitted function \\hat{f}(x), and therefore we can think of \\hat{f}(x) as a random variable. Note: \\hat{f}(x) is calculated for a fixed value of x, so it is a real number.\n\\left(\\hat{f}(x) - f(x)\\right)(\\omega). Each experimental realization \\omega has its own value of \\hat{f}(x) - f(x), and therefore we can think of \\hat{f}(x) - f(x) as a random variable. Again, this is calculated for a fixed value of x, so it is a real number.\nYou get the idea.\n\nThe bias and variance are also random variables, because they are defined as functions of the random variable \\hat{f}(x):\n\\begin{align*}\n\\text{Var}\\left[\\hat{f}(x)\\right](\\omega) &= \\left(\\hat{f}(x)(\\omega) - \\mu(x)\\right)^2, \\\\\n\\text{Bias}^2\\left[\\hat{f}(x)\\right](\\omega) &= \\Bigl(\\mu(x) - f(x)\\Bigr)^2.\n\\end{align*}\nIn this tutorial we drew M experimental realization out of \\Omega. For most of it we drew 200 experimental realizations, so think of a vector with 200 entries:\n\n\\{\\omega_1, \\omega_2, \\ldots, \\omega_{200}\\}\\in\\Omega.\n\nFrom this vector we can calculate all the random variables mentioned above:\n\\begin{align*}\n\\{\\epsilon(\\omega_1), \\epsilon(\\omega_2), \\ldots, \\epsilon(\\omega_{200})\\} \\\\\n\\{\\hat{f}(x)(\\omega_1), \\hat{f}(x)(\\omega_2), \\ldots, \\hat{f}(x)(\\omega_{200})\\} \\\\\n\\text{etc.}\n\\end{align*}\nbut in the last section we drew 5000. The bias and variance are defined as follows:",
+    "crumbs": [
+      "generalization and model complexity",
+      "<span class='chapter-number'>46</span>  <span class='chapter-title'>bias-variance tradeoff</span>"
+    ]
   }
 ]
