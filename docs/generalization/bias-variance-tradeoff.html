@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -146,7 +147,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -188,7 +189,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -706,22 +708,21 @@ y = f(x) + \epsilon.
 </span></p>
 <p>Here the noise <span class="math inline">\epsilon</span> has zero mean and some standard deviation <span class="math inline">\sigma</span>. In our example, the noise could represent all the other factors that affect a person’s income, such as their family background, their social skills, their luck, and so on.</p>
 <p>See below an example.</p>
-<div id="e952dbf9" class="cell">
+<div id="e952dbf9" class="cell" data-execution_count="66">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-4"><a href="#cb1-4"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.2</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> warnings</span>
-<span id="cb1-6"><a href="#cb1-6"></a>warnings.simplefilter(<span class="st">'ignore'</span>, np.exceptions.RankWarning)</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> numpy.polynomial <span class="im">import</span> Chebyshev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D  <span class="co"># noqa: F401</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> numpy.polynomial <span class="im">import</span> Chebyshev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cadebec1" class="cell" data-execution_count="3">
+<div id="cadebec1" class="cell" data-execution_count="67">
 <details class="code-fold">
 <summary>plot</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>np.random.seed(<span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>N <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>f <span class="op">=</span> <span class="kw">lambda</span> x: np.sin(<span class="dv">4</span><span class="op">*</span>np.pi<span class="op">*</span>x) <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>x</span>
 <span id="cb2-4"><a href="#cb2-4"></a>x_grid <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, N)</span>
@@ -737,7 +738,7 @@ y = f(x) + \epsilon.
 <span id="cb2-14"><a href="#cb2-14"></a>        xlim<span class="op">=</span>(x_grid[<span class="dv">0</span>], x_grid[<span class="op">-</span><span class="dv">1</span>]),</span>
 <span id="cb2-15"><a href="#cb2-15"></a>        ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span>
 <span id="cb2-16"><a href="#cb2-16"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-17"><a href="#cb2-17"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -750,10 +751,10 @@ y = f(x) + \epsilon.
 <p>Note: don’t pay much attention to the scale of the axes, the concrete example is just for illustration purposes, and the numbers are not meant to be realistic.</p>
 <p>Let’s say that I learn that John Doe belongs to the same population as the data I observed, and I know that John Doe has <span class="math inline">x_0</span> years of education. Can I predict his income? My job is to find a function <span class="math inline">\hat{f}(x)</span> that best describes the process that generates the data, <span class="math inline">f(x)</span>. I can then use this function and give a prediction for John’s income, <span class="math inline">\hat{f}(x_0)</span>. There are infinite functions to choose from, what should I do? Not knowing much about the true function, I decide in this tutorial to describe it using a polynomial function. The problem is not only that I need to find the best coefficients for the polynomial, but I also need to <strong>decide on the degree of the polynomial</strong>! It could be a straight line (degree 1), a parabola (degree 2), or something a lot more complex, such as a 15-degree polynomial. How do I decide on the degree of the polynomial?</p>
 <p>Let’s play a little bit. At first, I’ll choose a 3rd degree polynomial (a cubic function). I’ll repeat the experiment 8 times, which in our example means that I’ll conduct 8 surveys, each with a different sample of people. For each experiment, I’ll fit a cubic function to each experiment using the least-squares method, and see how the fitted functions look like.</p>
-<div id="52af85cc" class="cell">
+<div id="52af85cc" class="cell" data-execution_count="68">
 <details class="code-fold">
 <summary>plot 8 fitted functions from repeated experiments</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>np.random.seed(<span class="dv">0</span>)</span>
 <span id="cb3-2"><a href="#cb3-2"></a>deg <span class="op">=</span> <span class="dv">3</span>          <span class="co"># degree of the fitted polynomial</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>sigma <span class="op">=</span> <span class="fl">0.3</span>      <span class="co"># standard deviation of the noise</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a>M <span class="op">=</span> <span class="dv">8</span>          <span class="co"># number of repeated experiments</span></span>
@@ -785,7 +786,7 @@ y = f(x) + \epsilon.
 <span id="cb3-30"><a href="#cb3-30"></a>    ax[i].<span class="bu">set</span>(xlim<span class="op">=</span>(x_grid[<span class="dv">0</span>], x_grid[<span class="op">-</span><span class="dv">1</span>]),</span>
 <span id="cb3-31"><a href="#cb3-31"></a>              ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>),</span>
 <span id="cb3-32"><a href="#cb3-32"></a>              xticks<span class="op">=</span>[],</span>
-<span id="cb3-33"><a href="#cb3-33"></a>              yticks<span class="op">=</span>[])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-33"><a href="#cb3-33"></a>              yticks<span class="op">=</span>[])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -796,10 +797,10 @@ y = f(x) + \epsilon.
 </div>
 </div>
 <p>Note that in each experiment <span class="math inline">m</span> we observe a different set of data points, and therefore we get a different fitted function <span class="math inline">{\hat{f}}_m(x)</span>. We will do the same for 200 experiments, and plot it as a “spaghetti plot”:</p>
-<div id="2043b37f" class="cell">
+<div id="2043b37f" class="cell" data-execution_count="69">
 <details class="code-fold">
 <summary>generate data for 200 repeated experiments, and fit each of them</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>np.random.seed(<span class="dv">0</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a>deg <span class="op">=</span> <span class="dv">3</span>          <span class="co"># degree of the fitted polynomial</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>sigma <span class="op">=</span> <span class="fl">0.3</span>      <span class="co"># standard deviation of the noise</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>M <span class="op">=</span> <span class="dv">200</span>          <span class="co"># number of repeated experiments</span></span>
@@ -819,13 +820,13 @@ y = f(x) + \epsilon.
 <span id="cb4-18"><a href="#cb4-18"></a>    <span class="co"># we get a callable polynomial</span></span>
 <span id="cb4-19"><a href="#cb4-19"></a>    p <span class="op">=</span> Chebyshev.fit(x_m, y_m, deg, domain<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>])</span>
 <span id="cb4-20"><a href="#cb4-20"></a>    <span class="co"># evaluate the fitted model on the full grid (common x for averaging across fits)</span></span>
-<span id="cb4-21"><a href="#cb4-21"></a>    preds[m, :] <span class="op">=</span> p(x_grid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-21"><a href="#cb4-21"></a>    preds[m, :] <span class="op">=</span> p(x_grid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="2d5c67dd" class="cell" data-execution_count="36">
+<div id="2d5c67dd" class="cell" data-execution_count="70">
 <details class="code-fold">
 <summary>spaghetti plot of all 200 fitted functions</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb5-2"><a href="#cb5-2"></a>ax.plot(x_grid, f(x_grid), color<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="vs">r"true function, </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>ax.plot([], [], color<span class="op">=</span>blue, label<span class="op">=</span><span class="st">"fitted functions"</span>)</span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(M):</span>
@@ -835,7 +836,7 @@ y = f(x) + \epsilon.
 <span id="cb5-8"><a href="#cb5-8"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(x_grid[<span class="dv">0</span>], x_grid[<span class="op">-</span><span class="dv">1</span>]),</span>
 <span id="cb5-9"><a href="#cb5-9"></a>       ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>),</span>
 <span id="cb5-10"><a href="#cb5-10"></a>       xlabel<span class="op">=</span><span class="st">"x"</span>,)<span class="op">;</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-11"><a href="#cb5-11"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -847,10 +848,10 @@ y = f(x) + \epsilon.
 </div>
 <p>A pattern seems to emerge!</p>
 <p>Now, let’s focus on a tiny slice of the graph, centered at <span class="math inline">x=0.6</span> (the vertical dotted line)</p>
-<div id="042dce0c" class="cell" data-execution_count="37">
+<div id="042dce0c" class="cell" data-execution_count="71">
 <details class="code-fold">
 <summary>a thin slice</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb6-2"><a href="#cb6-2"></a>test_point <span class="op">=</span> [<span class="fl">0.6</span>, f(<span class="fl">0.6</span>)<span class="op">+</span><span class="fl">0.8</span>]</span>
 <span id="cb6-3"><a href="#cb6-3"></a>ax.plot(<span class="op">*</span>test_point, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">"o"</span>, markersize<span class="op">=</span><span class="dv">5</span>, mec<span class="op">=</span>pink, mfc<span class="op">=</span>pink)</span>
 <span id="cb6-4"><a href="#cb6-4"></a>ax.plot(x_grid, f(x_grid), color<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="vs">r"true function, </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
@@ -870,7 +871,7 @@ y = f(x) + \epsilon.
 <span id="cb6-18"><a href="#cb6-18"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="fl">0.54</span>, <span class="fl">0.66</span>),</span>
 <span id="cb6-19"><a href="#cb6-19"></a>       ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>),</span>
 <span id="cb6-20"><a href="#cb6-20"></a>       xlabel<span class="op">=</span><span class="st">"x"</span>,)<span class="op">;</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-21"><a href="#cb6-21"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -965,10 +966,10 @@ y = f(x) + \epsilon.
 \mathbb{E}_D[(\hat{f}(x) - y)^2\mid x] = \text{Var}\left[\hat{f}(x)\right] + \text{Bias}^2\left[\hat{f}(x)\right] + \sigma^2.
 </span></p>
 <p>We did all this hard work of deriving this decomposition to understand the different sources of error in our model. Hopefully, a good model will give a low expected error. Let’s see a few examples of repeated experiments, this time for polynomials of degree 3, 6, and 11.</p>
-<div id="29cfcc3d" class="cell" data-execution_count="38">
+<div id="29cfcc3d" class="cell" data-execution_count="72">
 <details class="code-fold">
 <summary>calculate mean and std for all degrees from 1 to 15</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>np.random.seed(<span class="dv">0</span>)</span>
 <span id="cb7-2"><a href="#cb7-2"></a>degree_max <span class="op">=</span> <span class="dv">15</span>  <span class="co"># degree of the fitted polynomial</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a>sigma <span class="op">=</span> <span class="fl">0.3</span>      <span class="co"># standard deviation of the noise</span></span>
 <span id="cb7-4"><a href="#cb7-4"></a>M <span class="op">=</span> <span class="dv">200</span>          <span class="co"># number of repeated experiments</span></span>
@@ -1001,13 +1002,13 @@ y = f(x) + \epsilon.
 <span id="cb7-31"><a href="#cb7-31"></a></span>
 <span id="cb7-32"><a href="#cb7-32"></a><span class="co"># calculate the mean prediction and its standard deviation across the M fitted models, for every point on the x-grid</span></span>
 <span id="cb7-33"><a href="#cb7-33"></a>mean_pred <span class="op">=</span> preds15.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-34"><a href="#cb7-34"></a>std_pred  <span class="op">=</span> preds15.std(axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-34"><a href="#cb7-34"></a>std_pred  <span class="op">=</span> preds15.std(axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="75f76a5c" class="cell" data-execution_count="39">
+<div id="75f76a5c" class="cell" data-execution_count="73">
 <details class="code-fold">
 <summary>plot 8 fitted functions from repeated experiments</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>np.random.seed(<span class="dv">0</span>)</span>
 <span id="cb8-2"><a href="#cb8-2"></a>degr <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">11</span>] <span class="co"># list of degrees to fit</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>sigma <span class="op">=</span> <span class="fl">0.3</span>      <span class="co"># standard deviation of the noise</span></span>
 <span id="cb8-4"><a href="#cb8-4"></a>M5 <span class="op">=</span> <span class="dv">5</span>          <span class="co"># number of repeated experiments</span></span>
@@ -1034,7 +1035,7 @@ y = f(x) + \epsilon.
 <span id="cb8-25"><a href="#cb8-25"></a>        ax[d, i].<span class="bu">set</span>(xlim<span class="op">=</span>(x_grid[<span class="dv">0</span>], x_grid[<span class="op">-</span><span class="dv">1</span>]),</span>
 <span id="cb8-26"><a href="#cb8-26"></a>                ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>),</span>
 <span id="cb8-27"><a href="#cb8-27"></a>                xticks<span class="op">=</span>[],</span>
-<span id="cb8-28"><a href="#cb8-28"></a>                yticks<span class="op">=</span>[])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-28"><a href="#cb8-28"></a>                yticks<span class="op">=</span>[])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1051,10 +1052,10 @@ y = f(x) + \epsilon.
 High variance: We can understand that high variance means that a model is highly sensitive to the specific data points it was trained on. If we were to train the same model on a different dataset, we would get a very different fitted function.
 </div>
 <p>Instead of showing spaghetti plots, we can compute the mean and standard deviation of all repeated experiments. It the plot below, the mean is the blue line, and the shaded area represents ±1 standard deviation.</p>
-<div id="89baaa8d" class="cell" data-execution_count="40">
+<div id="89baaa8d" class="cell" data-execution_count="74">
 <details class="code-fold">
 <summary>plot results for all degrees from 1 to 15</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a>ax <span class="op">=</span> ax.flatten()</span>
 <span id="cb9-3"><a href="#cb9-3"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span>):</span>
 <span id="cb9-4"><a href="#cb9-4"></a>    ax[i].plot(x_grid, f(x_grid), color<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"true function"</span>)</span>
@@ -1070,7 +1071,7 @@ High variance: We can understand that high variance means that a model is highly
 <span id="cb9-14"><a href="#cb9-14"></a>    ax[i].<span class="bu">set</span>(xlim<span class="op">=</span>(x_grid[<span class="dv">0</span>], x_grid[<span class="op">-</span><span class="dv">1</span>]),</span>
 <span id="cb9-15"><a href="#cb9-15"></a>              ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>),</span>
 <span id="cb9-16"><a href="#cb9-16"></a>              xticks<span class="op">=</span>[],</span>
-<span id="cb9-17"><a href="#cb9-17"></a>              yticks<span class="op">=</span>[])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-17"><a href="#cb9-17"></a>              yticks<span class="op">=</span>[])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1081,10 +1082,10 @@ High variance: We can understand that high variance means that a model is highly
 </div>
 </div>
 <p>We can actually see the bias and variance in these plots. To make it more clear, let’s focus on two polynomials: the 3rd degree and the 8th degree. The bias squared and the variance, shown in the middle and right columns, are just the square of the distances marked on the left column.</p>
-<div id="9bf0ac03" class="cell" data-execution_count="41">
+<div id="9bf0ac03" class="cell" data-execution_count="75">
 <details class="code-fold">
 <summary>bias-variance decomposition for deg=3 and deg=8</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
 <span id="cb10-3"><a href="#cb10-3"></a>deg_A <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb10-4"><a href="#cb10-4"></a>ax[<span class="dv">0</span>,<span class="dv">0</span>].plot(x_grid, f(x_grid), color<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"true function"</span>)</span>
@@ -1162,7 +1163,7 @@ High variance: We can understand that high variance means that a model is highly
 <span id="cb10-76"><a href="#cb10-76"></a>ax[<span class="dv">1</span>,<span class="dv">1</span>].text(<span class="fl">0.5</span>, <span class="fl">0.97</span>, <span class="vs">r"Bias</span><span class="dv">$^</span><span class="vs">2</span><span class="dv">$</span><span class="vs">"</span>, transform<span class="op">=</span>ax[<span class="dv">1</span>,<span class="dv">1</span>].transAxes,</span>
 <span id="cb10-77"><a href="#cb10-77"></a>         horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,)</span>
 <span id="cb10-78"><a href="#cb10-78"></a>ax[<span class="dv">1</span>,<span class="dv">2</span>].text(<span class="fl">0.5</span>, <span class="fl">0.97</span>, <span class="vs">r"Variance"</span>, transform<span class="op">=</span>ax[<span class="dv">1</span>,<span class="dv">2</span>].transAxes,</span>
-<span id="cb10-79"><a href="#cb10-79"></a>         horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-79"><a href="#cb10-79"></a>         horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1188,21 +1189,21 @@ High variance: We can understand that high variance means that a model is highly
 <li>We might know the true distribution of <span class="math inline">x</span> in the population, and use it to calculate the overall bias and variance. In our example, we might have access to census data that tells us the distribution of education levels in the population, and we can use this information to calculate the overall bias and variance of our model.</li>
 </ol>
 <p>For simplicity’s sake, let’s assume that <span class="math inline">x</span> is uniformly distributed in the interval <span class="math inline">[0, 1]</span>. See how the overall bias and variance change as we increase the degree of the polynomial.</p>
-<div id="f8c47a61" class="cell" data-execution_count="12">
+<div id="f8c47a61" class="cell" data-execution_count="76">
 <details class="code-fold">
 <summary>compute overall bias and variance</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>p_order <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">9</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>p_order <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">9</span>)</span>
 <span id="cb11-2"><a href="#cb11-2"></a>bias2 <span class="op">=</span> np.empty(<span class="bu">len</span>(p_order))</span>
 <span id="cb11-3"><a href="#cb11-3"></a>var <span class="op">=</span> np.empty(<span class="bu">len</span>(p_order))</span>
 <span id="cb11-4"><a href="#cb11-4"></a><span class="cf">for</span> i, deg <span class="kw">in</span> <span class="bu">enumerate</span>(p_order):</span>
 <span id="cb11-5"><a href="#cb11-5"></a>    bias2[i] <span class="op">=</span> np.mean((f(x_grid) <span class="op">-</span> mean_pred[:, deg<span class="op">-</span><span class="dv">1</span>])<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb11-6"><a href="#cb11-6"></a>    var[i] <span class="op">=</span> np.mean(std_pred[:, deg<span class="op">-</span><span class="dv">1</span>]<span class="op">**</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-6"><a href="#cb11-6"></a>    var[i] <span class="op">=</span> np.mean(std_pred[:, deg<span class="op">-</span><span class="dv">1</span>]<span class="op">**</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="1b3fe6e1" class="cell">
+<div id="1b3fe6e1" class="cell" data-execution_count="77">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
 <span id="cb12-2"><a href="#cb12-2"></a>ax.plot(p_order, bias2, label<span class="op">=</span><span class="st">"Bias²"</span>, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>gold)</span>
 <span id="cb12-3"><a href="#cb12-3"></a>ax.plot(p_order, var, label<span class="op">=</span><span class="st">"Variance"</span>, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>pink)</span>
 <span id="cb12-4"><a href="#cb12-4"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"Polynomial Degree"</span>,</span>
@@ -1210,7 +1211,7 @@ High variance: We can understand that high variance means that a model is highly
 <span id="cb12-6"><a href="#cb12-6"></a>       xticks<span class="op">=</span>p_order,</span>
 <span id="cb12-7"><a href="#cb12-7"></a>       title<span class="op">=</span><span class="st">"Bias-Variance Tradeoff"</span>,</span>
 <span id="cb12-8"><a href="#cb12-8"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">2</span>))<span class="op">;</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-9"><a href="#cb12-9"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1222,10 +1223,10 @@ High variance: We can understand that high variance means that a model is highly
 </div>
 <p>In broad terms, and for fixed data size and noise level, increasing the degree of the polynomial tends to decrease the bias and increase the variance. This is what we call the <strong>bias-variance tradeoff</strong>. A model with low bias and low variance would be ideal, but with finite data these two goals are typically in tension. Increasing model complexity can reduce bias, but often at the cost of increased variance; decreasing complexity has the opposite effect.</p>
 <p>The curves above are quite jagged, and we do not observe a smooth monotonic decrease in bias or increase in variance. This is partly because we are estimating bias and variance from a finite number of repeated experiments. To reduce this Monte Carlo noise and make the underlying trends clearer, we repeat the analysis below using 5000 experiments instead of 200, and sampling 50 data points per experiment instead of 20.</p>
-<div id="2738b852" class="cell">
+<div id="2738b852" class="cell" data-execution_count="84">
 <details class="code-fold">
 <summary>compute overall bias and variance for all degrees from 1 to 15</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># setup</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># setup</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>np.random.seed(<span class="dv">0</span>)</span>
 <span id="cb13-3"><a href="#cb13-3"></a>N <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb13-4"><a href="#cb13-4"></a>x_grid <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, N)</span>
@@ -1267,19 +1268,19 @@ High variance: We can understand that high variance means that a model is highly
 <span id="cb13-40"><a href="#cb13-40"></a>    var_list.append(np.mean(std_pred<span class="op">**</span><span class="dv">2</span>))</span>
 <span id="cb13-41"><a href="#cb13-41"></a></span>
 <span id="cb13-42"><a href="#cb13-42"></a>bias2_arr <span class="op">=</span> np.array(bias2_list)</span>
-<span id="cb13-43"><a href="#cb13-43"></a>var_arr <span class="op">=</span> np.array(var_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-43"><a href="#cb13-43"></a>var_arr <span class="op">=</span> np.array(var_list)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="7fae9601" class="cell" data-execution_count="43">
+<div id="7fae9601" class="cell" data-execution_count="85">
 <details class="code-fold">
 <summary>plot tradeoff</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb14-2"><a href="#cb14-2"></a>ax.plot(degrees, bias2_arr <span class="op">+</span> var_arr, lw<span class="op">=</span><span class="dv">5</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="st">"bias² + variance"</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
 <span id="cb14-3"><a href="#cb14-3"></a>ax.plot(degrees, bias2_arr, marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span><span class="st">"bias²"</span>, color<span class="op">=</span>gold)</span>
 <span id="cb14-4"><a href="#cb14-4"></a>ax.plot(degrees, var_arr, marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span><span class="st">"variance"</span>, color<span class="op">=</span>pink)</span>
 <span id="cb14-5"><a href="#cb14-5"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"polynomial degree"</span>, ylabel<span class="op">=</span><span class="st">"error"</span>, title<span class="op">=</span><span class="st">"bias-variance tradeoff"</span>)</span>
 <span id="cb14-6"><a href="#cb14-6"></a>ax.set_yscale(<span class="st">"log"</span>)</span>
-<span id="cb14-7"><a href="#cb14-7"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-7"><a href="#cb14-7"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1305,22 +1306,175 @@ High variance: We can understand that high variance means that a model is highly
 <li><span class="math inline">\left(\hat{f}(x) - f(x)\right)(\omega)</span>. Each experimental realization <span class="math inline">\omega</span> has its own value of <span class="math inline">\hat{f}(x) - f(x)</span>, and therefore we can think of <span class="math inline">\hat{f}(x) - f(x)</span> as a random variable. Again, this is calculated for a fixed value of <span class="math inline">x</span>, so it is a real number.</li>
 <li>You get the idea.</li>
 </ul>
-<p>The bias and variance are also random variables, because they are defined as functions of the random variable <span class="math inline">\hat{f}(x)</span>:</p>
-<p><span class="math display">\begin{align*}
-\text{Var}\left[\hat{f}(x)\right](\omega) &amp;= \left(\hat{f}(x)(\omega) - \mu(x)\right)^2, \\
-\text{Bias}^2\left[\hat{f}(x)\right](\omega) &amp;= \Bigl(\mu(x) - f(x)\Bigr)^2.
-\end{align*}</span></p>
-<p>In this tutorial we drew <span class="math inline">M</span> experimental realization out of <span class="math inline">\Omega</span>. For most of it we drew 200 experimental realizations, so think of a vector with 200 entries:</p>
+<p>It’s useful to see a figure from before to grasp these ideas. Below, you see 200 <span class="math inline">\omega</span> experimental realizations, each with its own fitted function <span class="math inline">\hat{f}(x)</span> in blue, plus a test point in pink. At the specific value of <span class="math inline">x</span> marked by the vertical dotted line, we can compute all sorts of random variables. Each of these random variables is a list of 200 real numbers, one for each experimental realization <span class="math inline">\omega</span>. We can imagine that each random variable is a vector in a 200-dimensional space, where each dimension corresponds to a specific experimental realization <span class="math inline">\omega</span>.</p>
+<div id="6a35bf1f" class="cell" data-execution_count="80">
+<details class="code-fold">
+<summary>a thin slice</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb15-2"><a href="#cb15-2"></a>test_point <span class="op">=</span> [<span class="fl">0.6</span>, f(<span class="fl">0.6</span>)<span class="op">+</span><span class="fl">0.8</span>]</span>
+<span id="cb15-3"><a href="#cb15-3"></a>ax.plot(<span class="op">*</span>test_point, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">"o"</span>, markersize<span class="op">=</span><span class="dv">5</span>, mec<span class="op">=</span>pink, mfc<span class="op">=</span>pink)</span>
+<span id="cb15-4"><a href="#cb15-4"></a>ax.plot(x_grid, f(x_grid), color<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="vs">r"true function, </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5"></a>ax.annotate(</span>
+<span id="cb15-6"><a href="#cb15-6"></a>    <span class="st">""</span>,</span>
+<span id="cb15-7"><a href="#cb15-7"></a>    xy<span class="op">=</span>(<span class="fl">0.6</span>, f(<span class="fl">0.6</span>)),</span>
+<span id="cb15-8"><a href="#cb15-8"></a>    xytext<span class="op">=</span><span class="bu">tuple</span>(test_point),</span>
+<span id="cb15-9"><a href="#cb15-9"></a>    arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"&lt;-&gt;"</span>, color<span class="op">=</span>pink, lw<span class="op">=</span><span class="fl">1.5</span>, connectionstyle<span class="op">=</span><span class="st">"bar,fraction=-0.5"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10"></a>                    shrinkA<span class="op">=</span><span class="dv">5</span>, shrinkB<span class="op">=</span><span class="dv">5</span>),</span>
+<span id="cb15-11"><a href="#cb15-11"></a>)</span>
+<span id="cb15-12"><a href="#cb15-12"></a>ax.text(test_point[<span class="dv">0</span>]<span class="op">+</span><span class="fl">0.010</span>, test_point[<span class="dv">1</span>], <span class="vs">r"</span><span class="dv">$</span><span class="vs">y=f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="op">+</span><span class="er">\</span><span class="vs">epsilon</span><span class="dv">$</span><span class="vs">"</span>, color<span class="op">=</span>pink, fontsize<span class="op">=</span><span class="dv">14</span>, ha<span class="op">=</span><span class="st">"left"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb15-13"><a href="#cb15-13"></a>ax.plot([], [], color<span class="op">=</span>blue, label<span class="op">=</span><span class="vs">r"fitted functions, </span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{f}_m</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb15-14"><a href="#cb15-14"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-15"><a href="#cb15-15"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(M):</span>
+<span id="cb15-16"><a href="#cb15-16"></a>    ax.plot(x_grid, preds[m, :], color<span class="op">=</span>blue, alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb15-17"><a href="#cb15-17"></a>ax.axvline(x<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span>gold, linestyle<span class="op">=</span><span class="st">":"</span>)</span>
+<span id="cb15-18"><a href="#cb15-18"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="fl">0.54</span>, <span class="fl">0.66</span>),</span>
+<span id="cb15-19"><a href="#cb15-19"></a>       ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>),</span>
+<span id="cb15-20"><a href="#cb15-20"></a>       xlabel<span class="op">=</span><span class="st">"x"</span>,)<span class="op">;</span></span>
+<span id="cb15-21"><a href="#cb15-21"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bias-variance-tradeoff_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When we talked about the bias-variance tradeoff, we ran a simulation where we increased the number of experiments to 5000. There, the random variables were vectors that “lived” in a 5000-dimensional space, and we had 5000 real numbers for each random variable, one for each experimental realization <span class="math inline">\omega</span>.</p>
+<p>The idea now is that we can imagine taking an infinite number of experimental realizations <span class="math inline">\omega</span> from <span class="math inline">\Omega</span>, and for each of them we can compute the random variables mentioned above. Now, the random variables are vectors in an infinite-dimensional space.</p>
+<p>This infinite dimensional space is a Hilbert space. A Hilbert space is a complete inner product space. Let’s unpack this definition, from the last word to the first:</p>
+<ul>
+<li><strong>space</strong>: a set of objects (in our case, random variables) that we can add together and multiply by scalars, and that satisfy the usual vector space properties (e.g.&nbsp;associativity, commutativity, distributivity, etc.).</li>
+<li><strong>inner product</strong>: a function that takes two objects from the space and returns a real number, that satisfies certain properties (e.g.&nbsp;positivity, linearity, symmetry, etc.). In our case, the inner product is defined as the expected value of the product of two (square-integrable) random variables: <span class="math display">
+\langle A, B \rangle = \mathbb{E}[A \cdot B].
+</span> From the inner product, we also get the notion of a norm, which is defined as the square root of the inner product of a random variable with itself: <span class="math display">
+  \|A\| = \sqrt{\langle A, A \rangle} = \sqrt{\mathbb{E}[A^2]}.
+</span> The norm gives us a way to measure the “length” of a random variable, and the inner product gives us a way to measure the “angle” between two random variables. In particular, if the inner product of two random variables is zero, we say that they are orthogonal. Finally, the qualifier “square-integrable” means that a random variable <span class="math inline">A</span> has finite norm, that is, <span class="math inline">\|A\| &lt; \infty</span> (equivalently, <span class="math inline">\mathbb{E}[A^2] &lt; \infty</span>).</li>
+<li><strong>complete</strong>: informally, a space is complete if it contains all the limits of sequences formed from its own elements. In our setting, this means that if a sequence of random variables becomes closer and closer in average squared distance, then their limiting random variable also belongs to the space. Completeness ensures that no “gaps” exist: limits of meaningful constructions do not fall outside the space.</li>
+</ul>
+<p>See how the whole derivation of the bias-variance-noise decomposition can be understood as operations on vectors in a Hilbert space, where the inner product is defined by expectation. The point-wise error at <span class="math inline">x</span> was defined as: The point-wise error at <span class="math inline">x</span> was defined as:</p>
 <p><span class="math display">
-\{\omega_1, \omega_2, \ldots, \omega_{200}\}\in\Omega.
+\text{error} = \hat{f} - y = \hat{f} - f - \epsilon.
 </span></p>
-<p>From this vector we can calculate all the random variables mentioned above:</p>
+<p>We will do the same trick of adding and subtracting <span class="math inline">\mu(x)</span>, but first let’s interpret what it means:</p>
+<p><span class="math display">
+\mu(x) = \mathbb{E}[\hat{f}(x)] = \mathbb{E}[\hat{f}(x)\cdot 1] = \langle \hat{f}(x), 1 \rangle.
+</span></p>
+<p>The mean predictor can be understood as the projection of the random variable <span class="math inline">\hat{f}(x)</span> onto the constant random variable <span class="math inline">1</span>. Attention: <span class="math inline">\mu</span> is a constant scalar, not a random variable, and we will treat it as such in what follows.</p>
+<p>Now we can rewrite the error as:</p>
 <p><span class="math display">\begin{align*}
-\{\epsilon(\omega_1), \epsilon(\omega_2), \ldots, \epsilon(\omega_{200})\} \\
-\{\hat{f}(x)(\omega_1), \hat{f}(x)(\omega_2), \ldots, \hat{f}(x)(\omega_{200})\} \\
-\text{etc.}
+\text{error} &amp;= \underbrace{\left(\hat{f} - \mu\right)}_{\text{variance vector}} + \underbrace{\left(\mu - f\right)}_{\text{bias vector}} + \underbrace{\epsilon}_{\text{irreducible noise vector}}\\
+&amp;\text{or simply...}\\
+\text{error} &amp;= \vec{V} +\vec{B} +\vec{\epsilon}
 \end{align*}</span></p>
-<p>but in the last section we drew 5000. The bias and variance are defined as follows:</p>
+<p>We wish the best possible model, and that is one that minimizes the length of the error vector. The squared length of the error vector is given by its squared norm:</p>
+<p><span class="math display">\begin{align*}
+\|\text{error}\|^2 &amp;= \mathbb{E}\left[\left(\vec{V} +\vec{B} +\vec{\epsilon}\right)^2\right] \\
+&amp;= \mathbb{E}\left[\left(\vec{V} +\vec{B} +\vec{\epsilon}\right)\cdot\left(\vec{V} +\vec{B} +\vec{\epsilon}\right)\right] \\
+&amp;= \mathbb{E}\left[\vec{V}^2 +\vec{B}^2 +\vec{\epsilon}^2 + 2\vec{V}\cdot\vec{B} + 2\vec{V}\cdot\vec{\epsilon} + 2\vec{B}\cdot\vec{\epsilon}\right] \\
+&amp;= \mathbb{E}\left[\vec{V}^2 + \vec{B}^2 + \vec{\epsilon}^2\right] + 2\mathbb{E}\left[\vec{V}\cdot\vec{B} + \vec{V}\cdot\vec{\epsilon} + \vec{B}\cdot\vec{\epsilon}\right]
+\end{align*}</span> The last line has two terms. The first term is the sum of the squared lengths of the variance, bias, and noise vectors. This is our end result. All we need to show now is that all the mixed terms are zero, that is, that the vectors for bias, variance, and noise are mutually orthogonal.</p>
+<ul>
+<li><span class="math inline">\vec{V}\cdot\vec{B} = 0</span>: The inner product of these two vectors is: <span class="math display">
+  \langle \vec{V}, \vec{B} \rangle = \mathbb{E}\left[(\hat{f} - \mu)(\mu - f)\right].
+  </span> Since both <span class="math inline">\mu</span> and <span class="math inline">f</span> are constants, we can take them out of the expectation operator, and we get: <span class="math display">
+  \langle \vec{V}, \vec{B} \rangle = \mathbb{E}\left[\hat{f}(\mu - f)\right] - \mu(\mu - f) = \mu(\mu - f) - \mu(\mu - f) = 0.
+  </span></li>
+<li><span class="math inline">\vec{V}\cdot\vec{\epsilon} = 0</span>: The inner product of these two vectors is: <span class="math display">
+  \langle \vec{V}, \vec{\epsilon} \rangle = \mathbb{E}\left[(\hat{f} - \mu)\epsilon\right].
+  </span> Since <span class="math inline">\epsilon</span> is independent of <span class="math inline">\hat{f}</span> and has zero mean, we have: <span class="math display">
+  \langle \vec{V}, \vec{\epsilon} \rangle = \mathbb{E}\left[\hat{f}\epsilon\right] - \mu\mathbb{E}\left[\epsilon\right] = 0 - \mu\cdot 0 = 0.
+  </span></li>
+<li><span class="math inline">\vec{B}\cdot\vec{\epsilon} = 0</span>: The inner product of these two vectors is: <span class="math display">
+  \langle \vec{B}, \vec{\epsilon} \rangle = \mathbb{E}\left[(\mu - f)\epsilon\right].
+  </span> Since <span class="math inline">\epsilon</span> is independent of <span class="math inline">\mu</span> and <span class="math inline">f</span>, and has zero mean, we have: <span class="math display">
+  \langle \vec{B}, \vec{\epsilon} \rangle = (\mu - f)\mathbb{E}\left[\epsilon\right] = (\mu - f)\cdot 0 = 0.
+  </span></li>
+</ul>
+<p>This is it, now we have</p>
+<p><span class="math display">
+\|\text{error}\|^2 = \mathbb{E}\left[\vec{V}^2 + \vec{B}^2 + \vec{\epsilon}^2\right] = \text{Var}\left[\hat{f}(x)\right] + \text{Bias}^2\left[\hat{f}(x)\right] + \sigma^2.
+</span></p>
+<p>The image that I have in my head, and that shows that the result above is a manifestation of the Pythagorean theorem, is this:</p>
+<div id="3f0a4f3e" class="cell" data-execution_count="81">
+<details class="code-fold">
+<summary>error vector in 3d</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># create figure and 3d axis</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-3"><a href="#cb16-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a>x0 <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span> y0 <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> z0 <span class="op">=</span> <span class="fl">0.8</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="co"># define vectors</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>x1 <span class="op">=</span> np.array([x0, <span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb16-8"><a href="#cb16-8"></a>x2 <span class="op">=</span> np.array([<span class="dv">0</span>, y0, <span class="dv">0</span>])</span>
+<span id="cb16-9"><a href="#cb16-9"></a>x3 <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">0</span>, z0])</span>
+<span id="cb16-10"><a href="#cb16-10"></a></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="co"># plot coordinate axes</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a>ax.quiver(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="op">*</span>x1, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, arrow_length_ratio<span class="op">=</span><span class="fl">0.1</span><span class="op">/</span>x0)</span>
+<span id="cb16-13"><a href="#cb16-13"></a>ax.quiver(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="op">*</span>x2, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, arrow_length_ratio<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb16-14"><a href="#cb16-14"></a>ax.quiver(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="op">*</span>x3, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, arrow_length_ratio<span class="op">=</span><span class="fl">0.1</span><span class="op">/</span>z0)</span>
+<span id="cb16-15"><a href="#cb16-15"></a></span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="co"># label axes</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a>ax.text(x0 <span class="op">+</span> <span class="fl">0.05</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="vs">r'</span><span class="dv">$</span><span class="ch">\v</span><span class="vs">ec{V}</span><span class="dv">$</span><span class="vs">'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb16-18"><a href="#cb16-18"></a>ax.text(<span class="dv">0</span>, y0 <span class="op">+</span> <span class="fl">0.05</span>, <span class="dv">0</span>, <span class="vs">r'</span><span class="dv">$</span><span class="ch">\v</span><span class="vs">ec{B}</span><span class="dv">$</span><span class="vs">'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb16-19"><a href="#cb16-19"></a>ax.text(<span class="dv">0</span>, <span class="dv">0</span>, z0 <span class="op">+</span> <span class="fl">0.05</span>, <span class="vs">r'</span><span class="dv">$</span><span class="ch">\v</span><span class="vs">ec{</span><span class="er">\</span><span class="vs">epsilon}</span><span class="dv">$</span><span class="vs">'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb16-20"><a href="#cb16-20"></a></span>
+<span id="cb16-21"><a href="#cb16-21"></a><span class="co"># define cube corners</span></span>
+<span id="cb16-22"><a href="#cb16-22"></a></span>
+<span id="cb16-23"><a href="#cb16-23"></a>corners <span class="op">=</span> np.array([</span>
+<span id="cb16-24"><a href="#cb16-24"></a>    [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb16-25"><a href="#cb16-25"></a>    [x0, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb16-26"><a href="#cb16-26"></a>    [x0, y0, <span class="dv">0</span>],</span>
+<span id="cb16-27"><a href="#cb16-27"></a>    [<span class="dv">0</span>, y0, <span class="dv">0</span>],</span>
+<span id="cb16-28"><a href="#cb16-28"></a>    [<span class="dv">0</span>, <span class="dv">0</span>, z0],</span>
+<span id="cb16-29"><a href="#cb16-29"></a>    [x0, <span class="dv">0</span>, z0],</span>
+<span id="cb16-30"><a href="#cb16-30"></a>    [x0, y0, z0],</span>
+<span id="cb16-31"><a href="#cb16-31"></a>    [<span class="dv">0</span>, y0, z0],</span>
+<span id="cb16-32"><a href="#cb16-32"></a>])</span>
+<span id="cb16-33"><a href="#cb16-33"></a></span>
+<span id="cb16-34"><a href="#cb16-34"></a><span class="co"># cube edges</span></span>
+<span id="cb16-35"><a href="#cb16-35"></a>edges <span class="op">=</span> [</span>
+<span id="cb16-36"><a href="#cb16-36"></a>    (<span class="dv">0</span>, <span class="dv">1</span>), (<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">2</span>, <span class="dv">3</span>), (<span class="dv">3</span>, <span class="dv">0</span>),</span>
+<span id="cb16-37"><a href="#cb16-37"></a>    (<span class="dv">4</span>, <span class="dv">5</span>), (<span class="dv">5</span>, <span class="dv">6</span>), (<span class="dv">6</span>, <span class="dv">7</span>), (<span class="dv">7</span>, <span class="dv">4</span>),</span>
+<span id="cb16-38"><a href="#cb16-38"></a>    (<span class="dv">0</span>, <span class="dv">4</span>), (<span class="dv">1</span>, <span class="dv">5</span>), (<span class="dv">2</span>, <span class="dv">6</span>), (<span class="dv">3</span>, <span class="dv">7</span>),</span>
+<span id="cb16-39"><a href="#cb16-39"></a>]</span>
+<span id="cb16-40"><a href="#cb16-40"></a></span>
+<span id="cb16-41"><a href="#cb16-41"></a><span class="co"># draw cube</span></span>
+<span id="cb16-42"><a href="#cb16-42"></a><span class="cf">for</span> i, j <span class="kw">in</span> edges:</span>
+<span id="cb16-43"><a href="#cb16-43"></a>    ax.plot(<span class="op">*</span><span class="bu">zip</span>(corners[i], corners[j]), color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-44"><a href="#cb16-44"></a></span>
+<span id="cb16-45"><a href="#cb16-45"></a><span class="co"># diagonal vector</span></span>
+<span id="cb16-46"><a href="#cb16-46"></a>diag <span class="op">=</span> x1 <span class="op">+</span> x2 <span class="op">+</span> x3</span>
+<span id="cb16-47"><a href="#cb16-47"></a>diag_length <span class="op">=</span> np.linalg.norm(diag)</span>
+<span id="cb16-48"><a href="#cb16-48"></a>ax.quiver(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="op">*</span>diag, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, arrow_length_ratio<span class="op">=</span><span class="fl">0.1</span><span class="op">/</span>diag_length)</span>
+<span id="cb16-49"><a href="#cb16-49"></a></span>
+<span id="cb16-50"><a href="#cb16-50"></a><span class="co"># label diagonal</span></span>
+<span id="cb16-51"><a href="#cb16-51"></a>ax.text(<span class="op">*</span>(diag <span class="op">+</span> <span class="fl">0.05</span>), <span class="vs">r'error</span><span class="dv">$</span><span class="vs">=</span><span class="ch">\v</span><span class="vs">ec{V} </span><span class="op">+</span><span class="vs"> </span><span class="ch">\v</span><span class="vs">ec{B} </span><span class="op">+</span><span class="vs"> </span><span class="ch">\v</span><span class="vs">ec{</span><span class="er">\</span><span class="vs">epsilon}</span><span class="dv">$</span><span class="vs">'</span>, color<span class="op">=</span><span class="st">'red'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb16-52"><a href="#cb16-52"></a></span>
+<span id="cb16-53"><a href="#cb16-53"></a><span class="co"># limits and aspect</span></span>
+<span id="cb16-54"><a href="#cb16-54"></a>ax.set_xlim(<span class="dv">0</span>, <span class="fl">1.2</span>)</span>
+<span id="cb16-55"><a href="#cb16-55"></a>ax.set_ylim(<span class="dv">0</span>, <span class="fl">1.2</span>)</span>
+<span id="cb16-56"><a href="#cb16-56"></a>ax.set_zlim(<span class="dv">0</span>, <span class="fl">1.2</span>)</span>
+<span id="cb16-57"><a href="#cb16-57"></a>ax.set_box_aspect([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb16-58"><a href="#cb16-58"></a></span>
+<span id="cb16-59"><a href="#cb16-59"></a><span class="co"># hide axes completely</span></span>
+<span id="cb16-60"><a href="#cb16-60"></a>ax.set_axis_off()</span>
+<span id="cb16-61"><a href="#cb16-61"></a></span>
+<span id="cb16-62"><a href="#cb16-62"></a><span class="co"># lower viewing angle</span></span>
+<span id="cb16-63"><a href="#cb16-63"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">80</span>)</span>
+<span id="cb16-64"><a href="#cb16-64"></a></span>
+<span id="cb16-65"><a href="#cb16-65"></a>plt.tight_layout()</span>
+<span id="cb16-66"><a href="#cb16-66"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bias-variance-tradeoff_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As usual in Math, we first had to think of our entities in a more abstract (and maybe less intuitive) way, so we could get a short a beautiful derivation of the bias-variance-noise decomposition.</p>
 
 
 </section>
@@ -1377,13 +1531,14 @@ High variance: We can understand that high variance means that a model is highly
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
