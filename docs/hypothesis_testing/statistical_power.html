@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -119,7 +118,7 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -151,7 +150,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -193,8 +192,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -845,20 +843,20 @@ Z_{H_1} \sim \mathcal{N}\left(d\sqrt{\frac{n}{2}}, 1\right).
 <div id="632550d2" class="cell" data-execution_count="45">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
 <span id="cb1-6"><a href="#cb1-6"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span>
 <span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm, ttest_ind, t</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># %matplotlib widget</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># %matplotlib widget</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="d1be5d42" class="cell" data-execution_count="46">
 <details class="code-fold">
 <summary>load data</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>df_girls <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/girls_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>age <span class="op">=</span> <span class="fl">12.0</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a>mu_boys <span class="op">=</span> df_boys.loc[age, <span class="st">'mu'</span>]</span>
@@ -867,13 +865,13 @@ Z_{H_1} \sim \mathcal{N}\left(d\sqrt{\frac{n}{2}}, 1\right).
 <span id="cb2-7"><a href="#cb2-7"></a>sigma_girls <span class="op">=</span> df_girls.loc[age, <span class="st">'sigma'</span>]</span>
 <span id="cb2-8"><a href="#cb2-8"></a>sigma <span class="op">=</span> (sigma_boys <span class="op">+</span> sigma_girls)<span class="op">/</span><span class="dv">2</span></span>
 <span id="cb2-9"><a href="#cb2-9"></a>Delta <span class="op">=</span> (mu_girls <span class="op">-</span> mu_boys)</span>
-<span id="cb2-10"><a href="#cb2-10"></a>cohens_d <span class="op">=</span> Delta <span class="op">/</span> sigma</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-10"><a href="#cb2-10"></a>cohens_d <span class="op">=</span> Delta <span class="op">/</span> sigma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="33330b18" class="cell" data-execution_count="55">
 <details class="code-fold">
 <summary>widget</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># --- Parameters ---</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># --- Parameters ---</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>seed <span class="op">=</span> <span class="dv">2</span>  <span class="co"># change this to any int (or set to None for non-reproducible draws)</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>delta <span class="op">=</span> mu_girls <span class="op">-</span> mu_boys</span>
 <span id="cb3-4"><a href="#cb3-4"></a>num_samples_dist <span class="op">=</span> <span class="dv">5000</span></span>
@@ -1029,7 +1027,7 @@ Z_{H_1} \sim \mathcal{N}\left(d\sqrt{\frac{n}{2}}, 1\right).
 <span id="cb3-154"><a href="#cb3-154"></a>    )</span>
 <span id="cb3-155"><a href="#cb3-155"></a>)</span>
 <span id="cb3-156"><a href="#cb3-156"></a></span>
-<span id="cb3-157"><a href="#cb3-157"></a>chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-157"><a href="#cb3-157"></a>chart</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="55">
 
@@ -1107,7 +1105,7 @@ Z_{H_1} \sim \mathcal{N}\left(d\sqrt{\frac{n}{2}}, 1\right).
 <div id="bf8e6455" class="cell" data-execution_count="56">
 <details class="code-fold">
 <summary>widget</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
 <span id="cb4-4"><a href="#cb4-4"></a></span>
@@ -1225,7 +1223,7 @@ Z_{H_1} \sim \mathcal{N}\left(d\sqrt{\frac{n}{2}}, 1\right).
 <span id="cb4-116"><a href="#cb4-116"></a>    )</span>
 <span id="cb4-117"><a href="#cb4-117"></a>)</span>
 <span id="cb4-118"><a href="#cb4-118"></a></span>
-<span id="cb4-119"><a href="#cb4-119"></a>chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-119"><a href="#cb4-119"></a>chart</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="56">
 
@@ -1300,8 +1298,8 @@ Z_{H_1} \sim \mathcal{N}\left(d\sqrt{\frac{n}{2}}, 1\right).
 </div>
 <p>The statistical significance <span class="math inline">\alpha</span> determines where we put the border between rejecting H0 or not. In this example, <span class="math inline">\alpha=0.05</span>, and because we are dealing with a one-sided test, this border is located at the value of <span class="math inline">Z</span> that leaves 0.05 of the area below H0 to its right. This is the same as leaving <span class="math inline">1-\alpha=0.95</span> of the area to its left, so a common name in the literature is <span class="math inline">z_{1-\alpha}</span>. The cumulative distribution function (CDF) is the integral of the probability density function (PDF) from <span class="math inline">-\infty</span> to <span class="math inline">z</span>, so it quantifies the area to the <strong>left</strong> of <span class="math inline">z</span>. We need the value <span class="math inline">z</span> for which the CDF is equal to <span class="math inline">1-\alpha</span>. Luckily, we can use python’s <code>scipy.stats.norm.ppf</code> function to get this value:</p>
 <div id="bf46586f" class="cell" data-execution_count="49">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>zcrit <span class="op">=</span> norm.ppf(<span class="fl">0.95</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="bu">print</span>(<span class="ss">f"zcrit (for α=0.05) = </span><span class="sc">{</span>zcrit<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>zcrit <span class="op">=</span> norm.ppf(<span class="fl">0.95</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="bu">print</span>(<span class="ss">f"zcrit (for α=0.05) = </span><span class="sc">{</span>zcrit<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>zcrit (for α=0.05) = 1.6449</code></pre>
 </div>
@@ -1310,7 +1308,7 @@ Z_{H_1} \sim \mathcal{N}\left(d\sqrt{\frac{n}{2}}, 1\right).
 <div id="656bde46" class="cell" data-execution_count="50">
 <details class="code-fold">
 <summary>widget</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
 <span id="cb7-4"><a href="#cb7-4"></a></span>
@@ -1481,7 +1479,7 @@ Z_{H_1} \sim \mathcal{N}\left(d\sqrt{\frac{n}{2}}, 1\right).
 <span id="cb7-169"><a href="#cb7-169"></a>    .configure_title(fontSize<span class="op">=</span><span class="dv">20</span>, anchor<span class="op">=</span><span class="st">"start"</span>, offset<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb7-170"><a href="#cb7-170"></a>)</span>
 <span id="cb7-171"><a href="#cb7-171"></a></span>
-<span id="cb7-172"><a href="#cb7-172"></a>chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-172"><a href="#cb7-172"></a>chart</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="50">
 
@@ -1579,11 +1577,11 @@ Z_{H_1} \sim \mathcal{N}\left(\frac{\Delta}{\sigma}\sqrt{\frac{n}{2}}, 1\right).
 <li>We want to have a statistical power of <span class="math inline">1-\beta=0.8</span>.</li>
 </ul>
 <div id="11d05f8d" class="cell" data-execution_count="51">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">import</span> statsmodels.stats.power <span class="im">as</span> smp</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">import</span> statsmodels.stats.power <span class="im">as</span> smp</span>
 <span id="cb8-2"><a href="#cb8-2"></a>power_analysis <span class="op">=</span> smp.TTestIndPower()</span>
 <span id="cb8-3"><a href="#cb8-3"></a>cohens_d <span class="op">=</span> Delta <span class="op">/</span> sigma</span>
 <span id="cb8-4"><a href="#cb8-4"></a>sample_size <span class="op">=</span> power_analysis.solve_power(effect_size<span class="op">=</span>cohens_d, power<span class="op">=</span><span class="fl">0.8</span>, alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="bu">print</span>(<span class="ss">f"sample size: </span><span class="sc">{</span>sample_size<span class="sc">:.0f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="bu">print</span>(<span class="ss">f"sample size: </span><span class="sc">{</span>sample_size<span class="sc">:.0f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>sample size: 206</code></pre>
 </div>
@@ -1592,7 +1590,7 @@ Z_{H_1} \sim \mathcal{N}\left(\frac{\Delta}{\sigma}\sqrt{\frac{n}{2}}, 1\right).
 <div id="4e5865f7" class="cell" data-execution_count="52">
 <details class="code-fold">
 <summary>power curve</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>normalized_effect_sizes <span class="op">=</span> np.array([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>])</span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>normalized_effect_sizes <span class="op">=</span> np.array([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>])</span>
 <span id="cb10-2"><a href="#cb10-2"></a>sample_sizes <span class="op">=</span> np.array(<span class="bu">range</span>(<span class="dv">3</span>, <span class="dv">500</span>, <span class="dv">1</span>))</span>
 <span id="cb10-3"><a href="#cb10-3"></a>fig <span class="op">=</span> plt.figure()</span>
 <span id="cb10-4"><a href="#cb10-4"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
@@ -1602,7 +1600,7 @@ Z_{H_1} \sim \mathcal{N}\left(\frac{\Delta}{\sigma}\sqrt{\frac{n}{2}}, 1\right).
 <span id="cb10-8"><a href="#cb10-8"></a>    title<span class="op">=</span><span class="st">'Power of Independent Samples t-test</span><span class="ch">\n</span><span class="st">$</span><span class="ch">\\</span><span class="st">alpha = 0.05$'</span>)</span>
 <span id="cb10-9"><a href="#cb10-9"></a>ax.axhline(<span class="fl">0.8</span>, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'80% Power'</span>)</span>
 <span id="cb10-10"><a href="#cb10-10"></a>ax.legend([<span class="st">'d = 0.2'</span>, <span class="st">'d = 0.5'</span>, <span class="st">'d = 0.8'</span>, <span class="st">'80% Power'</span>])</span>
-<span id="cb10-11"><a href="#cb10-11"></a>ax.<span class="bu">set</span>(ylabel<span class="op">=</span><span class="st">'Power'</span>, xlabel<span class="op">=</span><span class="st">'Sample Size per Group'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-11"><a href="#cb10-11"></a>ax.<span class="bu">set</span>(ylabel<span class="op">=</span><span class="st">'Power'</span>, xlabel<span class="op">=</span><span class="st">'Sample Size per Group'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1623,12 +1621,12 @@ Z_{H_1} \sim \mathcal{N}\left(\frac{\Delta}{\sigma}\sqrt{\frac{n}{2}}, 1\right).
 <li>The sample size is fixed to <span class="math inline">n=50</span>.</li>
 </ul>
 <div id="424cc6b2" class="cell" data-execution_count="53">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="im">import</span> statsmodels.stats.power <span class="im">as</span> smp</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="im">import</span> statsmodels.stats.power <span class="im">as</span> smp</span>
 <span id="cb11-2"><a href="#cb11-2"></a>power_analysis <span class="op">=</span> smp.TTestIndPower()</span>
 <span id="cb11-3"><a href="#cb11-3"></a>sample_size <span class="op">=</span> <span class="dv">50</span></span>
 <span id="cb11-4"><a href="#cb11-4"></a>effect_size <span class="op">=</span> power_analysis.solve_power(nobs1<span class="op">=</span>sample_size, power<span class="op">=</span><span class="fl">0.8</span>, alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
 <span id="cb11-5"><a href="#cb11-5"></a><span class="bu">print</span>(<span class="ss">f"minimum detectable effect size: Cohen's d = </span><span class="sc">{</span>effect_size<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb11-6"><a href="#cb11-6"></a><span class="bu">print</span>(<span class="ss">f"minimum detectable effect size: Delta = </span><span class="sc">{</span>effect_size <span class="op">*</span> sigma<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="bu">print</span>(<span class="ss">f"minimum detectable effect size: Delta = </span><span class="sc">{</span>effect_size <span class="op">*</span> sigma<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>minimum detectable effect size: Cohen's d = 0.57
 minimum detectable effect size: Delta = 4.18 cm</code></pre>
@@ -1637,7 +1635,7 @@ minimum detectable effect size: Delta = 4.18 cm</code></pre>
 <div id="5c41caae" class="cell" data-execution_count="54">
 <details class="code-fold">
 <summary>power curve</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>effect_sizes <span class="op">=</span> np.arange(<span class="fl">0.01</span>, <span class="fl">1.01</span>, <span class="fl">0.01</span>)</span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>effect_sizes <span class="op">=</span> np.arange(<span class="fl">0.01</span>, <span class="fl">1.01</span>, <span class="fl">0.01</span>)</span>
 <span id="cb13-2"><a href="#cb13-2"></a>sample_sizes <span class="op">=</span> np.array([<span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">250</span>])</span>
 <span id="cb13-3"><a href="#cb13-3"></a>fig <span class="op">=</span> plt.figure()</span>
 <span id="cb13-4"><a href="#cb13-4"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
@@ -1648,7 +1646,7 @@ minimum detectable effect size: Delta = 4.18 cm</code></pre>
 <span id="cb13-9"><a href="#cb13-9"></a></span>
 <span id="cb13-10"><a href="#cb13-10"></a>ax.axhline(<span class="fl">0.8</span>, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'80% Power'</span>)</span>
 <span id="cb13-11"><a href="#cb13-11"></a>ax.legend([<span class="st">'n = 20'</span>, <span class="st">'n = 50'</span>, <span class="st">'n = 250'</span>, <span class="st">'80% Power'</span>])</span>
-<span id="cb13-12"><a href="#cb13-12"></a>ax.<span class="bu">set</span>(ylabel<span class="op">=</span><span class="st">'Power'</span>, xlabel<span class="op">=</span><span class="st">'Effect Size (d)'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-12"><a href="#cb13-12"></a>ax.<span class="bu">set</span>(ylabel<span class="op">=</span><span class="st">'Power'</span>, xlabel<span class="op">=</span><span class="st">'Effect Size (d)'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1715,14 +1713,13 @@ minimum detectable effect size: Delta = 4.18 cm</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

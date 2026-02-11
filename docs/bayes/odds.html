@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -147,7 +146,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -189,8 +188,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -780,17 +778,17 @@ P(\text{Disease}) = \frac{23 + 6}{23 + 117 + 6 + 210} = \frac{29}{356} \approx 0
 <div id="cell-3" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-5"><a href="#cb1-5"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-5"><a href="#cb1-5"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="cell-4" class="cell" data-execution_count="33">
 <details class="code-fold">
 <summary>visualize</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
 <span id="cb2-3"><a href="#cb2-3"></a>p <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
 <span id="cb2-4"><a href="#cb2-4"></a>odds <span class="op">=</span> p <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> p)</span>
@@ -819,7 +817,7 @@ P(\text{Disease}) = \frac{23 + 6}{23 + 117 + 6 + 210} = \frac{29}{356} \approx 0
 <span id="cb2-27"><a href="#cb2-27"></a>ax[<span class="dv">1</span>].annotate(<span class="st">"more likely</span><span class="ch">\n</span><span class="st">than not"</span>, xy<span class="op">=</span>(<span class="fl">0.25</span>, <span class="dv">0</span>), xytext<span class="op">=</span>(<span class="fl">0.25</span>, <span class="dv">1</span>),</span>
 <span id="cb2-28"><a href="#cb2-28"></a>               ha<span class="op">=</span><span class="st">"center"</span>, arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"&lt;-"</span>, color<span class="op">=</span><span class="st">"gray"</span>))</span>
 <span id="cb2-29"><a href="#cb2-29"></a>ax[<span class="dv">1</span>].annotate(<span class="st">"less likely"</span>, xy<span class="op">=</span>(<span class="fl">0.75</span>, <span class="dv">0</span>), xytext<span class="op">=</span>(<span class="fl">0.75</span>, <span class="op">-</span><span class="dv">1</span>),</span>
-<span id="cb2-30"><a href="#cb2-30"></a>               ha<span class="op">=</span><span class="st">"center"</span>, arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"&lt;-"</span>, color<span class="op">=</span><span class="st">"gray"</span>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-30"><a href="#cb2-30"></a>               ha<span class="op">=</span><span class="st">"center"</span>, arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"&lt;-"</span>, color<span class="op">=</span><span class="st">"gray"</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/var/folders/cn/m58l7p_j6j10_4c43j4pd8gw0000gq/T/ipykernel_10104/1581004145.py:5: RuntimeWarning: divide by zero encountered in divide
@@ -957,14 +955,13 @@ P(H|E) = \frac{\text{Posterior Odds}}{1 + \text{Posterior Odds}} = \frac{0.197}{
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

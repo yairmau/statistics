@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -119,6 +118,49 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -146,8 +188,7 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -625,8 +666,16 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#evaluating-performance-the-wrong-way" id="toc-evaluating-performance-the-wrong-way" class="nav-link active" data-scroll-target="#evaluating-performance-the-wrong-way"><span class="header-section-number">47.1</span> evaluating performance the wrong way</a></li>
+  <li><a href="#the-right-way" id="toc-the-right-way" class="nav-link" data-scroll-target="#the-right-way"><span class="header-section-number">47.2</span> the right way</a></li>
+  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">47.3</span> concluding remarks</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -650,21 +699,29 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </header>
 
 
+<p>The previous chapter dealt with the impact of model complexity on the partitioning of the error into bias+variance+noise, and on the bias-variance tradeoff. All the arguments there were based on our ability to repeatedly sample from the population, and to compute the expected values of the error components across these samples.</p>
+<p>Most often, we only have one dataset, and we cannot compute these expected values. In this chapter, we will see how the concepts of bias and variance can inform our understanding of the generalization performance of a model, that is, its ability to make accurate predictions on new, unseen data.</p>
+<p>As in the previous chapter, we will the following model for the data generating process:</p>
+<p><span class="math display">
+y = f(x) + \epsilon,
+</span></p>
+<p>where <span class="math inline">f(x) = \sin(4\pi x)+3x</span> is the “ground truth” function, and <span class="math inline">\epsilon \sim \mathcal{N}(0, 0.3^2)</span> is the noise.</p>
+<p>We generate a population of 10 thousand data points from this model, see how it looks.</p>
 <div id="64afb299" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-4"><a href="#cb1-4"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.2</span>)</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D  <span class="co"># noqa: F401</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> numpy.polynomial <span class="im">import</span> Chebyshev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> numpy.polynomial <span class="im">import</span> Chebyshev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="275c3c3b" class="cell" data-execution_count="19">
+<div id="275c3c3b" class="cell" data-execution_count="2">
 <details class="code-fold">
-<summary>plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<summary>true function and population</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>np.random.seed(<span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>N <span class="op">=</span> <span class="dv">10000</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>f <span class="op">=</span> <span class="kw">lambda</span> x: np.sin(<span class="dv">4</span><span class="op">*</span>np.pi<span class="op">*</span>x) <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>x</span>
 <span id="cb2-4"><a href="#cb2-4"></a>blue <span class="op">=</span> <span class="st">"xkcd:cerulean"</span></span>
@@ -672,17 +729,20 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 <span id="cb2-6"><a href="#cb2-6"></a>pink <span class="op">=</span> <span class="st">"xkcd:hot pink"</span></span>
 <span id="cb2-7"><a href="#cb2-7"></a>green <span class="op">=</span> <span class="st">"xkcd:forest"</span></span>
 <span id="cb2-8"><a href="#cb2-8"></a></span>
-<span id="cb2-9"><a href="#cb2-9"></a>x_pop <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, N)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>pop_x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, N)</span>
 <span id="cb2-10"><a href="#cb2-10"></a>noise_pop <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.3</span>, size<span class="op">=</span>N)</span>
-<span id="cb2-11"><a href="#cb2-11"></a>y_pop <span class="op">=</span> f(x_pop) <span class="op">+</span> noise_pop</span>
+<span id="cb2-11"><a href="#cb2-11"></a>pop_y <span class="op">=</span> f(pop_x) <span class="op">+</span> noise_pop</span>
 <span id="cb2-12"><a href="#cb2-12"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb2-13"><a href="#cb2-13"></a>ax.plot(x_pop, f(x_pop), color<span class="op">=</span><span class="st">'black'</span>, label<span class="op">=</span><span class="vs">r'true function, </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
-<span id="cb2-14"><a href="#cb2-14"></a>ax.scatter(x_pop, y_pop, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span>blue, label<span class="op">=</span><span class="vs">r'noisy data, </span><span class="dv">$</span><span class="vs">y = f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="vs"> </span><span class="op">+</span><span class="vs"> </span><span class="er">\</span><span class="vs">epsilon</span><span class="dv">$</span><span class="vs">'</span>)</span>
-<span id="cb2-15"><a href="#cb2-15"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
-<span id="cb2-16"><a href="#cb2-16"></a>        xlim<span class="op">=</span>(x_pop[<span class="dv">0</span>], x_pop[<span class="op">-</span><span class="dv">1</span>]),</span>
-<span id="cb2-17"><a href="#cb2-17"></a>        ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span>
-<span id="cb2-18"><a href="#cb2-18"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="co"># ax.legend(loc='upper left', frameon=False)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-13"><a href="#cb2-13"></a>ax.plot(pop_x, f(pop_x), color<span class="op">=</span><span class="st">'black'</span>, label<span class="op">=</span><span class="vs">r'true function, </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb2-14"><a href="#cb2-14"></a>ax.plot(pop_x, pop_y,</span>
+<span id="cb2-15"><a href="#cb2-15"></a>        ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">4</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, mfc<span class="op">=</span>blue,</span>
+<span id="cb2-16"><a href="#cb2-16"></a>        mec<span class="op">=</span><span class="st">"None"</span>,)</span>
+<span id="cb2-17"><a href="#cb2-17"></a>ax.plot([<span class="op">-</span><span class="dv">10</span>], [<span class="op">-</span><span class="dv">10</span>], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">4</span>, alpha<span class="op">=</span><span class="dv">1</span>, mfc<span class="op">=</span>blue, mec<span class="op">=</span><span class="st">"None"</span>, label<span class="op">=</span><span class="st">"population"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb2-19"><a href="#cb2-19"></a>        xlim<span class="op">=</span>(pop_x[<span class="dv">0</span>], pop_x[<span class="op">-</span><span class="dv">1</span>]),</span>
+<span id="cb2-20"><a href="#cb2-20"></a>        ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb2-21"><a href="#cb2-21"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -692,24 +752,37 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<div id="e0b41325" class="cell" data-execution_count="47">
+<p>We perform a single experiment, where we sample 50 data points from the population. For reasons that will become clear later, we split this sample into two groups, one with 30 data points, and one with 20. See below how the first group, which we call “training set”, looks like.</p>
+<div id="e0b41325" class="cell" data-execution_count="3">
 <details class="code-fold">
-<summary>plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>np.random.seed(<span class="dv">628</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a>n <span class="op">=</span> <span class="dv">20</span></span>
+<summary>population and training set</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>n <span class="op">=</span> <span class="dv">50</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>idx <span class="op">=</span> np.random.choice(N, size<span class="op">=</span>n, replace<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>data_x <span class="op">=</span> x_pop[idx]</span>
-<span id="cb3-5"><a href="#cb3-5"></a>data_y <span class="op">=</span> y_pop[idx]</span>
+<span id="cb3-4"><a href="#cb3-4"></a>sample_x <span class="op">=</span> pop_x[idx]</span>
+<span id="cb3-5"><a href="#cb3-5"></a>sample_y <span class="op">=</span> pop_y[idx]</span>
 <span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb3-8"><a href="#cb3-8"></a>ax.plot(x_pop, f(x_pop), color<span class="op">=</span><span class="st">'black'</span>, label<span class="op">=</span><span class="vs">r'true function, </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
-<span id="cb3-9"><a href="#cb3-9"></a>ax.scatter(x_pop, y_pop, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">0.05</span>, color<span class="op">=</span>blue, label<span class="op">=</span><span class="vs">r'noisy data, </span><span class="dv">$</span><span class="vs">y = f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="vs"> </span><span class="op">+</span><span class="vs"> </span><span class="er">\</span><span class="vs">epsilon</span><span class="dv">$</span><span class="vs">'</span>)</span>
-<span id="cb3-10"><a href="#cb3-10"></a>ax.scatter(data_x, data_y, s<span class="op">=</span><span class="dv">15</span>, alpha<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span>pink, label<span class="op">=</span><span class="vs">r'noisy data, </span><span class="dv">$</span><span class="vs">y = f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="vs"> </span><span class="op">+</span><span class="vs"> </span><span class="er">\</span><span class="vs">epsilon</span><span class="dv">$</span><span class="vs">'</span>)</span>
-<span id="cb3-11"><a href="#cb3-11"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12"></a>        xlim<span class="op">=</span>(x_pop[<span class="dv">0</span>], x_pop[<span class="op">-</span><span class="dv">1</span>]),</span>
-<span id="cb3-13"><a href="#cb3-13"></a>        ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span>
-<span id="cb3-14"><a href="#cb3-14"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># ax.legend(loc='upper left', frameon=False)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-7"><a href="#cb3-7"></a>train_x <span class="op">=</span> sample_x[:<span class="dv">30</span>]</span>
+<span id="cb3-8"><a href="#cb3-8"></a>train_y <span class="op">=</span> sample_y[:<span class="dv">30</span>]</span>
+<span id="cb3-9"><a href="#cb3-9"></a>test_x <span class="op">=</span> sample_x[<span class="dv">30</span>:]</span>
+<span id="cb3-10"><a href="#cb3-10"></a>test_y <span class="op">=</span> sample_y[<span class="dv">30</span>:]</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb3-13"><a href="#cb3-13"></a>ax.plot(pop_x, f(pop_x),</span>
+<span id="cb3-14"><a href="#cb3-14"></a>        color<span class="op">=</span><span class="st">'black'</span>, label<span class="op">=</span><span class="vs">r'true function, </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15"></a>ax.plot(pop_x, pop_y,</span>
+<span id="cb3-16"><a href="#cb3-16"></a>        ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">4</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, mfc<span class="op">=</span>blue,</span>
+<span id="cb3-17"><a href="#cb3-17"></a>        mec<span class="op">=</span><span class="st">"None"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18"></a>ax.plot([<span class="op">-</span><span class="dv">10</span>], [<span class="op">-</span><span class="dv">10</span>], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">4</span>, alpha<span class="op">=</span><span class="dv">1</span>, mfc<span class="op">=</span>blue, mec<span class="op">=</span><span class="st">"None"</span>, label<span class="op">=</span><span class="st">"population"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19"></a></span>
+<span id="cb3-20"><a href="#cb3-20"></a>ax.plot(train_x, train_y, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb3-21"><a href="#cb3-21"></a>        markerfacecolor<span class="op">=</span><span class="st">'None'</span>, markeredgecolor<span class="op">=</span>pink, </span>
+<span id="cb3-22"><a href="#cb3-22"></a>        markeredgewidth<span class="op">=</span><span class="fl">1.5</span>, clip_on<span class="op">=</span><span class="va">False</span>, label<span class="op">=</span><span class="st">"training set"</span>)</span>
+<span id="cb3-23"><a href="#cb3-23"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24"></a>        xlim<span class="op">=</span>(pop_x[<span class="dv">0</span>], pop_x[<span class="op">-</span><span class="dv">1</span>]),</span>
+<span id="cb3-25"><a href="#cb3-25"></a>        ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb3-26"><a href="#cb3-26"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-27"><a href="#cb3-27"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -719,18 +792,18 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<div id="7483522a" class="cell" data-execution_count="48">
+<p>At first glance, the training set looks like a pretty good representation of the population. Of course, we are simulating everything on the computer, so we know the true function and the population. In real life, we only have what we measured, and it looks like this:</p>
+<div id="7483522a" class="cell" data-execution_count="4">
 <details class="code-fold">
-<summary>plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb4-2"><a href="#cb4-2"></a>noise <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.3</span>, size<span class="op">=</span>N)</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># ax.plot(x_grid, f(x_grid), color='black', label=r'true function, $f(x)$')</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>ax.scatter(data_x, data_y, s<span class="op">=</span><span class="dv">15</span>, alpha<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span>pink, label<span class="op">=</span><span class="vs">r'noisy data, </span><span class="dv">$</span><span class="vs">y = f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="vs"> </span><span class="op">+</span><span class="vs"> </span><span class="er">\</span><span class="vs">epsilon</span><span class="dv">$</span><span class="vs">'</span>, clip_on<span class="op">=</span><span class="va">False</span>)</span>
+<summary>just the training set</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb4-2"><a href="#cb4-2"></a>ax.plot(train_x, train_y, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>        markerfacecolor<span class="op">=</span><span class="st">'None'</span>, markeredgecolor<span class="op">=</span>pink, </span>
+<span id="cb4-4"><a href="#cb4-4"></a>        markeredgewidth<span class="op">=</span><span class="fl">1.5</span>, clip_on<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb4-5"><a href="#cb4-5"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
-<span id="cb4-6"><a href="#cb4-6"></a>        xlim<span class="op">=</span>(x_grid[<span class="dv">0</span>], x_grid[<span class="op">-</span><span class="dv">1</span>]),</span>
+<span id="cb4-6"><a href="#cb4-6"></a>        xlim<span class="op">=</span>(pop_x[<span class="dv">0</span>], pop_x[<span class="op">-</span><span class="dv">1</span>]),</span>
 <span id="cb4-7"><a href="#cb4-7"></a>        ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span>
-<span id="cb4-8"><a href="#cb4-8"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># ax.legend(loc='upper left', frameon=False)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-8"><a href="#cb4-8"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -740,7 +813,135 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<p>We do not split data because we like throwing data away. We split data because evaluating a model on the data it was trained on answers the wrong question.</p>
+<p>Personally, I fill a lot less confident about my ability to model the true function based on this data, without the benefit of the context of the population and the true function.</p>
+<p>My job is to find a model that best captures the relationship between <span class="math inline">x</span> and <span class="math inline">y</span> in the measured data, in the hope that it will also describe something fundamental about the true function.</p>
+<p>As in the previoius chapter, I will focus only on polynomials to model my data. See below four different polynomial fits to the training data, with degrees 2, 5, 10, and 15.</p>
+<div id="e1b49995" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>fig.subplots_adjust(hspace<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>degrees <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>]</span>
+<span id="cb5-4"><a href="#cb5-4"></a>ax <span class="op">=</span> ax.flatten()</span>
+<span id="cb5-5"><a href="#cb5-5"></a>poly_fits <span class="op">=</span> []</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># for each degree, use np.polyfit to fit train data</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="cf">for</span> i, degree <span class="kw">in</span> <span class="bu">enumerate</span>(degrees):</span>
+<span id="cb5-8"><a href="#cb5-8"></a>    coeffs <span class="op">=</span> np.polyfit(train_x, train_y, degree)</span>
+<span id="cb5-9"><a href="#cb5-9"></a>    poly <span class="op">=</span> np.poly1d(coeffs)</span>
+<span id="cb5-10"><a href="#cb5-10"></a>    poly_fits.append(poly)</span>
+<span id="cb5-11"><a href="#cb5-11"></a>    ax[i].plot(pop_x, poly(pop_x), label<span class="op">=</span><span class="ss">f"degree </span><span class="sc">{</span>degree<span class="sc">}</span><span class="ss">"</span>, color<span class="op">=</span>blue)</span>
+<span id="cb5-12"><a href="#cb5-12"></a>    <span class="co"># ax[i].legend(loc='upper left', frameon=False)</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>    ax[i].plot(train_x, train_y, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb5-14"><a href="#cb5-14"></a>        markerfacecolor<span class="op">=</span><span class="st">'None'</span>, markeredgecolor<span class="op">=</span>pink, </span>
+<span id="cb5-15"><a href="#cb5-15"></a>        markeredgewidth<span class="op">=</span><span class="fl">1.5</span>, clip_on<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-16"><a href="#cb5-16"></a>    ax[i].text(<span class="fl">0.03</span>, <span class="fl">0.97</span>, <span class="ss">f"degree </span><span class="sc">{</span>degree<span class="sc">}</span><span class="ss">"</span>, transform<span class="op">=</span>ax[i].transAxes,</span>
+<span id="cb5-17"><a href="#cb5-17"></a>          horizontalalignment<span class="op">=</span><span class="st">'left'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,)</span>
+<span id="cb5-18"><a href="#cb5-18"></a>    ax[i].<span class="bu">set</span>(xticks<span class="op">=</span>[],</span>
+<span id="cb5-19"><a href="#cb5-19"></a>              yticks<span class="op">=</span>[],</span>
+<span id="cb5-20"><a href="#cb5-20"></a>              xlim<span class="op">=</span>(pop_x[<span class="dv">0</span>], pop_x[<span class="op">-</span><span class="dv">1</span>]),</span>
+<span id="cb5-21"><a href="#cb5-21"></a>              ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb5-22"><a href="#cb5-22"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-23"><a href="#cb5-23"></a>ax[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,)</span>
+<span id="cb5-24"><a href="#cb5-24"></a>ax[<span class="dv">2</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-25"><a href="#cb5-25"></a>ax[<span class="dv">3</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="overfitting-and-underfitting_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can’t determine neither the bias nor the variance of these models, because we only have one dataset. But from what we learned, we can surmise that the degree 2 model, not being flexible enought, is likely to have a high bias, that is, it probably differs from the true function in a systematic way. The degree 15 polynomial, on the other hand, is very flexible, but it is likely to have a high variance, that is, it is sensitive to the particularities of the training data.</p>
+<p>Now it is time to evaluate the performace of each model. We will start with the wrong way, which is very educational, and then we will see the right way.</p>
+<section id="evaluating-performance-the-wrong-way" class="level2" data-number="47.1">
+<h2 data-number="47.1" class="anchored" data-anchor-id="evaluating-performance-the-wrong-way"><span class="header-section-number">47.1</span> evaluating performance the wrong way</h2>
+<p>Let’s call the error of a model the difference between the predicted values <span class="math inline">\hat{f}</span> and the true values <span class="math inline">y</span> that we obeserved:</p>
+<p><span class="math display">
+\text{error} = \hat{f}(x) - y.
+</span></p>
+<p>We can compute this error for each data point in the training set, and then we can compute the mean squared error (MSE) across all data points:</p>
+<p><span class="math display">
+\text{MSE} = \frac{1}{n} \sum_{i=1}^n (\hat{f}(x_i) - y_i)^2.
+</span></p>
+<p>Let’s see how the MSE changes as a function of the degree of the polynomial.</p>
+<div id="2f983a1c" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>plot MSE for training set</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<span id="cb6-2"><a href="#cb6-2"></a>d_list <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">16</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a>MSE <span class="op">=</span> []</span>
+<span id="cb6-4"><a href="#cb6-4"></a>trained_polys <span class="op">=</span> []</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="cf">for</span> i, degree <span class="kw">in</span> <span class="bu">enumerate</span>(d_list):</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    coeffs <span class="op">=</span> np.polyfit(train_x, train_y, degree)</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    poly <span class="op">=</span> np.poly1d(coeffs)</span>
+<span id="cb6-8"><a href="#cb6-8"></a>    trained_polys.append(poly)</span>
+<span id="cb6-9"><a href="#cb6-9"></a>    MSE.append(np.mean((poly(train_x) <span class="op">-</span> train_y)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb6-10"><a href="#cb6-10"></a>MSE <span class="op">=</span> np.array(MSE)</span>
+<span id="cb6-11"><a href="#cb6-11"></a>ax.plot(d_list, MSE, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>blue)</span>
+<span id="cb6-12"><a href="#cb6-12"></a>idx <span class="op">=</span> np.array(degrees)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>ax.plot(degrees, MSE[idx], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span>pink, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co"># ax.set_yscale('log')</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'polynomial degree'</span>,</span>
+<span id="cb6-16"><a href="#cb6-16"></a>       ylabel<span class="op">=</span><span class="st">'MSE'</span>,</span>
+<span id="cb6-17"><a href="#cb6-17"></a>       title<span class="op">=</span><span class="st">'MSE on training set'</span>,)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="overfitting-and-underfitting_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that we marked the polynomial fits for degrees 2, 5, 10, and 15 with pink circles.</p>
+<p>Not surprisingly, the higher the polynomial degree, the lower the MSE on the training set. It couldn’t be otherwise. Think about it. A degree 4 polynomial is a particular case of a degree 5 polynomial, where the parameter for <span class="math inline">x^5</span> is zero. So the degree 5 polynomial can always fit the training data at least as well as the degree 4 polynomial, and it can do better if it finds a non-zero parameter for <span class="math inline">x^5</span>. The same logic applies to all higher degree polynomials. So the MSE on the training set will always decrease as we increase the degree of the polynomial. In fact, with 30 data points in our training set, a degree 29 polynomial can fit the training data perfectly, and achieve an MSE of zero.</p>
+<p>Take a look again at the fit for the degree 15 polynomial. It passes very close to most points in the training set, but at the cost of wild fluctuations. Having the benefit of the population and the true function, we can see that these fluctuations are not capturing any fundamental aspect of the true function, but rather they are fitting the particularities of the training data. This is called <strong>overfitting</strong>. Should we ever get a second dataset from the same population, we would see that the degree 15 polynomial performs very poorly on it.</p>
+<p>The degree 2 polynomial, on the other hand, is not flexible enough to capture the relationship between <span class="math inline">x</span> and <span class="math inline">y</span> in the training data. It is systematically off from the true function, and it is not capturing some fundamental aspect of the relationship between <span class="math inline">x</span> and <span class="math inline">y</span>. This is called <strong>underfitting</strong>. Should we get a second dataset from the same population, we would see that the degree 2 polynomial performs poorly on it as well.</p>
+</section>
+<section id="the-right-way" class="level2" data-number="47.2">
+<h2 data-number="47.2" class="anchored" data-anchor-id="the-right-way"><span class="header-section-number">47.2</span> the right way</h2>
+<p>You must have surely guessed by now that the right way to evaluate the performance of a model is to use the second group of data points that we set aside at the beginning, which we call “test set”.</p>
+<p>Let’s compute the MSE on the test set for each model, and see how it changes as a function of the degree of the polynomial.</p>
+<div id="41c46abb" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>plot MSE for test set</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<span id="cb7-2"><a href="#cb7-2"></a>MSE_test <span class="op">=</span> []</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="cf">for</span> i, degree <span class="kw">in</span> <span class="bu">enumerate</span>(d_list):</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    MSE_test.append(np.mean((trained_polys[i](test_x) <span class="op">-</span> test_y)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb7-5"><a href="#cb7-5"></a>MSE_test <span class="op">=</span> np.array(MSE_test)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>ax.plot(d_list, MSE_test, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>blue)</span>
+<span id="cb7-7"><a href="#cb7-7"></a>idx <span class="op">=</span> np.array(degrees)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>ax.plot(degrees, MSE_test[idx], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span>pink, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'polynomial degree'</span>,</span>
+<span id="cb7-11"><a href="#cb7-11"></a>       ylabel<span class="op">=</span><span class="st">'MSE'</span>,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>       title<span class="op">=</span><span class="st">'MSE on test set'</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>       <span class="co"># ylim=(0, 1)</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="overfitting-and-underfitting_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When confronted with unseed data, the higher-order polynomials now perform abysmally. Their MSE is so high that I had to use a logarithmic scale on the y-axis.</p>
+<p>The performace of models of increasing complexity now shows a typical U-shape. Initially, the MSE on the test set decreases, because the model is becoming more flexible, and it can capture better the underlying relationship between <span class="math inline">x</span> and <span class="math inline">y</span>. At this stage we are getting away from underfitting. However, after a certain point, increasing the degree of the polynomial leads to overfitting, where the model starts to capture noise in the training data rather than the true underlying relationship. This results in an increase in MSE on the test set.</p>
+<p>In this example, all polynomials from degree 5 to 10 perform approximately equally well, meaning that the generalize equally well to new data.</p>
+</section>
+<section id="concluding-remarks" class="level2" data-number="47.3">
+<h2 data-number="47.3" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">47.3</span> concluding remarks</h2>
+<p>We will deal with the split of our dataset into training and test sets in more detail in the next chapter. For now, the main takeaway is that when we evaluated our models against each of these sets, we were asking different questions.</p>
+<ul>
+<li><strong>How well does this model reproduce the data I already showed it?</strong> This is what the first evaluation, based on the training set, was asking.</li>
+<li><strong>How well will this model perform on new data drawn from the same population?</strong> This is what the second evaluation, based on the test set, was asking.</li>
+</ul>
+<p>The second question is what we really care about. This is the fundamental reason why splitting our dataset is not a waste of data.</p>
 <!-- Core question
 
 Where does prediction error come from?
@@ -768,6 +969,7 @@ spread of predictions (variance)
 conceptual error decomposition (no heavy math) -->
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -821,14 +1023,13 @@ conceptual error decomposition (no heavy math) -->
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

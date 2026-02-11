@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -147,7 +146,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -189,8 +188,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -719,23 +717,23 @@ window.Quarto = {
 <div id="cell-2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> time</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> TruncatedSVD</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> TruncatedSVD</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="cell-3" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>load jpg into numpy array, convert to grayscale, and display it</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>image <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'../archive/images/splat.jpg'</span>)</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>image <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'../archive/images/splat.jpg'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>gray_image <span class="op">=</span> image.convert(<span class="st">'L'</span>)  <span class="co"># convert to grayscale</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>image_array <span class="op">=</span> np.array(gray_image)  <span class="co"># make it a numpy array</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co"># display the image</span></span>
 <span id="cb2-5"><a href="#cb2-5"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb2-6"><a href="#cb2-6"></a>ax.imshow(image_array, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
-<span id="cb2-7"><a href="#cb2-7"></a>ax.axis(<span class="st">'off'</span>)  <span class="co"># Hide axis</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-7"><a href="#cb2-7"></a>ax.axis(<span class="st">'off'</span>)  <span class="co"># Hide axis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -751,14 +749,14 @@ window.Quarto = {
 <div id="cell-5" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>decompose with numpy in one line of code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>U, S, Vt <span class="op">=</span> np.linalg.svd(image_array)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>U, S, Vt <span class="op">=</span> np.linalg.svd(image_array)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Let’s see how the magnitude of the singular values decreases as we go from the first to the last (k goes from zero to 900-1). Also, let’s see how much of the total energy accumulated up to the k-th singular value squared.</p>
 <div id="cell-7" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>plot singular values and cumulative energy</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
 <span id="cb4-2"><a href="#cb4-2"></a>lenS <span class="op">=</span> <span class="bu">len</span>(S)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>ax[<span class="dv">0</span>].plot(np.arange(lenS), S, marker<span class="op">=</span><span class="st">'o'</span>, markeredgecolor<span class="op">=</span><span class="st">"black"</span>, markerfacecolor<span class="op">=</span><span class="st">'None'</span>, markersize<span class="op">=</span><span class="dv">5</span>, linestyle<span class="op">=</span><span class="st">'None'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb4-4"><a href="#cb4-4"></a>ax[<span class="dv">0</span>].set_yscale(<span class="st">'log'</span>)  <span class="co"># Set y-axis to log scale</span></span>
@@ -779,7 +777,7 @@ window.Quarto = {
 <span id="cb4-19"><a href="#cb4-19"></a>         )</span>
 <span id="cb4-20"><a href="#cb4-20"></a>ax[<span class="dv">1</span>].grid(<span class="va">True</span>)  <span class="co"># Enable grid on the second panel</span></span>
 <span id="cb4-21"><a href="#cb4-21"></a>ax[<span class="dv">1</span>].yaxis.set_label_position(<span class="st">"right"</span>)  <span class="co"># Move ylabel to the right</span></span>
-<span id="cb4-22"><a href="#cb4-22"></a>ax[<span class="dv">1</span>].yaxis.tick_right()  <span class="co"># Move yticks to the right</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-22"><a href="#cb4-22"></a>ax[<span class="dv">1</span>].yaxis.tick_right()  <span class="co"># Move yticks to the right</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -806,7 +804,7 @@ X_k = U_k \Sigma_k V_k^T = \sum_{i=1}^{k} \sigma_i \cdot \text{outer}(u_i, v_i^T
 <div id="cell-10" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>reconstruct image from first k singular values/vectors</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> reconstruct_image(U, S, Vt, k):</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> reconstruct_image(U, S, Vt, k):</span>
 <span id="cb5-2"><a href="#cb5-2"></a>    X_reconstructed <span class="op">=</span> np.zeros_like(image_array, dtype<span class="op">=</span>np.float64)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k): </span>
 <span id="cb5-4"><a href="#cb5-4"></a>        X_reconstructed <span class="op">+=</span> S[i] <span class="op">*</span> np.outer(U[:, i], Vt[i, :])   </span>
@@ -817,19 +815,19 @@ X_k = U_k \Sigma_k V_k^T = \sum_{i=1}^{k} \sigma_i \cdot \text{outer}(u_i, v_i^T
 <span id="cb5-9"><a href="#cb5-9"></a>reconstructed_images <span class="op">=</span> []</span>
 <span id="cb5-10"><a href="#cb5-10"></a><span class="cf">for</span> k <span class="kw">in</span> klist:</span>
 <span id="cb5-11"><a href="#cb5-11"></a>    X_reconstructed <span class="op">=</span> reconstruct_image(U, S, Vt, k)</span>
-<span id="cb5-12"><a href="#cb5-12"></a>    reconstructed_images.append(X_reconstructed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-12"><a href="#cb5-12"></a>    reconstructed_images.append(X_reconstructed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="cell-11" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>visualize reconstructed images</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">8</span>))</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">8</span>))</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="cf">for</span> i, k <span class="kw">in</span> <span class="bu">enumerate</span>(klist):</span>
 <span id="cb6-3"><a href="#cb6-3"></a>    ax <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>, <span class="dv">2</span>, i<span class="op">+</span><span class="dv">1</span>)</span>
 <span id="cb6-4"><a href="#cb6-4"></a>    X_k <span class="op">=</span> reconstructed_images[i]</span>
 <span id="cb6-5"><a href="#cb6-5"></a>    ax.imshow(X_k, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
 <span id="cb6-6"><a href="#cb6-6"></a>    ax.set_title(<span class="ss">f'k=</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb6-7"><a href="#cb6-7"></a>    ax.axis(<span class="st">'off'</span>)  <span class="co"># Hide axis</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-7"><a href="#cb6-7"></a>    ax.axis(<span class="st">'off'</span>)  <span class="co"># Hide axis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -843,13 +841,13 @@ X_k = U_k \Sigma_k V_k^T = \sum_{i=1}^{k} \sigma_i \cdot \text{outer}(u_i, v_i^T
 <div id="cell-13" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>visualize zoomed in reconstructed images</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="cf">for</span> i, k <span class="kw">in</span> <span class="bu">enumerate</span>(klist):</span>
 <span id="cb7-3"><a href="#cb7-3"></a>    ax <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>, <span class="dv">2</span>, i<span class="op">+</span><span class="dv">1</span>)</span>
 <span id="cb7-4"><a href="#cb7-4"></a>    X_k <span class="op">=</span> reconstructed_images[i][<span class="dv">700</span>:<span class="dv">1000</span>, <span class="dv">700</span>:<span class="dv">1000</span>]  <span class="co"># zoom in</span></span>
 <span id="cb7-5"><a href="#cb7-5"></a>    ax.imshow(X_k, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
 <span id="cb7-6"><a href="#cb7-6"></a>    ax.set_title(<span class="ss">f'k=</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb7-7"><a href="#cb7-7"></a>    ax.axis(<span class="st">'off'</span>)  <span class="co"># Hide axis</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-7"><a href="#cb7-7"></a>    ax.axis(<span class="st">'off'</span>)  <span class="co"># Hide axis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -923,7 +921,7 @@ X_k = \sum_{i=1}^{k} \sigma_i (u_i v_i^T)
 </span></p>
 <p>Let’s time the two methods of reconstruction to see the efficiency gain from using matrix multiplication.</p>
 <div id="cell-16" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>k <span class="op">=</span> <span class="dv">100</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>k <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb8-2"><a href="#cb8-2"></a></span>
 <span id="cb8-3"><a href="#cb8-3"></a>start_time1 <span class="op">=</span> time.time()</span>
 <span id="cb8-4"><a href="#cb8-4"></a>X1 <span class="op">=</span> reconstruct_image(U, S, Vt, k)</span>
@@ -938,7 +936,7 @@ X_k = \sum_{i=1}^{k} \sigma_i (u_i v_i^T)
 <span id="cb8-13"><a href="#cb8-13"></a></span>
 <span id="cb8-14"><a href="#cb8-14"></a><span class="bu">print</span>(<span class="ss">f"explicitly computing the outer products: </span><span class="sc">{</span>T1<span class="sc">:.6f}</span><span class="ss"> seconds"</span>)</span>
 <span id="cb8-15"><a href="#cb8-15"></a><span class="bu">print</span>(<span class="ss">f"leveraging matrix multiplication: </span><span class="sc">{</span>T2<span class="sc">:.6f}</span><span class="ss"> seconds"</span>)</span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="bu">print</span>(<span class="ss">f"speedup: </span><span class="sc">{</span>T1<span class="op">/</span>T2<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="bu">print</span>(<span class="ss">f"speedup: </span><span class="sc">{</span>T1<span class="op">/</span>T2<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>explicitly computing the outer products: 1.508656 seconds
 leveraging matrix multiplication: 0.011750 seconds
@@ -955,7 +953,7 @@ speedup: 128.40x</code></pre>
 <div id="cell-18" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>start_time2b <span class="op">=</span> time.time()</span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>start_time2b <span class="op">=</span> time.time()</span>
 <span id="cb10-2"><a href="#cb10-2"></a>X2b <span class="op">=</span> np.dot(np.dot(U[:, :k], np.diag(S[:k])), Vt[:k, :])</span>
 <span id="cb10-3"><a href="#cb10-3"></a>end_time2b <span class="op">=</span> time.time()</span>
 <span id="cb10-4"><a href="#cb10-4"></a></span>
@@ -969,7 +967,7 @@ speedup: 128.40x</code></pre>
 <span id="cb10-12"><a href="#cb10-12"></a>T3 <span class="op">=</span> end_time3 <span class="op">-</span> start_time3</span>
 <span id="cb10-13"><a href="#cb10-13"></a></span>
 <span id="cb10-14"><a href="#cb10-14"></a><span class="bu">print</span>(<span class="ss">f"matrix multiplication, option 2: </span><span class="sc">{</span>T2b<span class="sc">:.6f}</span><span class="ss"> seconds"</span>)</span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="bu">print</span>(<span class="ss">f"using sklearn's TruncatedSVD: </span><span class="sc">{</span>T3<span class="sc">:.6f}</span><span class="ss"> seconds"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="bu">print</span>(<span class="ss">f"using sklearn's TruncatedSVD: </span><span class="sc">{</span>T3<span class="sc">:.6f}</span><span class="ss"> seconds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>matrix multiplication, option 2: 0.068557 seconds
@@ -1032,14 +1030,13 @@ using sklearn's TruncatedSVD: 0.011218 seconds</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
