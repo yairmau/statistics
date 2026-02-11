@@ -853,11 +853,11 @@ y = f(x) + \epsilon,
 </div>
 </div>
 </div>
-<p>We can’t determine neither the bias nor the variance of these models, because we only have one dataset. But from what we learned, we can surmise that the degree 2 model, not being flexible enought, is likely to have a high bias, that is, it probably differs from the true function in a systematic way. The degree 15 polynomial, on the other hand, is very flexible, but it is likely to have a high variance, that is, it is sensitive to the particularities of the training data.</p>
-<p>Now it is time to evaluate the performace of each model. We will start with the wrong way, which is very educational, and then we will see the right way.</p>
+<p>We can’t determine neither the bias nor the variance of these models, because we only have one dataset. But from what we learned, we can surmise that the degree 2 model, not being flexible enough, is expected to have high bias, though we can’t measure bias directly from one sample. That is to say that it probably differs from the true function in a systematic way. The degree 15 polynomial, on the other hand, is very flexible, but it is expected to have a high variance, that is, it is sensitive to the particularities of the training data.</p>
+<p>Now it is time to evaluate the performance of each model. We will start with the wrong way, which is very educational, and then we will see the right way.</p>
 <section id="evaluating-performance-the-wrong-way" class="level2" data-number="47.1">
 <h2 data-number="47.1" class="anchored" data-anchor-id="evaluating-performance-the-wrong-way"><span class="header-section-number">47.1</span> evaluating performance the wrong way</h2>
-<p>Let’s call the error of a model the difference between the predicted values <span class="math inline">\hat{f}</span> and the true values <span class="math inline">y</span> that we obeserved:</p>
+<p>We define the error for a given point as the difference between the predicted values <span class="math inline">\hat{f}</span> and the true values <span class="math inline">y</span> that we observed:</p>
 <p><span class="math display">
 \text{error} = \hat{f}(x) - y.
 </span></p>
@@ -930,9 +930,10 @@ y = f(x) + \epsilon,
 </div>
 </div>
 </div>
-<p>When confronted with unseed data, the higher-order polynomials now perform abysmally. Their MSE is so high that I had to use a logarithmic scale on the y-axis.</p>
-<p>The performace of models of increasing complexity now shows a typical U-shape. Initially, the MSE on the test set decreases, because the model is becoming more flexible, and it can capture better the underlying relationship between <span class="math inline">x</span> and <span class="math inline">y</span>. At this stage we are getting away from underfitting. However, after a certain point, increasing the degree of the polynomial leads to overfitting, where the model starts to capture noise in the training data rather than the true underlying relationship. This results in an increase in MSE on the test set.</p>
+<p>When confronted with unseen data, the higher-order polynomials now perform abysmally. Their MSE is so high that I had to use a logarithmic scale on the y-axis.</p>
+<p>The performance of models of increasing complexity now shows a typical U-shape. Initially, the MSE on the test set decreases, because the model is becoming more flexible, and it can capture better the underlying relationship between <span class="math inline">x</span> and <span class="math inline">y</span>. At this stage we are getting away from underfitting. However, after a certain point, increasing the degree of the polynomial leads to overfitting, where the model starts to capture noise in the training data rather than the true underlying relationship. This results in an increase in MSE on the test set.</p>
 <p>In this example, all polynomials from degree 5 to 10 perform approximately equally well, meaning that the generalize equally well to new data.</p>
+<p>In the previous chapter, we studied generalization error at the population level, averaging over many possible training sets. Here, we focused on a single realized dataset and estimated generalization error using a held-out test set.</p>
 </section>
 <section id="concluding-remarks" class="level2" data-number="47.3">
 <h2 data-number="47.3" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">47.3</span> concluding remarks</h2>
