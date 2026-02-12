@@ -639,7 +639,8 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
   <li><a href="#a-different-hold-out-set" id="toc-a-different-hold-out-set" class="nav-link" data-scroll-target="#a-different-hold-out-set"><span class="header-section-number">48.5</span> a different hold-out set</a></li>
   <li><a href="#a-much-larger-dataset" id="toc-a-much-larger-dataset" class="nav-link" data-scroll-target="#a-much-larger-dataset"><span class="header-section-number">48.6</span> a much larger dataset</a></li>
   <li><a href="#using-sklearn" id="toc-using-sklearn" class="nav-link" data-scroll-target="#using-sklearn"><span class="header-section-number">48.7</span> using sklearn</a></li>
-  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">48.8</span> concluding remarks</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">48.8</span> assumptions</a></li>
+  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">48.9</span> concluding remarks</a></li>
   </ul>
 </nav>
     </div>
@@ -1240,8 +1241,18 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="concluding-remarks" class="level2" data-number="48.8">
-<h2 data-number="48.8" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">48.8</span> concluding remarks</h2>
+<section id="assumptions" class="level2" data-number="48.8">
+<h2 data-number="48.8" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">48.8</span> assumptions</h2>
+<p>In order for k-fold cross-validation to work well, we need to make some assumptions.</p>
+<ul>
+<li>k-fold cross-validation assumes that the data points are exchangeable, meaning that any subset is representative of the same underlying process that generated the data. Randomly splitting only makes sense if any point could have appeared in train or test. Exchangeability of the data points happens if they are independent and identically distributed (i.i.d.), but it may not hold in cases where there is temporal or spatial correlation, or when the data is collected in a non-random way.</li>
+<li>k-fold uses overlapping training sets, which means that the different folds are not independent from each other. When we average the performance across the different folds, we assume that this dependence is not too strong, so that our estimates and their variance are not too biased.</li>
+<li>There is no data leakage, meaning that the information in the test set is not used in any way during training. We will discuss this in more detail in the next chapter.</li>
+<li>Each fold should contain enough data to produce a meaningful validation estimate. If the number of folds is too large, the validation sets become very small, making the error estimates highly variable and noisy. If the number of folds is too small, each model is trained on substantially less data than will ultimately be used, which can lead to a pessimistically biased estimate of generalization error.</li>
+</ul>
+</section>
+<section id="concluding-remarks" class="level2" data-number="48.9">
+<h2 data-number="48.9" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">48.9</span> concluding remarks</h2>
 <p>We learned about cross-validation with a specific modeling choice (polynomials), and a specific procedure (k-fold cross-validation). This was not intended to be a comprehensive treatment of cross-validation, just an introduction to the main ideas. Models with several hyperparameters require using nested cross-validation, and classification problems might benefit from stratified cross-validation, to name just two examples.</p>
 <p>When I started learning about cross-validation, the different datasets confused me, and I tended confuse which I should use and for what purpose. I’d like to offer a clear way of thinking about this. We should first think of the three different goals we have when we are trying to find a good model for our data:</p>
 <ol type="1">
