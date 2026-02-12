@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -588,15 +623,31 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#three-different-goals" id="toc-three-different-goals" class="nav-link active" data-scroll-target="#three-different-goals"><span class="header-section-number">48.1</span> three different goals</a></li>
+  <li><a href="#splitting-the-data" id="toc-splitting-the-data" class="nav-link" data-scroll-target="#splitting-the-data"><span class="header-section-number">48.2</span> splitting the data</a>
+  <ul class="collapse">
+  <li><a href="#hold-out-or-test-set" id="toc-hold-out-or-test-set" class="nav-link" data-scroll-target="#hold-out-or-test-set"><span class="header-section-number">48.2.1</span> hold-out or test set</a></li>
+  <li><a href="#k-fold-cross-validation" id="toc-k-fold-cross-validation" class="nav-link" data-scroll-target="#k-fold-cross-validation"><span class="header-section-number">48.2.2</span> k-fold cross-validation</a></li>
+  </ul></li>
+  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">48.3</span> model selection</a></li>
+  <li><a href="#performance" id="toc-performance" class="nav-link" data-scroll-target="#performance"><span class="header-section-number">48.4</span> performance</a></li>
+  <li><a href="#a-different-hold-out-set" id="toc-a-different-hold-out-set" class="nav-link" data-scroll-target="#a-different-hold-out-set"><span class="header-section-number">48.5</span> a different hold-out set</a></li>
+  <li><a href="#a-much-larger-dataset" id="toc-a-much-larger-dataset" class="nav-link" data-scroll-target="#a-much-larger-dataset"><span class="header-section-number">48.6</span> a much larger dataset</a></li>
+  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">48.7</span> concluding remarks</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../generalization/bias-variance-tradeoff.html">generalization and model complexity</a></li><li class="breadcrumb-item"><a href="../generalization/cross-validation.html"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">cross-validation</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">cross-validation</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/generalization/cross-validation.ipynb"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">cross-validation</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/generalization/cross-validation.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -613,28 +664,538 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </header>
 
 
-<!-- Cross-Validation as a Tool for Model Selection
-Core question
-
-How do we choose model complexity when we only have one dataset?
-
-Main goal
-
-Explain why CV works, not just how.
-
-Topics to cover
-
-k-fold cross-validation (concept + implementation)
-
-validation error vs model complexity
-
-instability of single train/test splits
-
-CV variance (fold-to-fold variability)
-
-choosing polynomial degree via CV
-
-link to bias–variance (implicit, not explicit) -->
+<p>I’ll start this chapter by summing up what we found out in the last chapter. Our experimental data consisted of 50 data points, which we split into a training set of 30 data points and a test set of 20 data points. We fitted polynomials of degree 1 to 15 to the training data, and we evaluated their performance by computing the MSE on a different dataset, the test set. We found that the performance followed a typical U-shape, where the MSE on the test set initially decreased as we increased the degree of the polynomial, but after a certain point it started to increase again.</p>
+<p>At the very beginning of this procedure, we randomly split the whole dataset into a training set and a test set. What would happend if we had done a different random split? We’ll do exactly that now, see below.</p>
+<div id="97dc7f5d" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.2</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D  <span class="co"># noqa: F401</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> numpy.polynomial <span class="im">import</span> Chebyshev</span>
+<span id="cb1-7"><a href="#cb1-7"></a>blue <span class="op">=</span> <span class="st">"xkcd:cerulean"</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>gold <span class="op">=</span> <span class="st">"xkcd:gold"</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>pink <span class="op">=</span> <span class="st">"xkcd:hot pink"</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>green <span class="op">=</span> <span class="st">"xkcd:forest"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="ce56c0cd" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>split dataset into two different training and test sets</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>N <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>f <span class="op">=</span> <span class="kw">lambda</span> x: np.sin(<span class="dv">4</span><span class="op">*</span>np.pi<span class="op">*</span>x) <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>x</span>
+<span id="cb2-4"><a href="#cb2-4"></a>pop_x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, N)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>noise_pop <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.3</span>, size<span class="op">=</span>N)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>pop_y <span class="op">=</span> f(pop_x) <span class="op">+</span> noise_pop</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>n <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11"></a>idx <span class="op">=</span> np.random.choice(N, size<span class="op">=</span>n, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-12"><a href="#cb2-12"></a>sample_x <span class="op">=</span> pop_x[idx]</span>
+<span id="cb2-13"><a href="#cb2-13"></a>sample_y <span class="op">=</span> pop_y[idx]</span>
+<span id="cb2-14"><a href="#cb2-14"></a></span>
+<span id="cb2-15"><a href="#cb2-15"></a>train1_x <span class="op">=</span> sample_x[:<span class="dv">30</span>]</span>
+<span id="cb2-16"><a href="#cb2-16"></a>train1_y <span class="op">=</span> sample_y[:<span class="dv">30</span>]</span>
+<span id="cb2-17"><a href="#cb2-17"></a>test1_x <span class="op">=</span> sample_x[<span class="dv">30</span>:]</span>
+<span id="cb2-18"><a href="#cb2-18"></a>test1_y <span class="op">=</span> sample_y[<span class="dv">30</span>:]</span>
+<span id="cb2-19"><a href="#cb2-19"></a></span>
+<span id="cb2-20"><a href="#cb2-20"></a>train2_x <span class="op">=</span> sample_x[<span class="op">-</span><span class="dv">30</span>:]</span>
+<span id="cb2-21"><a href="#cb2-21"></a>train2_y <span class="op">=</span> sample_y[<span class="op">-</span><span class="dv">30</span>:]</span>
+<span id="cb2-22"><a href="#cb2-22"></a>test2_x <span class="op">=</span> sample_x[:<span class="dv">20</span>]</span>
+<span id="cb2-23"><a href="#cb2-23"></a>test2_y <span class="op">=</span> sample_y[:<span class="dv">20</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="dced0b45" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>compute MSE on training set for each dataset</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>d_list <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">16</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>MSE1_test <span class="op">=</span> []<span class="op">;</span> MSE2_test <span class="op">=</span> []</span>
+<span id="cb3-3"><a href="#cb3-3"></a>trained_polys1 <span class="op">=</span> []<span class="op">;</span> trained_polys2 <span class="op">=</span> []</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="cf">for</span> i, degree <span class="kw">in</span> <span class="bu">enumerate</span>(d_list):</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    coeffs1 <span class="op">=</span> np.polyfit(train1_x, train1_y, degree)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    coeffs2 <span class="op">=</span> np.polyfit(train2_x, train2_y, degree)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    poly1 <span class="op">=</span> np.poly1d(coeffs1)</span>
+<span id="cb3-8"><a href="#cb3-8"></a>    poly2 <span class="op">=</span> np.poly1d(coeffs2)</span>
+<span id="cb3-9"><a href="#cb3-9"></a>    trained_polys1.append(poly1)</span>
+<span id="cb3-10"><a href="#cb3-10"></a>    trained_polys2.append(poly2)</span>
+<span id="cb3-11"><a href="#cb3-11"></a>    MSE1_test.append(np.mean((trained_polys1[i](test1_x) <span class="op">-</span> test1_y)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    MSE2_test.append(np.mean((trained_polys2[i](test2_x) <span class="op">-</span> test2_y)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb3-13"><a href="#cb3-13"></a>MSE1_test <span class="op">=</span> np.array(MSE1_test)</span>
+<span id="cb3-14"><a href="#cb3-14"></a>MSE2_test <span class="op">=</span> np.array(MSE2_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="f52dfdad" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<span id="cb4-2"><a href="#cb4-2"></a>ax.plot(d_list, MSE1_test, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>blue, label<span class="op">=</span><span class="st">"split 1"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>ax.plot(d_list, MSE2_test, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>pink, label<span class="op">=</span><span class="st">"split 2"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>idx1 <span class="op">=</span> np.argmin(MSE1_test)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>idx2 <span class="op">=</span> np.argmin(MSE2_test)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>ax.plot(d_list[idx1], MSE1_test[idx1], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>ax.plot(d_list[idx2], MSE2_test[idx2], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-9"><a href="#cb4-9"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'polynomial degree'</span>,</span>
+<span id="cb4-11"><a href="#cb4-11"></a>       ylabel<span class="op">=</span><span class="st">'MSE'</span>,</span>
+<span id="cb4-12"><a href="#cb4-12"></a>       ylim<span class="op">=</span>(<span class="fl">5e-2</span>, <span class="fl">1e1</span>),</span>
+<span id="cb4-13"><a href="#cb4-13"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">12</span>)</span>
+<span id="cb4-14"><a href="#cb4-14"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Clearly, the results are not the same. Had we relied on this kind of analysis to decide which polynomial degree to use, we would have come to a different conclusion. To make it clear, I put a black circle around the best performing polynomial in each curve. In the first split, the best performing polynomial was the degree 5 polynomial, while for the second split it was the degree 6 polynomial.</p>
+<p>This is the problem that cross-validation tries to solve. We would like to minimize the sensitivity of our conclusions on the particular random split of the data.</p>
+<section id="three-different-goals" class="level2" data-number="48.1">
+<h2 data-number="48.1" class="anchored" data-anchor-id="three-different-goals"><span class="header-section-number">48.1</span> three different goals</h2>
+<p>It is best to make explicit three different goals that we may have when we are trying to find a good model for our data.</p>
+<ol type="1">
+<li><strong>Training:</strong> We want to find the model parameters that best fit the data we have. In the example here, this is done by fitting polynomials of different degrees to the data. There are several names for the adjustable knobs of a model, such as parameters, coefficients, weights, etc. It’s all the same.</li>
+<li><strong>Model selection:</strong> Among the several models that we have fitted, we want to select the one that performs best on <em>unseen</em> data. The different modeling choices are determined by <strong>hyperparameters</strong>, which are different from the parameters mentioned in the previous point. In our example, the hyperparameter is the degree of the polynomial. For random forests, the hyperparameters include the number of trees, the maximum depth of each tree, etc. Model selection is the problem of choosing the best hyperparameters.</li>
+<li><strong>Model performance:</strong> Once we have selected a model, we want to estimate how well it will perform on new data. This is the problem of estimating the generalization error of our model.</li>
+</ol>
+<p>The idea of cross-validation is that we split our dataset into three parts, each of which is used to solve one of the three problems mentioned above. If we have it clear what our three goals are, it becomes much easier to understand not only how to do cross-validation, but also what not to do.</p>
+</section>
+<section id="splitting-the-data" class="level2" data-number="48.2">
+<h2 data-number="48.2" class="anchored" data-anchor-id="splitting-the-data"><span class="header-section-number">48.2</span> splitting the data</h2>
+<section id="hold-out-or-test-set" class="level3" data-number="48.2.1">
+<h3 data-number="48.2.1" class="anchored" data-anchor-id="hold-out-or-test-set"><span class="header-section-number">48.2.1</span> hold-out or test set</h3>
+<p>The very first thing we do is to take part of the whole dataset and set it aside. We don’t touch it until the very end. The procedures after that cannot absolutely be informed by the data in this hold-out set. We will only use it at the very end to get an unbiased estimate of the generalization error of our final model.</p>
+<p>The name “hold-out” comes from the fact that we are holding out a part of the data until the very end. The name “test set” comes from the fact that we will use this part of the data to test our final model. I like to keep in the back of my mind that they we’re really talking about a “performance set”, because it makes it clear that this part of the data is used to estimate the performance of our final model. Whatever isn’t part of the performance set is called the training set, because we will use it to train our models.</p>
+<div id="e685a22f" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>np.random.seed(<span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>idx_test <span class="op">=</span> np.random.choice(<span class="bu">len</span>(sample_x), size<span class="op">=</span><span class="dv">10</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>test_x <span class="op">=</span> sample_x[idx_test]</span>
+<span id="cb5-4"><a href="#cb5-4"></a>test_y <span class="op">=</span> sample_y[idx_test]</span>
+<span id="cb5-5"><a href="#cb5-5"></a>remaining_idx <span class="op">=</span> np.setdiff1d(np.arange(<span class="bu">len</span>(sample_x)), idx_test)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>train_x <span class="op">=</span> sample_x[remaining_idx]</span>
+<span id="cb5-7"><a href="#cb5-7"></a>train_y <span class="op">=</span> sample_y[remaining_idx]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="c613226a" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb6-2"><a href="#cb6-2"></a>ax.plot(test_x, test_y, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>        markerfacecolor<span class="op">=</span>blue, markeredgecolor<span class="op">=</span>blue, </span>
+<span id="cb6-4"><a href="#cb6-4"></a>        markeredgewidth<span class="op">=</span><span class="fl">1.5</span>, clip_on<span class="op">=</span><span class="va">False</span>, label<span class="op">=</span><span class="st">"test set"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a>ax.plot(train_x, train_y, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>        markerfacecolor<span class="op">=</span><span class="st">'None'</span>, markeredgecolor<span class="op">=</span>pink, </span>
+<span id="cb6-7"><a href="#cb6-7"></a>        markeredgewidth<span class="op">=</span><span class="fl">1.5</span>, clip_on<span class="op">=</span><span class="va">False</span>, label<span class="op">=</span><span class="st">"train set"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-9"><a href="#cb6-9"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10"></a>        xlim<span class="op">=</span>(pop_x[<span class="dv">0</span>], pop_x[<span class="op">-</span><span class="dv">1</span>]),</span>
+<span id="cb6-11"><a href="#cb6-11"></a>        ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb6-12"><a href="#cb6-12"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="k-fold-cross-validation" class="level3" data-number="48.2.2">
+<h3 data-number="48.2.2" class="anchored" data-anchor-id="k-fold-cross-validation"><span class="header-section-number">48.2.2</span> k-fold cross-validation</h3>
+<p>I will talk about a specific procedure for doing cross-validation, which is called k-fold cross-validation. The idea is that we split the data into k different parts, which we call folds. We use k-1 of the folds to train our model and the remaining fold to evaluate its performance. We repeat this procedure k times, each time using a different fold as the test set. Finally, we average the performance across the k different folds to get an estimate of the generalization error of our model. We began this chapter by showing two particular splits of the data, which are just two particular folds. By doing k-fold cross-validation, we will get k curves like the ones we showed at the beginning, not only two. Let’s see how this works for 5 folds.</p>
+<div id="e328304b" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>run k-fold cross-validation</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> scipy</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="kw">def</span> k_fold(x, y, degree, k<span class="op">=</span><span class="dv">5</span>, seed<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="co"># super important</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>    rng <span class="op">=</span> np.random.default_rng(seed)</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>    idx <span class="op">=</span> np.arange(n)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    rng.shuffle(idx)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    folds <span class="op">=</span> np.array_split(idx, k)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    mse_per_fold <span class="op">=</span> []</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k):</span>
+<span id="cb7-13"><a href="#cb7-13"></a>        val_idx <span class="op">=</span> folds[i]</span>
+<span id="cb7-14"><a href="#cb7-14"></a>        train_idx <span class="op">=</span> np.concatenate([folds[j] <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(k) <span class="cf">if</span> j <span class="op">!=</span> i])</span>
+<span id="cb7-15"><a href="#cb7-15"></a>        train_x, train_y <span class="op">=</span> x[train_idx], y[train_idx]</span>
+<span id="cb7-16"><a href="#cb7-16"></a>        val_x, val_y <span class="op">=</span> x[val_idx], y[val_idx]</span>
+<span id="cb7-17"><a href="#cb7-17"></a>        coeffs <span class="op">=</span> np.polyfit(train_x, train_y, degree)</span>
+<span id="cb7-18"><a href="#cb7-18"></a>        poly <span class="op">=</span> np.poly1d(coeffs)</span>
+<span id="cb7-19"><a href="#cb7-19"></a>        mse_per_fold.append(np.mean((poly(val_x) <span class="op">-</span> val_y)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb7-20"><a href="#cb7-20"></a>    <span class="cf">return</span> np.array(mse_per_fold)</span>
+<span id="cb7-21"><a href="#cb7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22"></a>mse_array <span class="op">=</span> np.empty((<span class="dv">0</span>, <span class="dv">5</span>))</span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="cf">for</span> d <span class="kw">in</span> d_list:</span>
+<span id="cb7-24"><a href="#cb7-24"></a>    mse_array <span class="op">=</span> np.vstack((mse_array, k_fold(train_x, train_y, degree<span class="op">=</span>d, k<span class="op">=</span><span class="dv">5</span>, seed<span class="op">=</span><span class="dv">0</span>)))</span>
+<span id="cb7-25"><a href="#cb7-25"></a>mean_mse <span class="op">=</span> np.mean(mse_array, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-26"><a href="#cb7-26"></a>std_mse <span class="op">=</span> np.std(mse_array, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-27"><a href="#cb7-27"></a>se_mse <span class="op">=</span> scipy.stats.sem(mse_array, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="c31005a5" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb8-3"><a href="#cb8-3"></a>    ax.plot(d_list, mse_array[:,j], color<span class="op">=</span><span class="st">"black"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>ax.plot([],[], color<span class="op">=</span><span class="st">"black"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, label<span class="op">=</span><span class="st">"k individual training runs"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a>ax.plot(d_list, mean_mse, color<span class="op">=</span>green, marker<span class="op">=</span><span class="st">'o'</span>, label<span class="op">=</span><span class="st">"mean MSE"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>ax.fill_between(d_list, mean_mse<span class="op">-</span>se_mse, mean_mse<span class="op">+</span>se_mse, color<span class="op">=</span>green, alpha<span class="op">=</span><span class="fl">0.15</span>, label<span class="op">=</span><span class="st">"SEM MSE"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7"></a>idx_min <span class="op">=</span> np.argmin(mean_mse)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>ax.axhline(mean_mse[idx_min]<span class="op">-</span>se_mse[idx_min], color<span class="op">=</span>gold, alpha<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>ax.axhline(mean_mse[idx_min]<span class="op">+</span>se_mse[idx_min], color<span class="op">=</span>gold, alpha<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"one SEM from the minimum"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10"></a>ax.plot(d_list[idx_min], mean_mse[idx_min], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb8-11"><a href="#cb8-11"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-13"><a href="#cb8-13"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'polynomial degree'</span>,</span>
+<span id="cb8-14"><a href="#cb8-14"></a>       ylabel<span class="op">=</span><span class="st">'MSE'</span>,</span>
+<span id="cb8-15"><a href="#cb8-15"></a>       ylim<span class="op">=</span>(<span class="fl">5e-2</span>, <span class="fl">1e1</span>),</span>
+<span id="cb8-16"><a href="#cb8-16"></a>       xlim<span class="op">=</span>(<span class="fl">0.5</span>,<span class="dv">13</span>)</span>
+<span id="cb8-17"><a href="#cb8-17"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We ran 5 times the same procedure: we fit polynomial degrees on 4/5 of the data and evaluated (computed the MSE) on the remaining 1/5. On the graph above you see all five realizations of this procedure, plus the mean and standard error of the mean of the MSE across the five folds.</p>
+<p>That’s the easy way to understand it. In reality, instead of fixing first the datasets and then fitting the models, we first fix the polynomial degree, and then we do the k-fold cross-validation. This works because we were careful to split the 5 folds using the same random seed, so every time we do the k-fold cross-validation for a given polynomial degree, we are using the same splits of the data.</p>
+</section>
+</section>
+<section id="model-selection" class="level2" data-number="48.3">
+<h2 data-number="48.3" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">48.3</span> model selection</h2>
+<p>On the graph above, we added a black circle around the best performing polynomial degree, which is degree 8. Before we select it, we recognize that chance played a role in the results, and that other polynomial degrees might fall within one SEM (standard error of the mean) of the best performing degree. In this case, there are no other degrees that fall within one SEM of degree 8, so we choose it. If there were other degrees that fell within one SEM of degree 8, we would choose the one with the lowest degree among them, because it is simpler and less likely to overfit.</p>
+<p>We chose degree 8 as our final model. Now what? We have 5 different lists of the parameters of the degree 8 polynomial, one for each fold. Which one do we choose?</p>
+<p>None of them! We will fit a new degree 8 polynomial to the <strong>whole training set</strong>. This is our final model.</p>
+<div id="95a3718f" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>compute y hat</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>yhat_n <span class="op">=</span> []</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="cf">for</span> degree <span class="kw">in</span> d_list:</span>
+<span id="cb9-3"><a href="#cb9-3"></a>    coeffs <span class="op">=</span> np.polyfit(train_x, train_y, degree)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    poly <span class="op">=</span> np.poly1d(coeffs)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>    yhat_n.append(poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="bcf70dc1" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb10-2"><a href="#cb10-2"></a>ax.plot(pop_x, (yhat_n[<span class="dv">8</span><span class="op">-</span><span class="dv">1</span>])(pop_x),</span>
+<span id="cb10-3"><a href="#cb10-3"></a>        color<span class="op">=</span>pink, label<span class="op">=</span><span class="vs">r'true function, </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># ax.plot(pop_x, (yhat_n[5-1])(pop_x),</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#         color=gold, label=r'true function, $f(x)$')</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>ax.plot(train_x, train_y, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>        markerfacecolor<span class="op">=</span><span class="st">'None'</span>, markeredgecolor<span class="op">=</span>pink, </span>
+<span id="cb10-8"><a href="#cb10-8"></a>        markeredgewidth<span class="op">=</span><span class="fl">1.5</span>, clip_on<span class="op">=</span><span class="va">False</span>, label<span class="op">=</span><span class="st">"train set"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-10"><a href="#cb10-10"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>       title<span class="op">=</span><span class="st">"the selected model (degree 8) fitted to the whole training set"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12"></a>        xlim<span class="op">=</span>(pop_x[<span class="dv">0</span>], pop_x[<span class="op">-</span><span class="dv">1</span>]),</span>
+<span id="cb10-13"><a href="#cb10-13"></a>        ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="performance" class="level2" data-number="48.4">
+<h2 data-number="48.4" class="anchored" data-anchor-id="performance"><span class="header-section-number">48.4</span> performance</h2>
+<p>That’s the very last step. Our choice is made, all’s left is to estimate the generalization error of our final model. We do this by computing the MSE of our final model on the hold-out set, which we haven’t touched until now. This gives us an unbiased estimate of the generalization error of our final model. I’ll do the same for all other polynomial degrees, so we can compare them.</p>
+<div id="6fd4d685" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb11-2"><a href="#cb11-2"></a>MSE <span class="op">=</span> []</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="cf">for</span> degree <span class="kw">in</span> d_list:</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    yhat <span class="op">=</span> yhat_n[degree<span class="op">-</span><span class="dv">1</span>](test_x)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>    MSE.append(np.mean((yhat <span class="op">-</span> test_y)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb11-6"><a href="#cb11-6"></a>MSE <span class="op">=</span> np.array(MSE)</span>
+<span id="cb11-7"><a href="#cb11-7"></a>ax.plot(d_list, MSE, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>blue, label<span class="op">=</span><span class="st">"test set"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8"></a>ax.plot(d_list[<span class="dv">7</span>], MSE[<span class="dv">7</span>], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a></span>
+<span id="cb11-11"><a href="#cb11-11"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"performance of all models on the test set"</span>,</span>
+<span id="cb11-13"><a href="#cb11-13"></a>       xlabel<span class="op">=</span><span class="st">"polynomial degree"</span>,</span>
+<span id="cb11-14"><a href="#cb11-14"></a>       ylabel<span class="op">=</span><span class="st">"MSE"</span>,)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Oops! Is there something wrong here? We chose degree 8 because in validation it had the lowest MSE, but now that we evaluate its performance on the hold-out set, it does <strong>worse than all other degrees smaller than itself!</strong></p>
+<p>When I first saw this result I thought: “bummer, that ruins the narrative!” I thought this was a bug needed to be fixed. I then realized that I couldn’t wish for a better result from an educational perspective. That’s why we’re here, to learn!</p>
+<p>The lesson to be learned is that cross-validation does not guarantee that the best performing model in model selection (validation) will also be the best performing model in testing. It only gives us a <strong>better chance</strong> of selecting a good model. Randomness is still involved in the process, and we might have just been unlucky with our particular splits of the data. k-folds cross-validation shuffles the train and validation sets, but it doesn’t touch the test set, which is the one that gives us the final estimate of the generalization error. Maybe we were just unlucky?</p>
+<p>Take the polynomial degree 5, its MSE is 100 times smaller than the MSE of degree 8 on the hold-out set. How can that be? Let’s see both polynomials against the test set (left) and against the training set (right).</p>
+<div id="1e117da4" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>ax[<span class="dv">0</span>].plot(pop_x, (yhat_n[<span class="dv">8</span><span class="op">-</span><span class="dv">1</span>])(pop_x),</span>
+<span id="cb12-4"><a href="#cb12-4"></a>        color<span class="op">=</span>pink, label<span class="op">=</span><span class="st">'degree 8'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5"></a>ax[<span class="dv">0</span>].plot(pop_x, (yhat_n[<span class="dv">5</span><span class="op">-</span><span class="dv">1</span>])(pop_x),</span>
+<span id="cb12-6"><a href="#cb12-6"></a>        color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">'degree 5'</span>)</span>
+<span id="cb12-7"><a href="#cb12-7"></a>ax[<span class="dv">0</span>].plot(train_x, train_y, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb12-8"><a href="#cb12-8"></a>        markerfacecolor<span class="op">=</span><span class="st">'None'</span>, markeredgecolor<span class="op">=</span><span class="st">"black"</span>, </span>
+<span id="cb12-9"><a href="#cb12-9"></a>        markeredgewidth<span class="op">=</span><span class="fl">1.5</span>, clip_on<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-10"><a href="#cb12-10"></a>ax[<span class="dv">0</span>].legend(loc<span class="op">=</span><span class="st">"lower right"</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-11"><a href="#cb12-11"></a>ax[<span class="dv">1</span>].plot(pop_x, (yhat_n[<span class="dv">5</span><span class="op">-</span><span class="dv">1</span>])(pop_x),</span>
+<span id="cb12-12"><a href="#cb12-12"></a>        color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">'degree 5'</span>)</span>
+<span id="cb12-13"><a href="#cb12-13"></a>ax[<span class="dv">1</span>].plot(pop_x, (yhat_n[<span class="dv">8</span><span class="op">-</span><span class="dv">1</span>])(pop_x),</span>
+<span id="cb12-14"><a href="#cb12-14"></a>        color<span class="op">=</span>pink, label<span class="op">=</span><span class="st">'degree 8'</span>)</span>
+<span id="cb12-15"><a href="#cb12-15"></a>ax[<span class="dv">1</span>].plot(test_x, test_y, ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb12-16"><a href="#cb12-16"></a>        markerfacecolor<span class="op">=</span><span class="st">'None'</span>, markeredgecolor<span class="op">=</span><span class="st">"black"</span>, </span>
+<span id="cb12-17"><a href="#cb12-17"></a>        markeredgewidth<span class="op">=</span><span class="fl">1.5</span>, clip_on<span class="op">=</span><span class="va">False</span>, label<span class="op">=</span><span class="st">"test set"</span>)</span>
+<span id="cb12-18"><a href="#cb12-18"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb12-19"><a href="#cb12-19"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb12-20"><a href="#cb12-20"></a>       title<span class="op">=</span><span class="st">"degrees 5 and 8</span><span class="ch">\n</span><span class="st">against the train set"</span>,</span>
+<span id="cb12-21"><a href="#cb12-21"></a>        xlim<span class="op">=</span>(pop_x[<span class="dv">0</span>], pop_x[<span class="op">-</span><span class="dv">1</span>]),</span>
+<span id="cb12-22"><a href="#cb12-22"></a>        ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb12-23"><a href="#cb12-23"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb12-24"><a href="#cb12-24"></a>          title<span class="op">=</span><span class="st">"degrees 5 and 8</span><span class="ch">\n</span><span class="st">against the test set"</span>,)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Yes, we were just unlucky. All polynomial orders were incentivized during training to capture the the higher dots on the left of the train set. What happened in the performance stage? We randomly drew two dots really low on the left of the test set, something never seen during training. By pure chance the degree 5 polynomial passes next to them, while the degree 8 polynomial goes way up, incurring in a huge error.</p>
+<p>Just to drive this point home, I’ll perform all the k-fold cross-validation again. I’ll use the exact same experimental dataset, but I’ll make sure the first split of the data, which decides the train/test split, is different from the one we had before.</p>
+</section>
+<section id="a-different-hold-out-set" class="level2" data-number="48.5">
+<h2 data-number="48.5" class="anchored" data-anchor-id="a-different-hold-out-set"><span class="header-section-number">48.5</span> a different hold-out set</h2>
+<div id="ea455ad4" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>different train/test split</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># this seed was 0 before, we keep it</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb13-3"><a href="#cb13-3"></a>n <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5"></a>idx <span class="op">=</span> np.random.choice(N, size<span class="op">=</span>n, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-6"><a href="#cb13-6"></a>sample2_x <span class="op">=</span> pop_x[idx]</span>
+<span id="cb13-7"><a href="#cb13-7"></a>sample2_y <span class="op">=</span> pop_y[idx]</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co"># this seed was 1 before, we change it</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co"># to guarantee a different train/test split from the one we had before</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a>np.random.seed(<span class="dv">2</span>)</span>
+<span id="cb13-12"><a href="#cb13-12"></a>idx_test <span class="op">=</span> np.random.choice(<span class="bu">len</span>(sample2_x), size<span class="op">=</span><span class="dv">10</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-13"><a href="#cb13-13"></a>test2_x <span class="op">=</span> sample2_x[idx_test]</span>
+<span id="cb13-14"><a href="#cb13-14"></a>test2_y <span class="op">=</span> sample2_y[idx_test]</span>
+<span id="cb13-15"><a href="#cb13-15"></a>remaining_idx <span class="op">=</span> np.setdiff1d(np.arange(<span class="bu">len</span>(sample2_x)), idx_test)</span>
+<span id="cb13-16"><a href="#cb13-16"></a>train2_x <span class="op">=</span> sample2_x[remaining_idx]</span>
+<span id="cb13-17"><a href="#cb13-17"></a>train2_y <span class="op">=</span> sample2_y[remaining_idx]</span>
+<span id="cb13-18"><a href="#cb13-18"></a></span>
+<span id="cb13-19"><a href="#cb13-19"></a>mse_array2 <span class="op">=</span> np.empty((<span class="dv">0</span>, <span class="dv">5</span>))</span>
+<span id="cb13-20"><a href="#cb13-20"></a><span class="cf">for</span> d <span class="kw">in</span> d_list:</span>
+<span id="cb13-21"><a href="#cb13-21"></a>    mse_array2 <span class="op">=</span> np.vstack((mse_array2, k_fold(train2_x, train2_y, degree<span class="op">=</span>d, k<span class="op">=</span><span class="dv">5</span>, seed<span class="op">=</span><span class="dv">0</span>))) <span class="co"># seed was 0 before, we can keep it...</span></span>
+<span id="cb13-22"><a href="#cb13-22"></a>mean_mse2 <span class="op">=</span> np.mean(mse_array2, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-23"><a href="#cb13-23"></a>std_mse2 <span class="op">=</span> np.std(mse_array2, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-24"><a href="#cb13-24"></a>se_mse2 <span class="op">=</span> scipy.stats.sem(mse_array2, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-25"><a href="#cb13-25"></a></span>
+<span id="cb13-26"><a href="#cb13-26"></a>yhat_n2 <span class="op">=</span> []</span>
+<span id="cb13-27"><a href="#cb13-27"></a><span class="cf">for</span> degree <span class="kw">in</span> d_list:</span>
+<span id="cb13-28"><a href="#cb13-28"></a>    coeffs <span class="op">=</span> np.polyfit(train2_x, train2_y, degree)</span>
+<span id="cb13-29"><a href="#cb13-29"></a>    poly <span class="op">=</span> np.poly1d(coeffs)</span>
+<span id="cb13-30"><a href="#cb13-30"></a>    yhat_n2.append(poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="51d4e8c8" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb14-3"><a href="#cb14-3"></a>    ax.plot(d_list, mse_array2[:,j], color<span class="op">=</span><span class="st">"black"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb14-4"><a href="#cb14-4"></a>ax.plot([],[], color<span class="op">=</span><span class="st">"black"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, label<span class="op">=</span><span class="st">"k individual training runs"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5"></a>ax.plot(d_list, mean_mse2, color<span class="op">=</span>green, marker<span class="op">=</span><span class="st">'o'</span>, label<span class="op">=</span><span class="st">"mean MSE"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>ax.fill_between(d_list, mean_mse2<span class="op">-</span>se_mse2, mean_mse2<span class="op">+</span>se_mse2, color<span class="op">=</span>green, alpha<span class="op">=</span><span class="fl">0.15</span>, label<span class="op">=</span><span class="st">"SEM MSE"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7"></a>idx_min <span class="op">=</span> np.argmin(mean_mse2)</span>
+<span id="cb14-8"><a href="#cb14-8"></a>ax.plot(d_list[idx_min], mean_mse2[idx_min], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb14-9"><a href="#cb14-9"></a>idx_min <span class="op">=</span> np.argmin(mean_mse2)</span>
+<span id="cb14-10"><a href="#cb14-10"></a>ax.axhline(mean_mse2[idx_min]<span class="op">-</span>se_mse2[idx_min], color<span class="op">=</span>gold, alpha<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11"></a>ax.axhline(mean_mse2[idx_min]<span class="op">+</span>se_mse2[idx_min], color<span class="op">=</span>gold, alpha<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"one SEM from the minimum"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb14-13"><a href="#cb14-13"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb14-14"><a href="#cb14-14"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'polynomial degree'</span>,</span>
+<span id="cb14-15"><a href="#cb14-15"></a>       ylabel<span class="op">=</span><span class="st">'MSE'</span>,</span>
+<span id="cb14-16"><a href="#cb14-16"></a>       ylim<span class="op">=</span>(<span class="fl">5e-2</span>, <span class="fl">1e1</span>),</span>
+<span id="cb14-17"><a href="#cb14-17"></a>       xlim<span class="op">=</span>(<span class="fl">0.5</span>,<span class="dv">13</span>),</span>
+<span id="cb14-18"><a href="#cb14-18"></a>       title<span class="op">=</span><span class="st">"different train/test split"</span></span>
+<span id="cb14-19"><a href="#cb14-19"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This time the best performing model in the validation was degree 5. Degrees 6 and 7 lie within one SEM of degree 5, so we choose the lower value, degree 5.</p>
+<p>Now let’s see the performance of all degrees on the hold-out set.</p>
+<div id="0b93e083" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb15-2"><a href="#cb15-2"></a>MSE2 <span class="op">=</span> []</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="cf">for</span> degree <span class="kw">in</span> d_list:</span>
+<span id="cb15-4"><a href="#cb15-4"></a>    yhat <span class="op">=</span> yhat_n2[degree<span class="op">-</span><span class="dv">1</span>](test2_x)</span>
+<span id="cb15-5"><a href="#cb15-5"></a>    MSE2.append(np.mean((yhat <span class="op">-</span> test2_y)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb15-6"><a href="#cb15-6"></a>MSE2 <span class="op">=</span> np.array(MSE2)</span>
+<span id="cb15-7"><a href="#cb15-7"></a>ax.plot(d_list, MSE2, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>blue, label<span class="op">=</span><span class="st">"test set"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8"></a>ax.plot(d_list[idx_min], MSE2[idx_min], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb15-9"><a href="#cb15-9"></a></span>
+<span id="cb15-10"><a href="#cb15-10"></a></span>
+<span id="cb15-11"><a href="#cb15-11"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb15-12"><a href="#cb15-12"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"performance of all models on the test set"</span>,</span>
+<span id="cb15-13"><a href="#cb15-13"></a>       xlabel<span class="op">=</span><span class="st">"polynomial degree"</span>,</span>
+<span id="cb15-14"><a href="#cb15-14"></a>       ylabel<span class="op">=</span><span class="st">"MSE"</span>,)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we see that, in general terms, all polynomial orders from 5 and above perform approximately equally well.</p>
+<p>What do I take from this? That cross-validation is a bit art and a bit science, probably more art than science. We need to know how it works to use it well, and to know what our results mean, and especially what they don’t mean.</p>
+<p>As a final simulation, we will see what happens if we perform k-fold cross-validation on a larger dataset of 250 data points, instead of 50.</p>
+</section>
+<section id="a-much-larger-dataset" class="level2" data-number="48.6">
+<h2 data-number="48.6" class="anchored" data-anchor-id="a-much-larger-dataset"><span class="header-section-number">48.6</span> a much larger dataset</h2>
+<div id="8847fa4c" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># this was 0 before</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb16-3"><a href="#cb16-3"></a>n <span class="op">=</span> <span class="dv">250</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a>idx <span class="op">=</span> np.random.choice(N, size<span class="op">=</span>n, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-6"><a href="#cb16-6"></a>sample3_x <span class="op">=</span> pop_x[idx]</span>
+<span id="cb16-7"><a href="#cb16-7"></a>sample3_y <span class="op">=</span> pop_y[idx]</span>
+<span id="cb16-8"><a href="#cb16-8"></a></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="co"># this was 1 before</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a>np.random.seed(<span class="dv">1</span>)</span>
+<span id="cb16-11"><a href="#cb16-11"></a>idx_test <span class="op">=</span> np.random.choice(<span class="bu">len</span>(sample3_x), size<span class="op">=</span><span class="dv">50</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-12"><a href="#cb16-12"></a>test3_x <span class="op">=</span> sample3_x[idx_test]</span>
+<span id="cb16-13"><a href="#cb16-13"></a>test3_y <span class="op">=</span> sample3_y[idx_test]</span>
+<span id="cb16-14"><a href="#cb16-14"></a>remaining_idx <span class="op">=</span> np.setdiff1d(np.arange(<span class="bu">len</span>(sample3_x)), idx_test)</span>
+<span id="cb16-15"><a href="#cb16-15"></a>train3_x <span class="op">=</span> sample3_x[remaining_idx]</span>
+<span id="cb16-16"><a href="#cb16-16"></a>train3_y <span class="op">=</span> sample3_y[remaining_idx]</span>
+<span id="cb16-17"><a href="#cb16-17"></a></span>
+<span id="cb16-18"><a href="#cb16-18"></a>mse_array3 <span class="op">=</span> np.empty((<span class="dv">0</span>, <span class="dv">5</span>))</span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="cf">for</span> d <span class="kw">in</span> d_list:</span>
+<span id="cb16-20"><a href="#cb16-20"></a>    mse_array3 <span class="op">=</span> np.vstack((mse_array3, k_fold(train3_x, train3_y, degree<span class="op">=</span>d, k<span class="op">=</span><span class="dv">5</span>, seed<span class="op">=</span><span class="dv">0</span>))) <span class="co"># seed was 0 before</span></span>
+<span id="cb16-21"><a href="#cb16-21"></a>mean_mse3 <span class="op">=</span> np.mean(mse_array3, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-22"><a href="#cb16-22"></a>std_mse3 <span class="op">=</span> np.std(mse_array3, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-23"><a href="#cb16-23"></a>se_mse3 <span class="op">=</span> scipy.stats.sem(mse_array3, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-24"><a href="#cb16-24"></a></span>
+<span id="cb16-25"><a href="#cb16-25"></a>yhat_n3 <span class="op">=</span> []</span>
+<span id="cb16-26"><a href="#cb16-26"></a><span class="cf">for</span> degree <span class="kw">in</span> d_list:</span>
+<span id="cb16-27"><a href="#cb16-27"></a>    coeffs <span class="op">=</span> np.polyfit(train3_x, train3_y, degree)</span>
+<span id="cb16-28"><a href="#cb16-28"></a>    poly <span class="op">=</span> np.poly1d(coeffs)</span>
+<span id="cb16-29"><a href="#cb16-29"></a>    yhat_n3.append(poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="827103b7" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb17-3"><a href="#cb17-3"></a>    ax.plot(d_list, mse_array3[:,j], color<span class="op">=</span><span class="st">"black"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb17-4"><a href="#cb17-4"></a>ax.plot([],[], color<span class="op">=</span><span class="st">"black"</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, label<span class="op">=</span><span class="st">"k individual training runs"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5"></a>ax.plot(d_list, mean_mse3, color<span class="op">=</span>green, marker<span class="op">=</span><span class="st">'o'</span>, label<span class="op">=</span><span class="st">"mean MSE"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6"></a>ax.fill_between(d_list, mean_mse3<span class="op">-</span>se_mse3, mean_mse3<span class="op">+</span>se_mse3, color<span class="op">=</span>green, alpha<span class="op">=</span><span class="fl">0.15</span>, label<span class="op">=</span><span class="st">"SEM MSE"</span>)</span>
+<span id="cb17-7"><a href="#cb17-7"></a>idx_min <span class="op">=</span> np.argmin(mean_mse3)</span>
+<span id="cb17-8"><a href="#cb17-8"></a>ax.plot(d_list[idx_min], mean_mse3[idx_min], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb17-9"><a href="#cb17-9"></a>ax.axhline(mean_mse3[idx_min]<span class="op">-</span>se_mse3[idx_min], color<span class="op">=</span>gold, alpha<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb17-10"><a href="#cb17-10"></a>ax.axhline(mean_mse3[idx_min]<span class="op">+</span>se_mse3[idx_min], color<span class="op">=</span>gold, alpha<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"one SEM from the minimum"</span>)</span>
+<span id="cb17-11"><a href="#cb17-11"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb17-12"><a href="#cb17-12"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-13"><a href="#cb17-13"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'polynomial degree'</span>,</span>
+<span id="cb17-14"><a href="#cb17-14"></a>       ylabel<span class="op">=</span><span class="st">'MSE'</span>,</span>
+<span id="cb17-15"><a href="#cb17-15"></a>       ylim<span class="op">=</span>(<span class="fl">5e-2</span>, <span class="fl">1e1</span>),</span>
+<span id="cb17-16"><a href="#cb17-16"></a>       xlim<span class="op">=</span>(<span class="fl">0.5</span>,<span class="dv">16</span>)</span>
+<span id="cb17-17"><a href="#cb17-17"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The best performing degree is 9, but degree 7 is the lowest degree that falls within one SEM of degree 9, so we choose degree 7 as our final model.</p>
+<p>The most important thing to notice is that all the gray lines, representing the MSE of the different folds, are much more similar to each other than in the previous simulations. See how the 1 SEM envelope is much tighter around the mean MSE. The whole idea of cross-validation was to try to neutralize the effect of randomness in the splits of the data, but for larger datasets the effect of randomness is smaller to begin with, so the effect of cross-validation is smaller as well. Cross-validation is an important tool in our toolbox, but it is most useful for smaller datasets, and should not be used in every case.</p>
+<p>Let’s see how the polynomial of degree 7 performs on the hold-out set, and compare it to the performance of the other degrees.</p>
+<div id="96a252b2" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>plot</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb18-2"><a href="#cb18-2"></a>MSE3 <span class="op">=</span> []</span>
+<span id="cb18-3"><a href="#cb18-3"></a>idx_min <span class="op">=</span> <span class="dv">7</span> <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="cf">for</span> degree <span class="kw">in</span> d_list:</span>
+<span id="cb18-5"><a href="#cb18-5"></a>    yhat <span class="op">=</span> yhat_n3[degree<span class="op">-</span><span class="dv">1</span>](test3_x)</span>
+<span id="cb18-6"><a href="#cb18-6"></a>    MSE3.append(np.mean((yhat <span class="op">-</span> test3_y)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb18-7"><a href="#cb18-7"></a>MSE3 <span class="op">=</span> np.array(MSE3)</span>
+<span id="cb18-8"><a href="#cb18-8"></a>ax.plot(d_list, MSE3, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span>blue, label<span class="op">=</span><span class="st">"test set"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9"></a>ax.plot(d_list[idx_min], MSE3[idx_min], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, markersize<span class="op">=</span><span class="dv">12</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb18-10"><a href="#cb18-10"></a></span>
+<span id="cb18-11"><a href="#cb18-11"></a></span>
+<span id="cb18-12"><a href="#cb18-12"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb18-13"><a href="#cb18-13"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"performance of all models on the test set"</span>,</span>
+<span id="cb18-14"><a href="#cb18-14"></a>       xlabel<span class="op">=</span><span class="st">"polynomial degree"</span>,</span>
+<span id="cb18-15"><a href="#cb18-15"></a>       ylabel<span class="op">=</span><span class="st">"MSE"</span>,)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cross-validation_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This performace graph looks much like the validation graph, which is expected for larger datasets.</p>
+</section>
+<section id="concluding-remarks" class="level2" data-number="48.7">
+<h2 data-number="48.7" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">48.7</span> concluding remarks</h2>
+<p>When I started learning about cross-validation, the different datasets confused me, and I tended confuse which I should use and for what purpose. I’d like to offer a clear way of thinking about this. We should first think of the three different goals we have when we are trying to find a good model for our data:</p>
+<ol type="1">
+<li><strong>Training</strong> variations of the model. In other words, finding the best set of <strong>parameters</strong>.</li>
+<li><strong>Selecting</strong> the best model. In this stage we choose the best <strong>hyperparameters</strong>, which are the different modeling choices we have, such as the degree of the polynomial, the number of trees in a random forest, etc.</li>
+<li>Estimating the <strong>performance</strong> of the selected model. In this last stage we simply quantify how well the selected model performs on new data.</li>
+</ol>
+<p>Each set of the data corresponds to one of these three goals. The training set is used to train the models, the validation set is used to select the best model, and the test set is used to estimate the performance of the selected model. If I were king of statistics for one day, the first thing I would do is to change the names of these datasets to make obvious what they are for. Training set is great, nothing to change there. The worst offender is the validation set. Validation usually means “to check if something is correct”, but here we are not checking if something is correct, we are selecting the best model among several candidates. Test set is not bad, but I would change it to “performance set” to make it clear what it is for.</p>
 <!-- Core question
 
 What does it mean, in practice, to fit too little or too much?
@@ -687,6 +1248,7 @@ spread of predictions (variance)
 conceptual error decomposition (no heavy math) -->
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
