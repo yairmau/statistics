@@ -638,7 +638,8 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
   <li><a href="#performance" id="toc-performance" class="nav-link" data-scroll-target="#performance"><span class="header-section-number">48.4</span> performance</a></li>
   <li><a href="#a-different-hold-out-set" id="toc-a-different-hold-out-set" class="nav-link" data-scroll-target="#a-different-hold-out-set"><span class="header-section-number">48.5</span> a different hold-out set</a></li>
   <li><a href="#a-much-larger-dataset" id="toc-a-much-larger-dataset" class="nav-link" data-scroll-target="#a-much-larger-dataset"><span class="header-section-number">48.6</span> a much larger dataset</a></li>
-  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">48.7</span> concluding remarks</a></li>
+  <li><a href="#using-sklearn" id="toc-using-sklearn" class="nav-link" data-scroll-target="#using-sklearn"><span class="header-section-number">48.7</span> using sklearn</a></li>
+  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">48.8</span> concluding remarks</a></li>
   </ul>
 </nav>
     </div>
@@ -811,7 +812,9 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </section>
 <section id="k-fold-cross-validation" class="level3" data-number="48.2.2">
 <h3 data-number="48.2.2" class="anchored" data-anchor-id="k-fold-cross-validation"><span class="header-section-number">48.2.2</span> k-fold cross-validation</h3>
-<p>I will talk about a specific procedure for doing cross-validation, which is called k-fold cross-validation. The idea is that we split the data into k different parts, which we call folds. We use k-1 of the folds to train our model and the remaining fold to evaluate its performance. We repeat this procedure k times, each time using a different fold as the test set. Finally, we average the performance across the k different folds to get an estimate of the generalization error of our model. We began this chapter by showing two particular splits of the data, which are just two particular folds. By doing k-fold cross-validation, we will get k curves like the ones we showed at the beginning, not only two. Let’s see how this works for 5 folds.</p>
+<p>I will talk about a specific procedure for doing cross-validation, which is called k-fold cross-validation. The idea is that we split the data into k different parts, which we call folds. We use k-1 of the folds to train our model and the remaining fold to evaluate its performance. We repeat this procedure k times, each time using a different fold as the test set. Finally, we average the performance across the k different folds to get an estimate of the generalization error of our model. See the figure below, taken from <a href="https://www.academis.eu/machine_learning/supervised/cross_validation/README.html">academis.eu</a>, for a graphical explanation of k-fold cross-validation.</p>
+<p><img src="k-fold-crossval.png" class="img-fluid"></p>
+<p>We began this chapter by showing two particular splits of the data, which are just two particular folds. By doing k-fold cross-validation, we will get k curves like the ones we showed at the beginning, not only two. Let’s see how this works for 5 folds.</p>
 <div id="e328304b" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>run k-fold cross-validation</summary>
@@ -873,7 +876,7 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<p>We ran 5 times the same procedure: we fit polynomial degrees on 4/5 of the data and evaluated (computed the MSE) on the remaining 1/5. On the graph above you see all five realizations of this procedure, plus the mean and standard error of the mean of the MSE across the five folds.</p>
+<p>We ran 5 times the same procedure: we fit polynomial degrees on 4/5 of the data and evaluated (computed the MSE) on the remaining 1/5. On the graph above you see all five realizations of this procedure, plus the mean and standard error of the mean (SEM) of the MSE across the five folds. The SEM band is a heuristic indicator (rule of thumb) of uncertainty, not a formal confidence interval, because cross-validation folds are overlapping and not independent.</p>
 <p>That’s the easy way to understand it. In reality, instead of fixing first the datasets and then fitting the models, we first fix the polynomial degree, and then we do the k-fold cross-validation. This works because we were careful to split the 5 folds using the same random seed, so every time we do the k-fold cross-validation for a given polynomial degree, we are using the same splits of the data.</p>
 </section>
 </section>
@@ -1187,8 +1190,59 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </div>
 <p>This performace graph looks much like the validation graph, which is expected for larger datasets.</p>
 </section>
-<section id="concluding-remarks" class="level2" data-number="48.7">
-<h2 data-number="48.7" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">48.7</span> concluding remarks</h2>
+<section id="using-sklearn" class="level2" data-number="48.7">
+<h2 data-number="48.7" class="anchored" data-anchor-id="using-sklearn"><span class="header-section-number">48.7</span> using sklearn</h2>
+<p>We can take advantage of the <code>sklearn</code> library to perform k-fold cross-validation in a more automatic way. Most of the magic happens in two functions:</p>
+<ul>
+<li><code>KFold</code>, which creates the splitting logic.</li>
+<li><code>cross_val_score</code>, which performs the cross-validation procedure.</li>
+</ul>
+<p>Assuming we already have our dataset defined as <code>sample_x</code> and <code>sample_y</code>, we do the following:</p>
+<div id="7eb00f71" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> make_pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8f94fea3" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">def</span> cv_mse_short(x, y, degree, kf):</span>
+<span id="cb20-2"><a href="#cb20-2"></a>    model <span class="op">=</span> make_pipeline(</span>
+<span id="cb20-3"><a href="#cb20-3"></a>        PolynomialFeatures(degree<span class="op">=</span>degree,</span>
+<span id="cb20-4"><a href="#cb20-4"></a>                           include_bias<span class="op">=</span><span class="va">False</span>),  <span class="co"># LinearRegression already includes an intercept </span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>        LinearRegression()</span>
+<span id="cb20-6"><a href="#cb20-6"></a>    )</span>
+<span id="cb20-7"><a href="#cb20-7"></a></span>
+<span id="cb20-8"><a href="#cb20-8"></a>    neg_mse <span class="op">=</span> cross_val_score(</span>
+<span id="cb20-9"><a href="#cb20-9"></a>        model,</span>
+<span id="cb20-10"><a href="#cb20-10"></a>        x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>),                  <span class="co"># sklearn expects 2D array, so we reshape x</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a>        y,</span>
+<span id="cb20-12"><a href="#cb20-12"></a>        scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>,  <span class="co"># sklearn uses negative MSE</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a>        cv<span class="op">=</span>kf                              <span class="co"># this defines the rule for splitting the data into k-folds</span></span>
+<span id="cb20-14"><a href="#cb20-14"></a>    )</span>
+<span id="cb20-15"><a href="#cb20-15"></a></span>
+<span id="cb20-16"><a href="#cb20-16"></a>    mse <span class="op">=</span> <span class="op">-</span>neg_mse  <span class="co"># we want positive MSE, so we negate the negative MSE returned by sklearn</span></span>
+<span id="cb20-17"><a href="#cb20-17"></a></span>
+<span id="cb20-18"><a href="#cb20-18"></a>    <span class="cf">return</span> np.mean(mse), mse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="2d794bb4" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>k <span class="op">=</span> <span class="dv">5</span>               <span class="co"># number of folds</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>kf <span class="op">=</span> KFold(         <span class="co"># KFold creates the splitting logic</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>    n_splits<span class="op">=</span>k,</span>
+<span id="cb21-4"><a href="#cb21-4"></a>    shuffle<span class="op">=</span><span class="va">True</span>,   <span class="co"># shuffle=True ensures we don't depend on data ordering</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>    random_state<span class="op">=</span><span class="dv">0</span>  <span class="co"># random_state makes the split reproducible</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>    )</span>
+<span id="cb21-7"><a href="#cb21-7"></a>poly_degree <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a>results <span class="op">=</span> cv_mse_short(sample_x, sample_y, poly_degree, kf)</span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="bu">print</span>(<span class="ss">f"for polynomial degree </span><span class="sc">{</span>poly_degree<span class="sc">}</span><span class="ss">, mean MSE across folds: </span><span class="sc">{</span>results[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>for polynomial degree 5, mean MSE across folds: 0.1856</code></pre>
+</div>
+</div>
+</section>
+<section id="concluding-remarks" class="level2" data-number="48.8">
+<h2 data-number="48.8" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">48.8</span> concluding remarks</h2>
+<p>We learned about cross-validation with a specific modeling choice (polynomials), and a specific procedure (k-fold cross-validation). This was not intended to be a comprehensive treatment of cross-validation, just an introduction to the main ideas. Models with several hyperparameters require using nested cross-validation, and classification problems might benefit from stratified cross-validation, to name just two examples.</p>
 <p>When I started learning about cross-validation, the different datasets confused me, and I tended confuse which I should use and for what purpose. I’d like to offer a clear way of thinking about this. We should first think of the three different goals we have when we are trying to find a good model for our data:</p>
 <ol type="1">
 <li><strong>Training</strong> variations of the model. In other words, finding the best set of <strong>parameters</strong>.</li>
