@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>16&nbsp; R-squared – Statistics and Machine Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../regression/equivalence.html" rel="next">
+<link href="../regression/partitioning.html" rel="prev">
+<link href="../archive/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TB8VQN4T5W"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
+</script>
+<!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/R-squared.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">R-squared</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics and Machine Learning</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://yairmau.com/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
+    <a href="https://github.com/yairmau/statistics/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/height.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/weight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">hypothesis testing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/statistical_power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">statistical power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/permutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">confidence interval</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/R-squared.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">R-squared</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">correlation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">bayes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/logistic-connection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">svd and pca</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">decision trees</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">information theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">likelihood</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">generalization and model complexity</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#negative-r-squared" id="toc-negative-r-squared" class="nav-link active" data-scroll-target="#negative-r-squared"><span class="header-section-number">16.1</span> negative R-squared?</a>
+  <ul class="collapse">
+  <li><a href="#the-model-doesnt-have-an-intercept" id="toc-the-model-doesnt-have-an-intercept" class="nav-link" data-scroll-target="#the-model-doesnt-have-an-intercept"><span class="header-section-number">16.1.1</span> the model doesn’t have an intercept</a></li>
+  <li><a href="#the-model-is-fitted-to-a-different-dataset" id="toc-the-model-is-fitted-to-a-different-dataset" class="nav-link" data-scroll-target="#the-model-is-fitted-to-a-different-dataset"><span class="header-section-number">16.1.2</span> the model is fitted to a different dataset</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/geometry-of-regression.html">regression</a></li><li class="breadcrumb-item"><a href="../regression/R-squared.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">R-squared</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">R-squared</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/regression/R-squared.ipynb">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>R-squared is one possible measure used to describe of how well a model fits the data. It is defined as the proportion of the variance in the dependent variable that is predictable from the independent variables. In the chapter <a href="../regression/partitioning.html">partitioning of the sum of squares</a> we saw the following equations:</p>
+<p><span class="math display">\begin{align*}
+SS_\text{Total} &amp;= SS_\text{Model} + SS_\text{Error} \\
+\underbrace{\sum_{i=1}^{n} (y_i - \bar{y})^2}_{SS_\text{Total}} &amp;= \underbrace{\sum_{i=1}^{n} (\hat{y}_i - \bar{y})^2}_{SS_\text{Model}} + \underbrace{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}_{SS_\text{Error}},
+\end{align*}</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">y_i</span> are the observed values,</li>
+<li><span class="math inline">\hat{y}_i</span> are the predicted values from the regression model,</li>
+<li><span class="math inline">\bar{y}</span> is the mean of the observed values,</li>
+<li><span class="math inline">n</span> is the number of observations.</li>
+</ul>
+<p>The <span class="math inline">R^2</span> is defined as</p>
+<p><span class="math display">
+R^2 = \frac{SS_\text{Model}}{SS_\text{Total}} = 1 - \frac{SS_\text{Error}}{SS_\text{Total}}.
+</span></p>
+<p>When talking about <span class="math inline">R^2</span>, we usually say that it is the proportion of the variance in the observed values that is explained by the model. For example, if <span class="math inline">R^2 = 0.8</span>, we say that the model explains 80% of the variance in the observed values. We will justify this statement in a moment.</p>
+<p>The <span class="math inline">R^2</span> value usually (but not always, see below) ranges from 0 to 1. It is zero when the model is simply a horizontal line at the mean of the observed values, because <span class="math inline">SS_\text{Model}</span> can only be zero if <span class="math inline">\hat{y}_i = \bar{y}</span> for all <span class="math inline">i</span>, which happens when the model is just a horizontal line at <span class="math inline">\bar{y}</span>. The <span class="math inline">R^2</span> value is one when the model <strong>perfectly</strong> fits the data, because <span class="math inline">SS_\text{Error}</span> can only be zero if <span class="math inline">\hat{y}_i = y_i</span> for all <span class="math inline">i</span>, which happens when the model passes exactly on top of every data point.</p>
+<p>In short, the higher the <span class="math inline">R^2</span> value, the better the model fits the data. [That’s not the whole story, you might be interested in reading about overfitting.]</p>
+<p>Now the connection between <span class="math inline">R^2</span> and the variance.</p>
+<p>If we divide both the <span class="math inline">SS_\text{Error}</span> and <span class="math inline">SS_\text{Total}</span> by <span class="math inline">n-1</span>, we get the sample variances of the errors (residuals) and the dependent variable, respectively.</p>
+<p><span class="math display">\begin{align*}
+s^2_\text{Error} = \frac{SS_\text{Error}}{n-1} &amp;= \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n-1} \\
+s^2_\text{Total} = \frac{SS_\text{Total}}{n-1} &amp;= \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n-1}
+\end{align*}</span></p>
+<p>Then the <span class="math inline">R^2</span> can then be expressed as: <span class="math display">
+R^2 = \frac{s^2_\text{Model}}{s^2_\text{Total}} = 1 - \frac{s^2_\text{Error}}{s^2_\text{Total}}.
+</span></p>
+<p>I prefer this equation over the first, because it makes it clear that <span class="math inline">R^2</span> is the ratio of the variances, which is a more intuitive way to think about it.</p>
+<p>Let’s see an example. We see below <span class="math inline">(x, y)</span> data points as blue circles, and the solid line is the best-fit for a parabola:</p>
+<p><span class="math display">
+y = \beta_0 + \beta_1 x + \beta_2 x^2.
+</span></p>
+<div id="a9d4a065" class="cell" data-execution_count="40">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.2</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D  <span class="co"># noqa: F401</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> numpy.polynomial <span class="im">import</span> Chebyshev</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a>blue <span class="op">=</span> <span class="st">"xkcd:cerulean"</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>gold <span class="op">=</span> <span class="st">"xkcd:gold"</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>pink <span class="op">=</span> <span class="st">"xkcd:hot pink"</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>green <span class="op">=</span> <span class="st">"xkcd:forest"</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>purple <span class="op">=</span> <span class="st">"xkcd:barney"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="35694272" class="cell" data-execution_count="105">
+<details class="code-fold">
+<summary>create data</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>nsample <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, nsample)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>noise <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>nsample)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>foo <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">6</span> <span class="op">-</span> <span class="fl">0.1</span><span class="op">*</span>x <span class="op">+</span> <span class="fl">0.05</span><span class="op">*</span>x<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>y <span class="op">=</span> foo(x) <span class="op">+</span> noise</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="dca3412e" class="cell" data-execution_count="106">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># use sm to create matrix design for a parabola</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>X <span class="op">=</span> sm.add_constant(np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>)))</span>
+<span id="cb3-3"><a href="#cb3-3"></a>model <span class="op">=</span> sm.OLS(y, X).fit()</span>
+<span id="cb3-4"><a href="#cb3-4"></a>y_hat <span class="op">=</span> model.predict(X)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>f_predicted <span class="op">=</span> np.poly1d(model.params[::<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="2de776f0" class="cell" data-execution_count="171">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb4-2"><a href="#cb4-2"></a>ax.plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">10</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>ax.plot(x_line, f_predicted(x_line), <span class="st">"-"</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>SS_residuals <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>SS_total <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>R_squared <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals <span class="op">/</span> SS_total</span>
+<span id="cb4-8"><a href="#cb4-8"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb4-10"><a href="#cb4-10"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb4-11"><a href="#cb4-11"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="R-squared_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here we have <span class="math inline">R^2=0.66</span>, meaning that the model explains 66% of the variance in the observed values. The remaining 34% of the variance is due to other factors not captured by the model.</p>
+<p>The sum of squares have a nice visual interpretation. In the figure below we show <span class="math inline">SS_\text{Total}</span> (the total sum of squares) litterally as the area of a bunch of pink squares. Each square’s side has length <span class="math inline">|y_i - \bar{y}|</span>. If we divide the total pink area by the number of observations minus one, we get the sample variance of the observed values.</p>
+<p>The yellow squares represent <span class="math inline">SS_\text{Error}</span> (the sum of squares not explained by the model), where the length of each square’s side is <span class="math inline">|y_i - \hat{y}_i|</span>. If we divide the total yellow area by the number of observations minus one, we get the sample variance of the errors (residuals).</p>
+<p>Finally, the <span class="math inline">R^2</span> is simply one minus the ratio of the yellow area to the pink area.</p>
+<div id="0f959421" class="cell" data-execution_count="115">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, subplot_kw<span class="op">=</span>{<span class="st">'aspect'</span>:<span class="st">'equal'</span>})</span>
+<span id="cb5-2"><a href="#cb5-2"></a>fig.subplots_adjust(left<span class="op">=</span><span class="fl">0.04</span>, right<span class="op">=</span><span class="fl">0.98</span>, top<span class="op">=</span><span class="fl">0.88</span>, bottom<span class="op">=</span><span class="fl">0.15</span>,</span>
+<span id="cb5-3"><a href="#cb5-3"></a>                    hspace<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.04</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>ax[<span class="dv">0</span>].plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>ax[<span class="dv">1</span>].plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>ax[<span class="dv">0</span>].axhline(y<span class="op">=</span>y.mean(), color<span class="op">=</span>pink, label<span class="op">=</span><span class="st">"sample mean"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>ax[<span class="dv">1</span>].plot(x_line, f_predicted(x_line), <span class="st">"-"</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="cf">for</span> ind <span class="kw">in</span> np.arange(<span class="bu">len</span>(x)):</span>
+<span id="cb5-11"><a href="#cb5-11"></a>    x0 <span class="op">=</span> x[ind]</span>
+<span id="cb5-12"><a href="#cb5-12"></a>    y0 <span class="op">=</span> y[ind]</span>
+<span id="cb5-13"><a href="#cb5-13"></a>    <span class="co"># print(x0,y0)</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a>    v1 <span class="op">=</span> y_hat[ind] <span class="op">-</span> y0</span>
+<span id="cb5-15"><a href="#cb5-15"></a>    v2 <span class="op">=</span> y.mean() <span class="op">-</span> y0</span>
+<span id="cb5-16"><a href="#cb5-16"></a>    <span class="co"># add_rec(ax[1], (x0, y0), -v1, "blue")</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>    <span class="co"># add_rec(ax[0], (x0, y0), -v2, "red")</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>    ax[<span class="dv">0</span>].fill_between(x<span class="op">=</span>[x0, x0 <span class="op">+</span> np.<span class="bu">abs</span>(v2)],</span>
+<span id="cb5-19"><a href="#cb5-19"></a>                       y1<span class="op">=</span>y0, y2<span class="op">=</span>y0 <span class="op">+</span> v2,</span>
+<span id="cb5-20"><a href="#cb5-20"></a>                       alpha<span class="op">=</span><span class="fl">0.4</span>, color<span class="op">=</span>pink,</span>
+<span id="cb5-21"><a href="#cb5-21"></a>                       label<span class="op">=</span><span class="st">"SS total"</span> <span class="cf">if</span> ind <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span>,</span>
+<span id="cb5-22"><a href="#cb5-22"></a>                       linewidth<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-23"><a href="#cb5-23"></a>    ax[<span class="dv">1</span>].fill_between(x<span class="op">=</span>[x0, x0 <span class="op">+</span> np.<span class="bu">abs</span>(v1)],</span>
+<span id="cb5-24"><a href="#cb5-24"></a>                       y1<span class="op">=</span>y0, y2<span class="op">=</span>y0 <span class="op">+</span> v1,</span>
+<span id="cb5-25"><a href="#cb5-25"></a>                       alpha<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span>gold,</span>
+<span id="cb5-26"><a href="#cb5-26"></a>                       label<span class="op">=</span><span class="st">"SS residuals"</span> <span class="cf">if</span> ind <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span>,</span>
+<span id="cb5-27"><a href="#cb5-27"></a>                       linewidth<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-28"><a href="#cb5-28"></a></span>
+<span id="cb5-29"><a href="#cb5-29"></a></span>
+<span id="cb5-30"><a href="#cb5-30"></a>fig.suptitle(<span class="vs">r"R-squared </span><span class="dv">$</span><span class="vs">= 1 - </span><span class="ch">\f</span><span class="vs">rac{</span><span class="ch">\t</span><span class="vs">ext{yellow area}}{</span><span class="ch">\t</span><span class="vs">ext{pink area}}</span><span class="dv">$</span><span class="vs">"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
+<span id="cb5-31"><a href="#cb5-31"></a></span>
+<span id="cb5-32"><a href="#cb5-32"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb5-33"><a href="#cb5-33"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">2</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">4</span>),</span>
+<span id="cb5-34"><a href="#cb5-34"></a>         ylim<span class="op">=</span>(<span class="dv">0</span>, y.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),)</span>
+<span id="cb5-35"><a href="#cb5-35"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb5-36"><a href="#cb5-36"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">2</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">4</span>),</span>
+<span id="cb5-37"><a href="#cb5-37"></a>         ylim<span class="op">=</span>(<span class="dv">0</span>, y.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),)</span>
+<span id="cb5-38"><a href="#cb5-38"></a>ax[<span class="dv">0</span>].legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
+<span id="cb5-39"><a href="#cb5-39"></a>ax[<span class="dv">1</span>].legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
+<span id="cb5-40"><a href="#cb5-40"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="R-squared_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="negative-r-squared" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="negative-r-squared"><span class="header-section-number">16.1</span> negative R-squared?</h2>
+<p>Yes. Sometimes it can be negative. Let’s see the formula:</p>
+<p><span class="math display">
+R^2 = 1 - \frac{SS_\text{Error}}{SS_\text{Total}} = 1 - \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
+</span></p>
+<p>R-squared can be negative when the numerator (the sum of squared residuals) is greater than the denominator (the total sum of squares). Another way of saying this is: the model does a worse job of fitting the data than the mean of the observed data. I can imagine two scenarios where this can happen.</p>
+<section id="the-model-doesnt-have-an-intercept" class="level3" data-number="16.1.1">
+<h3 data-number="16.1.1" class="anchored" data-anchor-id="the-model-doesnt-have-an-intercept"><span class="header-section-number">16.1.1</span> the model doesn’t have an intercept</h3>
+<p>Let’s start with an absurd model:</p>
+<p><span class="math display">
+y = \beta_0
+</span></p>
+<p>This is to say, the model is just a horizontal line. In order to find the best fit, we need to find the optimal <span class="math inline">\beta_0</span>. We can do that by minimizing the sum of squared residuals, <span class="math inline">SS_\text{Error}</span>, with respect to <span class="math inline">\beta_0</span>.</p>
+<p><span class="math display">
+\frac{\partial }{\partial \beta_0} SS_\text{Error} = \frac{\partial}{\partial \beta_0} \sum_{i=1}^n (y_i - \beta_0)^2 = 0
+</span></p>
+<p>then…</p>
+<p><span class="math display">
+-2\sum_{i=1}^n (y_i - \beta_0) = 0 \longrightarrow
+\beta_0 = \frac{1}{n} \sum_{i=1}^n y_i = \bar{y}
+</span></p>
+<p>We found that the absurd model <span class="math inline">y = \beta_0</span> is optimized when <span class="math inline">\beta_0</span> is the mean of the observed data, <span class="math inline">\bar{y}</span>. So let’s call the absurd model now the “mean model”.</p>
+<p>We use the sum of squares of this mean model as a <strong>benchmark</strong>. Of course, this is what we called <span class="math inline">SS_\text{Total}</span>, the total sum of squares. When we say that a given model has R-squared greater than zero, we are saying that the model does a better job of fitting the data than the mean model. If R-squared is zero, it does equally well. If R-squared is negative, it does worse.</p>
+<p>When we modeled the data as a parabola, we used the formula</p>
+<p><span class="math display">
+y = \beta_0 + \beta_1 x + \beta_2 x^2.
+</span></p>
+<p>This model <strong>has to be better</strong> than the mean model, because the mean model is a special case of the parabola, where <span class="math inline">\beta_1 = \beta_2 = 0</span>. Whatever nonzero values are assigned to <span class="math inline">\beta_1</span> and <span class="math inline">\beta_2</span> during the optimization procees, the <span class="math inline">SS_\text{Error}</span> becomes <strong>necessarily smaller</strong> than <span class="math inline">SS_\text{Total}</span>.</p>
+<p>This is true not only for the parabola, but for <strong>any model that includes an intercept</strong>. So, if we fit a model that has an intercept term, we are <strong>guaranteed</strong> to have <span class="math inline">R^2 \geq 0</span>. If we fit a model without an intercept, we are not guaranteed to have <span class="math inline">R^2 \geq 0</span>. See below what happens when we fit a three different polynomials without an intercept to the data.</p>
+<div id="a41b84eb" class="cell" data-execution_count="119">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># use sm to create matrix design for a parabola</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>X1 <span class="op">=</span> np.column_stack((x,))</span>
+<span id="cb6-3"><a href="#cb6-3"></a>X2 <span class="op">=</span> np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb6-4"><a href="#cb6-4"></a>X3 <span class="op">=</span> np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>, x<span class="op">**</span><span class="dv">3</span>))</span>
+<span id="cb6-5"><a href="#cb6-5"></a>model1 <span class="op">=</span> sm.OLS(y, X1).fit()</span>
+<span id="cb6-6"><a href="#cb6-6"></a>model2 <span class="op">=</span> sm.OLS(y, X2).fit()</span>
+<span id="cb6-7"><a href="#cb6-7"></a>model3 <span class="op">=</span> sm.OLS(y, X3).fit()</span>
+<span id="cb6-8"><a href="#cb6-8"></a>y_hat1 <span class="op">=</span> model1.predict(X1)</span>
+<span id="cb6-9"><a href="#cb6-9"></a>y_hat2 <span class="op">=</span> model2.predict(X2)</span>
+<span id="cb6-10"><a href="#cb6-10"></a>y_hat3 <span class="op">=</span> model3.predict(X3)</span>
+<span id="cb6-11"><a href="#cb6-11"></a>p1 <span class="op">=</span> np.append(<span class="dv">0</span>, model1.params)</span>
+<span id="cb6-12"><a href="#cb6-12"></a>p2 <span class="op">=</span> np.append(<span class="dv">0</span>, model2.params)</span>
+<span id="cb6-13"><a href="#cb6-13"></a>p3 <span class="op">=</span> np.append(<span class="dv">0</span>, model3.params)</span>
+<span id="cb6-14"><a href="#cb6-14"></a>f_predicted1 <span class="op">=</span> np.poly1d(p1[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb6-15"><a href="#cb6-15"></a>f_predicted2 <span class="op">=</span> np.poly1d(p2[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb6-16"><a href="#cb6-16"></a>f_predicted3 <span class="op">=</span> np.poly1d(p3[::<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="3a0d942e" class="cell" data-execution_count="129">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>SS_total <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>SS_residuals1 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat1)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>SS_residuals2 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat2)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>SS_residuals3 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat3)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>R_squared1 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals1 <span class="op">/</span> SS_total</span>
+<span id="cb7-6"><a href="#cb7-6"></a>R_squared2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals2 <span class="op">/</span> SS_total</span>
+<span id="cb7-7"><a href="#cb7-7"></a>R_squared3 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals3 <span class="op">/</span> SS_total</span>
+<span id="cb7-8"><a href="#cb7-8"></a></span>
+<span id="cb7-9"><a href="#cb7-9"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb7-10"><a href="#cb7-10"></a>ax.plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">10</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>ax.plot(x_line, f_predicted1(x_line), <span class="st">"-"</span>, color<span class="op">=</span>green, label<span class="op">=</span><span class="vs">fr"1st order, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared1<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-13"><a href="#cb7-13"></a>ax.plot(x_line, f_predicted2(x_line), <span class="st">"-"</span>, color<span class="op">=</span>green, label<span class="op">=</span><span class="vs">fr"2nd order, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared2<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb7-14"><a href="#cb7-14"></a>ax.plot(x_line, f_predicted3(x_line), <span class="st">"-"</span>, color<span class="op">=</span>green, label<span class="op">=</span><span class="vs">fr"3rd order, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared3<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb7-16"><a href="#cb7-16"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb7-17"><a href="#cb7-17"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb7-18"><a href="#cb7-18"></a>       title<span class="op">=</span><span class="vs">fr"polynomials without intercept"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="R-squared_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that if I had used <code>np.polyfit</code> to fit the data, I would have gotten a model with an intercept. In order to get a model without an intercept, I had to design myself the design matrix and use <code>statmodels.OLS</code>.</p>
+<p>There’s another option for how to get negative R-squared.</p>
+</section>
+<section id="the-model-is-fitted-to-a-different-dataset" class="level3" data-number="16.1.2">
+<h3 data-number="16.1.2" class="anchored" data-anchor-id="the-model-is-fitted-to-a-different-dataset"><span class="header-section-number">16.1.2</span> the model is fitted to a different dataset</h3>
+<p>This is quite common when we train a model on a training set, and then evaluate it on a test set. If the model is overfitted to the training data, it may perform very poorly on the test data, resulting in a negative R-squared value when evaluated on the test set. It also may be that we have a small test set, and by chance the model performs very poorly on it, even if it is not overfitted. In any case, a negative R-squared value in this context indicates that the model is not generalizing well to new data. See an example below.</p>
+<div id="daff5cf4" class="cell" data-execution_count="172">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">for</span> seed <span class="kw">in</span> np.arange(<span class="dv">10</span>):</span>
+<span id="cb8-2"><a href="#cb8-2"></a>    rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>seed)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>    N <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>    x_sample <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)</span>
+<span id="cb8-5"><a href="#cb8-5"></a>    noise <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>    y_sample <span class="op">=</span> foo(x_sample) <span class="op">+</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
+<span id="cb8-7"><a href="#cb8-7"></a>    idx <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.67</span> <span class="op">*</span> N)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>    x_train <span class="op">=</span> x_sample[:idx]</span>
+<span id="cb8-9"><a href="#cb8-9"></a>    y_train <span class="op">=</span> y_sample[:idx]</span>
+<span id="cb8-10"><a href="#cb8-10"></a>    x_test <span class="op">=</span> x_sample[idx:]</span>
+<span id="cb8-11"><a href="#cb8-11"></a>    y_test <span class="op">=</span> y_sample[idx:]</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a>    coefficients <span class="op">=</span> np.polyfit(x_train, y_train, deg<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb8-14"><a href="#cb8-14"></a>    fitted_model <span class="op">=</span> np.poly1d(coefficients)</span>
+<span id="cb8-15"><a href="#cb8-15"></a>    y_predicted_train <span class="op">=</span> fitted_model(x_train)</span>
+<span id="cb8-16"><a href="#cb8-16"></a>    y_predicted_test <span class="op">=</span> fitted_model(x_test)</span>
+<span id="cb8-17"><a href="#cb8-17"></a></span>
+<span id="cb8-18"><a href="#cb8-18"></a>    SS_total_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_train.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb8-19"><a href="#cb8-19"></a>    SS_total_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_test.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb8-20"><a href="#cb8-20"></a>    SS_residuals_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_predicted_train)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb8-21"><a href="#cb8-21"></a>    SS_residuals_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_predicted_test)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb8-22"><a href="#cb8-22"></a>    R_squared_train <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_train <span class="op">/</span> SS_total_train</span>
+<span id="cb8-23"><a href="#cb8-23"></a>    R_squared_test <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_test <span class="op">/</span> SS_total_test</span>
+<span id="cb8-24"><a href="#cb8-24"></a>    <span class="bu">print</span>(<span class="ss">f"seed: </span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">, R² train: </span><span class="sc">{</span>R_squared_train<span class="sc">:.2f}</span><span class="ss">, R² test: </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>seed: 0, R² train: 0.54, R² test: 0.53
+seed: 1, R² train: 0.73, R² test: 0.73
+seed: 2, R² train: 0.61, R² test: 0.58
+seed: 3, R² train: 0.43, R² test: -0.62
+seed: 4, R² train: 0.69, R² test: 0.54
+seed: 5, R² train: 0.75, R² test: 0.79
+seed: 6, R² train: 0.69, R² test: 0.63
+seed: 7, R² train: 0.75, R² test: 0.69
+seed: 8, R² train: 0.53, R² test: 0.64
+seed: 9, R² train: 0.65, R² test: 0.62</code></pre>
+</div>
+</div>
+<div id="b2bc74e2" class="cell" data-execution_count="170">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>N <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>x_sample <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>noise <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
+<span id="cb10-5"><a href="#cb10-5"></a>y_sample <span class="op">=</span> foo(x_sample) <span class="op">+</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
+<span id="cb10-6"><a href="#cb10-6"></a>idx <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.67</span> <span class="op">*</span> N)</span>
+<span id="cb10-7"><a href="#cb10-7"></a>x_train <span class="op">=</span> x_sample[:idx]</span>
+<span id="cb10-8"><a href="#cb10-8"></a>y_train <span class="op">=</span> y_sample[:idx]</span>
+<span id="cb10-9"><a href="#cb10-9"></a>x_test <span class="op">=</span> x_sample[idx:]</span>
+<span id="cb10-10"><a href="#cb10-10"></a>y_test <span class="op">=</span> y_sample[idx:]</span>
+<span id="cb10-11"><a href="#cb10-11"></a></span>
+<span id="cb10-12"><a href="#cb10-12"></a>coefficients <span class="op">=</span> np.polyfit(x_train, y_train, deg<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb10-13"><a href="#cb10-13"></a>fitted_model <span class="op">=</span> np.poly1d(coefficients)</span>
+<span id="cb10-14"><a href="#cb10-14"></a>y_predicted_train <span class="op">=</span> fitted_model(x_train)</span>
+<span id="cb10-15"><a href="#cb10-15"></a>y_predicted_test <span class="op">=</span> fitted_model(x_test)</span>
+<span id="cb10-16"><a href="#cb10-16"></a></span>
+<span id="cb10-17"><a href="#cb10-17"></a>SS_total_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_train.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb10-18"><a href="#cb10-18"></a>SS_total_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_test.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb10-19"><a href="#cb10-19"></a>SS_residuals_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_predicted_train)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb10-20"><a href="#cb10-20"></a>SS_residuals_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_predicted_test)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb10-21"><a href="#cb10-21"></a>R_squared_train <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_train <span class="op">/</span> SS_total_train</span>
+<span id="cb10-22"><a href="#cb10-22"></a>R_squared_test <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_test <span class="op">/</span> SS_total_test</span>
+<span id="cb10-23"><a href="#cb10-23"></a></span>
+<span id="cb10-24"><a href="#cb10-24"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-25"><a href="#cb10-25"></a>ax[<span class="dv">0</span>].plot(x_train, y_train, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb10-26"><a href="#cb10-26"></a>ax[<span class="dv">0</span>].plot(x_line, fitted_model(x_line), color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb10-27"><a href="#cb10-27"></a></span>
+<span id="cb10-28"><a href="#cb10-28"></a>ax[<span class="dv">1</span>].plot(x_test, y_test, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb10-29"><a href="#cb10-29"></a>ax[<span class="dv">1</span>].plot(x_line, fitted_model(x_line), color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb10-30"><a href="#cb10-30"></a></span>
+<span id="cb10-31"><a href="#cb10-31"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb10-32"><a href="#cb10-32"></a>       xlim<span class="op">=</span>(x_sample.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb10-33"><a href="#cb10-33"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb10-34"><a href="#cb10-34"></a>       title<span class="op">=</span><span class="vs">fr"train set, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared_train<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb10-35"><a href="#cb10-35"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-36"><a href="#cb10-36"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb10-37"><a href="#cb10-37"></a>       xlim<span class="op">=</span>(x_sample.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb10-38"><a href="#cb10-38"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb10-39"><a href="#cb10-39"></a>       title<span class="op">=</span><span class="vs">fr"test set, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="R-squared_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In the example above, we divided the dataset of 30 points into 20 training points and 10 test points. We fitted a parabola to the training data, and then evaluated the R-squared on both the training and test data. I had to play a little bit with the random seed to get a negative R-squared on the test set, but it is not that hard to get it.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../regression/partitioning.html" class="pagination-link" aria-label="partitioning of the sum of squares">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../regression/equivalence.html" class="pagination-link" aria-label="equivalence">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">equivalence</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

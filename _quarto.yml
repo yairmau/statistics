@@ -33,8 +33,9 @@ book:
       chapters:
         - regression/geometry-of-regression.ipynb
         - regression/least-squares.ipynb
-        - regression/equivalence.ipynb
         - regression/partitioning.ipynb
+        - regression/R-squared.ipynb
+        - regression/equivalence.ipynb
         - regression/mixed-model.ipynb
         - regression/logistic-regression.ipynb
         - regression/logistic_2d.ipynb

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>49&nbsp; data splitting – Statistics and Machine Learning</title>
+<title>50&nbsp; data splitting – Statistics and Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -83,6 +118,49 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -95,7 +173,7 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../generalization/bias-variance-tradeoff.html">generalization and model complexity</a></li><li class="breadcrumb-item"><a href="../generalization/data-splitting.html"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">data splitting</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../generalization/bias-variance-tradeoff.html">generalization and model complexity</a></li><li class="breadcrumb-item"><a href="../generalization/data-splitting.html"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">data splitting</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -261,32 +339,38 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  <a href="../regression/R-squared.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">R-squared</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
   </div>
 </li>
       </ul>
@@ -303,25 +387,25 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
   </div>
 </li>
       </ul>
@@ -338,43 +422,43 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/logistic-connection.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
   </div>
 </li>
       </ul>
@@ -391,13 +475,13 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -414,19 +498,19 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
   </div>
 </li>
       </ul>
@@ -443,13 +527,13 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -466,49 +550,49 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -525,43 +609,43 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
   </div>
 </li>
       </ul>
@@ -578,7 +662,7 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -588,15 +672,23 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-it-all-good-for" id="toc-what-is-it-all-good-for" class="nav-link active" data-scroll-target="#what-is-it-all-good-for"><span class="header-section-number">50.1</span> what is it all good for?</a></li>
+  <li><a href="#not-splitting-the-data" id="toc-not-splitting-the-data" class="nav-link" data-scroll-target="#not-splitting-the-data"><span class="header-section-number">50.2</span> NOT splitting the data</a></li>
+  <li><a href="#performance-on-unseen-data" id="toc-performance-on-unseen-data" class="nav-link" data-scroll-target="#performance-on-unseen-data"><span class="header-section-number">50.3</span> performance on unseen data</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../generalization/bias-variance-tradeoff.html">generalization and model complexity</a></li><li class="breadcrumb-item"><a href="../generalization/data-splitting.html"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">data splitting</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../generalization/bias-variance-tradeoff.html">generalization and model complexity</a></li><li class="breadcrumb-item"><a href="../generalization/data-splitting.html"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">data splitting</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">data splitting</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/generalization/data-splitting.ipynb"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">data splitting</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/generalization/data-splitting.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -613,35 +705,234 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </header>
 
 
-<!-- Data splitting is a practical way of enforcing a separation between fitting, model selection, and evaluation.
-
-The purpose of splitting data into training, validation, and test sets is not procedural convenience, but to ensure that each modeling decision is evaluated on information that was not used to make it.
-
-Core question
-
-Why can’t we use the same data for everything?
-
-Topics
-
-information leakage
-
-optimistic bias
-
-tuning as data usage
-
-why validation error is biased
-
-role of the test set as a “one-time look”
-
-why you should never “peek” at the test set
-
-Simple example
-
-polynomial degree chosen via validation
-
-show that test error is lower if reused improperly
-
-show how optimism creeps in -->
+<br>
+<div class="alert alert-danger">
+<strong>“Past performance is not indicative of future results.”</strong>
+</div>
+<p>Every investment firm has this disclaimer. Although it is generally very good practice not to heavily rely on any particularly successful hedgefund to take care of my business, I still find this sentence infuriating. If past performance is not indicative, then stop advertising last year’s returns! What’s more, how should I decide to whom entrust my investments (if at all) if a firm’s track record is “not indicative”?!</p>
+<p>This chapter deals with the central idea of model generalization. We’ve seen enough examples from the previous chapters on <a href="../generalization/bias-variance-tradeoff.html">bias-variance tradeoff</a>, <a href="../generalization/overfitting-and-underfitting.html">overfitting and underfitting</a>, and <a href="../generalization/cross-validation.html">cross-validation</a> to discuss head on the question of “what is it all good for?”</p>
+<section id="what-is-it-all-good-for" class="level2" data-number="50.1">
+<h2 data-number="50.1" class="anchored" data-anchor-id="what-is-it-all-good-for"><span class="header-section-number">50.1</span> what is it all good for?</h2>
+<p>I will stipulate that the one question important to us is:</p>
+<p><strong>How can I study a system’s past behavior, so I can say something meaningful about its future?</strong></p>
+<p>There are many other interesting questions that I could have asked, but if you are with me that right now we will focus on the question above only, then there are many things that we should and should not do.</p>
+<p>Data splitting, the name of this chapter, is a technical term, and we might think that it primarily deals with rules of thumb like splitting our dataset 70-30% between training and test sets. We can learn all that in other tutorials, not here. I will argue that data-splitting best practices are there to ensure the integrity of the question above.</p>
+</section>
+<section id="not-splitting-the-data" class="level2" data-number="50.2">
+<h2 data-number="50.2" class="anchored" data-anchor-id="not-splitting-the-data"><span class="header-section-number">50.2</span> NOT splitting the data</h2>
+<p>Let’s say that I conducted an experiment and collected 30 data points.</p>
+<div id="6929bcd4" class="cell" data-execution_count="141">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.2</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D  <span class="co"># noqa: F401</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> numpy.polynomial <span class="im">import</span> Chebyshev</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score, mean_squared_error</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a>blue <span class="op">=</span> <span class="st">"xkcd:cerulean"</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>gold <span class="op">=</span> <span class="st">"xkcd:gold"</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>pink <span class="op">=</span> <span class="st">"xkcd:hot pink"</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>green <span class="op">=</span> <span class="st">"xkcd:forest"</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>purple <span class="op">=</span> <span class="st">"xkcd:barney"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="95321d38" class="cell" data-execution_count="111">
+<details class="code-fold">
+<summary>plot sample data</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>xp <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>yp <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">3</span>])</span>
+<span id="cb2-3"><a href="#cb2-3"></a>coefficients <span class="op">=</span> np.polyfit(xp, yp, deg<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>polynomial <span class="op">=</span> np.poly1d(coefficients)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>N <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb2-7"><a href="#cb2-7"></a>sample_x <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">2</span>, size<span class="op">=</span>N)</span>
+<span id="cb2-8"><a href="#cb2-8"></a>noise <span class="op">=</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.3</span>, size<span class="op">=</span>N)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>sample_y <span class="op">=</span> polynomial(sample_x) <span class="op">+</span> noise</span>
+<span id="cb2-10"><a href="#cb2-10"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb2-11"><a href="#cb2-11"></a>ax.plot(sample_x, sample_y, <span class="st">"o"</span>, color<span class="op">=</span>purple, label<span class="op">=</span><span class="st">"sample data"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">2</span>),</span>
+<span id="cb2-14"><a href="#cb2-14"></a>       ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>),</span>
+<span id="cb2-15"><a href="#cb2-15"></a>       xticks<span class="op">=</span>np.arange(<span class="dv">0</span>, <span class="fl">2.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb2-16"><a href="#cb2-16"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>))</span>
+<span id="cb2-17"><a href="#cb2-17"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data-splitting_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I now develop a model to explain the data, and decide to fit a degree 2 polynomial (a parabola) to the data:</p>
+<div id="c5d5b886" class="cell" data-execution_count="127">
+<details class="code-fold">
+<summary>sample data and degree 2 polynomial fit</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">def</span> quadratic_design_matrix(x):</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    X <span class="op">=</span> np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    X <span class="op">=</span> sm.add_constant(X) <span class="co"># Adds the intercept (beta_0)</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="cf">return</span> X</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>sample_X <span class="op">=</span> quadratic_design_matrix(sample_x)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>model <span class="op">=</span> sm.OLS(sample_y, sample_X).fit()</span>
+<span id="cb3-8"><a href="#cb3-8"></a>fitted_params <span class="op">=</span> model.params</span>
+<span id="cb3-9"><a href="#cb3-9"></a>p_values_params <span class="op">=</span> model.pvalues</span>
+<span id="cb3-10"><a href="#cb3-10"></a>grid_x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a>grid_X <span class="op">=</span> quadratic_design_matrix(grid_x)</span>
+<span id="cb3-12"><a href="#cb3-12"></a>prediction_obj_grid <span class="op">=</span> model.get_prediction(grid_X)</span>
+<span id="cb3-13"><a href="#cb3-13"></a>summary_frame <span class="op">=</span> prediction_obj_grid.summary_frame(alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb3-14"><a href="#cb3-14"></a>y_mean <span class="op">=</span> summary_frame[<span class="st">'mean'</span>]</span>
+<span id="cb3-15"><a href="#cb3-15"></a>y_low  <span class="op">=</span> summary_frame[<span class="st">'mean_ci_lower'</span>]</span>
+<span id="cb3-16"><a href="#cb3-16"></a>y_high <span class="op">=</span> summary_frame[<span class="st">'mean_ci_upper'</span>]</span>
+<span id="cb3-17"><a href="#cb3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb3-20"><a href="#cb3-20"></a>ax.plot(sample_x, sample_y, <span class="st">"o"</span>, color<span class="op">=</span>purple, label<span class="op">=</span><span class="st">"sample data"</span>)</span>
+<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-22"><a href="#cb3-22"></a>residual_squared <span class="op">=</span> (sample_y <span class="op">-</span> model.predict(sample_X))<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>SS_residual <span class="op">=</span> np.<span class="bu">sum</span>(residual_squared)</span>
+<span id="cb3-24"><a href="#cb3-24"></a>SS_total <span class="op">=</span> np.<span class="bu">sum</span>((sample_y <span class="op">-</span> np.mean(sample_y)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb3-25"><a href="#cb3-25"></a>R2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residual <span class="op">/</span> SS_total</span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="co"># RMSE = np.sqrt(np.mean(residual_squared))</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a>R2 <span class="op">=</span> model.rsquared</span>
+<span id="cb3-28"><a href="#cb3-28"></a>adj_R2 <span class="op">=</span> model.rsquared_adj</span>
+<span id="cb3-29"><a href="#cb3-29"></a>RMSE <span class="op">=</span> np.sqrt(model.mse_resid)</span>
+<span id="cb3-30"><a href="#cb3-30"></a></span>
+<span id="cb3-31"><a href="#cb3-31"></a>fit_label <span class="op">=</span> <span class="vs">fr"</span><span class="dv">$</span><span class="vs">y = </span><span class="sc">{</span>fitted_params[<span class="dv">2</span>]<span class="sc">:.1f}</span><span class="vs">x</span><span class="dv">^</span><span class="vs">2</span><span class="dv">$</span><span class="vs">"</span> <span class="op">+</span> <span class="vs">fr"</span><span class="dv">$</span><span class="sc">{</span>fitted_params[<span class="dv">1</span>]<span class="sc">:.1f}</span><span class="vs">x </span><span class="op">+</span><span class="vs"> </span><span class="sc">{</span>fitted_params[<span class="dv">0</span>]<span class="sc">:.1f}</span><span class="dv">$</span><span class="vs">"</span><span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span><span class="op">+</span> <span class="vs">fr"</span><span class="dv">$</span><span class="vs">adj R</span><span class="dv">^</span><span class="vs">2 = </span><span class="sc">{</span>adj_R2<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">, RMSE</span><span class="dv">$</span><span class="vs"> = </span><span class="sc">{</span>RMSE<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a>best_fit_parabola <span class="op">=</span> <span class="ss">f"y = </span><span class="sc">{</span>fitted_params[<span class="dv">2</span>]<span class="sc">:.1f}</span><span class="ss">x^2 </span><span class="sc">{</span>fitted_params[<span class="dv">1</span>]<span class="sc">:.1f}</span><span class="ss">x + </span><span class="sc">{</span>fitted_params[<span class="dv">0</span>]<span class="sc">:.1f}</span><span class="ss">"</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a>ax.plot(grid_x, y_mean, <span class="st">"-"</span>, color<span class="op">=</span>purple, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">"best-fit parabola"</span>)</span>
+<span id="cb3-34"><a href="#cb3-34"></a>ax.fill_between(grid_x, y_low, y_high, color<span class="op">=</span>purple, alpha<span class="op">=</span><span class="fl">0.2</span>, label<span class="op">=</span><span class="st">"95% CI"</span>)</span>
+<span id="cb3-35"><a href="#cb3-35"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper center"</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-36"><a href="#cb3-36"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb3-37"><a href="#cb3-37"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">2</span>),</span>
+<span id="cb3-38"><a href="#cb3-38"></a>       ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>),</span>
+<span id="cb3-39"><a href="#cb3-39"></a>       xticks<span class="op">=</span>np.arange(<span class="dv">0</span>, <span class="fl">2.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb3-40"><a href="#cb3-40"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>))</span>
+<span id="cb3-41"><a href="#cb3-41"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a><span class="bu">print</span>(<span class="st">"Best fit parabola: "</span><span class="op">+</span> best_fit_parabola)</span>
+<span id="cb3-43"><a href="#cb3-43"></a><span class="bu">print</span>(<span class="ss">f"Adjusted R^2: </span><span class="sc">{</span>adj_R2<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb3-44"><a href="#cb3-44"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>RMSE<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb3-45"><a href="#cb3-45"></a><span class="bu">print</span>(<span class="ss">f"p-value for positive x^2 coefficient: </span><span class="sc">{</span>p_values_params[<span class="dv">2</span>]<span class="op">/</span><span class="dv">2</span><span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best fit parabola: y = 1.5x^2 -3.0x + 1.9
+Adjusted R^2: 0.36
+RMSE: 0.51
+p-value for positive x^2 coefficient: 0.0001</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data-splitting_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here are a few things I could say about my findings:</p>
+<ul>
+<li>The model explains 36% of the variance in the sample data.</li>
+<li>The model’s performance, as measured by the root mean squared error against the sample data, is 0.51.</li>
+<li>The sample data is best explained by a convex parabola (positive coefficient for the <span class="math inline">x^2</span> term), and the p-value for this coefficient is 0.0001 (against the null hypothesis of a zero coefficient).</li>
+</ul>
+<p>All of this is fine, and I made sure to say “sample data” in all of the statements above. If all I’m interested is in describing the past, then all is good.</p>
+<p>I might be tempted to say something more general, like:</p>
+<ul>
+<li>The model captures 36% of the variance in this <strong>system</strong>.</li>
+<li>We can <strong>predict</strong> the system’s behavior with an expected RMSE of 0.51.</li>
+<li>We demonstrate that <strong>variable</strong> <span class="math inline">y</span> has a convex relationship with <strong>variable</strong> <span class="math inline">x</span>.</li>
+</ul>
+<p>This is where we are in trouble. We have no reason to believe that the model’s <strong>performance</strong> on the sample data will be similar to its performance on future data from the same system. More generally, we have no reason to believe that the <strong>relationship</strong> between <span class="math inline">y</span> and <span class="math inline">x</span> in the sample data will be similar to the relationship between <span class="math inline">y</span> and <span class="math inline">x</span> in future data from the same system. It could be so, we just don’t know it.</p>
+<p>And why not? Because we <strong>optimized</strong> the model to fit the sample data, and we never tested the model on data it hasn’t seen before. This simple fact prevents us from generalizing our findings to the system as a whole, and to future data from the system.</p>
+<p>The conclusion here is that if we want to say something meaningful about the system in general, or about its future, then we <strong>need</strong> to put aside some of the data.</p>
+</section>
+<section id="performance-on-unseen-data" class="level2" data-number="50.3">
+<h2 data-number="50.3" class="anchored" data-anchor-id="performance-on-unseen-data"><span class="header-section-number">50.3</span> performance on unseen data</h2>
+<p>In general terms, we expect that the a model’s performance on unseen data will be worse than its performance on the data it was trained on. The reason should be obvious to us from now on: we <strong>optimized</strong> the model to fit the training data. Sure, it could be that by chance the performance on the unseen data is better than on the training data, but we have no reason to expect it.</p>
+<p>As an illustration, let’s say that we split our sample data of 30 points into a training set of 20 and a test set of 10. We fit the same degree 2 polynomial to the training data, and evaluate its performance on the test data.</p>
+<div id="70ac5a10" class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>train_x <span class="op">=</span> sample_x[:<span class="dv">20</span>]</span>
+<span id="cb5-2"><a href="#cb5-2"></a>train_y <span class="op">=</span> sample_y[:<span class="dv">20</span>]</span>
+<span id="cb5-3"><a href="#cb5-3"></a>test_x <span class="op">=</span> sample_x[<span class="dv">20</span>:]</span>
+<span id="cb5-4"><a href="#cb5-4"></a>test_y <span class="op">=</span> sample_y[<span class="dv">20</span>:]</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a>train_X <span class="op">=</span> quadratic_design_matrix(train_x)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>test_X <span class="op">=</span> quadratic_design_matrix(test_x)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>model <span class="op">=</span> sm.OLS(train_y, train_X).fit()</span>
+<span id="cb5-9"><a href="#cb5-9"></a>fitted_params <span class="op">=</span> model.params</span>
+<span id="cb5-10"><a href="#cb5-10"></a>p_values_params <span class="op">=</span> model.pvalues</span>
+<span id="cb5-11"><a href="#cb5-11"></a>prediction_obj_grid <span class="op">=</span> model.get_prediction(grid_X)</span>
+<span id="cb5-12"><a href="#cb5-12"></a>summary_frame <span class="op">=</span> prediction_obj_grid.summary_frame(alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a>y_mean <span class="op">=</span> summary_frame[<span class="st">'mean'</span>]</span>
+<span id="cb5-14"><a href="#cb5-14"></a>y_low  <span class="op">=</span> summary_frame[<span class="st">'mean_ci_lower'</span>]</span>
+<span id="cb5-15"><a href="#cb5-15"></a>y_high <span class="op">=</span> summary_frame[<span class="st">'mean_ci_upper'</span>]</span>
+<span id="cb5-16"><a href="#cb5-16"></a></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co"># 1. Generate predictions for both sets</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>preds_train <span class="op">=</span> model.predict(train_X)</span>
+<span id="cb5-19"><a href="#cb5-19"></a>preds_test <span class="op">=</span> model.predict(test_X)</span>
+<span id="cb5-20"><a href="#cb5-20"></a></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co"># 2. Calculate RMSE</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co"># Note: np.sqrt(mean_squared_error(...)) gives the "plug-in" RMSE (divided by n)</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a>rmse_train <span class="op">=</span> np.sqrt(mean_squared_error(train_y, preds_train))</span>
+<span id="cb5-24"><a href="#cb5-24"></a>rmse_test <span class="op">=</span> np.sqrt(mean_squared_error(test_y, preds_test))</span>
+<span id="cb5-25"><a href="#cb5-25"></a></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co"># 3. Calculate R2</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a>r2_train <span class="op">=</span> r2_score(train_y, preds_train)</span>
+<span id="cb5-28"><a href="#cb5-28"></a>r2_test <span class="op">=</span> r2_score(test_y, preds_test)</span>
+<span id="cb5-29"><a href="#cb5-29"></a></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="bu">print</span>(<span class="ss">f"Train: R2 = </span><span class="sc">{</span>r2_train<span class="sc">:.4f}</span><span class="ss">, RMSE = </span><span class="sc">{</span>rmse_train<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="bu">print</span>(<span class="ss">f"Test:  R2 = </span><span class="sc">{</span>r2_test<span class="sc">:.4f}</span><span class="ss">,  RMSE = </span><span class="sc">{</span>rmse_test<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Train: R2 = 0.5363, RMSE = 0.4347
+Test:  R2 = -0.0553,  RMSE = 0.5876</code></pre>
+</div>
+</div>
+<div id="8f2420d8" class="cell" data-execution_count="153">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>ax[<span class="dv">0</span>].plot(train_x, train_y, <span class="st">"o"</span>, color<span class="op">=</span>purple, label<span class="op">=</span><span class="st">"train set"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>ax[<span class="dv">0</span>].plot(grid_x, y_mean, <span class="st">"-"</span>, color<span class="op">=</span>purple, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">"best-fit parabola"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># prediction_obj_grid = model.get_prediction(grid_X)</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a>ax[<span class="dv">1</span>].plot(test_x, test_y, <span class="st">"o"</span>, color<span class="op">=</span>blue, label<span class="op">=</span><span class="st">"test data"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>ax[<span class="dv">1</span>].plot(grid_x, y_mean, <span class="st">"-"</span>, color<span class="op">=</span>purple, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">"best-fit parabola"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a>ax[<span class="dv">0</span>].text(<span class="fl">0.5</span>, <span class="fl">0.97</span>, <span class="vs">fr"RMSE</span><span class="dv">$</span><span class="vs"> = </span><span class="sc">{</span>rmse_train<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span><span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span><span class="op">+</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>r2_train<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>, transform<span class="op">=</span>ax[<span class="dv">0</span>].transAxes,</span>
+<span id="cb7-11"><a href="#cb7-11"></a>           horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>ax[<span class="dv">1</span>].text(<span class="fl">0.5</span>, <span class="fl">0.97</span>, <span class="vs">fr"RMSE</span><span class="dv">$</span><span class="vs"> = </span><span class="sc">{</span>rmse_test<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span><span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span><span class="op">+</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>r2_test<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>, transform<span class="op">=</span>ax[<span class="dv">1</span>].transAxes,</span>
+<span id="cb7-13"><a href="#cb7-13"></a>           horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,)</span>
+<span id="cb7-14"><a href="#cb7-14"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15"></a>          xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">2</span>),</span>
+<span id="cb7-16"><a href="#cb7-16"></a>          ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>),</span>
+<span id="cb7-17"><a href="#cb7-17"></a>          xticks<span class="op">=</span>np.arange(<span class="dv">0</span>, <span class="fl">2.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb7-18"><a href="#cb7-18"></a>          yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>),</span>
+<span id="cb7-19"><a href="#cb7-19"></a>          title<span class="op">=</span><span class="st">"model against the train set"</span>)</span>
+<span id="cb7-20"><a href="#cb7-20"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-21"><a href="#cb7-21"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb7-22"><a href="#cb7-22"></a>          xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">2</span>),</span>
+<span id="cb7-23"><a href="#cb7-23"></a>          ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>),</span>
+<span id="cb7-24"><a href="#cb7-24"></a>          xticks<span class="op">=</span>np.arange(<span class="dv">0</span>, <span class="fl">2.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb7-25"><a href="#cb7-25"></a>          yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>),</span>
+<span id="cb7-26"><a href="#cb7-26"></a>          title<span class="op">=</span><span class="st">"model against the test set"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data-splitting_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As expected, the model’s performance on the test data, as measured by the RMSE and R-squared, is worse than its performance on the training data: the RMSE went up, and the R-squared went down. By chance, we had the “luck” of getting a negative R-squared on the test data! How is that possible?! In very few words, this means that the model is worse that useless. The model does so badly on the test data, that we would have been better off just predicting the mean of the test data for all test points, instead of using the model’s predictions. More on this point on the chapter on <a href="../regression/R-squared.html">R-squared</a>.</p>
 <!-- Core question
 
 Where does prediction error come from?
@@ -669,6 +960,7 @@ spread of predictions (variance)
 conceptual error decomposition (no heavy math) -->
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1124,12 +1416,12 @@ conceptual error decomposition (no heavy math) -->
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../generalization/cross-validation.html" class="pagination-link" aria-label="cross-validation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">cross-validation</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">cross-validation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../generalization/regularization.html" class="pagination-link" aria-label="regularization">
-        <span class="nav-page-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">regularization</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">regularization</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
