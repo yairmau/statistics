@@ -653,7 +653,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
+ <span class="menu-text">neural networks</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -661,8 +661,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.1</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -680,6 +697,10 @@ window.Quarto = {
   <li><a href="#what-is-it-all-good-for" id="toc-what-is-it-all-good-for" class="nav-link active" data-scroll-target="#what-is-it-all-good-for"><span class="header-section-number">50.1</span> what is it all good for?</a></li>
   <li><a href="#not-splitting-the-data" id="toc-not-splitting-the-data" class="nav-link" data-scroll-target="#not-splitting-the-data"><span class="header-section-number">50.2</span> NOT splitting the data</a></li>
   <li><a href="#performance-on-unseen-data" id="toc-performance-on-unseen-data" class="nav-link" data-scroll-target="#performance-on-unseen-data"><span class="header-section-number">50.3</span> performance on unseen data</a></li>
+  <li><a href="#target-leakage" id="toc-target-leakage" class="nav-link" data-scroll-target="#target-leakage"><span class="header-section-number">50.4</span> target leakage</a></li>
+  <li><a href="#traintest-contamination" id="toc-traintest-contamination" class="nav-link" data-scroll-target="#traintest-contamination"><span class="header-section-number">50.5</span> train–test contamination</a></li>
+  <li><a href="#time-sequence-dependencies" id="toc-time-sequence-dependencies" class="nav-link" data-scroll-target="#time-sequence-dependencies"><span class="header-section-number">50.6</span> time / sequence dependencies</a></li>
+  <li><a href="#group-leakage" id="toc-group-leakage" class="nav-link" data-scroll-target="#group-leakage"><span class="header-section-number">50.7</span> group leakage</a></li>
   </ul>
 </nav>
     </div>
@@ -933,6 +954,22 @@ Test:  R2 = -0.0553,  RMSE = 0.5876</code></pre>
 </div>
 </div>
 <p>As expected, the model’s performance on the test data, as measured by the RMSE and R-squared, is worse than its performance on the training data: the RMSE went up, and the R-squared went down. By chance, we had the “luck” of getting a negative R-squared on the test data! How is that possible?! In very few words, this means that the model is worse that useless. The model does so badly on the test data, that we would have been better off just predicting the mean of the test data for all test points, instead of using the model’s predictions. More on this point on the chapter on <a href="../regression/R-squared.html">R-squared</a>.</p>
+</section>
+<section id="target-leakage" class="level2" data-number="50.4">
+<h2 data-number="50.4" class="anchored" data-anchor-id="target-leakage"><span class="header-section-number">50.4</span> target leakage</h2>
+<p>This is when features contain information that would not be available at prediction time — e.g., including the answer or something correlated with the answer into the model. The result is overly optimistic performance that will not repeat in new data.</p>
+<p>You can show a simple synthetic example where a “feature” directly encodes the target (say, with added noise) and then the evaluation looks good but fails on truly unseen data.</p>
+</section>
+<section id="traintest-contamination" class="level2" data-number="50.5">
+<h2 data-number="50.5" class="anchored" data-anchor-id="traintest-contamination"><span class="header-section-number">50.5</span> train–test contamination</h2>
+<p>This is when the test set ends up influencing the model, often through improper preprocessing. Common examples include:</p>
+<p>scaling using global mean &amp; std instead of training mean &amp; std</p>
+<p>feature selection done before splitting</p>
+<p>shuffling time series data and randomly splitting despite temporal order</p>
+<p>All of these are examples where information from the test set leaks into training.</p>
+<p>A simple demonstration can be:</p>
+<p>Fit a model with normalization applied to the whole dataset, then compare its test performance to the same model with normalization done properly only on training data.</p>
+<p>That produces two curves where the first looks unrealistically good.</p>
 <!-- Core question
 
 Where does prediction error come from?
@@ -958,6 +995,130 @@ mean prediction (bias)
 spread of predictions (variance)
 
 conceptual error decomposition (no heavy math) -->
+<div id="0c255ce9" class="cell" data-execution_count="154">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># feature selection leakage demonstration (gene example)</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co"># -------------------------</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co"># 1. generate synthetic data</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co"># -------------------------</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a>n_samples <span class="op">=</span> <span class="dv">120</span>      <span class="co"># number of patients</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>n_features <span class="op">=</span> <span class="dv">20000</span>   <span class="co"># number of genes (all noise!)</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a></span>
+<span id="cb8-20"><a href="#cb8-20"></a><span class="co"># gene expression: pure noise</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a>X <span class="op">=</span> np.random.normal(size<span class="op">=</span>(n_samples, n_features))</span>
+<span id="cb8-22"><a href="#cb8-22"></a></span>
+<span id="cb8-23"><a href="#cb8-23"></a><span class="co"># disease label: random (no relationship to genes)</span></span>
+<span id="cb8-24"><a href="#cb8-24"></a>y <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">2</span>, size<span class="op">=</span>n_samples)</span>
+<span id="cb8-25"><a href="#cb8-25"></a></span>
+<span id="cb8-26"><a href="#cb8-26"></a><span class="co"># -------------------------</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a><span class="co"># 2. WRONG approach: feature selection before splitting</span></span>
+<span id="cb8-28"><a href="#cb8-28"></a><span class="co"># -------------------------</span></span>
+<span id="cb8-29"><a href="#cb8-29"></a></span>
+<span id="cb8-30"><a href="#cb8-30"></a><span class="co"># compute correlation between each gene and the label</span></span>
+<span id="cb8-31"><a href="#cb8-31"></a>correlations <span class="op">=</span> np.array([</span>
+<span id="cb8-32"><a href="#cb8-32"></a>    np.corrcoef(X[:, j], y)[<span class="dv">0</span>, <span class="dv">1</span>] <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n_features)</span>
+<span id="cb8-33"><a href="#cb8-33"></a>])</span>
+<span id="cb8-34"><a href="#cb8-34"></a></span>
+<span id="cb8-35"><a href="#cb8-35"></a><span class="co"># select top 50 most correlated genes (using ALL data)</span></span>
+<span id="cb8-36"><a href="#cb8-36"></a>top_k <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb8-37"><a href="#cb8-37"></a>top_features_wrong <span class="op">=</span> np.argsort(np.<span class="bu">abs</span>(correlations))[<span class="op">-</span>top_k:]</span>
+<span id="cb8-38"><a href="#cb8-38"></a></span>
+<span id="cb8-39"><a href="#cb8-39"></a>X_selected_wrong <span class="op">=</span> X[:, top_features_wrong]</span>
+<span id="cb8-40"><a href="#cb8-40"></a></span>
+<span id="cb8-41"><a href="#cb8-41"></a><span class="co"># now split AFTER feature selection (this is the mistake)</span></span>
+<span id="cb8-42"><a href="#cb8-42"></a>X_train_w, X_test_w, y_train_w, y_test_w <span class="op">=</span> train_test_split(</span>
+<span id="cb8-43"><a href="#cb8-43"></a>    X_selected_wrong, y, test_size<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb8-44"><a href="#cb8-44"></a>)</span>
+<span id="cb8-45"><a href="#cb8-45"></a></span>
+<span id="cb8-46"><a href="#cb8-46"></a>model_wrong <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb8-47"><a href="#cb8-47"></a>model_wrong.fit(X_train_w, y_train_w)</span>
+<span id="cb8-48"><a href="#cb8-48"></a></span>
+<span id="cb8-49"><a href="#cb8-49"></a>y_pred_w <span class="op">=</span> model_wrong.predict(X_test_w)</span>
+<span id="cb8-50"><a href="#cb8-50"></a>acc_wrong <span class="op">=</span> accuracy_score(y_test_w, y_pred_w)</span>
+<span id="cb8-51"><a href="#cb8-51"></a></span>
+<span id="cb8-52"><a href="#cb8-52"></a><span class="bu">print</span>(<span class="st">"WRONG pipeline (feature selection before split)"</span>)</span>
+<span id="cb8-53"><a href="#cb8-53"></a><span class="bu">print</span>(<span class="ss">f"Test accuracy: </span><span class="sc">{</span>acc_wrong<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb8-54"><a href="#cb8-54"></a><span class="bu">print</span>()</span>
+<span id="cb8-55"><a href="#cb8-55"></a></span>
+<span id="cb8-56"><a href="#cb8-56"></a><span class="co"># -------------------------</span></span>
+<span id="cb8-57"><a href="#cb8-57"></a><span class="co"># 3. CORRECT approach: split first, then select features</span></span>
+<span id="cb8-58"><a href="#cb8-58"></a><span class="co"># -------------------------</span></span>
+<span id="cb8-59"><a href="#cb8-59"></a></span>
+<span id="cb8-60"><a href="#cb8-60"></a><span class="co"># split raw data first</span></span>
+<span id="cb8-61"><a href="#cb8-61"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb8-62"><a href="#cb8-62"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb8-63"><a href="#cb8-63"></a>)</span>
+<span id="cb8-64"><a href="#cb8-64"></a></span>
+<span id="cb8-65"><a href="#cb8-65"></a><span class="co"># compute correlations ONLY on training data</span></span>
+<span id="cb8-66"><a href="#cb8-66"></a>correlations_train <span class="op">=</span> np.array([</span>
+<span id="cb8-67"><a href="#cb8-67"></a>    np.corrcoef(X_train[:, j], y_train)[<span class="dv">0</span>, <span class="dv">1</span>] <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n_features)</span>
+<span id="cb8-68"><a href="#cb8-68"></a>])</span>
+<span id="cb8-69"><a href="#cb8-69"></a></span>
+<span id="cb8-70"><a href="#cb8-70"></a>top_features_correct <span class="op">=</span> np.argsort(np.<span class="bu">abs</span>(correlations_train))[<span class="op">-</span>top_k:]</span>
+<span id="cb8-71"><a href="#cb8-71"></a></span>
+<span id="cb8-72"><a href="#cb8-72"></a>X_train_c <span class="op">=</span> X_train[:, top_features_correct]</span>
+<span id="cb8-73"><a href="#cb8-73"></a>X_test_c  <span class="op">=</span> X_test[:, top_features_correct]</span>
+<span id="cb8-74"><a href="#cb8-74"></a></span>
+<span id="cb8-75"><a href="#cb8-75"></a>model_correct <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb8-76"><a href="#cb8-76"></a>model_correct.fit(X_train_c, y_train)</span>
+<span id="cb8-77"><a href="#cb8-77"></a></span>
+<span id="cb8-78"><a href="#cb8-78"></a>y_pred_c <span class="op">=</span> model_correct.predict(X_test_c)</span>
+<span id="cb8-79"><a href="#cb8-79"></a>acc_correct <span class="op">=</span> accuracy_score(y_test, y_pred_c)</span>
+<span id="cb8-80"><a href="#cb8-80"></a></span>
+<span id="cb8-81"><a href="#cb8-81"></a><span class="bu">print</span>(<span class="st">"CORRECT pipeline (split before feature selection)"</span>)</span>
+<span id="cb8-82"><a href="#cb8-82"></a><span class="bu">print</span>(<span class="ss">f"Test accuracy: </span><span class="sc">{</span>acc_correct<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb8-83"><a href="#cb8-83"></a><span class="bu">print</span>()</span>
+<span id="cb8-84"><a href="#cb8-84"></a></span>
+<span id="cb8-85"><a href="#cb8-85"></a><span class="co"># -------------------------</span></span>
+<span id="cb8-86"><a href="#cb8-86"></a><span class="co"># 4. visualize comparison</span></span>
+<span id="cb8-87"><a href="#cb8-87"></a><span class="co"># -------------------------</span></span>
+<span id="cb8-88"><a href="#cb8-88"></a></span>
+<span id="cb8-89"><a href="#cb8-89"></a>plt.figure()</span>
+<span id="cb8-90"><a href="#cb8-90"></a>plt.bar([<span class="st">"Wrong (leaky)"</span>, <span class="st">"Correct"</span>], [acc_wrong, acc_correct])</span>
+<span id="cb8-91"><a href="#cb8-91"></a>plt.ylabel(<span class="st">"Test Accuracy"</span>)</span>
+<span id="cb8-92"><a href="#cb8-92"></a>plt.title(<span class="st">"Feature Selection Leakage Demonstration"</span>)</span>
+<span id="cb8-93"><a href="#cb8-93"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb8-94"><a href="#cb8-94"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>WRONG pipeline (feature selection before split)
+Test accuracy: 0.979
+
+CORRECT pipeline (split before feature selection)
+Test accuracy: 0.500
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data-splitting_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="time-sequence-dependencies" class="level2" data-number="50.6">
+<h2 data-number="50.6" class="anchored" data-anchor-id="time-sequence-dependencies"><span class="header-section-number">50.6</span> time / sequence dependencies</h2>
+<p>If your data has a temporal structure, a random split can “expose” future points during training. You can illustrate this with synthetic time series — or even simpler: show that if you shuffle a temporal dataset, the model appears to perform well, but if you respect time order, performance drops.</p>
+<p>This is a perfect example of contamination through mishandling the structure of the data</p>
+</section>
+<section id="group-leakage" class="level2" data-number="50.7">
+<h2 data-number="50.7" class="anchored" data-anchor-id="group-leakage"><span class="header-section-number">50.7</span> group leakage</h2>
+<p>Another subtle case is when units in the data are correlated — e.g., multiple observations from the same subject or cluster — but you split randomly instead of by group. The model ends up trained on data “too similar” to test.</p>
+<p>You can illustrate this with a toy example where each group has its own bias — random splits mistakenly allow the model to learn that bias.</p>
 
 
 </section>

@@ -653,7 +653,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
+ <span class="menu-text">neural networks</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -661,8 +661,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.1</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
       </ul>
@@ -740,26 +757,24 @@ R^2 = \frac{s^2_\text{Model}}{s^2_\text{Total}} = 1 - \frac{s^2_\text{Error}}{s^
 <p><span class="math display">
 y = \beta_0 + \beta_1 x + \beta_2 x^2.
 </span></p>
-<div id="a9d4a065" class="cell" data-execution_count="40">
+<div id="a9d4a065" class="cell" data-execution_count="193">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-4"><a href="#cb1-4"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.2</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D  <span class="co"># noqa: F401</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> numpy.polynomial <span class="im">import</span> Chebyshev</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a>blue <span class="op">=</span> <span class="st">"xkcd:cerulean"</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>gold <span class="op">=</span> <span class="st">"xkcd:gold"</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>pink <span class="op">=</span> <span class="st">"xkcd:hot pink"</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>green <span class="op">=</span> <span class="st">"xkcd:forest"</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a>purple <span class="op">=</span> <span class="st">"xkcd:barney"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a>blue <span class="op">=</span> <span class="st">"xkcd:cerulean"</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>gold <span class="op">=</span> <span class="st">"xkcd:gold"</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>pink <span class="op">=</span> <span class="st">"xkcd:hot pink"</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>green <span class="op">=</span> <span class="st">"xkcd:forest"</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>purple <span class="op">=</span> <span class="st">"xkcd:barney"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="35694272" class="cell" data-execution_count="105">
+<div id="35694272" class="cell" data-execution_count="194">
 <details class="code-fold">
 <summary>create data</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">2</span>)</span>
@@ -770,7 +785,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb2-6"><a href="#cb2-6"></a>y <span class="op">=</span> foo(x) <span class="op">+</span> noise</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="dca3412e" class="cell" data-execution_count="106">
+<div id="dca3412e" class="cell" data-execution_count="195">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># use sm to create matrix design for a parabola</span></span>
@@ -780,13 +795,13 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb3-5"><a href="#cb3-5"></a>f_predicted <span class="op">=</span> np.poly1d(model.params[::<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="2de776f0" class="cell" data-execution_count="171">
+<div id="2de776f0" class="cell" data-execution_count="196">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb4-2"><a href="#cb4-2"></a>ax.plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">10</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">10</span>, <span class="dv">100</span>)</span>
-<span id="cb4-4"><a href="#cb4-4"></a>ax.plot(x_line, f_predicted(x_line), <span class="st">"-"</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>ax.plot(x_line, f_predicted(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
 <span id="cb4-5"><a href="#cb4-5"></a>SS_residuals <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat) <span class="op">**</span> <span class="dv">2</span>)</span>
 <span id="cb4-6"><a href="#cb4-6"></a>SS_total <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
 <span id="cb4-7"><a href="#cb4-7"></a>R_squared <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals <span class="op">/</span> SS_total</span>
@@ -809,7 +824,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <p>The sum of squares have a nice visual interpretation. In the figure below we show <span class="math inline">SS_\text{Total}</span> (the total sum of squares) litterally as the area of a bunch of pink squares. Each square’s side has length <span class="math inline">|y_i - \bar{y}|</span>. If we divide the total pink area by the number of observations minus one, we get the sample variance of the observed values.</p>
 <p>The yellow squares represent <span class="math inline">SS_\text{Error}</span> (the sum of squares not explained by the model), where the length of each square’s side is <span class="math inline">|y_i - \hat{y}_i|</span>. If we divide the total yellow area by the number of observations minus one, we get the sample variance of the errors (residuals).</p>
 <p>Finally, the <span class="math inline">R^2</span> is simply one minus the ratio of the yellow area to the pink area.</p>
-<div id="0f959421" class="cell" data-execution_count="115">
+<div id="0f959421" class="cell" data-execution_count="197">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, subplot_kw<span class="op">=</span>{<span class="st">'aspect'</span>:<span class="st">'equal'</span>})</span>
@@ -818,8 +833,8 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb5-4"><a href="#cb5-4"></a>ax[<span class="dv">0</span>].plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
 <span id="cb5-5"><a href="#cb5-5"></a>ax[<span class="dv">1</span>].plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
 <span id="cb5-6"><a href="#cb5-6"></a></span>
-<span id="cb5-7"><a href="#cb5-7"></a>ax[<span class="dv">0</span>].axhline(y<span class="op">=</span>y.mean(), color<span class="op">=</span>pink, label<span class="op">=</span><span class="st">"sample mean"</span>)</span>
-<span id="cb5-8"><a href="#cb5-8"></a>ax[<span class="dv">1</span>].plot(x_line, f_predicted(x_line), <span class="st">"-"</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>ax[<span class="dv">0</span>].axhline(y<span class="op">=</span>y.mean(), color<span class="op">=</span>pink, label<span class="op">=</span><span class="st">"sample mean"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>ax[<span class="dv">1</span>].plot(x_line, f_predicted(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
 <span id="cb5-9"><a href="#cb5-9"></a></span>
 <span id="cb5-10"><a href="#cb5-10"></a><span class="cf">for</span> ind <span class="kw">in</span> np.arange(<span class="bu">len</span>(x)):</span>
 <span id="cb5-11"><a href="#cb5-11"></a>    x0 <span class="op">=</span> x[ind]</span>
@@ -861,6 +876,154 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 </div>
 </div>
 </div>
+<p>Just to build some further intuition, see what happens to the value of <span class="math inline">R^2</span> when we decrease the noise in the data.</p>
+<div id="d832c7c9" class="cell" data-execution_count="198">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>nsample <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, nsample)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>noise1 <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span>nsample)</span>
+<span id="cb6-5"><a href="#cb6-5"></a>noise2 <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>nsample)</span>
+<span id="cb6-6"><a href="#cb6-6"></a>noise3 <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="fl">0.1</span>, size<span class="op">=</span>nsample)</span>
+<span id="cb6-7"><a href="#cb6-7"></a>foo <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">6</span> <span class="op">-</span> <span class="fl">0.1</span><span class="op">*</span>x <span class="op">+</span> <span class="fl">0.05</span><span class="op">*</span>x<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>y1 <span class="op">=</span> foo(x) <span class="op">+</span> noise1</span>
+<span id="cb6-9"><a href="#cb6-9"></a>y2 <span class="op">=</span> foo(x) <span class="op">+</span> noise2</span>
+<span id="cb6-10"><a href="#cb6-10"></a>y3 <span class="op">=</span> foo(x) <span class="op">+</span> noise3</span>
+<span id="cb6-11"><a href="#cb6-11"></a></span>
+<span id="cb6-12"><a href="#cb6-12"></a>X <span class="op">=</span> sm.add_constant(np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>)))</span>
+<span id="cb6-13"><a href="#cb6-13"></a>model1 <span class="op">=</span> sm.OLS(y1, X).fit()</span>
+<span id="cb6-14"><a href="#cb6-14"></a>model2 <span class="op">=</span> sm.OLS(y2, X).fit()</span>
+<span id="cb6-15"><a href="#cb6-15"></a>model3 <span class="op">=</span> sm.OLS(y3, X).fit()</span>
+<span id="cb6-16"><a href="#cb6-16"></a>y1_hat <span class="op">=</span> model1.predict(X)</span>
+<span id="cb6-17"><a href="#cb6-17"></a>y2_hat <span class="op">=</span> model2.predict(X)</span>
+<span id="cb6-18"><a href="#cb6-18"></a>y3_hat <span class="op">=</span> model3.predict(X)</span>
+<span id="cb6-19"><a href="#cb6-19"></a>f1_predicted <span class="op">=</span> np.poly1d(model1.params[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb6-20"><a href="#cb6-20"></a>f2_predicted <span class="op">=</span> np.poly1d(model2.params[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb6-21"><a href="#cb6-21"></a>f3_predicted <span class="op">=</span> np.poly1d(model3.params[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb6-22"><a href="#cb6-22"></a></span>
+<span id="cb6-23"><a href="#cb6-23"></a>R_squared1 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y1 <span class="op">-</span> y1_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y1 <span class="op">-</span> y1.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb6-24"><a href="#cb6-24"></a>R_squared2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb6-25"><a href="#cb6-25"></a>R_squared3 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y3 <span class="op">-</span> y3_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y3 <span class="op">-</span> y3.mean()) <span class="op">**</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="c1300b10" class="cell" data-execution_count="199">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>fig.subplots_adjust(left<span class="op">=</span><span class="fl">0.04</span>, right<span class="op">=</span><span class="fl">0.98</span>, top<span class="op">=</span><span class="fl">0.95</span>, bottom<span class="op">=</span><span class="fl">0.15</span>,</span>
+<span id="cb7-3"><a href="#cb7-3"></a>                    hspace<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.04</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>ax[<span class="dv">0</span>].plot(x, y1, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>ax[<span class="dv">1</span>].plot(x, y2, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>ax[<span class="dv">2</span>].plot(x, y3, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a>ax[<span class="dv">0</span>].plot(x_line, f1_predicted(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>ax[<span class="dv">1</span>].plot(x_line, f2_predicted(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>ax[<span class="dv">2</span>].plot(x_line, f3_predicted(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a>ax[<span class="dv">0</span>].text(<span class="fl">0.97</span>, <span class="fl">0.02</span>, <span class="vs">r"</span><span class="dv">$\s</span><span class="vs">igma=5</span><span class="dv">$</span><span class="vs">"</span>, transform<span class="op">=</span>ax[<span class="dv">0</span>].transAxes,</span>
+<span id="cb7-13"><a href="#cb7-13"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb7-14"><a href="#cb7-14"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a>ax[<span class="dv">1</span>].text(<span class="fl">0.97</span>, <span class="fl">0.02</span>, <span class="vs">r"</span><span class="dv">$\s</span><span class="vs">igma=1</span><span class="dv">$</span><span class="vs">"</span>, transform<span class="op">=</span>ax[<span class="dv">1</span>].transAxes,</span>
+<span id="cb7-16"><a href="#cb7-16"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb7-17"><a href="#cb7-17"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18"></a>ax[<span class="dv">2</span>].text(<span class="fl">0.97</span>, <span class="fl">0.02</span>, <span class="vs">r"</span><span class="dv">$\s</span><span class="vs">igma=0</span><span class="dv">.</span><span class="vs">1</span><span class="dv">$</span><span class="vs">"</span>, transform<span class="op">=</span>ax[<span class="dv">2</span>].transAxes,</span>
+<span id="cb7-19"><a href="#cb7-19"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb7-20"><a href="#cb7-20"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb7-21"><a href="#cb7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb7-23"><a href="#cb7-23"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb7-24"><a href="#cb7-24"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y1.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb7-25"><a href="#cb7-25"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared1<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-26"><a href="#cb7-26"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb7-27"><a href="#cb7-27"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb7-28"><a href="#cb7-28"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y2.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb7-29"><a href="#cb7-29"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared2<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-30"><a href="#cb7-30"></a>ax[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb7-31"><a href="#cb7-31"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb7-32"><a href="#cb7-32"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y3.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb7-33"><a href="#cb7-33"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared3<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb7-34"><a href="#cb7-34"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="R-squared_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is the image I have in my head: the R-squared quantifies how tightly the data points are clustered around the fitted curve. This is the exact opposite of what it is in reality, <strong>first</strong> there are the data points, <strong>then</strong> we fit a curve to them. Maybe the fitted curve has managed to capture valuable information of the underlying process that generated the data. It’s not that the data points are clustered around the fitted curve, but rather they are clustered around the true underlying curve, and a successful fitted curve is a good shaddow if this true curve.</p>
+<p>But, let’s see now another example, what happens when I keep the noise fixed, but I increase the order of the fitted polynomial:</p>
+<div id="c9d351ce" class="cell" data-execution_count="200">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">10</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">10</span>, <span class="dv">1000</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>coeff2 <span class="op">=</span> np.polyfit(x, y2, deg<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>coeff7 <span class="op">=</span> np.polyfit(x, y2, deg<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>coeff14 <span class="op">=</span> np.polyfit(x, y2, deg<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a>f2_predicted <span class="op">=</span> np.poly1d(coeff2)</span>
+<span id="cb8-7"><a href="#cb8-7"></a>f7_predicted <span class="op">=</span> np.poly1d(coeff7)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>f14_predicted <span class="op">=</span> np.poly1d(coeff14)</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a>y2_hat <span class="op">=</span> np.polyval(coeff2, x)</span>
+<span id="cb8-11"><a href="#cb8-11"></a>y7_hat <span class="op">=</span> np.polyval(coeff7, x)</span>
+<span id="cb8-12"><a href="#cb8-12"></a>y14_hat <span class="op">=</span> np.polyval(coeff14, x)</span>
+<span id="cb8-13"><a href="#cb8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14"></a>R_squared2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb8-15"><a href="#cb8-15"></a>R_squared7 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y7_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb8-16"><a href="#cb8-16"></a>R_squared14 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y14_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2.mean()) <span class="op">**</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="d5a08b1e" class="cell" data-execution_count="201">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>fig.subplots_adjust(left<span class="op">=</span><span class="fl">0.04</span>, right<span class="op">=</span><span class="fl">0.98</span>, top<span class="op">=</span><span class="fl">0.95</span>, bottom<span class="op">=</span><span class="fl">0.15</span>,</span>
+<span id="cb9-3"><a href="#cb9-3"></a>                    hspace<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.04</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>ax[<span class="dv">0</span>].plot(x, y2, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>ax[<span class="dv">1</span>].plot(x, y2, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>ax[<span class="dv">2</span>].plot(x, y2, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8"></a>ax[<span class="dv">0</span>].plot(x_line, f2_predicted(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9"></a>ax[<span class="dv">1</span>].plot(x_line, f7_predicted(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10"></a>ax[<span class="dv">2</span>].plot(x_line, f14_predicted(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11"></a></span>
+<span id="cb9-12"><a href="#cb9-12"></a>ax[<span class="dv">0</span>].text(<span class="fl">0.97</span>, <span class="fl">0.02</span>, <span class="vs">r"order=2"</span>, transform<span class="op">=</span>ax[<span class="dv">0</span>].transAxes,</span>
+<span id="cb9-13"><a href="#cb9-13"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb9-14"><a href="#cb9-14"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15"></a>ax[<span class="dv">1</span>].text(<span class="fl">0.97</span>, <span class="fl">0.02</span>, <span class="vs">r"order=7"</span>, transform<span class="op">=</span>ax[<span class="dv">1</span>].transAxes,</span>
+<span id="cb9-16"><a href="#cb9-16"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb9-17"><a href="#cb9-17"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb9-18"><a href="#cb9-18"></a>ax[<span class="dv">2</span>].text(<span class="fl">0.97</span>, <span class="fl">0.02</span>, <span class="vs">r"order=14"</span>, transform<span class="op">=</span>ax[<span class="dv">2</span>].transAxes,</span>
+<span id="cb9-19"><a href="#cb9-19"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb9-20"><a href="#cb9-20"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21"></a></span>
+<span id="cb9-22"><a href="#cb9-22"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb9-23"><a href="#cb9-23"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb9-24"><a href="#cb9-24"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y2.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb9-25"><a href="#cb9-25"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared2<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb9-26"><a href="#cb9-26"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb9-27"><a href="#cb9-27"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb9-28"><a href="#cb9-28"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y2.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb9-29"><a href="#cb9-29"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared7<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb9-30"><a href="#cb9-30"></a>ax[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb9-31"><a href="#cb9-31"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb9-32"><a href="#cb9-32"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y2.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb9-33"><a href="#cb9-33"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared14<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb9-34"><a href="#cb9-34"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="R-squared_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This time I don’t have such good feelings as I see the value of R-squared increasing. For the panel on the right, it doesn’t look anymore like to points are hugging the fitted curve, but rather the fitted curve is contorting itself to hug the points.</p>
+<p>Of course, I’m foreshadowing a much larger discussion about <a href="../generalization/overfitting-and-underfitting.html">overfitting</a> and <a href="../generalization/cross-validation.html">model selection</a>, but I thought it was important to show these graphs now, and warn ourselves about the pitfalls of blindly confounding high R-squared values with good model performance.</p>
 <section id="negative-r-squared" class="level2" data-number="16.1">
 <h2 data-number="16.1" class="anchored" data-anchor-id="negative-r-squared"><span class="header-section-number">16.1</span> negative R-squared?</h2>
 <p>Yes. Sometimes it can be negative. Let’s see the formula:</p>
@@ -891,55 +1054,55 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 </span></p>
 <p>This model <strong>has to be better</strong> than the mean model, because the mean model is a special case of the parabola, where <span class="math inline">\beta_1 = \beta_2 = 0</span>. Whatever nonzero values are assigned to <span class="math inline">\beta_1</span> and <span class="math inline">\beta_2</span> during the optimization procees, the <span class="math inline">SS_\text{Error}</span> becomes <strong>necessarily smaller</strong> than <span class="math inline">SS_\text{Total}</span>.</p>
 <p>This is true not only for the parabola, but for <strong>any model that includes an intercept</strong>. So, if we fit a model that has an intercept term, we are <strong>guaranteed</strong> to have <span class="math inline">R^2 \geq 0</span>. If we fit a model without an intercept, we are not guaranteed to have <span class="math inline">R^2 \geq 0</span>. See below what happens when we fit a three different polynomials without an intercept to the data.</p>
-<div id="a41b84eb" class="cell" data-execution_count="119">
+<div id="a41b84eb" class="cell" data-execution_count="202">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># use sm to create matrix design for a parabola</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>X1 <span class="op">=</span> np.column_stack((x,))</span>
-<span id="cb6-3"><a href="#cb6-3"></a>X2 <span class="op">=</span> np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>))</span>
-<span id="cb6-4"><a href="#cb6-4"></a>X3 <span class="op">=</span> np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>, x<span class="op">**</span><span class="dv">3</span>))</span>
-<span id="cb6-5"><a href="#cb6-5"></a>model1 <span class="op">=</span> sm.OLS(y, X1).fit()</span>
-<span id="cb6-6"><a href="#cb6-6"></a>model2 <span class="op">=</span> sm.OLS(y, X2).fit()</span>
-<span id="cb6-7"><a href="#cb6-7"></a>model3 <span class="op">=</span> sm.OLS(y, X3).fit()</span>
-<span id="cb6-8"><a href="#cb6-8"></a>y_hat1 <span class="op">=</span> model1.predict(X1)</span>
-<span id="cb6-9"><a href="#cb6-9"></a>y_hat2 <span class="op">=</span> model2.predict(X2)</span>
-<span id="cb6-10"><a href="#cb6-10"></a>y_hat3 <span class="op">=</span> model3.predict(X3)</span>
-<span id="cb6-11"><a href="#cb6-11"></a>p1 <span class="op">=</span> np.append(<span class="dv">0</span>, model1.params)</span>
-<span id="cb6-12"><a href="#cb6-12"></a>p2 <span class="op">=</span> np.append(<span class="dv">0</span>, model2.params)</span>
-<span id="cb6-13"><a href="#cb6-13"></a>p3 <span class="op">=</span> np.append(<span class="dv">0</span>, model3.params)</span>
-<span id="cb6-14"><a href="#cb6-14"></a>f_predicted1 <span class="op">=</span> np.poly1d(p1[::<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb6-15"><a href="#cb6-15"></a>f_predicted2 <span class="op">=</span> np.poly1d(p2[::<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb6-16"><a href="#cb6-16"></a>f_predicted3 <span class="op">=</span> np.poly1d(p3[::<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># use sm to create matrix design for a parabola</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>X1 <span class="op">=</span> np.column_stack((x,))</span>
+<span id="cb10-3"><a href="#cb10-3"></a>X2 <span class="op">=</span> np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb10-4"><a href="#cb10-4"></a>X3 <span class="op">=</span> np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>, x<span class="op">**</span><span class="dv">3</span>))</span>
+<span id="cb10-5"><a href="#cb10-5"></a>model1 <span class="op">=</span> sm.OLS(y, X1).fit()</span>
+<span id="cb10-6"><a href="#cb10-6"></a>model2 <span class="op">=</span> sm.OLS(y, X2).fit()</span>
+<span id="cb10-7"><a href="#cb10-7"></a>model3 <span class="op">=</span> sm.OLS(y, X3).fit()</span>
+<span id="cb10-8"><a href="#cb10-8"></a>y_hat1 <span class="op">=</span> model1.predict(X1)</span>
+<span id="cb10-9"><a href="#cb10-9"></a>y_hat2 <span class="op">=</span> model2.predict(X2)</span>
+<span id="cb10-10"><a href="#cb10-10"></a>y_hat3 <span class="op">=</span> model3.predict(X3)</span>
+<span id="cb10-11"><a href="#cb10-11"></a>p1 <span class="op">=</span> np.append(<span class="dv">0</span>, model1.params)</span>
+<span id="cb10-12"><a href="#cb10-12"></a>p2 <span class="op">=</span> np.append(<span class="dv">0</span>, model2.params)</span>
+<span id="cb10-13"><a href="#cb10-13"></a>p3 <span class="op">=</span> np.append(<span class="dv">0</span>, model3.params)</span>
+<span id="cb10-14"><a href="#cb10-14"></a>f_predicted1 <span class="op">=</span> np.poly1d(p1[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb10-15"><a href="#cb10-15"></a>f_predicted2 <span class="op">=</span> np.poly1d(p2[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb10-16"><a href="#cb10-16"></a>f_predicted3 <span class="op">=</span> np.poly1d(p3[::<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="3a0d942e" class="cell" data-execution_count="129">
+<div id="3a0d942e" class="cell" data-execution_count="203">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>SS_total <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean())<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb7-2"><a href="#cb7-2"></a>SS_residuals1 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat1)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb7-3"><a href="#cb7-3"></a>SS_residuals2 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat2)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb7-4"><a href="#cb7-4"></a>SS_residuals3 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat3)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb7-5"><a href="#cb7-5"></a>R_squared1 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals1 <span class="op">/</span> SS_total</span>
-<span id="cb7-6"><a href="#cb7-6"></a>R_squared2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals2 <span class="op">/</span> SS_total</span>
-<span id="cb7-7"><a href="#cb7-7"></a>R_squared3 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals3 <span class="op">/</span> SS_total</span>
-<span id="cb7-8"><a href="#cb7-8"></a></span>
-<span id="cb7-9"><a href="#cb7-9"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb7-10"><a href="#cb7-10"></a>ax.plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>)</span>
-<span id="cb7-11"><a href="#cb7-11"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">10</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">10</span>, <span class="dv">100</span>)</span>
-<span id="cb7-12"><a href="#cb7-12"></a>ax.plot(x_line, f_predicted1(x_line), <span class="st">"-"</span>, color<span class="op">=</span>green, label<span class="op">=</span><span class="vs">fr"1st order, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared1<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb7-13"><a href="#cb7-13"></a>ax.plot(x_line, f_predicted2(x_line), <span class="st">"-"</span>, color<span class="op">=</span>green, label<span class="op">=</span><span class="vs">fr"2nd order, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared2<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb7-14"><a href="#cb7-14"></a>ax.plot(x_line, f_predicted3(x_line), <span class="st">"-"</span>, color<span class="op">=</span>green, label<span class="op">=</span><span class="vs">fr"3rd order, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared3<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb7-15"><a href="#cb7-15"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
-<span id="cb7-16"><a href="#cb7-16"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
-<span id="cb7-17"><a href="#cb7-17"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
-<span id="cb7-18"><a href="#cb7-18"></a>       title<span class="op">=</span><span class="vs">fr"polynomials without intercept"</span>)</span>
-<span id="cb7-19"><a href="#cb7-19"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>SS_total <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb11-2"><a href="#cb11-2"></a>SS_residuals1 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat1)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a>SS_residuals2 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat2)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a>SS_residuals3 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat3)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>R_squared1 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals1 <span class="op">/</span> SS_total</span>
+<span id="cb11-6"><a href="#cb11-6"></a>R_squared2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals2 <span class="op">/</span> SS_total</span>
+<span id="cb11-7"><a href="#cb11-7"></a>R_squared3 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals3 <span class="op">/</span> SS_total</span>
+<span id="cb11-8"><a href="#cb11-8"></a></span>
+<span id="cb11-9"><a href="#cb11-9"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb11-10"><a href="#cb11-10"></a>ax.plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">10</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb11-12"><a href="#cb11-12"></a>ax.plot(x_line, f_predicted1(x_line), color<span class="op">=</span>green, lw<span class="op">=</span><span class="dv">2</span>,  label<span class="op">=</span><span class="vs">fr"1st order, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared1<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb11-13"><a href="#cb11-13"></a>ax.plot(x_line, f_predicted2(x_line), color<span class="op">=</span>green, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="vs">fr"2nd order, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared2<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb11-14"><a href="#cb11-14"></a>ax.plot(x_line, f_predicted3(x_line), color<span class="op">=</span>green, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="vs">fr"3rd order, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared3<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb11-16"><a href="#cb11-16"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb11-17"><a href="#cb11-17"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb11-18"><a href="#cb11-18"></a>       title<span class="op">=</span><span class="vs">fr"polynomials without intercept"</span>)</span>
+<span id="cb11-19"><a href="#cb11-19"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="R-squared_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="R-squared_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -950,33 +1113,33 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <section id="the-model-is-fitted-to-a-different-dataset" class="level3" data-number="16.1.2">
 <h3 data-number="16.1.2" class="anchored" data-anchor-id="the-model-is-fitted-to-a-different-dataset"><span class="header-section-number">16.1.2</span> the model is fitted to a different dataset</h3>
 <p>This is quite common when we train a model on a training set, and then evaluate it on a test set. If the model is overfitted to the training data, it may perform very poorly on the test data, resulting in a negative R-squared value when evaluated on the test set. It also may be that we have a small test set, and by chance the model performs very poorly on it, even if it is not overfitted. In any case, a negative R-squared value in this context indicates that the model is not generalizing well to new data. See an example below.</p>
-<div id="daff5cf4" class="cell" data-execution_count="172">
+<div id="daff5cf4" class="cell" data-execution_count="204">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">for</span> seed <span class="kw">in</span> np.arange(<span class="dv">10</span>):</span>
-<span id="cb8-2"><a href="#cb8-2"></a>    rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>seed)</span>
-<span id="cb8-3"><a href="#cb8-3"></a>    N <span class="op">=</span> <span class="dv">30</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>    x_sample <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)</span>
-<span id="cb8-5"><a href="#cb8-5"></a>    noise <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
-<span id="cb8-6"><a href="#cb8-6"></a>    y_sample <span class="op">=</span> foo(x_sample) <span class="op">+</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
-<span id="cb8-7"><a href="#cb8-7"></a>    idx <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.67</span> <span class="op">*</span> N)</span>
-<span id="cb8-8"><a href="#cb8-8"></a>    x_train <span class="op">=</span> x_sample[:idx]</span>
-<span id="cb8-9"><a href="#cb8-9"></a>    y_train <span class="op">=</span> y_sample[:idx]</span>
-<span id="cb8-10"><a href="#cb8-10"></a>    x_test <span class="op">=</span> x_sample[idx:]</span>
-<span id="cb8-11"><a href="#cb8-11"></a>    y_test <span class="op">=</span> y_sample[idx:]</span>
-<span id="cb8-12"><a href="#cb8-12"></a></span>
-<span id="cb8-13"><a href="#cb8-13"></a>    coefficients <span class="op">=</span> np.polyfit(x_train, y_train, deg<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb8-14"><a href="#cb8-14"></a>    fitted_model <span class="op">=</span> np.poly1d(coefficients)</span>
-<span id="cb8-15"><a href="#cb8-15"></a>    y_predicted_train <span class="op">=</span> fitted_model(x_train)</span>
-<span id="cb8-16"><a href="#cb8-16"></a>    y_predicted_test <span class="op">=</span> fitted_model(x_test)</span>
-<span id="cb8-17"><a href="#cb8-17"></a></span>
-<span id="cb8-18"><a href="#cb8-18"></a>    SS_total_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_train.mean())<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb8-19"><a href="#cb8-19"></a>    SS_total_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_test.mean())<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb8-20"><a href="#cb8-20"></a>    SS_residuals_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_predicted_train)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb8-21"><a href="#cb8-21"></a>    SS_residuals_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_predicted_test)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb8-22"><a href="#cb8-22"></a>    R_squared_train <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_train <span class="op">/</span> SS_total_train</span>
-<span id="cb8-23"><a href="#cb8-23"></a>    R_squared_test <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_test <span class="op">/</span> SS_total_test</span>
-<span id="cb8-24"><a href="#cb8-24"></a>    <span class="bu">print</span>(<span class="ss">f"seed: </span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">, R² train: </span><span class="sc">{</span>R_squared_train<span class="sc">:.2f}</span><span class="ss">, R² test: </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="cf">for</span> seed <span class="kw">in</span> np.arange(<span class="dv">10</span>):</span>
+<span id="cb12-2"><a href="#cb12-2"></a>    rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>seed)</span>
+<span id="cb12-3"><a href="#cb12-3"></a>    N <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>    x_sample <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    noise <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    y_sample <span class="op">=</span> foo(x_sample) <span class="op">+</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
+<span id="cb12-7"><a href="#cb12-7"></a>    idx <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.67</span> <span class="op">*</span> N)</span>
+<span id="cb12-8"><a href="#cb12-8"></a>    x_train <span class="op">=</span> x_sample[:idx]</span>
+<span id="cb12-9"><a href="#cb12-9"></a>    y_train <span class="op">=</span> y_sample[:idx]</span>
+<span id="cb12-10"><a href="#cb12-10"></a>    x_test <span class="op">=</span> x_sample[idx:]</span>
+<span id="cb12-11"><a href="#cb12-11"></a>    y_test <span class="op">=</span> y_sample[idx:]</span>
+<span id="cb12-12"><a href="#cb12-12"></a></span>
+<span id="cb12-13"><a href="#cb12-13"></a>    coefficients <span class="op">=</span> np.polyfit(x_train, y_train, deg<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb12-14"><a href="#cb12-14"></a>    fitted_model <span class="op">=</span> np.poly1d(coefficients)</span>
+<span id="cb12-15"><a href="#cb12-15"></a>    y_predicted_train <span class="op">=</span> fitted_model(x_train)</span>
+<span id="cb12-16"><a href="#cb12-16"></a>    y_predicted_test <span class="op">=</span> fitted_model(x_test)</span>
+<span id="cb12-17"><a href="#cb12-17"></a></span>
+<span id="cb12-18"><a href="#cb12-18"></a>    SS_total_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_train.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb12-19"><a href="#cb12-19"></a>    SS_total_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_test.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb12-20"><a href="#cb12-20"></a>    SS_residuals_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_predicted_train)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb12-21"><a href="#cb12-21"></a>    SS_residuals_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_predicted_test)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb12-22"><a href="#cb12-22"></a>    R_squared_train <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_train <span class="op">/</span> SS_total_train</span>
+<span id="cb12-23"><a href="#cb12-23"></a>    R_squared_test <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_test <span class="op">/</span> SS_total_test</span>
+<span id="cb12-24"><a href="#cb12-24"></a>    <span class="bu">print</span>(<span class="ss">f"seed: </span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">, R² train: </span><span class="sc">{</span>R_squared_train<span class="sc">:.2f}</span><span class="ss">, R² test: </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>seed: 0, R² train: 0.54, R² test: 0.53
@@ -991,53 +1154,53 @@ seed: 8, R² train: 0.53, R² test: 0.64
 seed: 9, R² train: 0.65, R² test: 0.62</code></pre>
 </div>
 </div>
-<div id="b2bc74e2" class="cell" data-execution_count="170">
+<div id="b2bc74e2" class="cell" data-execution_count="205">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb10-2"><a href="#cb10-2"></a>N <span class="op">=</span> <span class="dv">30</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a>x_sample <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)</span>
-<span id="cb10-4"><a href="#cb10-4"></a>noise <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
-<span id="cb10-5"><a href="#cb10-5"></a>y_sample <span class="op">=</span> foo(x_sample) <span class="op">+</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
-<span id="cb10-6"><a href="#cb10-6"></a>idx <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.67</span> <span class="op">*</span> N)</span>
-<span id="cb10-7"><a href="#cb10-7"></a>x_train <span class="op">=</span> x_sample[:idx]</span>
-<span id="cb10-8"><a href="#cb10-8"></a>y_train <span class="op">=</span> y_sample[:idx]</span>
-<span id="cb10-9"><a href="#cb10-9"></a>x_test <span class="op">=</span> x_sample[idx:]</span>
-<span id="cb10-10"><a href="#cb10-10"></a>y_test <span class="op">=</span> y_sample[idx:]</span>
-<span id="cb10-11"><a href="#cb10-11"></a></span>
-<span id="cb10-12"><a href="#cb10-12"></a>coefficients <span class="op">=</span> np.polyfit(x_train, y_train, deg<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb10-13"><a href="#cb10-13"></a>fitted_model <span class="op">=</span> np.poly1d(coefficients)</span>
-<span id="cb10-14"><a href="#cb10-14"></a>y_predicted_train <span class="op">=</span> fitted_model(x_train)</span>
-<span id="cb10-15"><a href="#cb10-15"></a>y_predicted_test <span class="op">=</span> fitted_model(x_test)</span>
-<span id="cb10-16"><a href="#cb10-16"></a></span>
-<span id="cb10-17"><a href="#cb10-17"></a>SS_total_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_train.mean())<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb10-18"><a href="#cb10-18"></a>SS_total_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_test.mean())<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb10-19"><a href="#cb10-19"></a>SS_residuals_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_predicted_train)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb10-20"><a href="#cb10-20"></a>SS_residuals_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_predicted_test)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb10-21"><a href="#cb10-21"></a>R_squared_train <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_train <span class="op">/</span> SS_total_train</span>
-<span id="cb10-22"><a href="#cb10-22"></a>R_squared_test <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_test <span class="op">/</span> SS_total_test</span>
-<span id="cb10-23"><a href="#cb10-23"></a></span>
-<span id="cb10-24"><a href="#cb10-24"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-25"><a href="#cb10-25"></a>ax[<span class="dv">0</span>].plot(x_train, y_train, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>)</span>
-<span id="cb10-26"><a href="#cb10-26"></a>ax[<span class="dv">0</span>].plot(x_line, fitted_model(x_line), color<span class="op">=</span><span class="st">"red"</span>)</span>
-<span id="cb10-27"><a href="#cb10-27"></a></span>
-<span id="cb10-28"><a href="#cb10-28"></a>ax[<span class="dv">1</span>].plot(x_test, y_test, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>)</span>
-<span id="cb10-29"><a href="#cb10-29"></a>ax[<span class="dv">1</span>].plot(x_line, fitted_model(x_line), color<span class="op">=</span><span class="st">"red"</span>)</span>
-<span id="cb10-30"><a href="#cb10-30"></a></span>
-<span id="cb10-31"><a href="#cb10-31"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
-<span id="cb10-32"><a href="#cb10-32"></a>       xlim<span class="op">=</span>(x_sample.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
-<span id="cb10-33"><a href="#cb10-33"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
-<span id="cb10-34"><a href="#cb10-34"></a>       title<span class="op">=</span><span class="vs">fr"train set, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared_train<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb10-35"><a href="#cb10-35"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb10-36"><a href="#cb10-36"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
-<span id="cb10-37"><a href="#cb10-37"></a>       xlim<span class="op">=</span>(x_sample.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
-<span id="cb10-38"><a href="#cb10-38"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
-<span id="cb10-39"><a href="#cb10-39"></a>       title<span class="op">=</span><span class="vs">fr"test set, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>N <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>x_sample <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)</span>
+<span id="cb14-4"><a href="#cb14-4"></a>noise <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
+<span id="cb14-5"><a href="#cb14-5"></a>y_sample <span class="op">=</span> foo(x_sample) <span class="op">+</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>idx <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.67</span> <span class="op">*</span> N)</span>
+<span id="cb14-7"><a href="#cb14-7"></a>x_train <span class="op">=</span> x_sample[:idx]</span>
+<span id="cb14-8"><a href="#cb14-8"></a>y_train <span class="op">=</span> y_sample[:idx]</span>
+<span id="cb14-9"><a href="#cb14-9"></a>x_test <span class="op">=</span> x_sample[idx:]</span>
+<span id="cb14-10"><a href="#cb14-10"></a>y_test <span class="op">=</span> y_sample[idx:]</span>
+<span id="cb14-11"><a href="#cb14-11"></a></span>
+<span id="cb14-12"><a href="#cb14-12"></a>coefficients <span class="op">=</span> np.polyfit(x_train, y_train, deg<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb14-13"><a href="#cb14-13"></a>fitted_model <span class="op">=</span> np.poly1d(coefficients)</span>
+<span id="cb14-14"><a href="#cb14-14"></a>y_predicted_train <span class="op">=</span> fitted_model(x_train)</span>
+<span id="cb14-15"><a href="#cb14-15"></a>y_predicted_test <span class="op">=</span> fitted_model(x_test)</span>
+<span id="cb14-16"><a href="#cb14-16"></a></span>
+<span id="cb14-17"><a href="#cb14-17"></a>SS_total_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_train.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb14-18"><a href="#cb14-18"></a>SS_total_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_test.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb14-19"><a href="#cb14-19"></a>SS_residuals_train <span class="op">=</span> np.<span class="bu">sum</span>((y_train <span class="op">-</span> y_predicted_train)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb14-20"><a href="#cb14-20"></a>SS_residuals_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_predicted_test)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb14-21"><a href="#cb14-21"></a>R_squared_train <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_train <span class="op">/</span> SS_total_train</span>
+<span id="cb14-22"><a href="#cb14-22"></a>R_squared_test <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_test <span class="op">/</span> SS_total_test</span>
+<span id="cb14-23"><a href="#cb14-23"></a></span>
+<span id="cb14-24"><a href="#cb14-24"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-25"><a href="#cb14-25"></a>ax[<span class="dv">0</span>].plot(x_train, y_train, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb14-26"><a href="#cb14-26"></a>ax[<span class="dv">0</span>].plot(x_line, fitted_model(x_line),lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb14-27"><a href="#cb14-27"></a></span>
+<span id="cb14-28"><a href="#cb14-28"></a>ax[<span class="dv">1</span>].plot(x_test, y_test, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb14-29"><a href="#cb14-29"></a>ax[<span class="dv">1</span>].plot(x_line, fitted_model(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb14-30"><a href="#cb14-30"></a></span>
+<span id="cb14-31"><a href="#cb14-31"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb14-32"><a href="#cb14-32"></a>       xlim<span class="op">=</span>(x_sample.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb14-33"><a href="#cb14-33"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb14-34"><a href="#cb14-34"></a>       title<span class="op">=</span><span class="vs">fr"train set, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared_train<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb14-35"><a href="#cb14-35"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb14-36"><a href="#cb14-36"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb14-37"><a href="#cb14-37"></a>       xlim<span class="op">=</span>(x_sample.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb14-38"><a href="#cb14-38"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
+<span id="cb14-39"><a href="#cb14-39"></a>       title<span class="op">=</span><span class="vs">fr"test set, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="R-squared_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="R-squared_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>

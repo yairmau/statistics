@@ -86,7 +86,9 @@ book:
         - generalization/regularization.ipynb
         - generalization/more-data.ipynb
         - generalization/double-descent.ipynb
-
+    - part: "neural networks"
+      chapters:
+        - neural_networks/nielsen_ch1.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
