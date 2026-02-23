@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -117,7 +118,7 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -149,7 +150,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -191,7 +192,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -756,20 +758,20 @@ window.Quarto = {
 <div id="d791de6f" class="cell" data-execution_count="144">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> os</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> io</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> gzip</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> requests</span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="48938471" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>define function to load MNIST from web</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> load_mnist_from_web():</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> load_mnist_from_web():</span>
 <span id="cb2-2"><a href="#cb2-2"></a>    urls <span class="op">=</span> {</span>
 <span id="cb2-3"><a href="#cb2-3"></a>        <span class="st">"train_img"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-images-idx3-ubyte.gz"</span>,</span>
 <span id="cb2-4"><a href="#cb2-4"></a>        <span class="st">"train_lbl"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-labels-idx1-ubyte.gz"</span>,</span>
@@ -806,14 +808,14 @@ window.Quarto = {
 <span id="cb2-35"><a href="#cb2-35"></a>    test_inputs <span class="op">=</span> [np.reshape(x, (<span class="dv">784</span>, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">255.0</span> <span class="cf">for</span> x <span class="kw">in</span> data_results[<span class="st">"test_img"</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">784</span>)]</span>
 <span id="cb2-36"><a href="#cb2-36"></a>    test_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(test_inputs, data_results[<span class="st">"test_lbl"</span>]))</span>
 <span id="cb2-37"><a href="#cb2-37"></a></span>
-<span id="cb2-38"><a href="#cb2-38"></a>    <span class="cf">return</span> training_data, test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-38"><a href="#cb2-38"></a>    <span class="cf">return</span> training_data, test_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="1fe79797" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>load MNIST data into memory</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>training_data, test_data <span class="op">=</span> load_mnist_from_web()</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(training_data)<span class="sc">}</span><span class="ss"> training samples directly into memory."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>training_data, test_data <span class="op">=</span> load_mnist_from_web()</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(training_data)<span class="sc">}</span><span class="ss"> training samples directly into memory."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Fetching train_img...
@@ -827,7 +829,7 @@ Loaded 60000 training samples directly into memory.</code></pre>
 <div id="b3073810" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>see some sample images</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">5</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">5</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
 <span id="cb5-2"><a href="#cb5-2"></a>ax <span class="op">=</span> ax.flatten()</span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">25</span>):</span>
 <span id="cb5-4"><a href="#cb5-4"></a>    ax[i].imshow(training_data[i][<span class="dv">0</span>].reshape(<span class="dv">28</span>, <span class="dv">28</span>), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
@@ -836,7 +838,7 @@ Loaded 60000 training samples directly into memory.</code></pre>
 <span id="cb5-7"><a href="#cb5-7"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,</span>
 <span id="cb5-8"><a href="#cb5-8"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"xkcd:goldenrod"</span>)</span>
 <span id="cb5-9"><a href="#cb5-9"></a>    ax[i].axis(<span class="st">'off'</span>)</span>
-<span id="cb5-10"><a href="#cb5-10"></a>fig.suptitle(<span class="st">"Sample MNIST Training Images"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-10"><a href="#cb5-10"></a>fig.suptitle(<span class="st">"Sample MNIST Training Images"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -850,7 +852,7 @@ Loaded 60000 training samples directly into memory.</code></pre>
 <div id="be2879e3" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
 <span id="cb6-2"><a href="#cb6-2"></a>ax[<span class="dv">0</span>].imshow(training_data[<span class="dv">0</span>][<span class="dv">0</span>].reshape(<span class="dv">28</span>, <span class="dv">28</span>), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3"></a>ax[<span class="dv">0</span>].text(<span class="op">-</span><span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="st">"label:</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="ss">f"</span><span class="sc">{</span>training_data[<span class="dv">0</span>][<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>, transform<span class="op">=</span>ax[<span class="dv">0</span>].transAxes,</span>
 <span id="cb6-4"><a href="#cb6-4"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>,)</span>
@@ -861,7 +863,7 @@ Loaded 60000 training samples directly into memory.</code></pre>
 <span id="cb6-9"><a href="#cb6-9"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>,)</span>
 <span id="cb6-10"><a href="#cb6-10"></a>ax[<span class="dv">1</span>].set_title(<span class="st">"Test Sample"</span>)</span>
 <span id="cb6-11"><a href="#cb6-11"></a>ax[<span class="dv">0</span>].axis(<span class="st">'off'</span>)</span>
-<span id="cb6-12"><a href="#cb6-12"></a>ax[<span class="dv">1</span>].axis(<span class="st">'off'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-12"><a href="#cb6-12"></a>ax[<span class="dv">1</span>].axis(<span class="st">'off'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -906,14 +908,14 @@ Suppose we have the same setup as the last problem — a network of perceptrons.
 <div id="49d72684" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="da08a7b6" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>sigmoid function with different steepness</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
 <span id="cb8-2"><a href="#cb8-2"></a>z <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1001</span>)</span>
 <span id="cb8-3"><a href="#cb8-3"></a>sigma <span class="op">=</span> <span class="kw">lambda</span> z: <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
 <span id="cb8-4"><a href="#cb8-4"></a>c_list <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">100</span>]</span>
@@ -922,7 +924,7 @@ Suppose we have the same setup as the last problem — a network of perceptrons.
 <span id="cb8-7"><a href="#cb8-7"></a>    ax.plot(z, sigma(c <span class="op">*</span> z), color<span class="op">=</span>color, label<span class="op">=</span><span class="ss">f"c=</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb8-8"><a href="#cb8-8"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb8-9"><a href="#cb8-9"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"z"</span>,</span>
-<span id="cb8-10"><a href="#cb8-10"></a>       title<span class="op">=</span><span class="st">"sigmoid with different steepness (c)"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-10"><a href="#cb8-10"></a>       title<span class="op">=</span><span class="st">"sigmoid with different steepness (c)"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -941,8 +943,8 @@ There is a way of determining the bitwise representation of a digit by adding an
 </div>
 <p>Instead of thinking what are the weights and biases for each of the 4 output neurons, we can think of the weights and biases for each of the 10 neurons in the previous layer. We do that by writing the binary representation of the output digit, for example:</p>
 <div id="38e04e68" class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb9-2"><a href="#cb9-2"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> = </span><span class="sc">{</span>i<span class="sc">:04b}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb9-2"><a href="#cb9-2"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> = </span><span class="sc">{</span>i<span class="sc">:04b}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0 = 0000
 1 = 0001
@@ -960,7 +962,7 @@ There is a way of determining the bitwise representation of a digit by adding an
 <div id="b93e6697" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>sigmoid function</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
 <span id="cb11-2"><a href="#cb11-2"></a>z <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dv">1001</span>)</span>
 <span id="cb11-3"><a href="#cb11-3"></a>sigma <span class="op">=</span> <span class="kw">lambda</span> z: <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
 <span id="cb11-4"><a href="#cb11-4"></a>c_list <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">5</span>]</span>
@@ -970,7 +972,7 @@ There is a way of determining the bitwise representation of a digit by adding an
 <span id="cb11-8"><a href="#cb11-8"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb11-9"><a href="#cb11-9"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"z"</span>,</span>
 <span id="cb11-10"><a href="#cb11-10"></a>    <span class="co">#    title="sigmoid with different steepness (c)"</span></span>
-<span id="cb11-11"><a href="#cb11-11"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-11"><a href="#cb11-11"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -983,7 +985,7 @@ There is a way of determining the bitwise representation of a digit by adding an
 <div id="11d3a4c1" class="cell" data-execution_count="97">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="im">from</span> matplotlib.animation <span class="im">import</span> FuncAnimation</span>
 <span id="cb12-4"><a href="#cb12-4"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
@@ -1045,7 +1047,7 @@ There is a way of determining the bitwise representation of a digit by adding an
 <span id="cb12-60"><a href="#cb12-60"></a>anim <span class="op">=</span> FuncAnimation(fig, update, frames<span class="op">=</span><span class="bu">range</span>(N), interval<span class="op">=</span><span class="dv">500</span>)</span>
 <span id="cb12-61"><a href="#cb12-61"></a></span>
 <span id="cb12-62"><a href="#cb12-62"></a>plt.close(fig)  <span class="co"># prevents the static plot from being captured</span></span>
-<span id="cb12-63"><a href="#cb12-63"></a>anim  <span class="co"># calling 'anim' displays the JS player</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-63"><a href="#cb12-63"></a>anim  <span class="co"># calling 'anim' displays the JS player</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="97">
 
@@ -13228,7 +13230,7 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <div id="79720256" class="cell" data-execution_count="195">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
 <span id="cb13-2"><a href="#cb13-2"></a></span>
 <span id="cb13-3"><a href="#cb13-3"></a>layer_left <span class="op">=</span> <span class="dv">7</span></span>
 <span id="cb13-4"><a href="#cb13-4"></a>layer_right <span class="op">=</span> <span class="dv">4</span></span>
@@ -13339,7 +13341,7 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <span id="cb13-109"><a href="#cb13-109"></a></span>
 <span id="cb13-110"><a href="#cb13-110"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span>), ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">2</span>), xticks<span class="op">=</span>[], yticks<span class="op">=</span>[])</span>
 <span id="cb13-111"><a href="#cb13-111"></a>ax.set_aspect(<span class="st">'equal'</span>)</span>
-<span id="cb13-112"><a href="#cb13-112"></a>ax.axis(<span class="st">'off'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-112"><a href="#cb13-112"></a>ax.axis(<span class="st">'off'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -13363,7 +13365,7 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <div id="1cf66ffc" class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">class</span> NN:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">class</span> NN:</span>
 <span id="cb14-2"><a href="#cb14-2"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, layer_sizes, rand_seed<span class="op">=</span><span class="dv">0</span>):</span>
 <span id="cb14-3"><a href="#cb14-3"></a>        <span class="va">self</span>.number_of_layers <span class="op">=</span> <span class="bu">len</span>(layer_sizes)</span>
 <span id="cb14-4"><a href="#cb14-4"></a>        <span class="va">self</span>.layer_sizes <span class="op">=</span> layer_sizes</span>
@@ -13424,14 +13426,14 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <span id="cb14-59"><a href="#cb14-59"></a>        ]</span>
 <span id="cb14-60"><a href="#cb14-60"></a>    </span>
 <span id="cb14-61"><a href="#cb14-61"></a>    <span class="kw">def</span> back_propagation(<span class="va">self</span>, features, labels):</span>
-<span id="cb14-62"><a href="#cb14-62"></a>        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-62"><a href="#cb14-62"></a>        </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="6a739037" class="cell" data-execution_count="106">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>net <span class="op">=</span> NN(layer_sizes<span class="op">=</span>[<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">11</span>,<span class="dv">4</span>])</span>
-<span id="cb15-2"><a href="#cb15-2"></a>net.biases[<span class="dv">0</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>net <span class="op">=</span> NN(layer_sizes<span class="op">=</span>[<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">11</span>,<span class="dv">4</span>])</span>
+<span id="cb15-2"><a href="#cb15-2"></a>net.biases[<span class="dv">0</span>].shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="106">
 <pre><code>(8,)</code></pre>
@@ -13440,7 +13442,7 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <div id="5699c2b9" class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">def</span> sigmoid(z):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">def</span> sigmoid(z):</span>
 <span id="cb17-2"><a href="#cb17-2"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
 <span id="cb17-3"><a href="#cb17-3"></a></span>
 <span id="cb17-4"><a href="#cb17-4"></a><span class="kw">def</span> sigmoid_prime(z):</span>
@@ -13451,13 +13453,13 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <span id="cb17-9"><a href="#cb17-9"></a>    <span class="cf">return</span> np.maximum(<span class="dv">0</span>, z)</span>
 <span id="cb17-10"><a href="#cb17-10"></a></span>
 <span id="cb17-11"><a href="#cb17-11"></a><span class="kw">def</span> relu_prime(z):</span>
-<span id="cb17-12"><a href="#cb17-12"></a>    <span class="cf">return</span> np.where(z <span class="op">&gt;</span> <span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-12"><a href="#cb17-12"></a>    <span class="cf">return</span> np.where(z <span class="op">&gt;</span> <span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="ea34f8bf" class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">def</span> sigmoid(z):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">def</span> sigmoid(z):</span>
 <span id="cb18-2"><a href="#cb18-2"></a>    <span class="co">"""The sigmoid function, JIT-compiled for speed."""</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a>    <span class="cf">return</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
 <span id="cb18-4"><a href="#cb18-4"></a></span>
@@ -13581,18 +13583,18 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <span id="cb18-122"><a href="#cb18-122"></a>        <span class="cf">return</span> <span class="bu">sum</span>(<span class="bu">int</span>(x <span class="op">==</span> y) <span class="cf">for</span> (x, y) <span class="kw">in</span> test_results)</span>
 <span id="cb18-123"><a href="#cb18-123"></a></span>
 <span id="cb18-124"><a href="#cb18-124"></a>    <span class="kw">def</span> cost_derivative(<span class="va">self</span>, output_activations, y):</span>
-<span id="cb18-125"><a href="#cb18-125"></a>        <span class="cf">return</span> (output_activations <span class="op">-</span> y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-125"><a href="#cb18-125"></a>        <span class="cf">return</span> (output_activations <span class="op">-</span> y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div id="6295750e" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>net <span class="op">=</span> Network(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>net <span class="op">=</span> Network(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>])</span>
 <span id="cb19-2"><a href="#cb19-2"></a>net.SGD(training_data<span class="op">=</span>training_data,</span>
 <span id="cb19-3"><a href="#cb19-3"></a>        epochs<span class="op">=</span><span class="dv">8</span>,</span>
 <span id="cb19-4"><a href="#cb19-4"></a>        mini_batch_size<span class="op">=</span><span class="dv">10</span>,</span>
 <span id="cb19-5"><a href="#cb19-5"></a>        eta<span class="op">=</span><span class="fl">3.0</span>,</span>
-<span id="cb19-6"><a href="#cb19-6"></a>        test_data<span class="op">=</span>test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-6"><a href="#cb19-6"></a>        test_data<span class="op">=</span>test_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Epoch 1/8:   0%|          | 0/6000 [00:00&lt;?, ?it/s]Epoch 1/8: 100%|██████████| 6000/6000 [00:04&lt;00:00, 1252.79it/s]</code></pre>
@@ -13646,7 +13648,7 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <div id="d6123170" class="cell" data-execution_count="100">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>net.weights[<span class="dv">1</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>net.weights[<span class="dv">1</span>].shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="100">
 <pre><code>(10, 30)</code></pre>
@@ -13708,13 +13710,14 @@ z_i &amp;= (w\cdot x)_i + b_i \\
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

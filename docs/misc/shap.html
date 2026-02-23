@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -145,7 +146,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -187,7 +188,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -712,7 +714,14 @@ window.Quarto = {
    
   <ul>
   <li><a href="#simple-practical-example" id="toc-simple-practical-example" class="nav-link active" data-scroll-target="#simple-practical-example"><span class="header-section-number">58.1</span> simple practical example</a></li>
-  <li><a href="#unfinished" id="toc-unfinished" class="nav-link" data-scroll-target="#unfinished"><span class="header-section-number">58.2</span> unfinished</a></li>
+  <li><a href="#conditional-vs.-marginal-expectations" id="toc-conditional-vs.-marginal-expectations" class="nav-link" data-scroll-target="#conditional-vs.-marginal-expectations"><span class="header-section-number">58.2</span> conditional vs.&nbsp;marginal expectations</a>
+  <ul class="collapse">
+  <li><a href="#marginal-expectation" id="toc-marginal-expectation" class="nav-link" data-scroll-target="#marginal-expectation"><span class="header-section-number">58.2.1</span> marginal expectation</a></li>
+  <li><a href="#conditional-expectation" id="toc-conditional-expectation" class="nav-link" data-scroll-target="#conditional-expectation"><span class="header-section-number">58.2.2</span> conditional expectation</a></li>
+  <li><a href="#the-hidden-assumption" id="toc-the-hidden-assumption" class="nav-link" data-scroll-target="#the-hidden-assumption"><span class="header-section-number">58.2.3</span> the hidden assumption</a></li>
+  </ul></li>
+  <li><a href="#more-than-2-features" id="toc-more-than-2-features" class="nav-link" data-scroll-target="#more-than-2-features"><span class="header-section-number">58.3</span> more than 2 features</a></li>
+  <li><a href="#unfinished" id="toc-unfinished" class="nav-link" data-scroll-target="#unfinished"><span class="header-section-number">58.4</span> unfinished</a></li>
   </ul>
 </nav>
     </div>
@@ -740,52 +749,23 @@ window.Quarto = {
 
 <section id="simple-practical-example" class="level2" data-number="58.1">
 <h2 data-number="58.1" class="anchored" data-anchor-id="simple-practical-example"><span class="header-section-number">58.1</span> simple practical example</h2>
-<p>Let’s say I want to know what impacts the price of a car. I have a model that takes into account 2 features, the car’s age (<span class="math inline">x_1</span>) and the car’s mileage (<span class="math inline">x_2</span>). We call the set of all features <span class="math inline">N = \{x_1, x_2\}</span>.</p>
-<p>Assume that we have a database with <span class="math inline">n</span> cars, and we somehow arrived at a model <span class="math inline">f(x_1, x_2)</span> that predicts the price of a car based on its age and mileage. Now, we want to understand how much each feature contributes to the predicted price for a <strong>specific car</strong> <span class="math inline">(x_1^\star, x_2^\star)</span> in our database. More specifically, we are asking:</p>
-<p><strong>Relative to the average price of all cars in the database, how many dollars of this specific car’s price can be attributed to its age (<span class="math inline">x_1^\star</span>​) and how many to its mileage (<span class="math inline">x_2^\star</span>)?</strong></p>
-<p>This can be answered by the formula below.</p>
-<p><span class="math display">
-\phi_j = \sum_{S \subseteq N \setminus \{j\}} \binom{n-1}{|S|}^{-1}[f(S \cup \{j\}) - f(S)].
-</span></p>
-<p>To compute the SHAP value <span class="math inline">\phi_1</span> for the car’s age (<span class="math inline">x_1</span>), we subtract age from the set of all features (that is, <span class="math inline">N \setminus \{x_1\}=\{x_2\}</span>), and consider all possible subsets in that, which are the empty set <span class="math inline">S_0 = \{\}</span>, and the set <span class="math inline">S_1 = \{x_2\}</span>. This is what we are summing over in the formula above.</p>
-<p>The parenthesis with a <span class="math inline">-1</span> power is the binomial coefficient, which is a normalization factor that accounts for the number of subsets of a given size. In our example, since we have 1 feature in <span class="math inline">N \setminus \{x_1\}=\{x_2\}</span>, we have <span class="math inline">\binom{1}{0} = 1</span> for the empty set, <span class="math inline">\binom{1}{1} = 1</span> for subsets of size 1.</p>
-<p>The last part of the formula, <span class="math inline">f(S \cup \{j\}) - f(S)</span>, represents the marginal contribution of feature <span class="math inline">x_j</span> (here, price <span class="math inline">x_1</span>) when added to the subset <span class="math inline">S</span>. Let’s spell it out for our example:</p>
-<p><span class="math display">\begin{align*}
-\phi_1 &amp;= \binom{1}{0}^{-1}[f(\{x_1\}) - f(\{\})] + \binom{1}{1}^{-1}[f(\{x_1, x_2\}) - f(\{x_2\})] \\
-&amp;= [f(\{x_1\}) - f(\{\})] + [f(\{x_1, x_2\}) - f(\{x_2\})].
-\end{align*}</span></p>
-<p>Intuitively, the expression above is asking: <strong>How much does the predicted price change when we add the car’s age to our model, first when we have no other information (the empty set), and then when we already know the car’s mileage?</strong></p>
-<p>We need now to find the values of <span class="math inline">f(\{\})</span>, <span class="math inline">f(\{x_1\})</span>, <span class="math inline">f(\{x_2\})</span>, and <span class="math inline">f(\{x_1, x_2\})</span> to compute <span class="math inline">\phi_1</span>. Let’s see what each means:</p>
-<ul>
-<li><span class="math inline">f(\{\})</span> is the expected price of a car when we ignore both age and mileage.</li>
-<li><span class="math inline">f(\{x_1\})</span> is the expected price of a car when we only consider its age, ignoring mileage.</li>
-<li><span class="math inline">f(\{x_2\})</span> is the expected price of a car when we only consider its mileage, ignoring age.</li>
-<li><span class="math inline">f(\{x_1, x_2\})</span> is the expected price of a car when we consider both age and mileage.</li>
-</ul>
-<p>Let’s start with <span class="math inline">f(\{\})</span>. This is the expected price of a car when we ignore both age and mileage. I find it more illuminating to phrase this as a question: <strong>If I have a car, and I don’t know its age or milage, what is the expected price based on the typical ages and mileages of cars in my database?</strong> We can compute this by averaging the model’s predictions over all possible values of age and mileage:</p>
-<p><span class="math display">
-f(\{\}) = \mathbb{E}[f(x)] = \int f(x_1, x_2) p(x_1, x_2) dx_1 dx_2.
-</span></p>
-<p>Because we have a finite dataset of <span class="math inline">n</span> cars, we can approximate this integral by taking the average of the model’s predictions for all <span class="math inline">n</span> cars in our database:</p>
-<p><span class="math display">
-f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
-</span></p>
-<p>Let’s visualize this. The figure below shows the price of the car (the color) as a function of its age and mileage. The black dots represent the <span class="math inline">n</span> cars in our database.</p>
-<div id="198e6227" class="cell" data-execution_count="1">
+<p>Let’s say I want to know what impacts the price of a car. I have a model that takes into account 2 features, the car’s age (<span class="math inline">x_1</span>) and the car’s mileage (<span class="math inline">x_2</span>). In a mathematical notation, we can say that <span class="math inline">p</span> is the total number of features (<span class="math inline">p=2</span> in our case), and that <span class="math inline">\mathcal{F} = \{x_1, x_2\}</span> is the set of all features.</p>
+<p>Assume that we have a dataset with <span class="math inline">n</span> cars, and we somehow arrived at a model <span class="math inline">f(x_1, x_2)</span> that predicts the price of a car based on its age and mileage. See below a visualization of this model: the predicted price of a car is the color in a 2D space where the axes are age and mileage. The black dots are the cars in our dataset. Don’t take the axes and the values too seriously, I just cooked up this example so we have an image in mind while learning about SHAP values.</p>
+<div id="d366f8f7" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> matplotlib <span class="im">import</span> cm</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> colors</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># %matplotlib widget</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># %matplotlib widget</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="5f756406" class="cell" data-execution_count="2">
+<div id="59190c44" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>model definition and sample data generation</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> model_f(x1, x2):</span>
-<span id="cb2-2"><a href="#cb2-2"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="fl">0.3</span><span class="op">*</span>x1<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> x2 <span class="op">+</span> (<span class="fl">0.3</span> <span class="op">*</span> x1 <span class="op">*</span> x2) <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>np.exp((<span class="op">-</span>(x1<span class="op">+</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="fl">0.3</span>) <span class="op">-</span> <span class="dv">3</span><span class="op">*</span>np.exp((<span class="op">-</span>(x1<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2<span class="op">+</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="fl">0.3</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> model_f(x1, x2):</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="cf">return</span> <span class="dv">5</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="fl">0.3</span><span class="op">*</span>x1<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> x2 <span class="op">+</span> (<span class="fl">0.3</span> <span class="op">*</span> x1 <span class="op">*</span> x2) <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>np.exp((<span class="op">-</span>(x1<span class="op">+</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="fl">0.3</span>) <span class="op">-</span> <span class="dv">3</span><span class="op">*</span>np.exp((<span class="op">-</span>(x1<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2<span class="op">+</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="fl">0.3</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a></span>
 <span id="cb2-4"><a href="#cb2-4"></a>N <span class="op">=</span> <span class="dv">40</span></span>
 <span id="cb2-5"><a href="#cb2-5"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">1</span>)</span>
@@ -799,30 +779,29 @@ f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
 <span id="cb2-13"><a href="#cb2-13"></a>x1_range <span class="op">=</span> np.linspace(x1_min, x1_max, <span class="dv">50</span>)</span>
 <span id="cb2-14"><a href="#cb2-14"></a>x2_range <span class="op">=</span> np.linspace(x2_min, x2_max, <span class="dv">50</span>)</span>
 <span id="cb2-15"><a href="#cb2-15"></a>X1, X2 <span class="op">=</span> np.meshgrid(x1_range, x2_range)</span>
-<span id="cb2-16"><a href="#cb2-16"></a>Z <span class="op">=</span> model_f(X1, X2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-16"><a href="#cb2-16"></a>Z <span class="op">=</span> model_f(X1, X2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="51e4b4e1" class="cell" data-execution_count="3">
+<div id="391c3767" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>2d plot</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
-<span id="cb3-3"><a href="#cb3-3"></a>levels <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">6</span>, <span class="fl">0.5</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>norm <span class="op">=</span> colors.BoundaryNorm(boundaries<span class="op">=</span>levels, ncolors<span class="op">=</span><span class="dv">256</span>, extend<span class="op">=</span><span class="st">'both'</span>)</span>
 <span id="cb3-5"><a href="#cb3-5"></a>cpax <span class="op">=</span> ax.contourf(X1, X2, Z, levels<span class="op">=</span>levels, cmap<span class="op">=</span>cm.viridis, norm<span class="op">=</span>norm, extend<span class="op">=</span><span class="st">'both'</span>)</span>
 <span id="cb3-6"><a href="#cb3-6"></a>cax <span class="op">=</span> ax.inset_axes([<span class="fl">1.05</span>, <span class="fl">0.0</span>, <span class="fl">0.05</span>, <span class="fl">1.0</span>], transform<span class="op">=</span>ax.transAxes)</span>
 <span id="cb3-7"><a href="#cb3-7"></a>cbar <span class="op">=</span> fig.colorbar(cpax, cax<span class="op">=</span>cax)</span>
 <span id="cb3-8"><a href="#cb3-8"></a>cbar.set_label(<span class="vs">r"Prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs"> "</span>)</span>
-<span id="cb3-9"><a href="#cb3-9"></a>ax.set_aspect(<span class="st">'equal'</span>)</span>
-<span id="cb3-10"><a href="#cb3-10"></a>ax.<span class="bu">set</span>(</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    xlabel<span class="op">=</span><span class="vs">r"feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12"></a>    ylabel<span class="op">=</span><span class="vs">r"feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13"></a>    title<span class="op">=</span><span class="vs">r"response surface </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs"> of the model"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14"></a>    xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb3-15"><a href="#cb3-15"></a>    yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
-<span id="cb3-16"><a href="#cb3-16"></a>)<span class="op">;</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a></span>
-<span id="cb3-18"><a href="#cb3-18"></a>ax.scatter(x1_sample, x2_sample, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Sample Points'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-9"><a href="#cb3-9"></a>ax.scatter(x1_sample, x2_sample, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Sample Points'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a>ax.set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a>ax.<span class="bu">set</span>(</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    xlabel<span class="op">=</span><span class="vs">r"feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    ylabel<span class="op">=</span><span class="vs">r"feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14"></a>    title<span class="op">=</span><span class="vs">r"response surface </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs"> of the model"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15"></a>    xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb3-16"><a href="#cb3-16"></a>    yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb3-17"><a href="#cb3-17"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -832,38 +811,77 @@ f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
 </div>
 </div>
 </div>
-<p>Another way to see this is by plotting the model’s predictions as the height of the surface above the age-mileage plane.</p>
+<p>Now, we want to understand how much each feature contributes to the predicted price for a <strong>specific car</strong> <span class="math inline">(x_1^\star, x_2^\star)</span> in our dataset. More specifically, we are asking:</p>
+<p><strong>Relative to the average price of all cars in the dataset, how many dollars of this specific car’s price can be attributed to its age (<span class="math inline">x_1^\star</span>​) and how many to its mileage (<span class="math inline">x_2^\star</span>)?</strong></p>
+<p>This can be answered by the formula below.</p>
+<p><span class="math display">
+\phi_j = \frac{1}{p} \sum_{S \subseteq \mathcal{F} \setminus \{j\}} \frac{1}{\binom{p-1}{|S|}}[f(S \cup \{j\}) - f(S)].
+</span></p>
+<p>To compute the SHAP value <span class="math inline">\phi_1</span> for the car’s age (<span class="math inline">x_1</span>), we have to think of all the features except age, and we denote that as <span class="math inline">\mathcal{F} \setminus \{x_1\}</span>. If you are used to the <code>pandas</code> lingo, this expression from set theory is just saying “take all feature columns and drop age column”, where the operation <span class="math inline">\setminus</span> represents “drop”. In our case,</p>
+<p><span class="math display">
+\mathcal{F} \setminus \{x_1\} = \{x_1, x_2\} \setminus \{x_1\} = \{x_2\}.
+</span></p>
+<p>From what’s left, we consider all possible subsets or equal to it, which is what <span class="math inline">S \subseteq</span> is saying. In our case, the subsets of <span class="math inline">\{x_2\}</span> are the empty set <span class="math inline">S_0 = \{\}</span>, and the set <span class="math inline">S_1 = \{x_2\}</span>. This is what we are summing over in the formula above. Later on, we will see an example with more features, and then we will have more subsets to consider.</p>
+<p>The denominator in the fraction is the binomial coefficient, which is a normalization factor that accounts for the number of subsets of a given size. This binomial term ensures all subsets of equal size are weighted equally, and that the total weights sum to 1, satisfying the Shapley axioms (efficiency, symmetry, etc., more on that later). The quantity <span class="math inline">|S|</span> represents the size of the subset <span class="math inline">S</span>, that is, the number of features in the subset. In our example, since we have <span class="math inline">p-1=1</span> feature left in <span class="math inline">\mathcal{F} \setminus \{x_1\}=\{x_2\}</span>, we have <span class="math inline">\binom{1}{0} = 1</span> for the empty set, <span class="math inline">\binom{1}{1} = 1</span> for subsets of size 1.</p>
+<p>The last part of the formula, <span class="math inline">f(S \cup \{j\}) - f(S)</span>, represents the marginal contribution of feature <span class="math inline">x_j</span> (here, price <span class="math inline">x_1</span>) when added to the subset <span class="math inline">S</span>. Let’s spell it out for our example:</p>
+<p><span class="math display">\begin{align*}
+\phi_1 &amp;= \frac{1}{2}\binom{1}{0}^{-1}[f(\{x_1\}) - f(\{\})] + \frac{1}{2}\binom{1}{1}^{-1}[f(\{x_1, x_2\}) - f(\{x_2\})] \\
+&amp;= \frac{1}{2}\left(\underbrace{[f(\{x_1\}) - f(\{\})]}_{\text{term 1}} + \underbrace{[f(\{x_1, x_2\}) - f(\{x_2\})]}_{\text{term 2}}\right).
+\end{align*}</span></p>
+<p>Intuitively, the expression above is asking:</p>
+<ul>
+<li><strong>Term 1</strong>: How much does the predicted price change when we add the car’s age to our model, when we have no other information (the empty set)?</li>
+<li><strong>Term 2</strong>: How much does the predicted price change when we add the car’s age to our model, when we already know the car’s mileage?</li>
+</ul>
+<p>We need now to find the values of <span class="math inline">f(\{\})</span>, <span class="math inline">f(\{x_1\})</span>, <span class="math inline">f(\{x_2\})</span>, and <span class="math inline">f(\{x_1, x_2\})</span> to compute <span class="math inline">\phi_1</span>. Let’s see what each means:</p>
+<ul>
+<li><span class="math inline">f(\{\})</span> is the expected price of a car when we ignore both age and mileage.</li>
+<li><span class="math inline">f(\{x_1\})</span> is the expected price of a car when we only consider its age, ignoring mileage.</li>
+<li><span class="math inline">f(\{x_2\})</span> is the expected price of a car when we only consider its mileage, ignoring age.</li>
+<li><span class="math inline">f(\{x_1, x_2\})</span> is the expected price of a car when we consider both age and mileage.</li>
+</ul>
+<p>Let’s start with <span class="math inline">f(\{\})</span>. This is the expected price of a car when we ignore both age and mileage. I find it more illuminating to phrase this as a question: <strong>If I have a car, and I don’t know its age or milage, what is the expected price based on the typical ages and mileages of cars in my dataset?</strong> We can compute this by averaging the model’s predictions over all possible values of age and mileage:</p>
+<p><span class="math display">
+f(\{\}) = \mathbb{E}[f(x)] = \int f(x_1, x_2) p(x_1, x_2) dx_1 dx_2.
+</span></p>
+<p>Because we have a finite dataset of <span class="math inline">n</span> cars, we can approximate this integral by taking the average of the model’s predictions for all <span class="math inline">n</span> cars in our dataset:</p>
+<p><span class="math display">
+f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
+</span></p>
+<p>Let’s visualize this. First, we picture the model’s predictions as a surface in a 3D space where the axes are age, mileage, and predicted price.</p>
 <div id="e13b5476" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb4-2"><a href="#cb4-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb4-4"><a href="#cb4-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, Z, cmap<span class="op">=</span>cm.viridis, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb4-6"><a href="#cb4-6"></a>ax.scatter(x1_sample, x2_sample, z_sample, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, label<span class="op">=</span><span class="st">'Sample Points'</span>)</span>
-<span id="cb4-7"><a href="#cb4-7"></a></span>
-<span id="cb4-8"><a href="#cb4-8"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a></span>
-<span id="cb4-10"><a href="#cb4-10"></a>ax.contourf(X1, X2, Z, </span>
-<span id="cb4-11"><a href="#cb4-11"></a>            levels<span class="op">=</span>levels, </span>
-<span id="cb4-12"><a href="#cb4-12"></a>            cmap<span class="op">=</span>cm.viridis, </span>
-<span id="cb4-13"><a href="#cb4-13"></a>            norm<span class="op">=</span>norm, </span>
-<span id="cb4-14"><a href="#cb4-14"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
-<span id="cb4-15"><a href="#cb4-15"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
-<span id="cb4-16"><a href="#cb4-16"></a>            offset<span class="op">=</span>z_offset, </span>
-<span id="cb4-17"><a href="#cb4-17"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb4-18"><a href="#cb4-18"></a></span>
-<span id="cb4-19"><a href="#cb4-19"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb4-20"><a href="#cb4-20"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb4-21"><a href="#cb4-21"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb4-22"><a href="#cb4-22"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb4-23"><a href="#cb4-23"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb4-24"><a href="#cb4-24"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
-<span id="cb4-25"><a href="#cb4-25"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
-<span id="cb4-26"><a href="#cb4-26"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb4-27"><a href="#cb4-27"></a>)</span>
-<span id="cb4-28"><a href="#cb4-28"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7"></a>z_offset <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>ax.scatter(x1_sample, x2_sample, z_offset, facecolors<span class="op">=</span><span class="st">'none'</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb4-10"><a href="#cb4-10"></a>    ax.plot([x1_sample[i]]<span class="op">*</span><span class="dv">2</span>, [x2_sample[i]]<span class="op">*</span><span class="dv">2</span>, [z_offset, z_sample[i]], <span class="st">'k-'</span>, alpha<span class="op">=</span><span class="fl">0.1</span>,)</span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb4-13"><a href="#cb4-13"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb4-14"><a href="#cb4-14"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb4-15"><a href="#cb4-15"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb4-16"><a href="#cb4-16"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb4-17"><a href="#cb4-17"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb4-18"><a href="#cb4-18"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb4-19"><a href="#cb4-19"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-20"><a href="#cb4-20"></a></span>
+<span id="cb4-21"><a href="#cb4-21"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb4-22"><a href="#cb4-22"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb4-23"><a href="#cb4-23"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb4-24"><a href="#cb4-24"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb4-25"><a href="#cb4-25"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb4-26"><a href="#cb4-26"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb4-27"><a href="#cb4-27"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb4-28"><a href="#cb4-28"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-29"><a href="#cb4-29"></a>)</span>
+<span id="cb4-30"><a href="#cb4-30"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -877,42 +895,38 @@ f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
 <div id="8ecf3334" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb5-2"><a href="#cb5-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb5-4"><a href="#cb5-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
 <span id="cb5-5"><a href="#cb5-5"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, Z, cmap<span class="op">=</span>cm.viridis, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb5-6"><a href="#cb5-6"></a>ax.scatter(x1_sample, x2_sample, z_sample, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, label<span class="op">=</span><span class="st">'Sample Points'</span>)</span>
 <span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a></span>
-<span id="cb5-10"><a href="#cb5-10"></a>ax.contourf(X1, X2, Z, </span>
-<span id="cb5-11"><a href="#cb5-11"></a>            levels<span class="op">=</span>levels, </span>
-<span id="cb5-12"><a href="#cb5-12"></a>            cmap<span class="op">=</span>cm.viridis, </span>
-<span id="cb5-13"><a href="#cb5-13"></a>            norm<span class="op">=</span>norm, </span>
-<span id="cb5-14"><a href="#cb5-14"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
-<span id="cb5-15"><a href="#cb5-15"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
-<span id="cb5-16"><a href="#cb5-16"></a>            offset<span class="op">=</span>z_offset, </span>
-<span id="cb5-17"><a href="#cb5-17"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb5-18"><a href="#cb5-18"></a></span>
-<span id="cb5-19"><a href="#cb5-19"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
-<span id="cb5-20"><a href="#cb5-20"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-21"><a href="#cb5-21"></a></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
-<span id="cb5-23"><a href="#cb5-23"></a>    ax.plot([x1_sample[i]]<span class="op">*</span><span class="dv">2</span>, [x2_sample[i]]<span class="op">*</span><span class="dv">2</span>, [phi_0, z_sample[i]], <span class="st">'k-'</span>, alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
-<span id="cb5-24"><a href="#cb5-24"></a></span>
-<span id="cb5-25"><a href="#cb5-25"></a></span>
-<span id="cb5-26"><a href="#cb5-26"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb5-27"><a href="#cb5-27"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb5-28"><a href="#cb5-28"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb5-29"><a href="#cb5-29"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb5-30"><a href="#cb5-30"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb5-31"><a href="#cb5-31"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
-<span id="cb5-32"><a href="#cb5-32"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
-<span id="cb5-33"><a href="#cb5-33"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb5-34"><a href="#cb5-34"></a>)</span>
-<span id="cb5-35"><a href="#cb5-35"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb5-36"><a href="#cb5-36"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-8"><a href="#cb5-8"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb5-9"><a href="#cb5-9"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb5-10"><a href="#cb5-10"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb5-11"><a href="#cb5-11"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb5-12"><a href="#cb5-12"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb5-13"><a href="#cb5-13"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb5-14"><a href="#cb5-14"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb5-15"><a href="#cb5-15"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-16"><a href="#cb5-16"></a></span>
+<span id="cb5-17"><a href="#cb5-17"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb5-18"><a href="#cb5-18"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-19"><a href="#cb5-19"></a></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb5-21"><a href="#cb5-21"></a>    ax.plot([x1_sample[i]]<span class="op">*</span><span class="dv">2</span>, [x2_sample[i]]<span class="op">*</span><span class="dv">2</span>, [phi_0, z_sample[i]], <span class="st">'k-'</span>, alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb5-22"><a href="#cb5-22"></a></span>
+<span id="cb5-23"><a href="#cb5-23"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb5-24"><a href="#cb5-24"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb5-25"><a href="#cb5-25"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb5-26"><a href="#cb5-26"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb5-27"><a href="#cb5-27"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb5-28"><a href="#cb5-28"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb5-29"><a href="#cb5-29"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb5-30"><a href="#cb5-30"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb5-31"><a href="#cb5-31"></a>)</span>
+<span id="cb5-32"><a href="#cb5-32"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -930,12 +944,13 @@ f(\{x_1\}) = \mathbb{E}[f(x) | x_1] = \int f(x_1, x_2) p(x_2) dx_2.
 <p>We can compute this by averaging the model’s predictions over all possible values of mileage, while keeping age fixed:</p>
 <p><span class="math display">
 f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
-</span> where <span class="math inline">x_1^\star</span> is the age of the specific car we are trying to explain, and <span class="math inline">x_2^i</span> are the mileages of all cars in our database.</p>
-<p>Let’s visualize this. The figure below shows a specific car in our database as a red dot. The pink vertical plane is located at the age of this car, and we marked the intersection of this plane with the surface as a red curve. All the black dots, previously located at their original age and mileage, were brought to this pink plane. We did that just by shifting their <span class="math inline">x_1</span> value to <span class="math inline">x_1^\star</span>, while keeping their <span class="math inline">x_2</span> and <span class="math inline">z</span> values the same. I imagine this as squishing the dots along the <span class="math inline">x_1</span> axis, until they all lie on the pink plane.</p>
-<div id="6b7b1ae6" class="cell" data-execution_count="7">
+</span> where <span class="math inline">x_1^\star</span> is the age of the specific car we are trying to explain, and <span class="math inline">x_2^i</span> are the mileages of all cars in our dataset.</p>
+<p><strong>Attention!</strong> In the integral equation I made a simplifying assumption, one that I will come back to later. At this stage, it suffices to mention that I initially had to compute the conditional expectation, and I exchanged that for a simpler marginal expectation. I just wanted to plant this flag now, and I will explain the difference between the two later in this chapter.</p>
+<p>Let’s visualize this. The figure below shows a specific car in our dataset as a red dot. The pink vertical plane is located at the age of this car, and we marked the intersection of this plane with the surface as a red curve. All the black dots, previously located at their original age and mileage, were brought to this pink plane. We did that just by shifting their <span class="math inline">x_1</span> value to <span class="math inline">x_1^\star</span>, while keeping their <span class="math inline">x_2</span> and <span class="math inline">z</span> values the same. I imagine this as squishing the dots along the <span class="math inline">x_1</span> axis, until they all lie on the pink plane.</p>
+<div id="6b7b1ae6" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb6-2"><a href="#cb6-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb6-3"><a href="#cb6-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb6-4"><a href="#cb6-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -944,49 +959,46 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <span id="cb6-7"><a href="#cb6-7"></a></span>
 <span id="cb6-8"><a href="#cb6-8"></a>ax.scatter(np.full_like(x1_sample, x1_sample[idx]), x2_sample, z_sample, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, label<span class="op">=</span><span class="st">'Sample Points'</span>)</span>
 <span id="cb6-9"><a href="#cb6-9"></a></span>
-<span id="cb6-10"><a href="#cb6-10"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a></span>
-<span id="cb6-12"><a href="#cb6-12"></a>ax.contourf(X1, X2, Z, </span>
-<span id="cb6-13"><a href="#cb6-13"></a>            levels<span class="op">=</span>levels, </span>
-<span id="cb6-14"><a href="#cb6-14"></a>            cmap<span class="op">=</span>cm.viridis, </span>
-<span id="cb6-15"><a href="#cb6-15"></a>            norm<span class="op">=</span>norm, </span>
-<span id="cb6-16"><a href="#cb6-16"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
-<span id="cb6-17"><a href="#cb6-17"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
-<span id="cb6-18"><a href="#cb6-18"></a>            offset<span class="op">=</span>z_offset, </span>
-<span id="cb6-19"><a href="#cb6-19"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb6-20"><a href="#cb6-20"></a></span>
-<span id="cb6-21"><a href="#cb6-21"></a></span>
-<span id="cb6-22"><a href="#cb6-22"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
-<span id="cb6-23"><a href="#cb6-23"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
-<span id="cb6-24"><a href="#cb6-24"></a>z_star <span class="op">=</span> z_sample[idx]</span>
-<span id="cb6-25"><a href="#cb6-25"></a>slice_x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
-<span id="cb6-26"><a href="#cb6-26"></a>slice_x1 <span class="op">=</span> np.full_like(slice_x2, x1_star)</span>
-<span id="cb6-27"><a href="#cb6-27"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
-<span id="cb6-28"><a href="#cb6-28"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x1}</span><span class="st">)'</span>)</span>
+<span id="cb6-10"><a href="#cb6-10"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb6-11"><a href="#cb6-11"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb6-12"><a href="#cb6-12"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb6-13"><a href="#cb6-13"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb6-14"><a href="#cb6-14"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb6-15"><a href="#cb6-15"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb6-16"><a href="#cb6-16"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb6-17"><a href="#cb6-17"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-18"><a href="#cb6-18"></a></span>
+<span id="cb6-19"><a href="#cb6-19"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
+<span id="cb6-20"><a href="#cb6-20"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
+<span id="cb6-21"><a href="#cb6-21"></a>z_star <span class="op">=</span> z_sample[idx]</span>
+<span id="cb6-22"><a href="#cb6-22"></a>slice_x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb6-23"><a href="#cb6-23"></a>slice_x1 <span class="op">=</span> np.full_like(slice_x2, x1_star)</span>
+<span id="cb6-24"><a href="#cb6-24"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
+<span id="cb6-25"><a href="#cb6-25"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x1}</span><span class="st">)'</span>)</span>
+<span id="cb6-26"><a href="#cb6-26"></a></span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="co"># Plot the specific prediction point (y_hat)</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a>ax.scatter([x1_sample[idx]], [x2_sample[idx]], [z_sample[idx]], color<span class="op">=</span><span class="st">'red'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Prediction (y_hat)'</span>, zorder<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb6-29"><a href="#cb6-29"></a></span>
-<span id="cb6-30"><a href="#cb6-30"></a><span class="co"># Plot the specific prediction point (y_hat)</span></span>
-<span id="cb6-31"><a href="#cb6-31"></a>ax.scatter([x1_sample[idx]], [x2_sample[idx]], [z_sample[idx]], color<span class="op">=</span><span class="st">'red'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Prediction (y_hat)'</span>, zorder<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb6-30"><a href="#cb6-30"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb6-31"><a href="#cb6-31"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb6-32"><a href="#cb6-32"></a></span>
-<span id="cb6-33"><a href="#cb6-33"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
-<span id="cb6-34"><a href="#cb6-34"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-35"><a href="#cb6-35"></a></span>
-<span id="cb6-36"><a href="#cb6-36"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
-<span id="cb6-37"><a href="#cb6-37"></a>slice_x2_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x2, z_plane_range)</span>
-<span id="cb6-38"><a href="#cb6-38"></a>slice_x1_mesh <span class="op">=</span> np.full_like(slice_x2_mesh, x1_star)</span>
-<span id="cb6-39"><a href="#cb6-39"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
-<span id="cb6-40"><a href="#cb6-40"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb6-41"><a href="#cb6-41"></a></span>
-<span id="cb6-42"><a href="#cb6-42"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb6-43"><a href="#cb6-43"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb6-44"><a href="#cb6-44"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb6-45"><a href="#cb6-45"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb6-46"><a href="#cb6-46"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb6-47"><a href="#cb6-47"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
-<span id="cb6-48"><a href="#cb6-48"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
-<span id="cb6-49"><a href="#cb6-49"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb6-50"><a href="#cb6-50"></a>)</span>
-<span id="cb6-51"><a href="#cb6-51"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb6-52"><a href="#cb6-52"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-33"><a href="#cb6-33"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
+<span id="cb6-34"><a href="#cb6-34"></a>slice_x2_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x2, z_plane_range)</span>
+<span id="cb6-35"><a href="#cb6-35"></a>slice_x1_mesh <span class="op">=</span> np.full_like(slice_x2_mesh, x1_star)</span>
+<span id="cb6-36"><a href="#cb6-36"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
+<span id="cb6-37"><a href="#cb6-37"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-38"><a href="#cb6-38"></a></span>
+<span id="cb6-39"><a href="#cb6-39"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb6-40"><a href="#cb6-40"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb6-41"><a href="#cb6-41"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb6-42"><a href="#cb6-42"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb6-43"><a href="#cb6-43"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb6-44"><a href="#cb6-44"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb6-45"><a href="#cb6-45"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb6-46"><a href="#cb6-46"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb6-47"><a href="#cb6-47"></a>)</span>
+<span id="cb6-48"><a href="#cb6-48"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-49"><a href="#cb6-49"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -997,10 +1009,10 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 </div>
 </div>
 <p>Now we compute the values for <span class="math inline">f(x_1^\star, x_2^i)</span>. This is the same as taking all the black dots in the figure above, and moving them vertically to the red line, see below.</p>
-<div id="834b7221" class="cell" data-execution_count="8">
+<div id="834b7221" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb7-2"><a href="#cb7-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb7-3"><a href="#cb7-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb7-4"><a href="#cb7-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -1008,59 +1020,42 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <span id="cb7-6"><a href="#cb7-6"></a>x1_squished <span class="op">=</span> np.full_like(x1_sample, x1_sample[idx])</span>
 <span id="cb7-7"><a href="#cb7-7"></a>ax.scatter(x1_squished, x2_sample, model_f(x1_squished, x2_sample), c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, zorder<span class="op">=</span><span class="dv">11</span>)</span>
 <span id="cb7-8"><a href="#cb7-8"></a></span>
-<span id="cb7-9"><a href="#cb7-9"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="co"># Plot the 2D contour projected on the 3D 'floor'</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>ax.contourf(X1, X2, Z, </span>
-<span id="cb7-13"><a href="#cb7-13"></a>            levels<span class="op">=</span>levels, </span>
-<span id="cb7-14"><a href="#cb7-14"></a>            cmap<span class="op">=</span>cm.viridis, </span>
-<span id="cb7-15"><a href="#cb7-15"></a>            norm<span class="op">=</span>norm, </span>
-<span id="cb7-16"><a href="#cb7-16"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
-<span id="cb7-17"><a href="#cb7-17"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
-<span id="cb7-18"><a href="#cb7-18"></a>            offset<span class="op">=</span>z_offset, </span>
-<span id="cb7-19"><a href="#cb7-19"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-20"><a href="#cb7-20"></a></span>
-<span id="cb7-21"><a href="#cb7-21"></a></span>
-<span id="cb7-22"><a href="#cb7-22"></a></span>
-<span id="cb7-23"><a href="#cb7-23"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
-<span id="cb7-24"><a href="#cb7-24"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
-<span id="cb7-25"><a href="#cb7-25"></a>z_star <span class="op">=</span> z_sample[idx]</span>
-<span id="cb7-26"><a href="#cb7-26"></a>slice_x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
-<span id="cb7-27"><a href="#cb7-27"></a>slice_x1 <span class="op">=</span> np.full_like(slice_x2, x1_star)</span>
-<span id="cb7-28"><a href="#cb7-28"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
-<span id="cb7-29"><a href="#cb7-29"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x1}</span><span class="st">)'</span>)</span>
-<span id="cb7-30"><a href="#cb7-30"></a></span>
-<span id="cb7-31"><a href="#cb7-31"></a><span class="co"># Plot the specific prediction point (y_hat)</span></span>
-<span id="cb7-32"><a href="#cb7-32"></a><span class="co"># ax.scatter([x1_sample[idx]], [x2_sample[idx]], [z_sample[idx]], color='red', s=100, label='Prediction (y_hat)', zorder=10)</span></span>
-<span id="cb7-33"><a href="#cb7-33"></a></span>
-<span id="cb7-34"><a href="#cb7-34"></a><span class="co"># Plot the Marginal Slice (The path SHAP integrates over)</span></span>
-<span id="cb7-35"><a href="#cb7-35"></a><span class="co"># ax.plot(slice_x1, slice_x2, slice_z, color='red', linewidth=3, label='Slice for f_x({x1})')</span></span>
-<span id="cb7-36"><a href="#cb7-36"></a></span>
-<span id="cb7-37"><a href="#cb7-37"></a></span>
-<span id="cb7-38"><a href="#cb7-38"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
-<span id="cb7-39"><a href="#cb7-39"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-40"><a href="#cb7-40"></a></span>
-<span id="cb7-41"><a href="#cb7-41"></a><span class="co"># for i in range(N):</span></span>
-<span id="cb7-42"><a href="#cb7-42"></a><span class="co">#     ax.plot([x1_sample[i]]*2, [x2_sample[i]]*2, [phi_0, z_sample[i]], 'k-', alpha=0.2)</span></span>
-<span id="cb7-43"><a href="#cb7-43"></a></span>
-<span id="cb7-44"><a href="#cb7-44"></a></span>
-<span id="cb7-45"><a href="#cb7-45"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
-<span id="cb7-46"><a href="#cb7-46"></a>slice_x2_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x2, z_plane_range)</span>
-<span id="cb7-47"><a href="#cb7-47"></a>slice_x1_mesh <span class="op">=</span> np.full_like(slice_x2_mesh, x1_star)</span>
-<span id="cb7-48"><a href="#cb7-48"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
-<span id="cb7-49"><a href="#cb7-49"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-50"><a href="#cb7-50"></a></span>
-<span id="cb7-51"><a href="#cb7-51"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb7-52"><a href="#cb7-52"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb7-53"><a href="#cb7-53"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb7-54"><a href="#cb7-54"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb7-55"><a href="#cb7-55"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb7-56"><a href="#cb7-56"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
-<span id="cb7-57"><a href="#cb7-57"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
-<span id="cb7-58"><a href="#cb7-58"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb7-59"><a href="#cb7-59"></a>)</span>
-<span id="cb7-60"><a href="#cb7-60"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-61"><a href="#cb7-61"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-9"><a href="#cb7-9"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb7-10"><a href="#cb7-10"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb7-11"><a href="#cb7-11"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb7-12"><a href="#cb7-12"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb7-13"><a href="#cb7-13"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb7-14"><a href="#cb7-14"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb7-15"><a href="#cb7-15"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb7-16"><a href="#cb7-16"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb7-17"><a href="#cb7-17"></a></span>
+<span id="cb7-18"><a href="#cb7-18"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
+<span id="cb7-19"><a href="#cb7-19"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
+<span id="cb7-20"><a href="#cb7-20"></a>z_star <span class="op">=</span> z_sample[idx]</span>
+<span id="cb7-21"><a href="#cb7-21"></a>slice_x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb7-22"><a href="#cb7-22"></a>slice_x1 <span class="op">=</span> np.full_like(slice_x2, x1_star)</span>
+<span id="cb7-23"><a href="#cb7-23"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
+<span id="cb7-24"><a href="#cb7-24"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x1}</span><span class="st">)'</span>)</span>
+<span id="cb7-25"><a href="#cb7-25"></a></span>
+<span id="cb7-26"><a href="#cb7-26"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb7-27"><a href="#cb7-27"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-28"><a href="#cb7-28"></a></span>
+<span id="cb7-29"><a href="#cb7-29"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
+<span id="cb7-30"><a href="#cb7-30"></a>slice_x2_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x2, z_plane_range)</span>
+<span id="cb7-31"><a href="#cb7-31"></a>slice_x1_mesh <span class="op">=</span> np.full_like(slice_x2_mesh, x1_star)</span>
+<span id="cb7-32"><a href="#cb7-32"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
+<span id="cb7-33"><a href="#cb7-33"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-34"><a href="#cb7-34"></a></span>
+<span id="cb7-35"><a href="#cb7-35"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb7-36"><a href="#cb7-36"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb7-37"><a href="#cb7-37"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb7-38"><a href="#cb7-38"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb7-39"><a href="#cb7-39"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb7-40"><a href="#cb7-40"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb7-41"><a href="#cb7-41"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb7-42"><a href="#cb7-42"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb7-43"><a href="#cb7-43"></a>)</span>
+<span id="cb7-44"><a href="#cb7-44"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1071,10 +1066,10 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 </div>
 </div>
 <p>We can average the height of all these new black dots, which is shown below as a black horizontal line, and this will give us the value of <span class="math inline">f(\{x_1\})</span>.</p>
-<div id="d02ab04f" class="cell" data-execution_count="10">
+<div id="d02ab04f" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb8-2"><a href="#cb8-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb8-3"><a href="#cb8-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb8-4"><a href="#cb8-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -1088,46 +1083,43 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <span id="cb8-12"><a href="#cb8-12"></a>z_x1 <span class="op">=</span> np.mean(z_x1squished)</span>
 <span id="cb8-13"><a href="#cb8-13"></a>z_x2 <span class="op">=</span> np.mean(z_x2squished)</span>
 <span id="cb8-14"><a href="#cb8-14"></a></span>
-<span id="cb8-15"><a href="#cb8-15"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a></span>
-<span id="cb8-17"><a href="#cb8-17"></a>ax.contourf(X1, X2, Z, </span>
-<span id="cb8-18"><a href="#cb8-18"></a>            levels<span class="op">=</span>levels, </span>
-<span id="cb8-19"><a href="#cb8-19"></a>            cmap<span class="op">=</span>cm.viridis, </span>
-<span id="cb8-20"><a href="#cb8-20"></a>            norm<span class="op">=</span>norm, </span>
-<span id="cb8-21"><a href="#cb8-21"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
-<span id="cb8-22"><a href="#cb8-22"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
-<span id="cb8-23"><a href="#cb8-23"></a>            offset<span class="op">=</span>z_offset, </span>
-<span id="cb8-24"><a href="#cb8-24"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb8-25"><a href="#cb8-25"></a></span>
-<span id="cb8-26"><a href="#cb8-26"></a>idx <span class="op">=</span> <span class="dv">8</span></span>
-<span id="cb8-27"><a href="#cb8-27"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
-<span id="cb8-28"><a href="#cb8-28"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
-<span id="cb8-29"><a href="#cb8-29"></a>z_star <span class="op">=</span> z_sample[idx]</span>
-<span id="cb8-30"><a href="#cb8-30"></a>slice_x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
-<span id="cb8-31"><a href="#cb8-31"></a>slice_x1 <span class="op">=</span> np.full_like(slice_x2, x1_star)</span>
-<span id="cb8-32"><a href="#cb8-32"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
-<span id="cb8-33"><a href="#cb8-33"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x1}</span><span class="st">)'</span>)</span>
-<span id="cb8-34"><a href="#cb8-34"></a>ax.plot(slice_x1, slice_x2, np.full_like(slice_x2, z_x1), color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb8-15"><a href="#cb8-15"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb8-16"><a href="#cb8-16"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb8-17"><a href="#cb8-17"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb8-18"><a href="#cb8-18"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb8-19"><a href="#cb8-19"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb8-20"><a href="#cb8-20"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb8-21"><a href="#cb8-21"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb8-22"><a href="#cb8-22"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-23"><a href="#cb8-23"></a></span>
+<span id="cb8-24"><a href="#cb8-24"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
+<span id="cb8-25"><a href="#cb8-25"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
+<span id="cb8-26"><a href="#cb8-26"></a>z_star <span class="op">=</span> z_sample[idx]</span>
+<span id="cb8-27"><a href="#cb8-27"></a>slice_x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb8-28"><a href="#cb8-28"></a>slice_x1 <span class="op">=</span> np.full_like(slice_x2, x1_star)</span>
+<span id="cb8-29"><a href="#cb8-29"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
+<span id="cb8-30"><a href="#cb8-30"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x1}</span><span class="st">)'</span>)</span>
+<span id="cb8-31"><a href="#cb8-31"></a>ax.plot(slice_x1, slice_x2, np.full_like(slice_x2, z_x1), color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb8-32"><a href="#cb8-32"></a></span>
+<span id="cb8-33"><a href="#cb8-33"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb8-34"><a href="#cb8-34"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb8-35"><a href="#cb8-35"></a></span>
-<span id="cb8-36"><a href="#cb8-36"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
-<span id="cb8-37"><a href="#cb8-37"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-38"><a href="#cb8-38"></a></span>
-<span id="cb8-39"><a href="#cb8-39"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
-<span id="cb8-40"><a href="#cb8-40"></a>slice_x2_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x2, z_plane_range)</span>
-<span id="cb8-41"><a href="#cb8-41"></a>slice_x1_mesh <span class="op">=</span> np.full_like(slice_x2_mesh, x1_star)</span>
-<span id="cb8-42"><a href="#cb8-42"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
-<span id="cb8-43"><a href="#cb8-43"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb8-44"><a href="#cb8-44"></a></span>
-<span id="cb8-45"><a href="#cb8-45"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb8-46"><a href="#cb8-46"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb8-47"><a href="#cb8-47"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb8-48"><a href="#cb8-48"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb8-49"><a href="#cb8-49"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb8-50"><a href="#cb8-50"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
-<span id="cb8-51"><a href="#cb8-51"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
-<span id="cb8-52"><a href="#cb8-52"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb8-53"><a href="#cb8-53"></a>)</span>
-<span id="cb8-54"><a href="#cb8-54"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-36"><a href="#cb8-36"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
+<span id="cb8-37"><a href="#cb8-37"></a>slice_x2_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x2, z_plane_range)</span>
+<span id="cb8-38"><a href="#cb8-38"></a>slice_x1_mesh <span class="op">=</span> np.full_like(slice_x2_mesh, x1_star)</span>
+<span id="cb8-39"><a href="#cb8-39"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
+<span id="cb8-40"><a href="#cb8-40"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-41"><a href="#cb8-41"></a></span>
+<span id="cb8-42"><a href="#cb8-42"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb8-43"><a href="#cb8-43"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb8-44"><a href="#cb8-44"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb8-45"><a href="#cb8-45"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb8-46"><a href="#cb8-46"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb8-47"><a href="#cb8-47"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb8-48"><a href="#cb8-48"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb8-49"><a href="#cb8-49"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-50"><a href="#cb8-50"></a>)</span>
+<span id="cb8-51"><a href="#cb8-51"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1138,14 +1130,14 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 </div>
 </div>
 <p>We are now ready to compute the first term for <span class="math inline">\phi_1</span>, namely <span class="math inline">f(\{x_1\}) - f(\{\})</span>. Visually, this is the distance between the black horizontal line and the gray horizontal plane in the figure above. This value is not very large, so we just can’t quite see it in the figure, but it’s there. We print its value below:</p>
-<div id="29e21537" class="cell" data-execution_count="15">
+<div id="29e21537" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>first_term <span class="op">=</span> z_x1 <span class="op">-</span> phi_0</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>first_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>first_term <span class="op">=</span> (z_x1 <span class="op">-</span> phi_0) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>first_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>-0.244</code></pre>
+<pre><code>-0.122</code></pre>
 </div>
 </div>
 <p>Next, we compute <span class="math inline">f(\{x_2\})</span>. This is the expected price of a specific car when we only consider its mileage, ignoring age. Phrasing this as a question: <strong>If I have a car with 100,000 miles, but I don’t know its age, what is its expected price based on the typical ages I see in my data?</strong></p>
@@ -1153,6 +1145,7 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <p><span class="math display">
 f(\{x_2\}) = \mathbb{E}[f(x) | x_2] = \int f(x_1, x_2) p(x_1) dx_1.
 </span></p>
+<p>Similarly to what I did for <span class="math inline">f(\{x_1\})</span>, here too I replaced the conditional expectation with a marginal expectation. I did not forget to comment on this, I’ll do it in a little while. Let’s keep going.</p>
 <p>We can compute this by averaging the model’s predictions over all possible values of age, while keeping mileage fixed:</p>
 <p><span class="math display">
 f(\{x_2\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^\star),
@@ -1164,20 +1157,20 @@ f(\{x_1, x_2\}) = \mathbb{E}[f(x) | x_1, x_2] = f(x_1^\star, x_2^\star).
 </span></p>
 <p>Since we are conditioning on both age and mileage, we can directly use the model’s prediction for the specific car we are trying to explain, which is <span class="math inline">f(x_1^\star, x_2^\star)</span>.</p>
 <p>Now we are ready to compute the second term for <span class="math inline">\phi_1</span>, namely <span class="math inline">f(\{x_1, x_2\}) - f(\{x_2\})</span>. Visually, it is the vertical distance between the black horizontal line and the actual height of the car we are trying to explain, which is the blue dot in the figure above. We print its value below:</p>
-<div id="d81c64ed" class="cell" data-execution_count="16">
+<div id="d81c64ed" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>second_term <span class="op">=</span> model_f(x1_sample[idx], x2_sample[idx]) <span class="op">-</span> z_x2</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>second_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>second_term <span class="op">=</span> (model_f(x1_sample[idx], x2_sample[idx]) <span class="op">-</span> z_x2) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>second_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>-0.146</code></pre>
+<pre><code>-0.073</code></pre>
 </div>
 </div>
-<div id="2b500bb7" class="cell" data-execution_count="24">
+<div id="2b500bb7" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb13-2"><a href="#cb13-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb13-3"><a href="#cb13-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb13-4"><a href="#cb13-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -1186,55 +1179,49 @@ f(\{x_1, x_2\}) = \mathbb{E}[f(x) | x_1, x_2] = f(x_1^\star, x_2^\star).
 <span id="cb13-7"><a href="#cb13-7"></a>x2_squished <span class="op">=</span> np.full_like(x2_sample, x2_sample[idx])</span>
 <span id="cb13-8"><a href="#cb13-8"></a>z_x1squished <span class="op">=</span> model_f(x1_squished, x2_sample)</span>
 <span id="cb13-9"><a href="#cb13-9"></a>z_x2squished <span class="op">=</span> model_f(x1_sample, x2_squished)</span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="co"># ax.scatter(x1_squished, x2_sample, z_x1squished, c='k', s=10, alpha=1.0, zorder=11)</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a>ax.scatter(x1_sample, x2_squished, z_x2squished, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, zorder<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb13-10"><a href="#cb13-10"></a>ax.scatter(x1_sample, x2_squished, z_x2squished, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, zorder<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb13-11"><a href="#cb13-11"></a>ax.scatter(x1_sample[idx], x2_sample[idx], z_sample[idx], c<span class="op">=</span><span class="st">'xkcd:cerulean'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, zorder<span class="op">=</span><span class="dv">12</span>)</span>
 <span id="cb13-12"><a href="#cb13-12"></a></span>
-<span id="cb13-13"><a href="#cb13-13"></a>ax.scatter(x1_sample[idx], x2_sample[idx], z_sample[idx], c<span class="op">=</span><span class="st">'xkcd:cerulean'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, zorder<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb13-14"><a href="#cb13-14"></a></span>
+<span id="cb13-13"><a href="#cb13-13"></a>z_x1 <span class="op">=</span> np.mean(z_x1squished)</span>
+<span id="cb13-14"><a href="#cb13-14"></a>z_x2 <span class="op">=</span> np.mean(z_x2squished)</span>
 <span id="cb13-15"><a href="#cb13-15"></a></span>
-<span id="cb13-16"><a href="#cb13-16"></a>z_x1 <span class="op">=</span> np.mean(z_x1squished)</span>
-<span id="cb13-17"><a href="#cb13-17"></a>z_x2 <span class="op">=</span> np.mean(z_x2squished)</span>
-<span id="cb13-18"><a href="#cb13-18"></a></span>
-<span id="cb13-19"><a href="#cb13-19"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
-<span id="cb13-20"><a href="#cb13-20"></a></span>
-<span id="cb13-21"><a href="#cb13-21"></a>ax.contourf(X1, X2, Z, </span>
-<span id="cb13-22"><a href="#cb13-22"></a>            levels<span class="op">=</span>levels, </span>
-<span id="cb13-23"><a href="#cb13-23"></a>            cmap<span class="op">=</span>cm.viridis, </span>
-<span id="cb13-24"><a href="#cb13-24"></a>            norm<span class="op">=</span>norm, </span>
-<span id="cb13-25"><a href="#cb13-25"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
-<span id="cb13-26"><a href="#cb13-26"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
-<span id="cb13-27"><a href="#cb13-27"></a>            offset<span class="op">=</span>z_offset, </span>
-<span id="cb13-28"><a href="#cb13-28"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb13-29"><a href="#cb13-29"></a></span>
-<span id="cb13-30"><a href="#cb13-30"></a>idx <span class="op">=</span> <span class="dv">8</span></span>
-<span id="cb13-31"><a href="#cb13-31"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
-<span id="cb13-32"><a href="#cb13-32"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
-<span id="cb13-33"><a href="#cb13-33"></a>z_star <span class="op">=</span> z_sample[idx]</span>
-<span id="cb13-34"><a href="#cb13-34"></a>slice_x1 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
-<span id="cb13-35"><a href="#cb13-35"></a>slice_x2 <span class="op">=</span> np.full_like(slice_x1, x2_star)</span>
-<span id="cb13-36"><a href="#cb13-36"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
-<span id="cb13-37"><a href="#cb13-37"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x2}</span><span class="st">)'</span>)</span>
-<span id="cb13-38"><a href="#cb13-38"></a>ax.plot(slice_x1, slice_x2, np.full_like(slice_x2, z_x2), color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb13-39"><a href="#cb13-39"></a></span>
-<span id="cb13-40"><a href="#cb13-40"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
-<span id="cb13-41"><a href="#cb13-41"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-16"><a href="#cb13-16"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb13-17"><a href="#cb13-17"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb13-18"><a href="#cb13-18"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb13-19"><a href="#cb13-19"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb13-20"><a href="#cb13-20"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb13-21"><a href="#cb13-21"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb13-22"><a href="#cb13-22"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb13-23"><a href="#cb13-23"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb13-24"><a href="#cb13-24"></a></span>
+<span id="cb13-25"><a href="#cb13-25"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
+<span id="cb13-26"><a href="#cb13-26"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
+<span id="cb13-27"><a href="#cb13-27"></a>z_star <span class="op">=</span> z_sample[idx]</span>
+<span id="cb13-28"><a href="#cb13-28"></a>slice_x1 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb13-29"><a href="#cb13-29"></a>slice_x2 <span class="op">=</span> np.full_like(slice_x1, x2_star)</span>
+<span id="cb13-30"><a href="#cb13-30"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
+<span id="cb13-31"><a href="#cb13-31"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x2}</span><span class="st">)'</span>)</span>
+<span id="cb13-32"><a href="#cb13-32"></a>ax.plot(slice_x1, slice_x2, np.full_like(slice_x2, z_x2), color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb13-33"><a href="#cb13-33"></a></span>
+<span id="cb13-34"><a href="#cb13-34"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb13-35"><a href="#cb13-35"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-36"><a href="#cb13-36"></a></span>
+<span id="cb13-37"><a href="#cb13-37"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
+<span id="cb13-38"><a href="#cb13-38"></a>slice_x1_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x1, z_plane_range)</span>
+<span id="cb13-39"><a href="#cb13-39"></a>slice_x2_mesh <span class="op">=</span> np.full_like(slice_x1_mesh, x2_star)</span>
+<span id="cb13-40"><a href="#cb13-40"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
+<span id="cb13-41"><a href="#cb13-41"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb13-42"><a href="#cb13-42"></a></span>
-<span id="cb13-43"><a href="#cb13-43"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
-<span id="cb13-44"><a href="#cb13-44"></a>slice_x1_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x1, z_plane_range)</span>
-<span id="cb13-45"><a href="#cb13-45"></a>slice_x2_mesh <span class="op">=</span> np.full_like(slice_x1_mesh, x2_star)</span>
-<span id="cb13-46"><a href="#cb13-46"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
-<span id="cb13-47"><a href="#cb13-47"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb13-48"><a href="#cb13-48"></a></span>
-<span id="cb13-49"><a href="#cb13-49"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb13-50"><a href="#cb13-50"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb13-51"><a href="#cb13-51"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb13-52"><a href="#cb13-52"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb13-53"><a href="#cb13-53"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb13-54"><a href="#cb13-54"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
-<span id="cb13-55"><a href="#cb13-55"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
-<span id="cb13-56"><a href="#cb13-56"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb13-57"><a href="#cb13-57"></a>)</span>
-<span id="cb13-58"><a href="#cb13-58"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-43"><a href="#cb13-43"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb13-44"><a href="#cb13-44"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb13-45"><a href="#cb13-45"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb13-46"><a href="#cb13-46"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb13-47"><a href="#cb13-47"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb13-48"><a href="#cb13-48"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb13-49"><a href="#cb13-49"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb13-50"><a href="#cb13-50"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb13-51"><a href="#cb13-51"></a>)</span>
+<span id="cb13-52"><a href="#cb13-52"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1248,106 +1235,287 @@ f(\{x_1, x_2\}) = \mathbb{E}[f(x) | x_1, x_2] = f(x_1^\star, x_2^\star).
 <div id="e6314ad1" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>phi_1 <span class="op">=</span> first_term <span class="op">+</span> second_term</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="bu">print</span>(<span class="ss">f"phi_1 = </span><span class="sc">{</span>phi_1<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>phi_1 <span class="op">=</span> first_term <span class="op">+</span> second_term</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="bu">print</span>(<span class="ss">f"phi_1 = </span><span class="sc">{</span>phi_1<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>phi_1 = -0.389</code></pre>
+<pre><code>phi_1 = -0.195</code></pre>
 </div>
 </div>
 <p>If you read all the code above that produced the figures, you might think that the computation is convoluted. Nothing could be further from the truth. See below the whole thing:</p>
-<div id="e55a93d5" class="cell" data-execution_count="26">
+<div id="e55a93d5" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>E_empty <span class="op">=</span> np.mean(z_sample)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>E_empty <span class="op">=</span> np.mean(z_sample)</span>
 <span id="cb16-2"><a href="#cb16-2"></a>E_x1 <span class="op">=</span> np.mean(model_f(x1_sample[idx], x2_sample))</span>
 <span id="cb16-3"><a href="#cb16-3"></a>E_x2 <span class="op">=</span> np.mean(model_f(x1_sample, x2_sample[idx]))</span>
 <span id="cb16-4"><a href="#cb16-4"></a>E_x1x2 <span class="op">=</span> model_f(x1_sample[idx], x2_sample[idx])</span>
-<span id="cb16-5"><a href="#cb16-5"></a>phi_1b <span class="op">=</span> (E_x1 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x2)</span>
-<span id="cb16-6"><a href="#cb16-6"></a>phi_2 <span class="op">=</span> (E_x2 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x1)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>phi_1b <span class="op">=</span> ((E_x1 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x2)) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>phi_2 <span class="op">=</span> ((E_x2 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x1)) <span class="op">/</span> <span class="dv">2</span></span>
 <span id="cb16-7"><a href="#cb16-7"></a><span class="bu">print</span>(<span class="ss">f"phi_1 = </span><span class="sc">{</span>phi_1b<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="bu">print</span>(<span class="ss">f"phi_2 = </span><span class="sc">{</span>phi_2<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="bu">print</span>(<span class="ss">f"phi_2 = </span><span class="sc">{</span>phi_2<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>phi_1 = -0.389
-phi_2 = -4.007</code></pre>
+<pre><code>phi_1 = -0.195
+phi_2 = -2.004</code></pre>
 </div>
 </div>
-<p>The computation is so trivial that I can do it for the whole dataset and visualize the SHAP values for all cars in my database, as shown below.</p>
-<div id="5e678e36" class="cell" data-execution_count="27">
+<p>The computation is so trivial that I can do it for the whole dataset and visualize the SHAP values for all cars in my database, as shown below. See a beeswarm plot of the SHAP values that I calculated.</p>
+<div id="5e678e36" class="cell" data-execution_count="25">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>phi1_list <span class="op">=</span> []</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>phi1_list <span class="op">=</span> []</span>
 <span id="cb18-2"><a href="#cb18-2"></a>phi2_list <span class="op">=</span> []</span>
 <span id="cb18-3"><a href="#cb18-3"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
 <span id="cb18-4"><a href="#cb18-4"></a>    E_empty <span class="op">=</span> np.mean(z_sample)</span>
 <span id="cb18-5"><a href="#cb18-5"></a>    E_x1 <span class="op">=</span> np.mean(model_f(x1_sample[i], x2_sample))</span>
 <span id="cb18-6"><a href="#cb18-6"></a>    E_x2 <span class="op">=</span> np.mean(model_f(x1_sample, x2_sample[i]))</span>
 <span id="cb18-7"><a href="#cb18-7"></a>    E_x1x2 <span class="op">=</span> model_f(x1_sample[i], x2_sample[i])</span>
-<span id="cb18-8"><a href="#cb18-8"></a>    phi_1b <span class="op">=</span> (E_x1 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x2)</span>
-<span id="cb18-9"><a href="#cb18-9"></a>    phi_2 <span class="op">=</span> (E_x2 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x1)</span>
+<span id="cb18-8"><a href="#cb18-8"></a>    phi_1b <span class="op">=</span> ((E_x1 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x2)) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>    phi_2 <span class="op">=</span> ((E_x2 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x1)) <span class="op">/</span> <span class="dv">2</span></span>
 <span id="cb18-10"><a href="#cb18-10"></a>    phi1_list.append(phi_1b)</span>
-<span id="cb18-11"><a href="#cb18-11"></a>    phi2_list.append(phi_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-11"><a href="#cb18-11"></a>    phi2_list.append(phi_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="098a9eed" class="cell">
+<div id="098a9eed" class="cell" data-execution_count="37">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
 <span id="cb19-2"><a href="#cb19-2"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb19-3"><a href="#cb19-3"></a>vertical_jitter <span class="op">=</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.05</span>, size<span class="op">=</span>N)</span>
-<span id="cb19-4"><a href="#cb19-4"></a>vabs1 <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(phi1_list))</span>
-<span id="cb19-5"><a href="#cb19-5"></a>vabs2 <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(phi2_list))</span>
-<span id="cb19-6"><a href="#cb19-6"></a>phi1_norm <span class="op">=</span> colors.TwoSlopeNorm(vmin<span class="op">=-</span>vabs1, vcenter<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>vabs1)</span>
-<span id="cb19-7"><a href="#cb19-7"></a>phi2_norm <span class="op">=</span> colors.TwoSlopeNorm(vmin<span class="op">=-</span>vabs2, vcenter<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>vabs2)</span>
-<span id="cb19-8"><a href="#cb19-8"></a></span>
-<span id="cb19-9"><a href="#cb19-9"></a>sc <span class="op">=</span> ax.scatter(</span>
-<span id="cb19-10"><a href="#cb19-10"></a>    x1_sample,</span>
-<span id="cb19-11"><a href="#cb19-11"></a>    <span class="dv">1</span> <span class="op">+</span> vertical_jitter,</span>
-<span id="cb19-12"><a href="#cb19-12"></a>    c<span class="op">=</span>phi1_list,</span>
-<span id="cb19-13"><a href="#cb19-13"></a>    cmap<span class="op">=</span><span class="st">'coolwarm'</span>,</span>
-<span id="cb19-14"><a href="#cb19-14"></a>    norm<span class="op">=</span>phi1_norm,</span>
-<span id="cb19-15"><a href="#cb19-15"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
-<span id="cb19-16"><a href="#cb19-16"></a>    s<span class="op">=</span><span class="dv">40</span>,</span>
-<span id="cb19-17"><a href="#cb19-17"></a>    label<span class="op">=</span><span class="st">'SHAP value for $x_1$ (age)'</span></span>
-<span id="cb19-18"><a href="#cb19-18"></a>)</span>
-<span id="cb19-19"><a href="#cb19-19"></a><span class="co"># fig.colorbar(sc, ax=ax, label=r'$\phi_1$')</span></span>
-<span id="cb19-20"><a href="#cb19-20"></a>vertical_jitter <span class="op">=</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.05</span>, size<span class="op">=</span>N)</span>
-<span id="cb19-21"><a href="#cb19-21"></a>sc <span class="op">=</span> ax.scatter(</span>
-<span id="cb19-22"><a href="#cb19-22"></a>    x2_sample,</span>
-<span id="cb19-23"><a href="#cb19-23"></a>    <span class="dv">0</span> <span class="op">+</span> vertical_jitter,</span>
-<span id="cb19-24"><a href="#cb19-24"></a>    c<span class="op">=</span>phi2_list,</span>
-<span id="cb19-25"><a href="#cb19-25"></a>    cmap<span class="op">=</span><span class="st">'coolwarm'</span>,</span>
-<span id="cb19-26"><a href="#cb19-26"></a>    norm<span class="op">=</span>phi2_norm,</span>
-<span id="cb19-27"><a href="#cb19-27"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
-<span id="cb19-28"><a href="#cb19-28"></a>    s<span class="op">=</span><span class="dv">40</span>,</span>
-<span id="cb19-29"><a href="#cb19-29"></a>    label<span class="op">=</span><span class="st">'SHAP value for $x_2$ (income)'</span></span>
-<span id="cb19-30"><a href="#cb19-30"></a>)</span>
-<span id="cb19-31"><a href="#cb19-31"></a>ax.<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span>),</span>
-<span id="cb19-32"><a href="#cb19-32"></a>       xlabel<span class="op">=</span><span class="vs">r'feature value'</span>,</span>
-<span id="cb19-33"><a href="#cb19-33"></a>       title<span class="op">=</span><span class="st">'SHAP values for all cars in the dataset'</span>,</span>
-<span id="cb19-34"><a href="#cb19-34"></a>       yticks<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>],</span>
-<span id="cb19-35"><a href="#cb19-35"></a>       yticklabels<span class="op">=</span>[<span class="st">'$x_2$ (milage)'</span>, <span class="st">'$x_1$ (age)'</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="co"># vabs1 = np.max(np.abs(phi1_list))</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="co"># vabs2 = np.max(np.abs(phi2_list))</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a>v1max <span class="op">=</span> np.<span class="bu">max</span>(x1_sample)</span>
+<span id="cb19-7"><a href="#cb19-7"></a>v1min <span class="op">=</span> np.<span class="bu">min</span>(x1_sample)</span>
+<span id="cb19-8"><a href="#cb19-8"></a>v2max <span class="op">=</span> np.<span class="bu">max</span>(x2_sample)</span>
+<span id="cb19-9"><a href="#cb19-9"></a>v2min <span class="op">=</span> np.<span class="bu">min</span>(x2_sample)</span>
+<span id="cb19-10"><a href="#cb19-10"></a><span class="co"># phi1_norm = colors.TwoSlopeNorm(vmin=-vabs1, vcenter=0, vmax=vabs1)</span></span>
+<span id="cb19-11"><a href="#cb19-11"></a><span class="co"># phi2_norm = colors.TwoSlopeNorm(vmin=-vabs2, vcenter=0, vmax=vabs2)</span></span>
+<span id="cb19-12"><a href="#cb19-12"></a>x1_norm <span class="op">=</span> colors.TwoSlopeNorm(vmin<span class="op">=</span>v1min, vcenter<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>v1max)</span>
+<span id="cb19-13"><a href="#cb19-13"></a>x2_norm <span class="op">=</span> colors.TwoSlopeNorm(vmin<span class="op">=</span>v2min, vcenter<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>v2max)</span>
+<span id="cb19-14"><a href="#cb19-14"></a></span>
+<span id="cb19-15"><a href="#cb19-15"></a>sc <span class="op">=</span> ax.scatter(</span>
+<span id="cb19-16"><a href="#cb19-16"></a>    phi1_list,</span>
+<span id="cb19-17"><a href="#cb19-17"></a>    <span class="dv">1</span> <span class="op">+</span> vertical_jitter,</span>
+<span id="cb19-18"><a href="#cb19-18"></a>    c<span class="op">=</span>x1_sample,</span>
+<span id="cb19-19"><a href="#cb19-19"></a>    cmap<span class="op">=</span><span class="st">'coolwarm'</span>,</span>
+<span id="cb19-20"><a href="#cb19-20"></a>    norm<span class="op">=</span>x1_norm,</span>
+<span id="cb19-21"><a href="#cb19-21"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb19-22"><a href="#cb19-22"></a>    s<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb19-23"><a href="#cb19-23"></a>    label<span class="op">=</span><span class="st">'SHAP value for $x_1$ (age)'</span></span>
+<span id="cb19-24"><a href="#cb19-24"></a>)</span>
+<span id="cb19-25"><a href="#cb19-25"></a><span class="co"># fig.colorbar(sc, ax=ax, label=r'$\phi_1$')</span></span>
+<span id="cb19-26"><a href="#cb19-26"></a>vertical_jitter <span class="op">=</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.05</span>, size<span class="op">=</span>N)</span>
+<span id="cb19-27"><a href="#cb19-27"></a>sc <span class="op">=</span> ax.scatter(</span>
+<span id="cb19-28"><a href="#cb19-28"></a>    phi2_list,</span>
+<span id="cb19-29"><a href="#cb19-29"></a>    <span class="dv">0</span> <span class="op">+</span> vertical_jitter,</span>
+<span id="cb19-30"><a href="#cb19-30"></a>    c<span class="op">=</span>x2_sample,</span>
+<span id="cb19-31"><a href="#cb19-31"></a>    cmap<span class="op">=</span><span class="st">'coolwarm'</span>,</span>
+<span id="cb19-32"><a href="#cb19-32"></a>    norm<span class="op">=</span>x2_norm,</span>
+<span id="cb19-33"><a href="#cb19-33"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb19-34"><a href="#cb19-34"></a>    s<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb19-35"><a href="#cb19-35"></a>    label<span class="op">=</span><span class="st">'SHAP value for $x_2$ (income)'</span></span>
+<span id="cb19-36"><a href="#cb19-36"></a>)</span>
+<span id="cb19-37"><a href="#cb19-37"></a>ax.<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span>),</span>
+<span id="cb19-38"><a href="#cb19-38"></a>       xlabel<span class="op">=</span><span class="vs">r'SHAP value'</span>,</span>
+<span id="cb19-39"><a href="#cb19-39"></a>       title<span class="op">=</span><span class="st">'SHAP values for all cars in the dataset'</span>,</span>
+<span id="cb19-40"><a href="#cb19-40"></a>       yticks<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>],</span>
+<span id="cb19-41"><a href="#cb19-41"></a>       yticklabels<span class="op">=</span>[<span class="st">'$x_2$ (milage)'</span>, <span class="st">'$x_1$ (age)'</span>])<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="38">
-<pre><code>[(-0.5, 1.5),
- Text(0.5, 0, 'feature value'),
- Text(0.5, 1.0, 'SHAP values for all cars in the dataset'),
- [&lt;matplotlib.axis.YTick at 0x118f73350&gt;,
-  &lt;matplotlib.axis.YTick at 0x1190b9610&gt;],
- [Text(0, 0, '$x_2$ (milage)'), Text(0, 1, '$x_1$ (age)')]]</code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="shap_files/figure-html/cell-16-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="shap_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Computing SHAP values “by hand” was fun, but in practice we use libraries like <code>shap</code> that do all the heavy lifting for us. See how <code>shap</code> results (top panel) compare to the values we computed by hand (bottom).</p>
+<div id="287e6205" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="im">import</span> shap</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb20-3"><a href="#cb20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="kw">def</span> model_f2(X):</span>
+<span id="cb20-5"><a href="#cb20-5"></a>    x1 <span class="op">=</span> X[<span class="st">'x1'</span>].values</span>
+<span id="cb20-6"><a href="#cb20-6"></a>    x2 <span class="op">=</span> X[<span class="st">'x2'</span>].values</span>
+<span id="cb20-7"><a href="#cb20-7"></a>    </span>
+<span id="cb20-8"><a href="#cb20-8"></a>    <span class="cf">return</span> (<span class="dv">5</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="fl">0.3</span> <span class="op">*</span> x1<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> x2 <span class="op">+</span> (<span class="fl">0.3</span> <span class="op">*</span> x1 <span class="op">*</span> x2) <span class="op">+</span> </span>
+<span id="cb20-9"><a href="#cb20-9"></a>            <span class="dv">3</span> <span class="op">*</span> np.exp((<span class="op">-</span>(x1 <span class="op">+</span> <span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2 <span class="op">-</span> <span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> <span class="fl">0.3</span>) <span class="op">-</span> </span>
+<span id="cb20-10"><a href="#cb20-10"></a>            <span class="dv">3</span> <span class="op">*</span> np.exp((<span class="op">-</span>(x1 <span class="op">-</span> <span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2 <span class="op">+</span> <span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> <span class="fl">0.3</span>))</span>
+<span id="cb20-11"><a href="#cb20-11"></a></span>
+<span id="cb20-12"><a href="#cb20-12"></a>X <span class="op">=</span> pd.DataFrame({<span class="st">'x1'</span>: x1_sample, <span class="st">'x2'</span>: x2_sample})</span>
+<span id="cb20-13"><a href="#cb20-13"></a>model <span class="op">=</span> model_f2</span>
+<span id="cb20-14"><a href="#cb20-14"></a>explainer <span class="op">=</span> shap.Explainer(model, X)</span>
+<span id="cb20-15"><a href="#cb20-15"></a>shap_values <span class="op">=</span> explainer(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="2971306e" class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb21-2"><a href="#cb21-2"></a>plt.subplots_adjust(hspace<span class="op">=</span><span class="fl">0.4</span>)</span>
+<span id="cb21-3"><a href="#cb21-3"></a>shap.plots.beeswarm(shap_values, ax<span class="op">=</span>ax[<span class="dv">0</span>], plot_size<span class="op">=</span><span class="va">None</span>, show<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a>shap_cmap <span class="op">=</span> shap.plots.colors.red_blue</span>
+<span id="cb21-6"><a href="#cb21-6"></a></span>
+<span id="cb21-7"><a href="#cb21-7"></a>sc <span class="op">=</span> ax[<span class="dv">1</span>].scatter(</span>
+<span id="cb21-8"><a href="#cb21-8"></a>    phi1_list,</span>
+<span id="cb21-9"><a href="#cb21-9"></a>    <span class="dv">0</span> <span class="op">+</span> vertical_jitter,</span>
+<span id="cb21-10"><a href="#cb21-10"></a>    c<span class="op">=</span>x1_sample,</span>
+<span id="cb21-11"><a href="#cb21-11"></a>    cmap<span class="op">=</span>shap_cmap,</span>
+<span id="cb21-12"><a href="#cb21-12"></a>    norm<span class="op">=</span>x1_norm,</span>
+<span id="cb21-13"><a href="#cb21-13"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb21-14"><a href="#cb21-14"></a>    s<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb21-15"><a href="#cb21-15"></a>    label<span class="op">=</span><span class="st">'SHAP value for $x_1$ (age)'</span></span>
+<span id="cb21-16"><a href="#cb21-16"></a>)</span>
+<span id="cb21-17"><a href="#cb21-17"></a>vertical_jitter <span class="op">=</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.05</span>, size<span class="op">=</span>N)</span>
+<span id="cb21-18"><a href="#cb21-18"></a>sc <span class="op">=</span> ax[<span class="dv">1</span>].scatter(</span>
+<span id="cb21-19"><a href="#cb21-19"></a>    phi2_list,</span>
+<span id="cb21-20"><a href="#cb21-20"></a>    <span class="dv">1</span> <span class="op">+</span> vertical_jitter,</span>
+<span id="cb21-21"><a href="#cb21-21"></a>    c<span class="op">=</span>x2_sample,</span>
+<span id="cb21-22"><a href="#cb21-22"></a>    cmap<span class="op">=</span>shap_cmap,</span>
+<span id="cb21-23"><a href="#cb21-23"></a>    norm<span class="op">=</span>x2_norm,</span>
+<span id="cb21-24"><a href="#cb21-24"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb21-25"><a href="#cb21-25"></a>    s<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb21-26"><a href="#cb21-26"></a>    label<span class="op">=</span><span class="st">'SHAP value for $x_2$ (income)'</span></span>
+<span id="cb21-27"><a href="#cb21-27"></a>)</span>
+<span id="cb21-28"><a href="#cb21-28"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span>),</span>
+<span id="cb21-29"><a href="#cb21-29"></a>       xlabel<span class="op">=</span><span class="vs">r'SHAP value'</span>,</span>
+<span id="cb21-30"><a href="#cb21-30"></a>       yticks<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>],</span>
+<span id="cb21-31"><a href="#cb21-31"></a>       yticklabels<span class="op">=</span>[<span class="st">'$x_1$ (age)'</span>, <span class="st">'$x_2$ (milage)'</span>])<span class="op">;</span></span>
+<span id="cb21-32"><a href="#cb21-32"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="shap_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="unfinished" class="level2" data-number="58.2">
-<h2 data-number="58.2" class="anchored" data-anchor-id="unfinished"><span class="header-section-number">58.2</span> unfinished</h2>
+<section id="conditional-vs.-marginal-expectations" class="level2" data-number="58.2">
+<h2 data-number="58.2" class="anchored" data-anchor-id="conditional-vs.-marginal-expectations"><span class="header-section-number">58.2</span> conditional vs.&nbsp;marginal expectations</h2>
+<p>In the calculation for <span class="math inline">\phi_1</span> we had to compute <span class="math inline">f(\{x_1\})</span>, that is, the expected price of a car whose age is known but its milage is unknown. We need to define what prediction we shall assign in this case. We have two options.</p>
+<section id="marginal-expectation" class="level3" data-number="58.2.1">
+<h3 data-number="58.2.1" class="anchored" data-anchor-id="marginal-expectation"><span class="header-section-number">58.2.1</span> marginal expectation</h3>
+<p>We will treat the missing feature (milage) as a random draw from the overall empirical milage distribution. The steps are:</p>
+<ol type="1">
+<li>Freeze the car’s age: <span class="math inline">x_1=x_1^\star</span>.</li>
+<li>Now we compute the model’s prediction for the price of the car drawing <span class="math inline">x_2</span> from all <span class="math inline">x_2</span> values seen in the dataset, and then average them.</li>
+</ol>
+<p>Mathematically, we are computing</p>
+<p><span class="math display">
+f(\{x_1\}) = \int f(x_1^\star, x_2) p(x_2) dx_2.
+</span></p>
+<p>We are weighing the car prices <span class="math inline">f</span> according to the distribution in <span class="math inline">x_2</span>.</p>
+<p>There’s a problem here. Assume that our car is 15 years old, that is, <span class="math inline">x_1^\star=15</span>. This means that when computing <span class="math inline">f(x_1^\star,x_2)</span>, we will plug into it a bunch of values for low-milage cars. To make this point sharper, assume that 20% of the cars in our dataset have milage below 20k miles. This means that in our estimation of <span class="math inline">f(\{x_1\})</span>, 20% of the estimated prices are for 15-year-old cars with an extremely low milage. That’s absurd! It’s extremely rare that such cars exist, how can we not take into account the age of the car here? Well, if we want to do better, then we shouldn’t be using the marginal expectation, we should be using the conditional expectation.</p>
+</section>
+<section id="conditional-expectation" class="level3" data-number="58.2.2">
+<h3 data-number="58.2.2" class="anchored" data-anchor-id="conditional-expectation"><span class="header-section-number">58.2.2</span> conditional expectation</h3>
+<p>Now, the random drawing of values for the milage is age-aware.</p>
+<ol type="1">
+<li>Freeze the car’s age: <span class="math inline">x_1=x_1^\star</span>.</li>
+<li>Now we average the prediction over milage values <span class="math inline">x_2</span> that are typical of 15-year-old cars.</li>
+</ol>
+<p>Mathematically, this reads</p>
+<p><span class="math display">
+f(\{x_1\}) = \int f(x_1^\star, x_2) p(x_2 \mid x_1^\star) dx_2.
+</span></p>
+<p>Great! That makes a lot more sense! So why don’t we use conditional expectation every time? The reason is that it is much harder to compute. To compute the conditional expectation <span class="math inline">p(x_2 \mid x_1^\star)</span> we need to estimate the joint distribution <span class="math inline">p(x_1^\star, x_2)</span>, since</p>
+<p><span class="math display">
+p(x_2 \mid x_1^\star) = \frac{p(x_1^\star, x_2)}{p(x_1^\star)}.
+</span></p>
+<p>If our dataset is small, the region of the feature space where <span class="math inline">x_1^\star</span> is located might be very sparse, and we won’t have enough data to estimate <span class="math inline">p(x_2 \mid x_1^\star)</span> accurately. Another problem arises in high-dimensional data, where we have many features. If we had 10 features instead of 2, and we wanted to compute the SHAP value for one of them, we would need to estimate the conditional distribution of that feature given the other 9 features. This is a much more complex task than estimating the marginal distribution of a single feature, one that would require an extremely large number of samples, which we often don’t have.</p>
+</section>
+<section id="the-hidden-assumption" class="level3" data-number="58.2.3">
+<h3 data-number="58.2.3" class="anchored" data-anchor-id="the-hidden-assumption"><span class="header-section-number">58.2.3</span> the hidden assumption</h3>
+<p>When is it ok to substitute the conditional expectation with the marginal expectation? The answer is when the features are independent. If <span class="math inline">x_1</span> and <span class="math inline">x_2</span> are independent, then <span class="math display">
+p(x_1, x_2) = p(x_1)p(x_2).
+</span></p>
+<p>From the definition of conditional probability, we have <span class="math display">
+p(x_1, x_2) = p(x_2 \mid x_1)p(x_1)
+</span></p>
+<p>Equating the two expressions above, we get <span class="math display">
+p(x_2 \mid x_1) = p(x_2).
+</span></p>
+<p>And that is exactly the substitution we made: we replaced the conditional expectation with the marginal expectation.</p>
+<p>Whenever my features are independent, or at least weakly correlated, I can safely use the marginal expectation to compute SHAP values. If some of my features are correlated, then depending on the problem I might find tools that can estimate the conditional expectation, such as <code>shap.TreeExplainer</code> for tree-based models.</p>
+<p>I won’t go into the details, but some of the quirks of erroneously using the marginal expectation when the features are correlated are:</p>
+<ul>
+<li>Credit gets arbitrarily redistributed between correlated features.</li>
+<li>The SHAP values of correlated features might have flipped sign.</li>
+<li>SHAP takes into consideration unrealistic feature combinations, which can lead to unreliable explanations.</li>
+</ul>
+</section>
+</section>
+<section id="more-than-2-features" class="level2" data-number="58.3">
+<h2 data-number="58.3" class="anchored" data-anchor-id="more-than-2-features"><span class="header-section-number">58.3</span> more than 2 features</h2>
+<p>The simple example of the car price took us quite far in understanding the basics of SHAP values. I’ll just add for completeness what happens when we have more than 2 features. Let’s assume a model <span class="math inline">f</span> with 5 features (<span class="math inline">p=5</span>), and we want to compute the SHAP value for feature <span class="math inline">x_1</span>. The set of all features is <span class="math inline">\mathcal{F} = \{x_1, x_2, x_3, x_4, x_5\}</span>, and the set of all features except <span class="math inline">x_1</span> is <span class="math inline">\mathcal{F} \setminus \{x_1\} = \{x_2, x_3, x_4, x_5\}</span>. The subsets of <span class="math inline">\mathcal{F} \setminus \{x_1\}</span> are:</p>
+<ul>
+<li><span class="math inline">S_0 = \{\}</span> (the empty set)</li>
+<li><span class="math inline">S_1 = \{x_2\}</span></li>
+<li><span class="math inline">S_2 = \{x_3\}</span></li>
+<li><span class="math inline">S_3 = \{x_4\}</span></li>
+<li><span class="math inline">S_4 = \{x_5\}</span></li>
+<li><span class="math inline">S_5 = \{x_2, x_3\}</span></li>
+<li><span class="math inline">S_6 = \{x_2, x_4\}</span></li>
+<li><span class="math inline">S_7 = \{x_2, x_5\}</span></li>
+<li><span class="math inline">S_8 = \{x_3, x_4\}</span></li>
+<li><span class="math inline">S_9 = \{x_3, x_5\}</span></li>
+<li><span class="math inline">S_{10} = \{x_4, x_5\}</span></li>
+<li><span class="math inline">S_{11} = \{x_2, x_3, x_4\}</span></li>
+<li><span class="math inline">S_{12} = \{x_2, x_3, x_5\}</span></li>
+<li><span class="math inline">S_{13} = \{x_2, x_4, x_5\}</span></li>
+<li><span class="math inline">S_{14} = \{x_3, x_4, x_5\}</span></li>
+<li><span class="math inline">S_{15} = \{x_2, x_3, x_4, x_5\}</span></li>
+</ul>
+<p>See how the number of subsets grows exponentially with the number of features. For a model with <span class="math inline">p</span> features, we have <span class="math inline">2^{p-1}</span> subsets to consider when computing the SHAP value for a single feature. The formula for <span class="math inline">\phi_1</span> in this case would be:</p>
+<p><span class="math display">\begin{align*}
+5\phi_1 &amp;=
+\binom{4}{0}^{-1}[f(\{x_1\}) - f(\{\})] +
+\binom{4}{1}^{-1}[f(\{x_1, x_2\}) - f(\{x_2\})]
+\\
+&amp;+ \binom{4}{1}^{-1}[f(\{x_1, x_3\}) - f(\{x_3\})]
++ \binom{4}{1}^{-1}[f(\{x_1, x_4\}) - f(\{x_4\})]
+\\
+&amp;+ \binom{4}{1}^{-1}[f(\{x_1, x_5\}) - f(\{x_5\})]
++ \binom{4}{2}^{-1}[f(\{x_1, x_2, x_3\}) - f(\{x_2, x_3\})]
+\\
+&amp;+ \binom{4}{2}^{-1}[f(\{x_1, x_2, x_4\}) - f(\{x_2, x_4\})]
++ \binom{4}{2}^{-1}[f(\{x_1, x_2, x_5\}) - f(\{x_2, x_5\})]
+\\
+&amp;+ \binom{4}{2}^{-1}[f(\{x_1, x_3, x_4\}) - f(\{x_3, x_4\})]
++ \binom{4}{2}^{-1}[f(\{x_1, x_3, x_5\}) - f(\{x_3, x_5\})]
+\\
+&amp;+ \binom{4}{2}^{-1}[f(\{x_1, x_4, x_5\}) - f(\{x_4, x_5\})]
++ \binom{4}{3}^{-1}[f(\{x_1, x_2, x_3, x_4\}) - f(\{x_2, x_3, x_4\})]
+\\
+&amp;+ \binom{4}{3}^{-1}[f(\{x_1, x_2, x_3, x_5\}) - f(\{x_2, x_3, x_5\})]
++ \binom{4}{3}^{-1}[f(\{x_1, x_2, x_4, x_5\}) - f(\{x_2, x_4, x_5\})]
+\\
+&amp;+ \binom{4}{3}^{-1}[f(\{x_1, x_3, x_4, x_5\}) - f(\{x_3, x_4, x_5\})]
++ \binom{4}{4}^{-1}[f(\{x_1, x_2, x_3, x_4, x_5\}) - f(\{x_2, x_3, x_4, x_5\})].
+\end{align*}</span></p>
+<p>What a delight it would be to calculate that by hand!</p>
+<p>One of the terms we need to compute is <span class="math inline">f(\{x_1, x_3, x_4\})</span>, which reads</p>
+<p><span class="math display">
+f(\{x_1, x_3, x_4\}) = \int f(x_1, x_2, x_3, x_4, x_5) p(x_2, x_5 \mid x_1, x_3, x_4) dx_2 dx_5.
+</span></p>
+<p>Using the marginal expectation instead of the conditional expectation, we would compute</p>
+<p><span class="math display">
+f(\{x_1, x_3, x_4\}) = \int f(x_1, x_2, x_3, x_4, x_5) p(x_2) p(x_5) dx_2 dx_5,
+</span></p>
+<p>which numerically translates into</p>
+<p><span class="math display">
+f(\{x_1, x_3, x_4\}) = \frac{1}{n^2} \sum_{i=1}^{n} \sum_{j=1}^{n} f(x_1^\star, x_2^i, x_3^\star, x_4^\star, x_5^j).
+</span></p>
+<p>There is not much I can learn from an example with more than 2 features, othen than the fact that there are many combinations to consider, but essentially each term is still conceptually the same.</p>
+</section>
+<section id="unfinished" class="level2" data-number="58.4">
+<h2 data-number="58.4" class="anchored" data-anchor-id="unfinished"><span class="header-section-number">58.4</span> unfinished</h2>
 <ul>
 <li>Now I need to discuss the general case, when we have more than 2 features.</li>
 <li>Discuss the properties of SHAP values, show its decomposition.</li>
@@ -1414,13 +1582,14 @@ f(x) = \phi_0 + \sum_{j=1}^n \phi_j,
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
