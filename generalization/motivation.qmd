@@ -1,0 +1,22 @@
+---
+title: "motivation"
+execute:
+  # echo: false
+  freeze: auto  # re-render only when source changes
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+---
+
+You are a member of an advanced alien species, and you've come to Earth to study the [meat-based intelligence](https://www.mit.edu/people/dpolicar/writing/prose/text/thinkingMeat.html) we call humans. You have to examine them and report back to your home planet, without exposing yourself in the process. You decide to sample 30 humans from around the globe, and bring them to your spaceship to a thorough 3-day examination, and return them back at the end of it.
+
+Some patterns are patently obvious to you: all humans have heads on the top of their bodies, and they move their four long meat limbs to move and interact with objects (although specimen 24 has only three limbs).
+
+Specimen 17 is the only one taller than 22 splorgs, and their head is the most devoid of hair. Are most (all?) tall humans bald?
+
+Specimens 2 and 5 are the two with the highest average heart beat, and they were sampled from coastal cities. Is it true that the proximity to salty bodies of water is associated with higher heart rates?
+
+Your superiors in your home planet do not care particularly about these 30 humans you sampled. They do not want to know particular facts true only of these specimens. They do want a solid report, that paints them an overall picture that will hold true most of the time. You know that if you happened to have sampled 30 other humans, some of the patterns you found would still hold, but some would not.
+
+This is the problem we will be discussing in these coming chapters. How to generalize findings based on a finite sample to the whole population?

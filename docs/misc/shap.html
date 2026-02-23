@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>58&nbsp; SHAP values – Statistics and Machine Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../misc/trend_test.html" rel="prev">
+<link href="../archive/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TB8VQN4T5W"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
+</script>
+<!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/shap.html"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">SHAP values</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics and Machine Learning</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://yairmau.com/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
+    <a href="https://github.com/yairmau/statistics/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/height.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/weight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">hypothesis testing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/statistical_power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">statistical power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/permutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">confidence interval</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/R-squared.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">R-squared</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">correlation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">bayes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/logistic-connection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">svd and pca</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">decision trees</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">information theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">likelihood</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">generalization and model complexity</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">motivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">neural networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.2</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/shap.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#simple-practical-example" id="toc-simple-practical-example" class="nav-link active" data-scroll-target="#simple-practical-example"><span class="header-section-number">58.1</span> simple practical example</a></li>
+  <li><a href="#unfinished" id="toc-unfinished" class="nav-link" data-scroll-target="#unfinished"><span class="header-section-number">58.2</span> unfinished</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/shap.html"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">SHAP values</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">SHAP values</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/misc/shap.ipynb">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="simple-practical-example" class="level2" data-number="58.1">
+<h2 data-number="58.1" class="anchored" data-anchor-id="simple-practical-example"><span class="header-section-number">58.1</span> simple practical example</h2>
+<p>Let’s say I want to know what impacts the price of a car. I have a model that takes into account 2 features, the car’s age (<span class="math inline">x_1</span>) and the car’s mileage (<span class="math inline">x_2</span>). We call the set of all features <span class="math inline">N = \{x_1, x_2\}</span>.</p>
+<p>Assume that we have a database with <span class="math inline">n</span> cars, and we somehow arrived at a model <span class="math inline">f(x_1, x_2)</span> that predicts the price of a car based on its age and mileage. Now, we want to understand how much each feature contributes to the predicted price for a <strong>specific car</strong> <span class="math inline">(x_1^\star, x_2^\star)</span> in our database. More specifically, we are asking:</p>
+<p><strong>Relative to the average price of all cars in the database, how many dollars of this specific car’s price can be attributed to its age (<span class="math inline">x_1^\star</span>​) and how many to its mileage (<span class="math inline">x_2^\star</span>)?</strong></p>
+<p>This can be answered by the formula below.</p>
+<p><span class="math display">
+\phi_j = \sum_{S \subseteq N \setminus \{j\}} \binom{n-1}{|S|}^{-1}[f(S \cup \{j\}) - f(S)].
+</span></p>
+<p>To compute the SHAP value <span class="math inline">\phi_1</span> for the car’s age (<span class="math inline">x_1</span>), we subtract age from the set of all features (that is, <span class="math inline">N \setminus \{x_1\}=\{x_2\}</span>), and consider all possible subsets in that, which are the empty set <span class="math inline">S_0 = \{\}</span>, and the set <span class="math inline">S_1 = \{x_2\}</span>. This is what we are summing over in the formula above.</p>
+<p>The parenthesis with a <span class="math inline">-1</span> power is the binomial coefficient, which is a normalization factor that accounts for the number of subsets of a given size. In our example, since we have 1 feature in <span class="math inline">N \setminus \{x_1\}=\{x_2\}</span>, we have <span class="math inline">\binom{1}{0} = 1</span> for the empty set, <span class="math inline">\binom{1}{1} = 1</span> for subsets of size 1.</p>
+<p>The last part of the formula, <span class="math inline">f(S \cup \{j\}) - f(S)</span>, represents the marginal contribution of feature <span class="math inline">x_j</span> (here, price <span class="math inline">x_1</span>) when added to the subset <span class="math inline">S</span>. Let’s spell it out for our example:</p>
+<p><span class="math display">\begin{align*}
+\phi_1 &amp;= \binom{1}{0}^{-1}[f(\{x_1\}) - f(\{\})] + \binom{1}{1}^{-1}[f(\{x_1, x_2\}) - f(\{x_2\})] \\
+&amp;= [f(\{x_1\}) - f(\{\})] + [f(\{x_1, x_2\}) - f(\{x_2\})].
+\end{align*}</span></p>
+<p>Intuitively, the expression above is asking: <strong>How much does the predicted price change when we add the car’s age to our model, first when we have no other information (the empty set), and then when we already know the car’s mileage?</strong></p>
+<p>We need now to find the values of <span class="math inline">f(\{\})</span>, <span class="math inline">f(\{x_1\})</span>, <span class="math inline">f(\{x_2\})</span>, and <span class="math inline">f(\{x_1, x_2\})</span> to compute <span class="math inline">\phi_1</span>. Let’s see what each means:</p>
+<ul>
+<li><span class="math inline">f(\{\})</span> is the expected price of a car when we ignore both age and mileage.</li>
+<li><span class="math inline">f(\{x_1\})</span> is the expected price of a car when we only consider its age, ignoring mileage.</li>
+<li><span class="math inline">f(\{x_2\})</span> is the expected price of a car when we only consider its mileage, ignoring age.</li>
+<li><span class="math inline">f(\{x_1, x_2\})</span> is the expected price of a car when we consider both age and mileage.</li>
+</ul>
+<p>Let’s start with <span class="math inline">f(\{\})</span>. This is the expected price of a car when we ignore both age and mileage. I find it more illuminating to phrase this as a question: <strong>If I have a car, and I don’t know its age or milage, what is the expected price based on the typical ages and mileages of cars in my database?</strong> We can compute this by averaging the model’s predictions over all possible values of age and mileage:</p>
+<p><span class="math display">
+f(\{\}) = \mathbb{E}[f(x)] = \int f(x_1, x_2) p(x_1, x_2) dx_1 dx_2.
+</span></p>
+<p>Because we have a finite dataset of <span class="math inline">n</span> cars, we can approximate this integral by taking the average of the model’s predictions for all <span class="math inline">n</span> cars in our database:</p>
+<p><span class="math display">
+f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
+</span></p>
+<p>Let’s visualize this. The figure below shows the price of the car (the color) as a function of its age and mileage. The black dots represent the <span class="math inline">n</span> cars in our database.</p>
+<div id="198e6227" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> matplotlib <span class="im">import</span> cm</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> colors</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># %matplotlib widget</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="5f756406" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>model definition and sample data generation</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> model_f(x1, x2):</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="fl">0.3</span><span class="op">*</span>x1<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> x2 <span class="op">+</span> (<span class="fl">0.3</span> <span class="op">*</span> x1 <span class="op">*</span> x2) <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>np.exp((<span class="op">-</span>(x1<span class="op">+</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="fl">0.3</span>) <span class="op">-</span> <span class="dv">3</span><span class="op">*</span>np.exp((<span class="op">-</span>(x1<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2<span class="op">+</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="fl">0.3</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>N <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>x1_min <span class="op">=</span> <span class="op">-</span><span class="dv">2</span><span class="op">;</span> x1_max <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>x2_min <span class="op">=</span> <span class="op">-</span><span class="dv">2</span><span class="op">;</span> x2_max <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>x1_sample <span class="op">=</span> rng.uniform(x1_min, x1_max, size<span class="op">=</span>N)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>x2_sample <span class="op">=</span> rng.uniform(x2_min, x2_max, size<span class="op">=</span>N)</span>
+<span id="cb2-10"><a href="#cb2-10"></a>z_sample <span class="op">=</span> model_f(x1_sample, x2_sample)</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># 2. Create the feature space (The Domain)</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>x1_range <span class="op">=</span> np.linspace(x1_min, x1_max, <span class="dv">50</span>)</span>
+<span id="cb2-14"><a href="#cb2-14"></a>x2_range <span class="op">=</span> np.linspace(x2_min, x2_max, <span class="dv">50</span>)</span>
+<span id="cb2-15"><a href="#cb2-15"></a>X1, X2 <span class="op">=</span> np.meshgrid(x1_range, x2_range)</span>
+<span id="cb2-16"><a href="#cb2-16"></a>Z <span class="op">=</span> model_f(X1, X2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="51e4b4e1" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>2d plot</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb3-2"><a href="#cb3-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>levels <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">6</span>, <span class="fl">0.5</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>norm <span class="op">=</span> colors.BoundaryNorm(boundaries<span class="op">=</span>levels, ncolors<span class="op">=</span><span class="dv">256</span>, extend<span class="op">=</span><span class="st">'both'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>cpax <span class="op">=</span> ax.contourf(X1, X2, Z, levels<span class="op">=</span>levels, cmap<span class="op">=</span>cm.viridis, norm<span class="op">=</span>norm, extend<span class="op">=</span><span class="st">'both'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>cax <span class="op">=</span> ax.inset_axes([<span class="fl">1.05</span>, <span class="fl">0.0</span>, <span class="fl">0.05</span>, <span class="fl">1.0</span>], transform<span class="op">=</span>ax.transAxes)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>cbar <span class="op">=</span> fig.colorbar(cpax, cax<span class="op">=</span>cax)</span>
+<span id="cb3-8"><a href="#cb3-8"></a>cbar.set_label(<span class="vs">r"Prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs"> "</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a>ax.set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a>ax.<span class="bu">set</span>(</span>
+<span id="cb3-11"><a href="#cb3-11"></a>    xlabel<span class="op">=</span><span class="vs">r"feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    ylabel<span class="op">=</span><span class="vs">r"feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    title<span class="op">=</span><span class="vs">r"response surface </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs"> of the model"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14"></a>    xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb3-15"><a href="#cb3-15"></a>    yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb3-16"><a href="#cb3-16"></a>)<span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18"></a>ax.scatter(x1_sample, x2_sample, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Sample Points'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="shap_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Another way to see this is by plotting the model’s predictions as the height of the surface above the age-mileage plane.</p>
+<div id="e13b5476" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>3d plot</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb4-2"><a href="#cb4-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, Z, cmap<span class="op">=</span>cm.viridis, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>ax.scatter(x1_sample, x2_sample, z_sample, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, label<span class="op">=</span><span class="st">'Sample Points'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb4-11"><a href="#cb4-11"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb4-12"><a href="#cb4-12"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb4-13"><a href="#cb4-13"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb4-14"><a href="#cb4-14"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb4-15"><a href="#cb4-15"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb4-16"><a href="#cb4-16"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb4-17"><a href="#cb4-17"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-18"><a href="#cb4-18"></a></span>
+<span id="cb4-19"><a href="#cb4-19"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb4-20"><a href="#cb4-20"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb4-21"><a href="#cb4-21"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb4-22"><a href="#cb4-22"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb4-23"><a href="#cb4-23"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb4-24"><a href="#cb4-24"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb4-25"><a href="#cb4-25"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb4-26"><a href="#cb4-26"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-27"><a href="#cb4-27"></a>)</span>
+<span id="cb4-28"><a href="#cb4-28"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="shap_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="math inline">f(\{\})</span> is the average height of all the black dots in the figure above. This is the expected price of a car when we don’t know its age or mileage, and use instead the typical ages and mileages of cars in our database. We represent the result as the gray horizontal plane in the figure below.</p>
+<div id="8ecf3334" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>3d plot</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb5-2"><a href="#cb5-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, Z, cmap<span class="op">=</span>cm.viridis, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>ax.scatter(x1_sample, x2_sample, z_sample, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, label<span class="op">=</span><span class="st">'Sample Points'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb5-11"><a href="#cb5-11"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb5-12"><a href="#cb5-12"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb5-13"><a href="#cb5-13"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb5-14"><a href="#cb5-14"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb5-15"><a href="#cb5-15"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb5-16"><a href="#cb5-16"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb5-17"><a href="#cb5-17"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-18"><a href="#cb5-18"></a></span>
+<span id="cb5-19"><a href="#cb5-19"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb5-20"><a href="#cb5-20"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-21"><a href="#cb5-21"></a></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb5-23"><a href="#cb5-23"></a>    ax.plot([x1_sample[i]]<span class="op">*</span><span class="dv">2</span>, [x2_sample[i]]<span class="op">*</span><span class="dv">2</span>, [phi_0, z_sample[i]], <span class="st">'k-'</span>, alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb5-24"><a href="#cb5-24"></a></span>
+<span id="cb5-25"><a href="#cb5-25"></a></span>
+<span id="cb5-26"><a href="#cb5-26"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb5-27"><a href="#cb5-27"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb5-28"><a href="#cb5-28"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb5-29"><a href="#cb5-29"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb5-30"><a href="#cb5-30"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb5-31"><a href="#cb5-31"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb5-32"><a href="#cb5-32"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb5-33"><a href="#cb5-33"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb5-34"><a href="#cb5-34"></a>)</span>
+<span id="cb5-35"><a href="#cb5-35"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-36"><a href="#cb5-36"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="shap_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now let’s compute <span class="math inline">f(\{x_1\})</span>. This is the expected price of a specific car when we only consider its age, ignoring mileage. Phrasing this as a question: <strong>If I have a 5-year-old car, but I don’t know its mileage, what is its expected price based on the typical mileages I see in my data?</strong></p>
+<p>In integral form, this can be expressed as:</p>
+<p><span class="math display">
+f(\{x_1\}) = \mathbb{E}[f(x) | x_1] = \int f(x_1, x_2) p(x_2) dx_2.
+</span></p>
+<p>We can compute this by averaging the model’s predictions over all possible values of mileage, while keeping age fixed:</p>
+<p><span class="math display">
+f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
+</span> where <span class="math inline">x_1^\star</span> is the age of the specific car we are trying to explain, and <span class="math inline">x_2^i</span> are the mileages of all cars in our database.</p>
+<p>Let’s visualize this. The figure below shows a specific car in our database as a red dot. The pink vertical plane is located at the age of this car, and we marked the intersection of this plane with the surface as a red curve. All the black dots, previously located at their original age and mileage, were brought to this pink plane. We did that just by shifting their <span class="math inline">x_1</span> value to <span class="math inline">x_1^\star</span>, while keeping their <span class="math inline">x_2</span> and <span class="math inline">z</span> values the same. I imagine this as squishing the dots along the <span class="math inline">x_1</span> axis, until they all lie on the pink plane.</p>
+<div id="6b7b1ae6" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>3d plot</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb6-2"><a href="#cb6-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, Z, cmap<span class="op">=</span>cm.viridis, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a>idx <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>ax.scatter(np.full_like(x1_sample, x1_sample[idx]), x2_sample, z_sample, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, label<span class="op">=</span><span class="st">'Sample Points'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a></span>
+<span id="cb6-12"><a href="#cb6-12"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb6-13"><a href="#cb6-13"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb6-14"><a href="#cb6-14"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb6-15"><a href="#cb6-15"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb6-16"><a href="#cb6-16"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb6-17"><a href="#cb6-17"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb6-18"><a href="#cb6-18"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb6-19"><a href="#cb6-19"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-20"><a href="#cb6-20"></a></span>
+<span id="cb6-21"><a href="#cb6-21"></a></span>
+<span id="cb6-22"><a href="#cb6-22"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
+<span id="cb6-23"><a href="#cb6-23"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
+<span id="cb6-24"><a href="#cb6-24"></a>z_star <span class="op">=</span> z_sample[idx]</span>
+<span id="cb6-25"><a href="#cb6-25"></a>slice_x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb6-26"><a href="#cb6-26"></a>slice_x1 <span class="op">=</span> np.full_like(slice_x2, x1_star)</span>
+<span id="cb6-27"><a href="#cb6-27"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
+<span id="cb6-28"><a href="#cb6-28"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x1}</span><span class="st">)'</span>)</span>
+<span id="cb6-29"><a href="#cb6-29"></a></span>
+<span id="cb6-30"><a href="#cb6-30"></a><span class="co"># Plot the specific prediction point (y_hat)</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a>ax.scatter([x1_sample[idx]], [x2_sample[idx]], [z_sample[idx]], color<span class="op">=</span><span class="st">'red'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Prediction (y_hat)'</span>, zorder<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb6-32"><a href="#cb6-32"></a></span>
+<span id="cb6-33"><a href="#cb6-33"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb6-34"><a href="#cb6-34"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-35"><a href="#cb6-35"></a></span>
+<span id="cb6-36"><a href="#cb6-36"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
+<span id="cb6-37"><a href="#cb6-37"></a>slice_x2_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x2, z_plane_range)</span>
+<span id="cb6-38"><a href="#cb6-38"></a>slice_x1_mesh <span class="op">=</span> np.full_like(slice_x2_mesh, x1_star)</span>
+<span id="cb6-39"><a href="#cb6-39"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
+<span id="cb6-40"><a href="#cb6-40"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-41"><a href="#cb6-41"></a></span>
+<span id="cb6-42"><a href="#cb6-42"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb6-43"><a href="#cb6-43"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb6-44"><a href="#cb6-44"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb6-45"><a href="#cb6-45"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb6-46"><a href="#cb6-46"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb6-47"><a href="#cb6-47"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb6-48"><a href="#cb6-48"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb6-49"><a href="#cb6-49"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb6-50"><a href="#cb6-50"></a>)</span>
+<span id="cb6-51"><a href="#cb6-51"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-52"><a href="#cb6-52"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="shap_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we compute the values for <span class="math inline">f(x_1^\star, x_2^i)</span>. This is the same as taking all the black dots in the figure above, and moving them vertically to the red line, see below.</p>
+<div id="834b7221" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>3d plot</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb7-2"><a href="#cb7-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, Z, cmap<span class="op">=</span>cm.viridis, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>x1_squished <span class="op">=</span> np.full_like(x1_sample, x1_sample[idx])</span>
+<span id="cb7-7"><a href="#cb7-7"></a>ax.scatter(x1_squished, x2_sample, model_f(x1_squished, x2_sample), c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, zorder<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a></span>
+<span id="cb7-9"><a href="#cb7-9"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co"># Plot the 2D contour projected on the 3D 'floor'</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb7-13"><a href="#cb7-13"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb7-14"><a href="#cb7-14"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb7-15"><a href="#cb7-15"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb7-16"><a href="#cb7-16"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb7-17"><a href="#cb7-17"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb7-18"><a href="#cb7-18"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb7-19"><a href="#cb7-19"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb7-20"><a href="#cb7-20"></a></span>
+<span id="cb7-21"><a href="#cb7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22"></a></span>
+<span id="cb7-23"><a href="#cb7-23"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
+<span id="cb7-24"><a href="#cb7-24"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
+<span id="cb7-25"><a href="#cb7-25"></a>z_star <span class="op">=</span> z_sample[idx]</span>
+<span id="cb7-26"><a href="#cb7-26"></a>slice_x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb7-27"><a href="#cb7-27"></a>slice_x1 <span class="op">=</span> np.full_like(slice_x2, x1_star)</span>
+<span id="cb7-28"><a href="#cb7-28"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
+<span id="cb7-29"><a href="#cb7-29"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x1}</span><span class="st">)'</span>)</span>
+<span id="cb7-30"><a href="#cb7-30"></a></span>
+<span id="cb7-31"><a href="#cb7-31"></a><span class="co"># Plot the specific prediction point (y_hat)</span></span>
+<span id="cb7-32"><a href="#cb7-32"></a><span class="co"># ax.scatter([x1_sample[idx]], [x2_sample[idx]], [z_sample[idx]], color='red', s=100, label='Prediction (y_hat)', zorder=10)</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a></span>
+<span id="cb7-34"><a href="#cb7-34"></a><span class="co"># Plot the Marginal Slice (The path SHAP integrates over)</span></span>
+<span id="cb7-35"><a href="#cb7-35"></a><span class="co"># ax.plot(slice_x1, slice_x2, slice_z, color='red', linewidth=3, label='Slice for f_x({x1})')</span></span>
+<span id="cb7-36"><a href="#cb7-36"></a></span>
+<span id="cb7-37"><a href="#cb7-37"></a></span>
+<span id="cb7-38"><a href="#cb7-38"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb7-39"><a href="#cb7-39"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-40"><a href="#cb7-40"></a></span>
+<span id="cb7-41"><a href="#cb7-41"></a><span class="co"># for i in range(N):</span></span>
+<span id="cb7-42"><a href="#cb7-42"></a><span class="co">#     ax.plot([x1_sample[i]]*2, [x2_sample[i]]*2, [phi_0, z_sample[i]], 'k-', alpha=0.2)</span></span>
+<span id="cb7-43"><a href="#cb7-43"></a></span>
+<span id="cb7-44"><a href="#cb7-44"></a></span>
+<span id="cb7-45"><a href="#cb7-45"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
+<span id="cb7-46"><a href="#cb7-46"></a>slice_x2_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x2, z_plane_range)</span>
+<span id="cb7-47"><a href="#cb7-47"></a>slice_x1_mesh <span class="op">=</span> np.full_like(slice_x2_mesh, x1_star)</span>
+<span id="cb7-48"><a href="#cb7-48"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
+<span id="cb7-49"><a href="#cb7-49"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-50"><a href="#cb7-50"></a></span>
+<span id="cb7-51"><a href="#cb7-51"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb7-52"><a href="#cb7-52"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb7-53"><a href="#cb7-53"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb7-54"><a href="#cb7-54"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb7-55"><a href="#cb7-55"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb7-56"><a href="#cb7-56"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb7-57"><a href="#cb7-57"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb7-58"><a href="#cb7-58"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb7-59"><a href="#cb7-59"></a>)</span>
+<span id="cb7-60"><a href="#cb7-60"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb7-61"><a href="#cb7-61"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="shap_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can average the height of all these new black dots, which is shown below as a black horizontal line, and this will give us the value of <span class="math inline">f(\{x_1\})</span>.</p>
+<div id="d02ab04f" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>3d plot</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb8-2"><a href="#cb8-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, Z, cmap<span class="op">=</span>cm.viridis, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>x1_squished <span class="op">=</span> np.full_like(x1_sample, x1_sample[idx])</span>
+<span id="cb8-7"><a href="#cb8-7"></a>x2_squished <span class="op">=</span> np.full_like(x2_sample, x2_sample[idx])</span>
+<span id="cb8-8"><a href="#cb8-8"></a>z_x1squished <span class="op">=</span> model_f(x1_squished, x2_sample)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>z_x2squished <span class="op">=</span> model_f(x1_sample, x2_squished)</span>
+<span id="cb8-10"><a href="#cb8-10"></a>ax.scatter(x1_squished, x2_sample, z_x1squished, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, zorder<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb8-11"><a href="#cb8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12"></a>z_x1 <span class="op">=</span> np.mean(z_x1squished)</span>
+<span id="cb8-13"><a href="#cb8-13"></a>z_x2 <span class="op">=</span> np.mean(z_x2squished)</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb8-18"><a href="#cb8-18"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb8-19"><a href="#cb8-19"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb8-20"><a href="#cb8-20"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb8-21"><a href="#cb8-21"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb8-22"><a href="#cb8-22"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb8-23"><a href="#cb8-23"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb8-24"><a href="#cb8-24"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-25"><a href="#cb8-25"></a></span>
+<span id="cb8-26"><a href="#cb8-26"></a>idx <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
+<span id="cb8-28"><a href="#cb8-28"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
+<span id="cb8-29"><a href="#cb8-29"></a>z_star <span class="op">=</span> z_sample[idx]</span>
+<span id="cb8-30"><a href="#cb8-30"></a>slice_x2 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb8-31"><a href="#cb8-31"></a>slice_x1 <span class="op">=</span> np.full_like(slice_x2, x1_star)</span>
+<span id="cb8-32"><a href="#cb8-32"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
+<span id="cb8-33"><a href="#cb8-33"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x1}</span><span class="st">)'</span>)</span>
+<span id="cb8-34"><a href="#cb8-34"></a>ax.plot(slice_x1, slice_x2, np.full_like(slice_x2, z_x1), color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb8-35"><a href="#cb8-35"></a></span>
+<span id="cb8-36"><a href="#cb8-36"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb8-37"><a href="#cb8-37"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-38"><a href="#cb8-38"></a></span>
+<span id="cb8-39"><a href="#cb8-39"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
+<span id="cb8-40"><a href="#cb8-40"></a>slice_x2_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x2, z_plane_range)</span>
+<span id="cb8-41"><a href="#cb8-41"></a>slice_x1_mesh <span class="op">=</span> np.full_like(slice_x2_mesh, x1_star)</span>
+<span id="cb8-42"><a href="#cb8-42"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
+<span id="cb8-43"><a href="#cb8-43"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-44"><a href="#cb8-44"></a></span>
+<span id="cb8-45"><a href="#cb8-45"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb8-46"><a href="#cb8-46"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb8-47"><a href="#cb8-47"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb8-48"><a href="#cb8-48"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb8-49"><a href="#cb8-49"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb8-50"><a href="#cb8-50"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb8-51"><a href="#cb8-51"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb8-52"><a href="#cb8-52"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-53"><a href="#cb8-53"></a>)</span>
+<span id="cb8-54"><a href="#cb8-54"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="shap_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We are now ready to compute the first term for <span class="math inline">\phi_1</span>, namely <span class="math inline">f(\{x_1\}) - f(\{\})</span>. Visually, this is the distance between the black horizontal line and the gray horizontal plane in the figure above. This value is not very large, so we just can’t quite see it in the figure, but it’s there. We print its value below:</p>
+<div id="29e21537" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>first_term <span class="op">=</span> z_x1 <span class="op">-</span> phi_0</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>first_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>-0.244</code></pre>
+</div>
+</div>
+<p>Next, we compute <span class="math inline">f(\{x_2\})</span>. This is the expected price of a specific car when we only consider its mileage, ignoring age. Phrasing this as a question: <strong>If I have a car with 100,000 miles, but I don’t know its age, what is its expected price based on the typical ages I see in my data?</strong></p>
+<p>In integral form, this can be expressed as:</p>
+<p><span class="math display">
+f(\{x_2\}) = \mathbb{E}[f(x) | x_2] = \int f(x_1, x_2) p(x_1) dx_1.
+</span></p>
+<p>We can compute this by averaging the model’s predictions over all possible values of age, while keeping mileage fixed:</p>
+<p><span class="math display">
+f(\{x_2\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^\star),
+</span> where <span class="math inline">x_2^\star</span> is the mileage of the specific car we are trying to explain, and <span class="math inline">x_1^i</span> are the ages of all cars in our database.</p>
+<p>Visually, this is almost the same as what we did in the figures above for <span class="math inline">x_1</span>, but now on the other axis.</p>
+<p>Finally, we compute <span class="math inline">f(\{x_1, x_2\})</span>. This is the expected price of a specific car when we consider both age and mileage. Phrasing this as a question: <strong>If I have a 5-year-old car with 100,000 miles, what does my model predict its price to be?</strong></p>
+<p>The expectation operator now becomes trivial: <span class="math display">
+f(\{x_1, x_2\}) = \mathbb{E}[f(x) | x_1, x_2] = f(x_1^\star, x_2^\star).
+</span></p>
+<p>Since we are conditioning on both age and mileage, we can directly use the model’s prediction for the specific car we are trying to explain, which is <span class="math inline">f(x_1^\star, x_2^\star)</span>.</p>
+<p>Now we are ready to compute the second term for <span class="math inline">\phi_1</span>, namely <span class="math inline">f(\{x_1, x_2\}) - f(\{x_2\})</span>. Visually, it is the vertical distance between the black horizontal line and the actual height of the car we are trying to explain, which is the blue dot in the figure above. We print its value below:</p>
+<div id="d81c64ed" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>second_term <span class="op">=</span> model_f(x1_sample[idx], x2_sample[idx]) <span class="op">-</span> z_x2</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>second_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>-0.146</code></pre>
+</div>
+</div>
+<div id="2b500bb7" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>3d plot</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb13-2"><a href="#cb13-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
+<span id="cb13-3"><a href="#cb13-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb13-4"><a href="#cb13-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, Z, cmap<span class="op">=</span>cm.viridis, alpha<span class="op">=</span><span class="fl">0.8</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-6"><a href="#cb13-6"></a>x1_squished <span class="op">=</span> np.full_like(x1_sample, x1_sample[idx])</span>
+<span id="cb13-7"><a href="#cb13-7"></a>x2_squished <span class="op">=</span> np.full_like(x2_sample, x2_sample[idx])</span>
+<span id="cb13-8"><a href="#cb13-8"></a>z_x1squished <span class="op">=</span> model_f(x1_squished, x2_sample)</span>
+<span id="cb13-9"><a href="#cb13-9"></a>z_x2squished <span class="op">=</span> model_f(x1_sample, x2_squished)</span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co"># ax.scatter(x1_squished, x2_sample, z_x1squished, c='k', s=10, alpha=1.0, zorder=11)</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a>ax.scatter(x1_sample, x2_squished, z_x2squished, c<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, zorder<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb13-12"><a href="#cb13-12"></a></span>
+<span id="cb13-13"><a href="#cb13-13"></a>ax.scatter(x1_sample[idx], x2_sample[idx], z_sample[idx], c<span class="op">=</span><span class="st">'xkcd:cerulean'</span>, s<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, zorder<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb13-14"><a href="#cb13-14"></a></span>
+<span id="cb13-15"><a href="#cb13-15"></a></span>
+<span id="cb13-16"><a href="#cb13-16"></a>z_x1 <span class="op">=</span> np.mean(z_x1squished)</span>
+<span id="cb13-17"><a href="#cb13-17"></a>z_x2 <span class="op">=</span> np.mean(z_x2squished)</span>
+<span id="cb13-18"><a href="#cb13-18"></a></span>
+<span id="cb13-19"><a href="#cb13-19"></a>z_offset <span class="op">=</span> <span class="op">-</span><span class="dv">3</span></span>
+<span id="cb13-20"><a href="#cb13-20"></a></span>
+<span id="cb13-21"><a href="#cb13-21"></a>ax.contourf(X1, X2, Z, </span>
+<span id="cb13-22"><a href="#cb13-22"></a>            levels<span class="op">=</span>levels, </span>
+<span id="cb13-23"><a href="#cb13-23"></a>            cmap<span class="op">=</span>cm.viridis, </span>
+<span id="cb13-24"><a href="#cb13-24"></a>            norm<span class="op">=</span>norm, </span>
+<span id="cb13-25"><a href="#cb13-25"></a>            zdir<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb13-26"><a href="#cb13-26"></a>            extend<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb13-27"><a href="#cb13-27"></a>            offset<span class="op">=</span>z_offset, </span>
+<span id="cb13-28"><a href="#cb13-28"></a>            alpha<span class="op">=</span><span class="fl">0.8</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb13-29"><a href="#cb13-29"></a></span>
+<span id="cb13-30"><a href="#cb13-30"></a>idx <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb13-31"><a href="#cb13-31"></a>x1_star <span class="op">=</span> x1_sample[idx]</span>
+<span id="cb13-32"><a href="#cb13-32"></a>x2_star <span class="op">=</span> x2_sample[idx]</span>
+<span id="cb13-33"><a href="#cb13-33"></a>z_star <span class="op">=</span> z_sample[idx]</span>
+<span id="cb13-34"><a href="#cb13-34"></a>slice_x1 <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb13-35"><a href="#cb13-35"></a>slice_x2 <span class="op">=</span> np.full_like(slice_x1, x2_star)</span>
+<span id="cb13-36"><a href="#cb13-36"></a>slice_z <span class="op">=</span> model_f(slice_x1, slice_x2)</span>
+<span id="cb13-37"><a href="#cb13-37"></a>ax.plot(slice_x1, slice_x2, slice_z, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Slice for f_x(</span><span class="sc">{x2}</span><span class="st">)'</span>)</span>
+<span id="cb13-38"><a href="#cb13-38"></a>ax.plot(slice_x1, slice_x2, np.full_like(slice_x2, z_x2), color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb13-39"><a href="#cb13-39"></a></span>
+<span id="cb13-40"><a href="#cb13-40"></a>phi_0 <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb13-41"><a href="#cb13-41"></a>surf <span class="op">=</span> ax.plot_surface(X1, X2, np.full_like(Z, phi_0), color<span class="op">=</span><span class="st">"gray"</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, antialiased<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-42"><a href="#cb13-42"></a></span>
+<span id="cb13-43"><a href="#cb13-43"></a>z_plane_range <span class="op">=</span> np.linspace(z_offset, np.<span class="bu">max</span>(Z), <span class="dv">10</span>)</span>
+<span id="cb13-44"><a href="#cb13-44"></a>slice_x1_mesh, z_mesh <span class="op">=</span> np.meshgrid(slice_x1, z_plane_range)</span>
+<span id="cb13-45"><a href="#cb13-45"></a>slice_x2_mesh <span class="op">=</span> np.full_like(slice_x1_mesh, x2_star)</span>
+<span id="cb13-46"><a href="#cb13-46"></a>ax.plot_surface(slice_x1_mesh, slice_x2_mesh, z_mesh, </span>
+<span id="cb13-47"><a href="#cb13-47"></a>                color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.15</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-48"><a href="#cb13-48"></a></span>
+<span id="cb13-49"><a href="#cb13-49"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_1</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb13-50"><a href="#cb13-50"></a>       ylabel<span class="op">=</span><span class="vs">r'feature </span><span class="dv">$</span><span class="vs">x_2</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb13-51"><a href="#cb13-51"></a>       zlabel<span class="op">=</span><span class="vs">r'prediction </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb13-52"><a href="#cb13-52"></a>       xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb13-53"><a href="#cb13-53"></a>       yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb13-54"><a href="#cb13-54"></a>       xlim<span class="op">=</span>(x1_min, x1_max),</span>
+<span id="cb13-55"><a href="#cb13-55"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
+<span id="cb13-56"><a href="#cb13-56"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb13-57"><a href="#cb13-57"></a>)</span>
+<span id="cb13-58"><a href="#cb13-58"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="shap_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally, we can compute <span class="math inline">\phi_1</span> by summing the two terms we just computed:</p>
+<div id="e6314ad1" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>phi_1 <span class="op">=</span> first_term <span class="op">+</span> second_term</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="bu">print</span>(<span class="ss">f"phi_1 = </span><span class="sc">{</span>phi_1<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>phi_1 = -0.389</code></pre>
+</div>
+</div>
+<p>If you read all the code above that produced the figures, you might think that the computation is convoluted. Nothing could be further from the truth. See below the whole thing:</p>
+<div id="e55a93d5" class="cell" data-execution_count="26">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>E_empty <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>E_x1 <span class="op">=</span> np.mean(model_f(x1_sample[idx], x2_sample))</span>
+<span id="cb16-3"><a href="#cb16-3"></a>E_x2 <span class="op">=</span> np.mean(model_f(x1_sample, x2_sample[idx]))</span>
+<span id="cb16-4"><a href="#cb16-4"></a>E_x1x2 <span class="op">=</span> model_f(x1_sample[idx], x2_sample[idx])</span>
+<span id="cb16-5"><a href="#cb16-5"></a>phi_1b <span class="op">=</span> (E_x1 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x2)</span>
+<span id="cb16-6"><a href="#cb16-6"></a>phi_2 <span class="op">=</span> (E_x2 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x1)</span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="bu">print</span>(<span class="ss">f"phi_1 = </span><span class="sc">{</span>phi_1b<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="bu">print</span>(<span class="ss">f"phi_2 = </span><span class="sc">{</span>phi_2<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>phi_1 = -0.389
+phi_2 = -4.007</code></pre>
+</div>
+</div>
+<p>The computation is so trivial that I can do it for the whole dataset and visualize the SHAP values for all cars in my database, as shown below.</p>
+<div id="5e678e36" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>phi1_list <span class="op">=</span> []</span>
+<span id="cb18-2"><a href="#cb18-2"></a>phi2_list <span class="op">=</span> []</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb18-4"><a href="#cb18-4"></a>    E_empty <span class="op">=</span> np.mean(z_sample)</span>
+<span id="cb18-5"><a href="#cb18-5"></a>    E_x1 <span class="op">=</span> np.mean(model_f(x1_sample[i], x2_sample))</span>
+<span id="cb18-6"><a href="#cb18-6"></a>    E_x2 <span class="op">=</span> np.mean(model_f(x1_sample, x2_sample[i]))</span>
+<span id="cb18-7"><a href="#cb18-7"></a>    E_x1x2 <span class="op">=</span> model_f(x1_sample[i], x2_sample[i])</span>
+<span id="cb18-8"><a href="#cb18-8"></a>    phi_1b <span class="op">=</span> (E_x1 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x2)</span>
+<span id="cb18-9"><a href="#cb18-9"></a>    phi_2 <span class="op">=</span> (E_x2 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x1)</span>
+<span id="cb18-10"><a href="#cb18-10"></a>    phi1_list.append(phi_1b)</span>
+<span id="cb18-11"><a href="#cb18-11"></a>    phi2_list.append(phi_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="098a9eed" class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb19-2"><a href="#cb19-2"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb19-3"><a href="#cb19-3"></a>vertical_jitter <span class="op">=</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.05</span>, size<span class="op">=</span>N)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>vabs1 <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(phi1_list))</span>
+<span id="cb19-5"><a href="#cb19-5"></a>vabs2 <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(phi2_list))</span>
+<span id="cb19-6"><a href="#cb19-6"></a>phi1_norm <span class="op">=</span> colors.TwoSlopeNorm(vmin<span class="op">=-</span>vabs1, vcenter<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>vabs1)</span>
+<span id="cb19-7"><a href="#cb19-7"></a>phi2_norm <span class="op">=</span> colors.TwoSlopeNorm(vmin<span class="op">=-</span>vabs2, vcenter<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>vabs2)</span>
+<span id="cb19-8"><a href="#cb19-8"></a></span>
+<span id="cb19-9"><a href="#cb19-9"></a>sc <span class="op">=</span> ax.scatter(</span>
+<span id="cb19-10"><a href="#cb19-10"></a>    x1_sample,</span>
+<span id="cb19-11"><a href="#cb19-11"></a>    <span class="dv">1</span> <span class="op">+</span> vertical_jitter,</span>
+<span id="cb19-12"><a href="#cb19-12"></a>    c<span class="op">=</span>phi1_list,</span>
+<span id="cb19-13"><a href="#cb19-13"></a>    cmap<span class="op">=</span><span class="st">'coolwarm'</span>,</span>
+<span id="cb19-14"><a href="#cb19-14"></a>    norm<span class="op">=</span>phi1_norm,</span>
+<span id="cb19-15"><a href="#cb19-15"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb19-16"><a href="#cb19-16"></a>    s<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb19-17"><a href="#cb19-17"></a>    label<span class="op">=</span><span class="st">'SHAP value for $x_1$ (age)'</span></span>
+<span id="cb19-18"><a href="#cb19-18"></a>)</span>
+<span id="cb19-19"><a href="#cb19-19"></a><span class="co"># fig.colorbar(sc, ax=ax, label=r'$\phi_1$')</span></span>
+<span id="cb19-20"><a href="#cb19-20"></a>vertical_jitter <span class="op">=</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.05</span>, size<span class="op">=</span>N)</span>
+<span id="cb19-21"><a href="#cb19-21"></a>sc <span class="op">=</span> ax.scatter(</span>
+<span id="cb19-22"><a href="#cb19-22"></a>    x2_sample,</span>
+<span id="cb19-23"><a href="#cb19-23"></a>    <span class="dv">0</span> <span class="op">+</span> vertical_jitter,</span>
+<span id="cb19-24"><a href="#cb19-24"></a>    c<span class="op">=</span>phi2_list,</span>
+<span id="cb19-25"><a href="#cb19-25"></a>    cmap<span class="op">=</span><span class="st">'coolwarm'</span>,</span>
+<span id="cb19-26"><a href="#cb19-26"></a>    norm<span class="op">=</span>phi2_norm,</span>
+<span id="cb19-27"><a href="#cb19-27"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb19-28"><a href="#cb19-28"></a>    s<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb19-29"><a href="#cb19-29"></a>    label<span class="op">=</span><span class="st">'SHAP value for $x_2$ (income)'</span></span>
+<span id="cb19-30"><a href="#cb19-30"></a>)</span>
+<span id="cb19-31"><a href="#cb19-31"></a>ax.<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span>),</span>
+<span id="cb19-32"><a href="#cb19-32"></a>       xlabel<span class="op">=</span><span class="vs">r'feature value'</span>,</span>
+<span id="cb19-33"><a href="#cb19-33"></a>       title<span class="op">=</span><span class="st">'SHAP values for all cars in the dataset'</span>,</span>
+<span id="cb19-34"><a href="#cb19-34"></a>       yticks<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>],</span>
+<span id="cb19-35"><a href="#cb19-35"></a>       yticklabels<span class="op">=</span>[<span class="st">'$x_2$ (milage)'</span>, <span class="st">'$x_1$ (age)'</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>[(-0.5, 1.5),
+ Text(0.5, 0, 'feature value'),
+ Text(0.5, 1.0, 'SHAP values for all cars in the dataset'),
+ [&lt;matplotlib.axis.YTick at 0x118f73350&gt;,
+  &lt;matplotlib.axis.YTick at 0x1190b9610&gt;],
+ [Text(0, 0, '$x_2$ (milage)'), Text(0, 1, '$x_1$ (age)')]]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="shap_files/figure-html/cell-16-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="unfinished" class="level2" data-number="58.2">
+<h2 data-number="58.2" class="anchored" data-anchor-id="unfinished"><span class="header-section-number">58.2</span> unfinished</h2>
+<ul>
+<li>Now I need to discuss the general case, when we have more than 2 features.</li>
+<li>Discuss the properties of SHAP values, show its decomposition.</li>
+<li>Show how to compute SHAP in python.</li>
+</ul>
+<p>A useful way to understant the usefulness of SHAP values is by the SHAP decomposition. If <span class="math inline">f(x)</span> is the model’s prediction for a specific data point <span class="math inline">x</span>, the decomposition is:</p>
+<p><span class="math display">
+f(x) = \phi_0 + \sum_{j=1}^n \phi_j,
+</span></p>
+<p>where we have <span class="math inline">M</span> features. The SHAP values <span class="math inline">\phi_j</span> represent the contribution of each feature to the prediction, beyond the average prediction <span class="math inline">\phi_0</span>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../misc/trend_test.html" class="pagination-link" aria-label="trend test">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">trend test</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

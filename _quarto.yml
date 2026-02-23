@@ -79,6 +79,7 @@ book:
         - likelihood/MLE_and_bayesian_inference.ipynb
     - part: "generalization and model complexity"
       chapters:
+        - generalization/motivation.qmd
         - generalization/bias-variance-tradeoff.ipynb
         - generalization/overfitting-and-underfitting.ipynb
         - generalization/cross-validation.ipynb
@@ -89,9 +90,11 @@ book:
     - part: "neural networks"
       chapters:
         - neural_networks/nielsen_ch1.ipynb
+        - neural_networks/nielsen_ch2.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
+        - misc/shap.ipynb
     # - references.qmd
   sidebar:
     collapse-level: 2
