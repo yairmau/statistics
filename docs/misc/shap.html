@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,15 +69,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -146,7 +145,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -188,8 +187,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -754,17 +752,17 @@ window.Quarto = {
 <div id="d366f8f7" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> matplotlib <span class="im">import</span> cm</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> colors</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># %matplotlib widget</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># %matplotlib widget</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="59190c44" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>model definition and sample data generation</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> model_f(x1, x2):</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> model_f(x1, x2):</span>
 <span id="cb2-2"><a href="#cb2-2"></a>    <span class="cf">return</span> <span class="dv">5</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="fl">0.3</span><span class="op">*</span>x1<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> x2 <span class="op">+</span> (<span class="fl">0.3</span> <span class="op">*</span> x1 <span class="op">*</span> x2) <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>np.exp((<span class="op">-</span>(x1<span class="op">+</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="fl">0.3</span>) <span class="op">-</span> <span class="dv">3</span><span class="op">*</span>np.exp((<span class="op">-</span>(x1<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x2<span class="op">+</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="fl">0.3</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a></span>
 <span id="cb2-4"><a href="#cb2-4"></a>N <span class="op">=</span> <span class="dv">40</span></span>
@@ -779,13 +777,13 @@ window.Quarto = {
 <span id="cb2-13"><a href="#cb2-13"></a>x1_range <span class="op">=</span> np.linspace(x1_min, x1_max, <span class="dv">50</span>)</span>
 <span id="cb2-14"><a href="#cb2-14"></a>x2_range <span class="op">=</span> np.linspace(x2_min, x2_max, <span class="dv">50</span>)</span>
 <span id="cb2-15"><a href="#cb2-15"></a>X1, X2 <span class="op">=</span> np.meshgrid(x1_range, x2_range)</span>
-<span id="cb2-16"><a href="#cb2-16"></a>Z <span class="op">=</span> model_f(X1, X2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-16"><a href="#cb2-16"></a>Z <span class="op">=</span> model_f(X1, X2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="391c3767" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>2d plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb3-3"><a href="#cb3-3"></a>levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>norm <span class="op">=</span> colors.BoundaryNorm(boundaries<span class="op">=</span>levels, ncolors<span class="op">=</span><span class="dv">256</span>, extend<span class="op">=</span><span class="st">'both'</span>)</span>
@@ -801,7 +799,7 @@ window.Quarto = {
 <span id="cb3-14"><a href="#cb3-14"></a>    title<span class="op">=</span><span class="vs">r"response surface </span><span class="dv">$</span><span class="vs">f</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs"> of the model"</span>,</span>
 <span id="cb3-15"><a href="#cb3-15"></a>    xticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
 <span id="cb3-16"><a href="#cb3-16"></a>    yticks<span class="op">=</span>np.arange(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
-<span id="cb3-17"><a href="#cb3-17"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-17"><a href="#cb3-17"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -852,7 +850,7 @@ f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
 <div id="e13b5476" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb4-2"><a href="#cb4-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb4-4"><a href="#cb4-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -881,7 +879,7 @@ f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
 <span id="cb4-27"><a href="#cb4-27"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
 <span id="cb4-28"><a href="#cb4-28"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
 <span id="cb4-29"><a href="#cb4-29"></a>)</span>
-<span id="cb4-30"><a href="#cb4-30"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-30"><a href="#cb4-30"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -895,7 +893,7 @@ f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
 <div id="8ecf3334" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb5-2"><a href="#cb5-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb5-4"><a href="#cb5-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -926,7 +924,7 @@ f(\{\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^i, x_2^i).
 <span id="cb5-29"><a href="#cb5-29"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
 <span id="cb5-30"><a href="#cb5-30"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
 <span id="cb5-31"><a href="#cb5-31"></a>)</span>
-<span id="cb5-32"><a href="#cb5-32"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-32"><a href="#cb5-32"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -950,7 +948,7 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <div id="6b7b1ae6" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb6-2"><a href="#cb6-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb6-3"><a href="#cb6-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb6-4"><a href="#cb6-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -998,7 +996,7 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <span id="cb6-46"><a href="#cb6-46"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
 <span id="cb6-47"><a href="#cb6-47"></a>)</span>
 <span id="cb6-48"><a href="#cb6-48"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb6-49"><a href="#cb6-49"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-49"><a href="#cb6-49"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1012,7 +1010,7 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <div id="834b7221" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb7-2"><a href="#cb7-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb7-3"><a href="#cb7-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb7-4"><a href="#cb7-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -1055,7 +1053,7 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <span id="cb7-41"><a href="#cb7-41"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
 <span id="cb7-42"><a href="#cb7-42"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
 <span id="cb7-43"><a href="#cb7-43"></a>)</span>
-<span id="cb7-44"><a href="#cb7-44"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-44"><a href="#cb7-44"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1069,7 +1067,7 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <div id="d02ab04f" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb8-2"><a href="#cb8-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb8-3"><a href="#cb8-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb8-4"><a href="#cb8-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -1119,7 +1117,7 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <span id="cb8-48"><a href="#cb8-48"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
 <span id="cb8-49"><a href="#cb8-49"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
 <span id="cb8-50"><a href="#cb8-50"></a>)</span>
-<span id="cb8-51"><a href="#cb8-51"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-51"><a href="#cb8-51"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1133,8 +1131,8 @@ f(\{x_1\}) = \frac{1}{n} \sum_{i=1}^{n} f(x_1^\star, x_2^i),
 <div id="29e21537" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>first_term <span class="op">=</span> (z_x1 <span class="op">-</span> phi_0) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>first_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>first_term <span class="op">=</span> (z_x1 <span class="op">-</span> phi_0) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>first_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>-0.122</code></pre>
@@ -1160,8 +1158,8 @@ f(\{x_1, x_2\}) = \mathbb{E}[f(x) | x_1, x_2] = f(x_1^\star, x_2^\star).
 <div id="d81c64ed" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>second_term <span class="op">=</span> (model_f(x1_sample[idx], x2_sample[idx]) <span class="op">-</span> z_x2) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>second_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>second_term <span class="op">=</span> (model_f(x1_sample[idx], x2_sample[idx]) <span class="op">-</span> z_x2) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>second_term<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>-0.073</code></pre>
@@ -1170,7 +1168,7 @@ f(\{x_1, x_2\}) = \mathbb{E}[f(x) | x_1, x_2] = f(x_1^\star, x_2^\star).
 <div id="2b500bb7" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>3d plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb13-2"><a href="#cb13-2"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.90</span>, bottom<span class="op">=</span><span class="fl">0.10</span>, left<span class="op">=</span><span class="fl">0.20</span>, right<span class="op">=</span><span class="fl">0.80</span>)</span>
 <span id="cb13-3"><a href="#cb13-3"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
 <span id="cb13-4"><a href="#cb13-4"></a>ax.computed_zorder <span class="op">=</span> <span class="va">False</span></span>
@@ -1221,7 +1219,7 @@ f(\{x_1, x_2\}) = \mathbb{E}[f(x) | x_1, x_2] = f(x_1^\star, x_2^\star).
 <span id="cb13-49"><a href="#cb13-49"></a>       ylim<span class="op">=</span>(x2_min, x2_max),</span>
 <span id="cb13-50"><a href="#cb13-50"></a>       zlim<span class="op">=</span>(z_offset, np.<span class="bu">max</span>(Z) <span class="op">+</span> <span class="dv">1</span>)</span>
 <span id="cb13-51"><a href="#cb13-51"></a>)</span>
-<span id="cb13-52"><a href="#cb13-52"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-52"><a href="#cb13-52"></a>ax.view_init(elev<span class="op">=</span><span class="dv">10</span>, azim<span class="op">=-</span><span class="dv">30</span>, roll<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1235,8 +1233,8 @@ f(\{x_1, x_2\}) = \mathbb{E}[f(x) | x_1, x_2] = f(x_1^\star, x_2^\star).
 <div id="e6314ad1" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>phi_1 <span class="op">=</span> first_term <span class="op">+</span> second_term</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="bu">print</span>(<span class="ss">f"phi_1 = </span><span class="sc">{</span>phi_1<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>phi_1 <span class="op">=</span> first_term <span class="op">+</span> second_term</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="bu">print</span>(<span class="ss">f"phi_1 = </span><span class="sc">{</span>phi_1<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>phi_1 = -0.195</code></pre>
@@ -1246,14 +1244,14 @@ f(\{x_1, x_2\}) = \mathbb{E}[f(x) | x_1, x_2] = f(x_1^\star, x_2^\star).
 <div id="e55a93d5" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>E_empty <span class="op">=</span> np.mean(z_sample)</span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>E_empty <span class="op">=</span> np.mean(z_sample)</span>
 <span id="cb16-2"><a href="#cb16-2"></a>E_x1 <span class="op">=</span> np.mean(model_f(x1_sample[idx], x2_sample))</span>
 <span id="cb16-3"><a href="#cb16-3"></a>E_x2 <span class="op">=</span> np.mean(model_f(x1_sample, x2_sample[idx]))</span>
 <span id="cb16-4"><a href="#cb16-4"></a>E_x1x2 <span class="op">=</span> model_f(x1_sample[idx], x2_sample[idx])</span>
 <span id="cb16-5"><a href="#cb16-5"></a>phi_1b <span class="op">=</span> ((E_x1 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x2)) <span class="op">/</span> <span class="dv">2</span></span>
 <span id="cb16-6"><a href="#cb16-6"></a>phi_2 <span class="op">=</span> ((E_x2 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x1)) <span class="op">/</span> <span class="dv">2</span></span>
 <span id="cb16-7"><a href="#cb16-7"></a><span class="bu">print</span>(<span class="ss">f"phi_1 = </span><span class="sc">{</span>phi_1b<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="bu">print</span>(<span class="ss">f"phi_2 = </span><span class="sc">{</span>phi_2<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="bu">print</span>(<span class="ss">f"phi_2 = </span><span class="sc">{</span>phi_2<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>phi_1 = -0.195
@@ -1264,7 +1262,7 @@ phi_2 = -2.004</code></pre>
 <div id="5e678e36" class="cell" data-execution_count="25">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>phi1_list <span class="op">=</span> []</span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>phi1_list <span class="op">=</span> []</span>
 <span id="cb18-2"><a href="#cb18-2"></a>phi2_list <span class="op">=</span> []</span>
 <span id="cb18-3"><a href="#cb18-3"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N):</span>
 <span id="cb18-4"><a href="#cb18-4"></a>    E_empty <span class="op">=</span> np.mean(z_sample)</span>
@@ -1274,13 +1272,13 @@ phi_2 = -2.004</code></pre>
 <span id="cb18-8"><a href="#cb18-8"></a>    phi_1b <span class="op">=</span> ((E_x1 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x2)) <span class="op">/</span> <span class="dv">2</span></span>
 <span id="cb18-9"><a href="#cb18-9"></a>    phi_2 <span class="op">=</span> ((E_x2 <span class="op">-</span> E_empty) <span class="op">+</span> (E_x1x2 <span class="op">-</span> E_x1)) <span class="op">/</span> <span class="dv">2</span></span>
 <span id="cb18-10"><a href="#cb18-10"></a>    phi1_list.append(phi_1b)</span>
-<span id="cb18-11"><a href="#cb18-11"></a>    phi2_list.append(phi_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-11"><a href="#cb18-11"></a>    phi2_list.append(phi_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="098a9eed" class="cell" data-execution_count="37">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
 <span id="cb19-2"><a href="#cb19-2"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb19-3"><a href="#cb19-3"></a>vertical_jitter <span class="op">=</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.05</span>, size<span class="op">=</span>N)</span>
 <span id="cb19-4"><a href="#cb19-4"></a><span class="co"># vabs1 = np.max(np.abs(phi1_list))</span></span>
@@ -1320,7 +1318,7 @@ phi_2 = -2.004</code></pre>
 <span id="cb19-38"><a href="#cb19-38"></a>       xlabel<span class="op">=</span><span class="vs">r'SHAP value'</span>,</span>
 <span id="cb19-39"><a href="#cb19-39"></a>       title<span class="op">=</span><span class="st">'SHAP values for all cars in the dataset'</span>,</span>
 <span id="cb19-40"><a href="#cb19-40"></a>       yticks<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>],</span>
-<span id="cb19-41"><a href="#cb19-41"></a>       yticklabels<span class="op">=</span>[<span class="st">'$x_2$ (milage)'</span>, <span class="st">'$x_1$ (age)'</span>])<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-41"><a href="#cb19-41"></a>       yticklabels<span class="op">=</span>[<span class="st">'$x_2$ (milage)'</span>, <span class="st">'$x_1$ (age)'</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1334,7 +1332,7 @@ phi_2 = -2.004</code></pre>
 <div id="287e6205" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="im">import</span> shap</span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="im">import</span> shap</span>
 <span id="cb20-2"><a href="#cb20-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb20-3"><a href="#cb20-3"></a></span>
 <span id="cb20-4"><a href="#cb20-4"></a><span class="kw">def</span> model_f2(X):</span>
@@ -1348,13 +1346,13 @@ phi_2 = -2.004</code></pre>
 <span id="cb20-12"><a href="#cb20-12"></a>X <span class="op">=</span> pd.DataFrame({<span class="st">'x1'</span>: x1_sample, <span class="st">'x2'</span>: x2_sample})</span>
 <span id="cb20-13"><a href="#cb20-13"></a>model <span class="op">=</span> model_f2</span>
 <span id="cb20-14"><a href="#cb20-14"></a>explainer <span class="op">=</span> shap.Explainer(model, X)</span>
-<span id="cb20-15"><a href="#cb20-15"></a>shap_values <span class="op">=</span> explainer(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-15"><a href="#cb20-15"></a>shap_values <span class="op">=</span> explainer(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="2971306e" class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
 <span id="cb21-2"><a href="#cb21-2"></a>plt.subplots_adjust(hspace<span class="op">=</span><span class="fl">0.4</span>)</span>
 <span id="cb21-3"><a href="#cb21-3"></a>shap.plots.beeswarm(shap_values, ax<span class="op">=</span>ax[<span class="dv">0</span>], plot_size<span class="op">=</span><span class="va">None</span>, show<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb21-4"><a href="#cb21-4"></a></span>
@@ -1385,7 +1383,7 @@ phi_2 = -2.004</code></pre>
 <span id="cb21-29"><a href="#cb21-29"></a>       xlabel<span class="op">=</span><span class="vs">r'SHAP value'</span>,</span>
 <span id="cb21-30"><a href="#cb21-30"></a>       yticks<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>],</span>
 <span id="cb21-31"><a href="#cb21-31"></a>       yticklabels<span class="op">=</span>[<span class="st">'$x_1$ (age)'</span>, <span class="st">'$x_2$ (milage)'</span>])<span class="op">;</span></span>
-<span id="cb21-32"><a href="#cb21-32"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb21-32"><a href="#cb21-32"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1582,14 +1580,13 @@ f(x) = \phi_0 + \sum_{j=1}^n \phi_j,
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

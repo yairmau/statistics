@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -147,7 +146,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -189,8 +188,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -780,7 +778,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <div id="a9d4a065" class="cell" data-execution_count="193">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-4"><a href="#cb1-4"></a>sns.set_theme(style<span class="op">=</span><span class="st">"ticks"</span>, font_scale<span class="op">=</span><span class="fl">1.2</span>)</span>
@@ -791,34 +789,34 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb1-9"><a href="#cb1-9"></a>gold <span class="op">=</span> <span class="st">"xkcd:gold"</span></span>
 <span id="cb1-10"><a href="#cb1-10"></a>pink <span class="op">=</span> <span class="st">"xkcd:hot pink"</span></span>
 <span id="cb1-11"><a href="#cb1-11"></a>green <span class="op">=</span> <span class="st">"xkcd:forest"</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>purple <span class="op">=</span> <span class="st">"xkcd:barney"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-12"><a href="#cb1-12"></a>purple <span class="op">=</span> <span class="st">"xkcd:barney"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="35694272" class="cell" data-execution_count="194">
 <details class="code-fold">
 <summary>create data</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">2</span>)</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>nsample <span class="op">=</span> <span class="dv">15</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, nsample)</span>
 <span id="cb2-4"><a href="#cb2-4"></a>noise <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>nsample)</span>
 <span id="cb2-5"><a href="#cb2-5"></a>foo <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">6</span> <span class="op">-</span> <span class="fl">0.1</span><span class="op">*</span>x <span class="op">+</span> <span class="fl">0.05</span><span class="op">*</span>x<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>y <span class="op">=</span> foo(x) <span class="op">+</span> noise</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-6"><a href="#cb2-6"></a>y <span class="op">=</span> foo(x) <span class="op">+</span> noise</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="dca3412e" class="cell" data-execution_count="195">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># use sm to create matrix design for a parabola</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># use sm to create matrix design for a parabola</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>X <span class="op">=</span> sm.add_constant(np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>)))</span>
 <span id="cb3-3"><a href="#cb3-3"></a>model <span class="op">=</span> sm.OLS(y, X).fit()</span>
 <span id="cb3-4"><a href="#cb3-4"></a>y_hat <span class="op">=</span> model.predict(X)</span>
-<span id="cb3-5"><a href="#cb3-5"></a>f_predicted <span class="op">=</span> np.poly1d(model.params[::<span class="op">-</span><span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a href="#cb3-5"></a>f_predicted <span class="op">=</span> np.poly1d(model.params[::<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="2de776f0" class="cell" data-execution_count="196">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb4-2"><a href="#cb4-2"></a>ax.plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">10</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">10</span>, <span class="dv">100</span>)</span>
 <span id="cb4-4"><a href="#cb4-4"></a>ax.plot(x_line, f_predicted(x_line), lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span>gold, label<span class="op">=</span><span class="st">"fitted model"</span>)</span>
@@ -830,7 +828,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb4-10"><a href="#cb4-10"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
 <span id="cb4-11"><a href="#cb4-11"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
 <span id="cb4-12"><a href="#cb4-12"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-13"><a href="#cb4-13"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -847,7 +845,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <div id="0f959421" class="cell" data-execution_count="197">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, subplot_kw<span class="op">=</span>{<span class="st">'aspect'</span>:<span class="st">'equal'</span>})</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, subplot_kw<span class="op">=</span>{<span class="st">'aspect'</span>:<span class="st">'equal'</span>})</span>
 <span id="cb5-2"><a href="#cb5-2"></a>fig.subplots_adjust(left<span class="op">=</span><span class="fl">0.04</span>, right<span class="op">=</span><span class="fl">0.98</span>, top<span class="op">=</span><span class="fl">0.88</span>, bottom<span class="op">=</span><span class="fl">0.15</span>,</span>
 <span id="cb5-3"><a href="#cb5-3"></a>                    hspace<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.04</span>)</span>
 <span id="cb5-4"><a href="#cb5-4"></a>ax[<span class="dv">0</span>].plot(x, y, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
@@ -886,7 +884,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb5-37"><a href="#cb5-37"></a>         ylim<span class="op">=</span>(<span class="dv">0</span>, y.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),)</span>
 <span id="cb5-38"><a href="#cb5-38"></a>ax[<span class="dv">0</span>].legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
 <span id="cb5-39"><a href="#cb5-39"></a>ax[<span class="dv">1</span>].legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
-<span id="cb5-40"><a href="#cb5-40"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-40"><a href="#cb5-40"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -900,7 +898,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <div id="d832c7c9" class="cell" data-execution_count="198">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">2</span>)</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb6-2"><a href="#cb6-2"></a>nsample <span class="op">=</span> <span class="dv">15</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, nsample)</span>
 <span id="cb6-4"><a href="#cb6-4"></a>noise1 <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span>nsample)</span>
@@ -924,13 +922,13 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb6-22"><a href="#cb6-22"></a></span>
 <span id="cb6-23"><a href="#cb6-23"></a>R_squared1 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y1 <span class="op">-</span> y1_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y1 <span class="op">-</span> y1.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
 <span id="cb6-24"><a href="#cb6-24"></a>R_squared2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb6-25"><a href="#cb6-25"></a>R_squared3 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y3 <span class="op">-</span> y3_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y3 <span class="op">-</span> y3.mean()) <span class="op">**</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-25"><a href="#cb6-25"></a>R_squared3 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y3 <span class="op">-</span> y3_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y3 <span class="op">-</span> y3.mean()) <span class="op">**</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="c1300b10" class="cell" data-execution_count="199">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb7-2"><a href="#cb7-2"></a>fig.subplots_adjust(left<span class="op">=</span><span class="fl">0.04</span>, right<span class="op">=</span><span class="fl">0.98</span>, top<span class="op">=</span><span class="fl">0.95</span>, bottom<span class="op">=</span><span class="fl">0.15</span>,</span>
 <span id="cb7-3"><a href="#cb7-3"></a>                    hspace<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.04</span>)</span>
 <span id="cb7-4"><a href="#cb7-4"></a>ax[<span class="dv">0</span>].plot(x, y1, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
@@ -963,7 +961,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb7-31"><a href="#cb7-31"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
 <span id="cb7-32"><a href="#cb7-32"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y3.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
 <span id="cb7-33"><a href="#cb7-33"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared3<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb7-34"><a href="#cb7-34"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-34"><a href="#cb7-34"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -978,7 +976,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <div id="c9d351ce" class="cell" data-execution_count="200">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">10</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">10</span>, <span class="dv">1000</span>)</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">10</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">10</span>, <span class="dv">1000</span>)</span>
 <span id="cb8-2"><a href="#cb8-2"></a>coeff2 <span class="op">=</span> np.polyfit(x, y2, deg<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb8-3"><a href="#cb8-3"></a>coeff7 <span class="op">=</span> np.polyfit(x, y2, deg<span class="op">=</span><span class="dv">7</span>)</span>
 <span id="cb8-4"><a href="#cb8-4"></a>coeff14 <span class="op">=</span> np.polyfit(x, y2, deg<span class="op">=</span><span class="dv">14</span>)</span>
@@ -993,13 +991,13 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb8-13"><a href="#cb8-13"></a></span>
 <span id="cb8-14"><a href="#cb8-14"></a>R_squared2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
 <span id="cb8-15"><a href="#cb8-15"></a>R_squared7 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y7_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb8-16"><a href="#cb8-16"></a>R_squared14 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y14_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2.mean()) <span class="op">**</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-16"><a href="#cb8-16"></a>R_squared14 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y14_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> np.<span class="bu">sum</span>((y2 <span class="op">-</span> y2.mean()) <span class="op">**</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="d5a08b1e" class="cell" data-execution_count="201">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a>fig.subplots_adjust(left<span class="op">=</span><span class="fl">0.04</span>, right<span class="op">=</span><span class="fl">0.98</span>, top<span class="op">=</span><span class="fl">0.95</span>, bottom<span class="op">=</span><span class="fl">0.15</span>,</span>
 <span id="cb9-3"><a href="#cb9-3"></a>                    hspace<span class="op">=</span><span class="fl">0.05</span>, wspace<span class="op">=</span><span class="fl">0.04</span>)</span>
 <span id="cb9-4"><a href="#cb9-4"></a>ax[<span class="dv">0</span>].plot(x, y2, <span class="st">"o"</span>, mfc<span class="op">=</span><span class="st">"None"</span>, mec<span class="op">=</span><span class="st">"black"</span>, label<span class="op">=</span><span class="st">"data"</span>)</span>
@@ -1032,7 +1030,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb9-31"><a href="#cb9-31"></a>       xlim<span class="op">=</span>(x.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
 <span id="cb9-32"><a href="#cb9-32"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y2.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
 <span id="cb9-33"><a href="#cb9-33"></a>       title<span class="op">=</span><span class="vs">fr"R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared14<span class="sc">:.3f}</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb9-34"><a href="#cb9-34"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-34"><a href="#cb9-34"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1077,7 +1075,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <div id="a41b84eb" class="cell" data-execution_count="202">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># use sm to create matrix design for a parabola</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># use sm to create matrix design for a parabola</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a>X1 <span class="op">=</span> np.column_stack((x,))</span>
 <span id="cb10-3"><a href="#cb10-3"></a>X2 <span class="op">=</span> np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>))</span>
 <span id="cb10-4"><a href="#cb10-4"></a>X3 <span class="op">=</span> np.column_stack((x, x<span class="op">**</span><span class="dv">2</span>, x<span class="op">**</span><span class="dv">3</span>))</span>
@@ -1092,13 +1090,13 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb10-13"><a href="#cb10-13"></a>p3 <span class="op">=</span> np.append(<span class="dv">0</span>, model3.params)</span>
 <span id="cb10-14"><a href="#cb10-14"></a>f_predicted1 <span class="op">=</span> np.poly1d(p1[::<span class="op">-</span><span class="dv">1</span>])</span>
 <span id="cb10-15"><a href="#cb10-15"></a>f_predicted2 <span class="op">=</span> np.poly1d(p2[::<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb10-16"><a href="#cb10-16"></a>f_predicted3 <span class="op">=</span> np.poly1d(p3[::<span class="op">-</span><span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-16"><a href="#cb10-16"></a>f_predicted3 <span class="op">=</span> np.poly1d(p3[::<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="3a0d942e" class="cell" data-execution_count="203">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>SS_total <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>SS_total <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean())<span class="op">**</span><span class="dv">2</span>)</span>
 <span id="cb11-2"><a href="#cb11-2"></a>SS_residuals1 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat1)<span class="op">**</span><span class="dv">2</span>)</span>
 <span id="cb11-3"><a href="#cb11-3"></a>SS_residuals2 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat2)<span class="op">**</span><span class="dv">2</span>)</span>
 <span id="cb11-4"><a href="#cb11-4"></a>SS_residuals3 <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_hat3)<span class="op">**</span><span class="dv">2</span>)</span>
@@ -1117,7 +1115,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb11-17"><a href="#cb11-17"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
 <span id="cb11-18"><a href="#cb11-18"></a>       title<span class="op">=</span><span class="vs">fr"polynomials without intercept"</span>)</span>
 <span id="cb11-19"><a href="#cb11-19"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span>
-<span id="cb11-20"><a href="#cb11-20"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-20"><a href="#cb11-20"></a>ax.set_ylabel(<span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">10</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1136,7 +1134,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <div id="daff5cf4" class="cell" data-execution_count="204">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="cf">for</span> seed <span class="kw">in</span> np.arange(<span class="dv">10</span>):</span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="cf">for</span> seed <span class="kw">in</span> np.arange(<span class="dv">10</span>):</span>
 <span id="cb12-2"><a href="#cb12-2"></a>    rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>seed)</span>
 <span id="cb12-3"><a href="#cb12-3"></a>    N <span class="op">=</span> <span class="dv">30</span></span>
 <span id="cb12-4"><a href="#cb12-4"></a>    x_sample <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)</span>
@@ -1159,7 +1157,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2.
 <span id="cb12-21"><a href="#cb12-21"></a>    SS_residuals_test <span class="op">=</span> np.<span class="bu">sum</span>((y_test <span class="op">-</span> y_predicted_test)<span class="op">**</span><span class="dv">2</span>)</span>
 <span id="cb12-22"><a href="#cb12-22"></a>    R_squared_train <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_train <span class="op">/</span> SS_total_train</span>
 <span id="cb12-23"><a href="#cb12-23"></a>    R_squared_test <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> SS_residuals_test <span class="op">/</span> SS_total_test</span>
-<span id="cb12-24"><a href="#cb12-24"></a>    <span class="bu">print</span>(<span class="ss">f"seed: </span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">, R² train: </span><span class="sc">{</span>R_squared_train<span class="sc">:.2f}</span><span class="ss">, R² test: </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-24"><a href="#cb12-24"></a>    <span class="bu">print</span>(<span class="ss">f"seed: </span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">, R² train: </span><span class="sc">{</span>R_squared_train<span class="sc">:.2f}</span><span class="ss">, R² test: </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>seed: 0, R² train: 0.54, R² test: 0.53
@@ -1177,7 +1175,7 @@ seed: 9, R² train: 0.65, R² test: 0.62</code></pre>
 <div id="b2bc74e2" class="cell" data-execution_count="205">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">3</span>)</span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb14-2"><a href="#cb14-2"></a>N <span class="op">=</span> <span class="dv">30</span></span>
 <span id="cb14-3"><a href="#cb14-3"></a>x_sample <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)</span>
 <span id="cb14-4"><a href="#cb14-4"></a>noise <span class="op">=</span> rng.normal(scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>N)</span>
@@ -1215,7 +1213,7 @@ seed: 9, R² train: 0.65, R² test: 0.62</code></pre>
 <span id="cb14-36"><a href="#cb14-36"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x"</span>,</span>
 <span id="cb14-37"><a href="#cb14-37"></a>       xlim<span class="op">=</span>(x_sample.<span class="bu">min</span>() <span class="op">-</span> <span class="dv">1</span>, x_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>),</span>
 <span id="cb14-38"><a href="#cb14-38"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, y_sample.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">3</span>),</span>
-<span id="cb14-39"><a href="#cb14-39"></a>       title<span class="op">=</span><span class="vs">fr"test set, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-39"><a href="#cb14-39"></a>       title<span class="op">=</span><span class="vs">fr"test set, R² </span><span class="dv">$</span><span class="vs">= </span><span class="sc">{</span>R_squared_test<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1283,14 +1281,13 @@ seed: 9, R² train: 0.65, R² test: 0.62</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
