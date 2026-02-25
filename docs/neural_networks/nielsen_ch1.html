@@ -724,6 +724,7 @@ window.Quarto = {
   <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="header-section-number">55.7</span> exercise</a></li>
   <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6"><span class="header-section-number">55.8</span> exercise</a></li>
   <li><a href="#the-code" id="toc-the-code" class="nav-link" data-scroll-target="#the-code"><span class="header-section-number">55.9</span> the code</a></li>
+  <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7"><span class="header-section-number">55.10</span> exercise</a></li>
   </ul>
 </nav>
     </div>
@@ -753,7 +754,7 @@ window.Quarto = {
 <section id="loading-the-data" class="level2" data-number="55.1">
 <h2 data-number="55.1" class="anchored" data-anchor-id="loading-the-data"><span class="header-section-number">55.1</span> loading the data</h2>
 <p>In the <a href="https://github.com/cvdfoundation/mnist">Common Visual Data Foundation’s Github</a>, I found the URLs for the MNIST dataset. I will load the data directly into memory using these URLs, without saving them to disk.</p>
-<div id="d791de6f" class="cell" data-execution_count="17">
+<div id="d791de6f" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> random</span>
@@ -765,10 +766,11 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span>
 <span id="cb1-9"><a href="#cb1-9"></a><span class="im">from</span> matplotlib.animation <span class="im">import</span> FuncAnimation</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="im">import</span> time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="48938471" class="cell" data-execution_count="4">
+<div id="48938471" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>define function to load MNIST from web</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> load_mnist_from_web():</span>
@@ -811,7 +813,7 @@ window.Quarto = {
 <span id="cb2-38"><a href="#cb2-38"></a>    <span class="cf">return</span> training_data, test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="1fe79797" class="cell" data-execution_count="5">
+<div id="1fe79797" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>load MNIST data into memory</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>training_data, test_data <span class="op">=</span> load_mnist_from_web()</span>
@@ -826,7 +828,7 @@ Loaded 60000 training samples directly into memory.</code></pre>
 </div>
 </div>
 <p>Let’s see a few of the images in the training set:</p>
-<div id="b3073810" class="cell" data-execution_count="6">
+<div id="b3073810" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>see some sample images</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">5</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
@@ -849,7 +851,7 @@ Loaded 60000 training samples directly into memory.</code></pre>
 </div>
 </div>
 <p>The training set has one-hot encoded labels, while the test set has integer labels. That’s perfect for our purposes!</p>
-<div id="be2879e3" class="cell" data-execution_count="7">
+<div id="be2879e3" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
@@ -905,7 +907,7 @@ Suppose we have the same setup as the last problem — a network of perceptrons.
 \sigma(cz) = \frac{1}{1 + e^{-cz}} = \frac{1}{1 + \left(e^{-z}\right)^c}
 </span></p>
 <p>The factor <span class="math inline">e^{-z}&lt;1</span> if z is positive, and <span class="math inline">e^{-z}&gt;1</span> if z is negative. Taking <span class="math inline">c</span> to infinity raises <span class="math inline">e^{-z}</span> to the power of infinity, which gives us 0 if <span class="math inline">z</span> is positive and infinity if <span class="math inline">z</span> is negative. Therefore, <span class="math inline">\sigma(cz)</span> approaches 1 if <span class="math inline">z</span> is positive and 0 if <span class="math inline">z</span> is negative, which is the same behavior as a perceptron. See the graph below.</p>
-<div id="da08a7b6" class="cell" data-execution_count="8">
+<div id="da08a7b6" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>sigmoid function with different steepness</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
@@ -935,7 +937,7 @@ Suppose we have the same setup as the last problem — a network of perceptrons.
 There is a way of determining the bitwise representation of a digit by adding an extra layer to the three-layer network above. The extra layer converts the output from the previous layer into a binary representation, as illustrated in the figure below. Find a set of weights and biases for the new output layer. Assume that the first 3 layers of neurons are such that the correct output in the third layer (i.e., the old output layer) has activation at least 0.99, and incorrect outputs have activation less than 0.01.
 </div>
 <p>Instead of thinking what are the weights and biases for each of the 4 output neurons, we can think of the weights and biases for each of the 10 neurons in the previous layer. We do that by writing the binary representation of the output digit, for example:</p>
-<div id="38e04e68" class="cell" data-execution_count="9">
+<div id="38e04e68" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
 <span id="cb8-2"><a href="#cb8-2"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> = </span><span class="sc">{</span>i<span class="sc">:04b}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -952,7 +954,7 @@ There is a way of determining the bitwise representation of a digit by adding an
 </div>
 </div>
 <p>The first column corresponds to the weights for the first output neuron, the second column corresponds to the weights for the second output neuron, and so on. In order to get activation for <span class="math inline">z=1</span> and no activation for <span class="math inline">z=0</span>, we can shift the sigmoid function to the right by setting the bias to -0.5. This way, if the input is 1, we get <span class="math inline">z=1-0.5=0.5</span> which gives us an activation of <span class="math inline">\sigma(0.5) \approx 0.62</span>, and if the input is 0, we get <span class="math inline">z=0-0.5=-0.5</span> which gives us an activation of <span class="math inline">\sigma(-0.5) \approx 0.38</span>. This is enought to make it work, but the constrast between “on” and “off” is not very high. We can increase the contrast by multiplying the weights and biases by a positive constant <span class="math inline">c</span>, as we saw in the previous exercises. For example, if we set <span class="math inline">c=10</span>, then for an input of 1 we get <span class="math inline">z=10*1-10*0.5=5</span> which gives us an activation of <span class="math inline">\sigma(5) \approx 0.993</span>, and for an input of 0 we get <span class="math inline">z=10*0-10*0.5=-5</span> which gives us an activation of <span class="math inline">\sigma(-5) \approx 0.007</span>.</p>
-<div id="b93e6697" class="cell" data-execution_count="10">
+<div id="b93e6697" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>sigmoid function</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
@@ -975,7 +977,7 @@ There is a way of determining the bitwise representation of a digit by adding an
 </div>
 </div>
 </div>
-<div id="11d3a4c1" class="cell" data-execution_count="12">
+<div id="11d3a4c1" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># essential for Quarto static HTML embedding</span></span>
@@ -1037,7 +1039,7 @@ There is a way of determining the bitwise representation of a digit by adding an
 <span id="cb11-57"><a href="#cb11-57"></a>plt.close(fig)  <span class="co"># prevents the static plot from being captured</span></span>
 <span id="cb11-58"><a href="#cb11-58"></a>anim  <span class="co"># calling 'anim' displays the JS player</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="13">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script language="javascript">
@@ -1222,36 +1224,36 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_imgd120b3ddaf7b4f18ab6a6b392d4668b1">
+  <img id="_anim_img04fc89a3f4894b0bb814b2ebc7548904">
   <div class="anim-controls">
-    <input id="_anim_sliderd120b3ddaf7b4f18ab6a6b392d4668b1" type="range" class="anim-slider" name="points" min="0" max="1" step="1" value="0" oninput="animd120b3ddaf7b4f18ab6a6b392d4668b1.set_frame(parseInt(this.value));">
+    <input id="_anim_slider04fc89a3f4894b0bb814b2ebc7548904" type="range" class="anim-slider" name="points" min="0" max="1" step="1" value="0" oninput="anim04fc89a3f4894b0bb814b2ebc7548904.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="animd120b3ddaf7b4f18ab6a6b392d4668b1.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim04fc89a3f4894b0bb814b2ebc7548904.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="animd120b3ddaf7b4f18ab6a6b392d4668b1.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim04fc89a3f4894b0bb814b2ebc7548904.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="animd120b3ddaf7b4f18ab6a6b392d4668b1.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim04fc89a3f4894b0bb814b2ebc7548904.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="animd120b3ddaf7b4f18ab6a6b392d4668b1.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim04fc89a3f4894b0bb814b2ebc7548904.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="animd120b3ddaf7b4f18ab6a6b392d4668b1.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim04fc89a3f4894b0bb814b2ebc7548904.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="animd120b3ddaf7b4f18ab6a6b392d4668b1.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim04fc89a3f4894b0bb814b2ebc7548904.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="animd120b3ddaf7b4f18ab6a6b392d4668b1.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim04fc89a3f4894b0bb814b2ebc7548904.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="animd120b3ddaf7b4f18ab6a6b392d4668b1.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim04fc89a3f4894b0bb814b2ebc7548904.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="animd120b3ddaf7b4f18ab6a6b392d4668b1.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim04fc89a3f4894b0bb814b2ebc7548904.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectd120b3ddaf7b4f18ab6a6b392d4668b1" class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_d120b3ddaf7b4f18ab6a6b392d4668b1">
-      <label for="_anim_radio1_d120b3ddaf7b4f18ab6a6b392d4668b1">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_d120b3ddaf7b4f18ab6a6b392d4668b1" checked="">
-      <label for="_anim_radio2_d120b3ddaf7b4f18ab6a6b392d4668b1">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_d120b3ddaf7b4f18ab6a6b392d4668b1">
-      <label for="_anim_radio3_d120b3ddaf7b4f18ab6a6b392d4668b1">Reflect</label>
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select04fc89a3f4894b0bb814b2ebc7548904" class="anim-state">
+      <input type="radio" name="state" value="once" id="_anim_radio1_04fc89a3f4894b0bb814b2ebc7548904">
+      <label for="_anim_radio1_04fc89a3f4894b0bb814b2ebc7548904">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_04fc89a3f4894b0bb814b2ebc7548904" checked="">
+      <label for="_anim_radio2_04fc89a3f4894b0bb814b2ebc7548904">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_04fc89a3f4894b0bb814b2ebc7548904">
+      <label for="_anim_radio3_04fc89a3f4894b0bb814b2ebc7548904">Reflect</label>
     </form>
   </div>
 </div>
@@ -1261,9 +1263,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_imgd120b3ddaf7b4f18ab6a6b392d4668b1";
-    var slider_id = "_anim_sliderd120b3ddaf7b4f18ab6a6b392d4668b1";
-    var loop_select_id = "_anim_loop_selectd120b3ddaf7b4f18ab6a6b392d4668b1";
+    var img_id = "_anim_img04fc89a3f4894b0bb814b2ebc7548904";
+    var slider_id = "_anim_slider04fc89a3f4894b0bb814b2ebc7548904";
+    var loop_select_id = "_anim_loop_select04fc89a3f4894b0bb814b2ebc7548904";
     var frames = new Array(10);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAYAAADL1t+KAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -13144,7 +13146,7 @@ dAqFQqFQugE0oFMoFAqF0g2gAZ1CoVAolG4ADegUCoVCoXQDaECnUCgUCqUbQAM6hUKhUCjdgP8H\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        animd120b3ddaf7b4f18ab6a6b392d4668b1 = new Animation(frames, img_id, slider_id, 500.0,
+        anim04fc89a3f4894b0bb814b2ebc7548904 = new Animation(frames, img_id, slider_id, 500.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -13215,7 +13217,7 @@ z = w\cdot a + b = w\cdot x + b \\
 z_i &amp;= (w\cdot x)_i + b_i \\
 &amp;= \left(\sum_j w_{ij}\cdot x_j\right) + b_i
 \end{align*}</span></p>
-<div id="79720256" class="cell" data-execution_count="13">
+<div id="79720256" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
@@ -13344,7 +13346,7 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <section id="the-code" class="level2" data-number="55.9">
 <h2 data-number="55.9" class="anchored" data-anchor-id="the-code"><span class="header-section-number">55.9</span> the code</h2>
 <p>This is exactly the same code as in the book. I only made minor updates to make it compatible with python3. In the next chapter I’ll go wild and take charge of this code, making it more modern and efficient.</p>
-<div id="4188c8ab" class="cell" data-execution_count="18">
+<div id="4188c8ab" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">class</span> Network(<span class="bu">object</span>):</span>
@@ -13472,18 +13474,60 @@ z_i &amp;= (w\cdot x)_i + b_i \\
 <span id="cb13-123"><a href="#cb13-123"></a>    <span class="cf">return</span> sigmoid(z)<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>sigmoid(z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="6a739037" class="cell" data-execution_count="20">
+<div id="6a739037" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>net <span class="op">=</span> Network([<span class="dv">784</span>, <span class="dv">10</span>, <span class="dv">10</span>])</span>
-<span id="cb14-2"><a href="#cb14-2"></a>net.SGD(training_data, <span class="dv">5</span>, <span class="dv">10</span>, <span class="fl">3.0</span>, test_data<span class="op">=</span>test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>epochs <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>net <span class="op">=</span> Network([<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>])</span>
+<span id="cb14-3"><a href="#cb14-3"></a>start <span class="op">=</span> time.perf_counter()</span>
+<span id="cb14-4"><a href="#cb14-4"></a>net.SGD(training_data,</span>
+<span id="cb14-5"><a href="#cb14-5"></a>        epochs<span class="op">=</span>epochs,</span>
+<span id="cb14-6"><a href="#cb14-6"></a>        mini_batch_size<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb14-7"><a href="#cb14-7"></a>        eta<span class="op">=</span><span class="fl">3.0</span>,</span>
+<span id="cb14-8"><a href="#cb14-8"></a>        test_data<span class="op">=</span>test_data)</span>
+<span id="cb14-9"><a href="#cb14-9"></a>end <span class="op">=</span> time.perf_counter()</span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="bu">print</span>(<span class="ss">f"Runtime: </span><span class="sc">{</span>end <span class="op">-</span> start<span class="sc">:.2f}</span><span class="ss"> seconds"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="bu">print</span>(<span class="ss">f"Average runtime per epoch: </span><span class="sc">{</span>(end <span class="op">-</span> start) <span class="op">/</span> epochs<span class="sc">:.2f}</span><span class="ss"> seconds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch 0: 8748 / 10000
-Epoch 1: 8950 / 10000
-Epoch 2: 9083 / 10000
-Epoch 3: 9109 / 10000
-Epoch 4: 9068 / 10000</code></pre>
+<pre><code>Epoch 0: 9096 / 10000
+Epoch 1: 9263 / 10000
+Epoch 2: 9296 / 10000
+Epoch 3: 9354 / 10000
+Epoch 4: 9396 / 10000
+Epoch 5: 9433 / 10000
+Epoch 6: 9453 / 10000
+Epoch 7: 9456 / 10000
+Epoch 8: 9470 / 10000
+Epoch 9: 9453 / 10000
+Runtime: 125.26 seconds
+Average runtime per epoch: 12.53 seconds</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-7" class="level2" data-number="55.10">
+<h2 data-number="55.10" class="anchored" data-anchor-id="exercise-7"><span class="header-section-number">55.10</span> exercise</h2>
+<div class="alert alert-info">
+Try creating a network with just two layers - an input and an output layer, no hidden layer - with 784 and 10 neurons, respectively. Train the network using stochastic gradient descent. What classification accuracy can you achieve?
+</div>
+<div id="229c546a" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>net <span class="op">=</span> Network([<span class="dv">784</span>, <span class="dv">10</span>])</span>
+<span id="cb16-2"><a href="#cb16-2"></a>net.SGD(training_data,</span>
+<span id="cb16-3"><a href="#cb16-3"></a>        epochs<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb16-4"><a href="#cb16-4"></a>        mini_batch_size<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb16-5"><a href="#cb16-5"></a>        eta<span class="op">=</span><span class="fl">3.0</span>,</span>
+<span id="cb16-6"><a href="#cb16-6"></a>        test_data<span class="op">=</span>test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 0: 7506 / 10000
+Epoch 1: 7592 / 10000
+Epoch 2: 8220 / 10000
+Epoch 3: 8279 / 10000
+Epoch 4: 8308 / 10000
+Epoch 5: 8321 / 10000
+Epoch 6: 8325 / 10000
+Epoch 7: 8333 / 10000
+Epoch 8: 8373 / 10000
+Epoch 9: 8294 / 10000</code></pre>
 </div>
 </div>
 

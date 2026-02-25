@@ -724,6 +724,7 @@ window.Quarto = {
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">56.5</span> summary</a></li>
   <li><a href="#batches" id="toc-batches" class="nav-link" data-scroll-target="#batches"><span class="header-section-number">56.6</span> batches</a></li>
   <li><a href="#vectorizing-nielsens-backpropagation-code" id="toc-vectorizing-nielsens-backpropagation-code" class="nav-link" data-scroll-target="#vectorizing-nielsens-backpropagation-code"><span class="header-section-number">56.7</span> vectorizing Nielsen’s backpropagation code</a></li>
+  <li><a href="#widget" id="toc-widget" class="nav-link" data-scroll-target="#widget"><span class="header-section-number">56.8</span> widget</a></li>
   </ul>
 </nav>
     </div>
@@ -795,7 +796,7 @@ p_\text{new} = p_\text{old} - \eta \nabla C,
 <p><span class="math display">
 z^\ell_j = \sum_k w^\ell_{jk} a^{\ell-1}_k + b^\ell_j.
 </span></p>
-<div id="898770e0" class="cell" data-execution_count="8">
+<div id="898770e0" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> os</span>
@@ -805,10 +806,12 @@ z^\ell_j = \sum_k w^\ell_{jk} a^{\ell-1}_k + b^\ell_j.
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> requests</span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-7"><a href="#cb1-7"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="im">import</span> json</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="im">import</span> time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="818c90ce" class="cell" data-execution_count="9">
+<div id="818c90ce" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>plot NN</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
@@ -964,7 +967,7 @@ a = \sigma(z),
 </span></p>
 <p>Let’s interpret this equation, using the image below to help us. We are already used to the idea that the activation of a neuron in layer <span class="math inline">\ell</span> propagates to the next layer <span class="math inline">\ell+1</span>, from left to right. This is what the blue lines in the image below represent.</p>
 <p>The conceptual jump now is to use these same lines to understand how the error in layer <span class="math inline">\ell+1</span> <strong>propagates back</strong> to layer <span class="math inline">\ell</span>, from right to left. The equation above says that the error in layer <span class="math inline">\ell</span> is the sum of the errors in layer <span class="math inline">\ell+1</span>, weighted by something that should be related to the strength of the connection between the neurons in layer <span class="math inline">\ell</span> and layer <span class="math inline">\ell+1</span>.</p>
-<div id="7eeadace" class="cell" data-execution_count="10">
+<div id="7eeadace" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
@@ -1080,289 +1083,239 @@ Our implementation of stochastic gradient descent loops over training examples i
 <li>You can quit training early by pressing <code>Ctrl+C</code>, the model will keep the weights without raising an error.</li>
 <li>I’ve vectorized the backpropagation algorithm to handle batches efficiently, which should speed up training significantly.</li>
 </ol>
-<div id="5c050565" class="cell" data-execution_count="48">
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-2"><a href="#cb4-2"></a>Nminus1 <span class="op">=</span> <span class="dv">784</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>N0 <span class="op">=</span> <span class="dv">50</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>w <span class="op">=</span> np.ones(shape<span class="op">=</span>(N0, Nminus1))</span>
-<span id="cb4-5"><a href="#cb4-5"></a>a <span class="op">=</span> np.ones(shape<span class="op">=</span>(Nminus1, <span class="dv">1</span>))</span>
-<span id="cb4-6"><a href="#cb4-6"></a>b <span class="op">=</span> np.ones(shape<span class="op">=</span>(N0, <span class="dv">1</span>))</span>
-<span id="cb4-7"><a href="#cb4-7"></a>(np.dot(w, a) <span class="op">+</span> b).shape</span>
+<div id="40afa7a0" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">def</span> sigmoid(z):</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="co">"""The sigmoid function, JIT-compiled for speed."""</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="cf">return</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="kw">def</span> relu(z):</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    <span class="co">"""The ReLU function, JIT-compiled for speed."""</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>    <span class="cf">return</span> np.maximum(<span class="dv">0</span>, z)</span>
 <span id="cb4-8"><a href="#cb4-8"></a></span>
-<span id="cb4-9"><a href="#cb4-9"></a>batch_size <span class="op">=</span> <span class="dv">11</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a>n <span class="op">=</span> <span class="bu">len</span>(training_data)</span>
-<span id="cb4-11"><a href="#cb4-11"></a>batches <span class="op">=</span> [</span>
-<span id="cb4-12"><a href="#cb4-12"></a>                training_data[k:k<span class="op">+</span>batch_size]</span>
-<span id="cb4-13"><a href="#cb4-13"></a>                <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n, batch_size)</span>
-<span id="cb4-14"><a href="#cb4-14"></a>            ]</span>
-<span id="cb4-15"><a href="#cb4-15"></a>batch0 <span class="op">=</span> batches[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div id="d2145ddb" class="cell" data-execution_count="50">
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>np.broadcast_to(b, (N0, batch_size)).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="50">
-<pre><code>(50, 11)</code></pre>
-</div>
-</div>
-<div id="29edef50" class="cell" data-execution_count="52">
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="bu">input</span> <span class="op">=</span> np.hstack([data[<span class="dv">0</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch0])</span>
-<span id="cb7-2"><a href="#cb7-2"></a>target <span class="op">=</span> np.hstack([data[<span class="dv">1</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch0])</span>
-<span id="cb7-3"><a href="#cb7-3"></a>(np.dot(w, <span class="bu">input</span>) <span class="op">+</span> np.broadcast_to(b, (N0, batch_size))).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="52">
-<pre><code>(50, 11)</code></pre>
-</div>
-</div>
-<div id="90a76e57" class="cell" data-execution_count="57">
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>np.<span class="bu">sum</span>(target, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="57">
-<pre><code>(10, 1)</code></pre>
-</div>
-</div>
-<div id="515a91f4" class="cell" data-execution_count="26">
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>(batches[<span class="dv">1</span>][<span class="dv">2</span>])[<span class="dv">0</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="26">
-<pre><code>(784, 1)</code></pre>
-</div>
-</div>
-<div id="40afa7a0" class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">def</span> sigmoid(z):</span>
-<span id="cb13-2"><a href="#cb13-2"></a>    <span class="co">"""The sigmoid function, JIT-compiled for speed."""</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>    <span class="cf">return</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
-<span id="cb13-4"><a href="#cb13-4"></a></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="kw">def</span> relu(z):</span>
-<span id="cb13-6"><a href="#cb13-6"></a>    <span class="co">"""The ReLU function, JIT-compiled for speed."""</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a>    <span class="cf">return</span> np.maximum(<span class="dv">0</span>, z)</span>
-<span id="cb13-8"><a href="#cb13-8"></a></span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="kw">def</span> sigmoid_prime(z):</span>
-<span id="cb13-10"><a href="#cb13-10"></a>    <span class="co">"""Derivative of the sigmoid function, JIT-compiled for speed."""</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a>    s <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
-<span id="cb13-12"><a href="#cb13-12"></a>    <span class="cf">return</span> s <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> s)</span>
-<span id="cb13-13"><a href="#cb13-13"></a></span>
-<span id="cb13-14"><a href="#cb13-14"></a><span class="kw">def</span> relu_prime(z):</span>
-<span id="cb13-15"><a href="#cb13-15"></a>    <span class="co">"""Derivative of the ReLU function, JIT-compiled for speed."""</span></span>
-<span id="cb13-16"><a href="#cb13-16"></a>    <span class="cf">return</span> np.where(z <span class="op">&gt;</span> <span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>)</span>
-<span id="cb13-17"><a href="#cb13-17"></a></span>
-<span id="cb13-18"><a href="#cb13-18"></a><span class="kw">class</span> NN:</span>
-<span id="cb13-19"><a href="#cb13-19"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, layer_sizes, rand_seed<span class="op">=</span><span class="dv">0</span>, activation<span class="op">=</span><span class="st">"relu"</span>, cost<span class="op">=</span><span class="st">"mse"</span>):</span>
-<span id="cb13-20"><a href="#cb13-20"></a>        <span class="co">"""Initialize the neural network with the given layer sizes.</span></span>
-<span id="cb13-21"><a href="#cb13-21"></a><span class="co">        For example, if layer_sizes = [50, 15, 20, 10], then we have a</span></span>
-<span id="cb13-22"><a href="#cb13-22"></a><span class="co">        network with 50 input neurons, 15 neurons in hidden layer 0,</span></span>
-<span id="cb13-23"><a href="#cb13-23"></a><span class="co">        20 neurons in hidden layer 1, and 10 output neurons (layer 3).</span></span>
-<span id="cb13-24"><a href="#cb13-24"></a><span class="co">        """</span></span>
-<span id="cb13-25"><a href="#cb13-25"></a>        <span class="va">self</span>.number_of_layers <span class="op">=</span> <span class="bu">len</span>(layer_sizes) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb13-26"><a href="#cb13-26"></a>        <span class="va">self</span>.layer_sizes <span class="op">=</span> layer_sizes</span>
-<span id="cb13-27"><a href="#cb13-27"></a>        <span class="va">self</span>.activation <span class="op">=</span> activation</span>
-<span id="cb13-28"><a href="#cb13-28"></a>        <span class="va">self</span>.rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>rand_seed)</span>
-<span id="cb13-29"><a href="#cb13-29"></a>        <span class="cf">if</span> activation <span class="op">==</span> <span class="st">'relu'</span>:</span>
-<span id="cb13-30"><a href="#cb13-30"></a>            <span class="va">self</span>.activation_func <span class="op">=</span> relu</span>
-<span id="cb13-31"><a href="#cb13-31"></a>            <span class="va">self</span>.activation_prime <span class="op">=</span> relu_prime</span>
-<span id="cb13-32"><a href="#cb13-32"></a>        <span class="cf">elif</span> activation <span class="op">==</span> <span class="st">'sigmoid'</span>:</span>
-<span id="cb13-33"><a href="#cb13-33"></a>            <span class="va">self</span>.activation_func <span class="op">=</span> sigmoid</span>
-<span id="cb13-34"><a href="#cb13-34"></a>            <span class="va">self</span>.activation_prime <span class="op">=</span> sigmoid_prime</span>
-<span id="cb13-35"><a href="#cb13-35"></a>        <span class="cf">else</span>:</span>
-<span id="cb13-36"><a href="#cb13-36"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Unsupported activation function. Use 'relu' or 'sigmoid'."</span>)</span>
-<span id="cb13-37"><a href="#cb13-37"></a>        <span class="cf">if</span> cost <span class="op">==</span> <span class="st">'mse'</span>:</span>
-<span id="cb13-38"><a href="#cb13-38"></a>            <span class="va">self</span>.cost_func <span class="op">=</span> <span class="kw">lambda</span> output, target: np.mean((output <span class="op">-</span> target) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb13-39"><a href="#cb13-39"></a>            <span class="va">self</span>.cost_derivative <span class="op">=</span> <span class="kw">lambda</span> output, target: (output <span class="op">-</span> target)</span>
-<span id="cb13-40"><a href="#cb13-40"></a>        <span class="cf">else</span>:</span>
-<span id="cb13-41"><a href="#cb13-41"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Unsupported cost function. Use 'mse'."</span>)</span>
-<span id="cb13-42"><a href="#cb13-42"></a>        <span class="co"># randomly initialize weights and biases</span></span>
-<span id="cb13-43"><a href="#cb13-43"></a>        <span class="co"># input layer has no weights nor biases, so we skip it.</span></span>
-<span id="cb13-44"><a href="#cb13-44"></a>        rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>rand_seed)</span>
-<span id="cb13-45"><a href="#cb13-45"></a>        <span class="co"># each neuron get 1 bias, so bias vector has the size of the layer</span></span>
-<span id="cb13-46"><a href="#cb13-46"></a>        <span class="co"># we skip the first (input) layer, it doesn't have biases</span></span>
-<span id="cb13-47"><a href="#cb13-47"></a>        <span class="co"># I made the biases to be matrices of shape (N_b, 1) instead of vectors of shape (N_b,)</span></span>
-<span id="cb13-48"><a href="#cb13-48"></a>        <span class="co"># to make the broadcasting work more smoothly in the feedforward and backpropagation functions.</span></span>
-<span id="cb13-49"><a href="#cb13-49"></a>        <span class="va">self</span>.biases <span class="op">=</span> [rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>(N_b, <span class="dv">1</span>))</span>
-<span id="cb13-50"><a href="#cb13-50"></a>                       <span class="cf">for</span> N_b <span class="kw">in</span> layer_sizes[<span class="dv">1</span>:]]</span>
-<span id="cb13-51"><a href="#cb13-51"></a>        <span class="co"># each neuron in layer Right is connected to all neurons in layer Left,</span></span>
-<span id="cb13-52"><a href="#cb13-52"></a>        <span class="co"># so weight matrix has the shape (size_right, size_left)</span></span>
-<span id="cb13-53"><a href="#cb13-53"></a>        <span class="co"># again, we skip the first (input) layer, it doesn't have weights</span></span>
-<span id="cb13-54"><a href="#cb13-54"></a>        <span class="co"># scale_for_weights = np.sqrt(2.0/size_left)</span></span>
-<span id="cb13-55"><a href="#cb13-55"></a>        scale_for_weights <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb13-56"><a href="#cb13-56"></a>        <span class="va">self</span>.weights <span class="op">=</span> [rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span>scale_for_weights, size<span class="op">=</span>(size_right, size_left))</span>
-<span id="cb13-57"><a href="#cb13-57"></a>                        <span class="cf">for</span> size_left, size_right <span class="kw">in</span></span>
-<span id="cb13-58"><a href="#cb13-58"></a>                          <span class="bu">zip</span>(layer_sizes[:<span class="op">-</span><span class="dv">1</span>],layer_sizes[<span class="dv">1</span>:])</span>
-<span id="cb13-59"><a href="#cb13-59"></a>                        ]</span>
-<span id="cb13-60"><a href="#cb13-60"></a>    </span>
-<span id="cb13-61"><a href="#cb13-61"></a>    <span class="kw">def</span> feedforward(<span class="va">self</span>, a):</span>
-<span id="cb13-62"><a href="#cb13-62"></a>        <span class="co">"""given input `a` from the first layer,</span></span>
-<span id="cb13-63"><a href="#cb13-63"></a><span class="co">           we sequencially compute the activations of each layer</span></span>
-<span id="cb13-64"><a href="#cb13-64"></a><span class="co">           `feedforward` returns the activations of last (output) layer</span></span>
-<span id="cb13-65"><a href="#cb13-65"></a><span class="co">        """</span></span>
-<span id="cb13-66"><a href="#cb13-66"></a>        <span class="cf">for</span> b, w <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, <span class="va">self</span>.weights):</span>
-<span id="cb13-67"><a href="#cb13-67"></a>            z <span class="op">=</span> np.dot(w, a) <span class="op">+</span> b</span>
-<span id="cb13-68"><a href="#cb13-68"></a>            a <span class="op">=</span> <span class="va">self</span>.activation_func(z)</span>
-<span id="cb13-69"><a href="#cb13-69"></a>        <span class="cf">return</span> a</span>
-<span id="cb13-70"><a href="#cb13-70"></a>    </span>
-<span id="cb13-71"><a href="#cb13-71"></a>    <span class="kw">def</span> stochastic_gradient_descent(<span class="va">self</span>, training_data, epochs, batch_size, eta, test_data<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb13-72"><a href="#cb13-72"></a>        n <span class="op">=</span> <span class="bu">len</span>(training_data)</span>
-<span id="cb13-73"><a href="#cb13-73"></a>        <span class="cf">try</span>:</span>
-<span id="cb13-74"><a href="#cb13-74"></a>            <span class="cf">for</span> epoch_j <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb13-75"><a href="#cb13-75"></a>                <span class="co"># shuffle training data at the beginning of each epoch</span></span>
-<span id="cb13-76"><a href="#cb13-76"></a>                <span class="va">self</span>.rng.shuffle(training_data)</span>
-<span id="cb13-77"><a href="#cb13-77"></a>                <span class="co"># split training data into batches</span></span>
-<span id="cb13-78"><a href="#cb13-78"></a>                batches <span class="op">=</span> [</span>
-<span id="cb13-79"><a href="#cb13-79"></a>                    training_data[k:k<span class="op">+</span>batch_size]</span>
-<span id="cb13-80"><a href="#cb13-80"></a>                    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n, batch_size)</span>
-<span id="cb13-81"><a href="#cb13-81"></a>                ]</span>
-<span id="cb13-82"><a href="#cb13-82"></a></span>
-<span id="cb13-83"><a href="#cb13-83"></a>                <span class="co"># ASCII Progress bar with Epoch X/Y description</span></span>
-<span id="cb13-84"><a href="#cb13-84"></a>                pbar <span class="op">=</span> tqdm(batches, desc<span class="op">=</span><span class="ss">f"Epoch </span><span class="sc">{</span>epoch_j<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>epochs<span class="sc">}</span><span class="ss">"</span>, leave<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-85"><a href="#cb13-85"></a>                    </span>
-<span id="cb13-86"><a href="#cb13-86"></a>                <span class="co"># now loop over batches, update weights</span></span>
-<span id="cb13-87"><a href="#cb13-87"></a>                <span class="cf">for</span> batch <span class="kw">in</span> pbar:</span>
-<span id="cb13-88"><a href="#cb13-88"></a>                    <span class="va">self</span>.update_params_batch(batch, eta)</span>
-<span id="cb13-89"><a href="#cb13-89"></a>                <span class="co"># for batch in batches:</span></span>
-<span id="cb13-90"><a href="#cb13-90"></a>                <span class="co">#     self.update_params_batch(batch, eta)</span></span>
-<span id="cb13-91"><a href="#cb13-91"></a>                <span class="cf">if</span> test_data:</span>
-<span id="cb13-92"><a href="#cb13-92"></a>                    <span class="bu">print</span>(<span class="ss">f"Accuracy = </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>evaluate(test_data)<span class="op">/</span><span class="bu">len</span>(test_data)<span class="sc">:.2%}</span><span class="ss"> (</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>evaluate(test_data)<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="bu">len</span>(test_data)<span class="sc">}</span><span class="ss">)"</span>)</span>
-<span id="cb13-93"><a href="#cb13-93"></a>                <span class="cf">else</span>:</span>
-<span id="cb13-94"><a href="#cb13-94"></a>                    <span class="cf">pass</span></span>
-<span id="cb13-95"><a href="#cb13-95"></a>                    <span class="co"># print(f"Epoch {epoch_j:02d} complete")</span></span>
-<span id="cb13-96"><a href="#cb13-96"></a>        <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
-<span id="cb13-97"><a href="#cb13-97"></a>            <span class="cf">if</span> <span class="st">'pbar'</span> <span class="kw">in</span> <span class="bu">locals</span>():</span>
-<span id="cb13-98"><a href="#cb13-98"></a>                pbar.close()</span>
-<span id="cb13-99"><a href="#cb13-99"></a>            <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Training interrupted by user. Weights preserved."</span>)</span>
-<span id="cb13-100"><a href="#cb13-100"></a>    </span>
-<span id="cb13-101"><a href="#cb13-101"></a>    <span class="kw">def</span> update_params_batch(<span class="va">self</span>, batch, eta):</span>
-<span id="cb13-102"><a href="#cb13-102"></a>        <span class="co"># 1. make input matrix, use column-major order, so each column is a training example, and each row is a feature.</span></span>
-<span id="cb13-103"><a href="#cb13-103"></a>        <span class="co"># input = np.array([data[0] for data in batch]).T</span></span>
-<span id="cb13-104"><a href="#cb13-104"></a>        <span class="co"># 2. make label matrix, use column-major order, so each column is a training example, and each row is a label.</span></span>
-<span id="cb13-105"><a href="#cb13-105"></a>        <span class="co"># target = np.array([data[1] for data in batch]).T</span></span>
-<span id="cb13-106"><a href="#cb13-106"></a>        <span class="bu">input</span> <span class="op">=</span> np.hstack([data[<span class="dv">0</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch])</span>
-<span id="cb13-107"><a href="#cb13-107"></a>        target <span class="op">=</span> np.hstack([data[<span class="dv">1</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch])</span>
-<span id="cb13-108"><a href="#cb13-108"></a>        <span class="co"># 3. compute the gradients for the whole batch using back propagation</span></span>
-<span id="cb13-109"><a href="#cb13-109"></a>        nabla_b, nabla_w <span class="op">=</span> <span class="va">self</span>.back_propagation(<span class="bu">input</span>, target)</span>
-<span id="cb13-110"><a href="#cb13-110"></a>        <span class="co"># update biases and weights</span></span>
-<span id="cb13-111"><a href="#cb13-111"></a>        m <span class="op">=</span> <span class="bu">len</span>(batch)</span>
-<span id="cb13-112"><a href="#cb13-112"></a>        <span class="va">self</span>.biases <span class="op">=</span> [</span>
-<span id="cb13-113"><a href="#cb13-113"></a>            b <span class="op">-</span> (eta<span class="op">/</span>m) <span class="op">*</span> nb</span>
-<span id="cb13-114"><a href="#cb13-114"></a>            <span class="cf">for</span> b, nb <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, nabla_b)</span>
-<span id="cb13-115"><a href="#cb13-115"></a>        ]</span>
-<span id="cb13-116"><a href="#cb13-116"></a>        <span class="va">self</span>.weights <span class="op">=</span> [</span>
-<span id="cb13-117"><a href="#cb13-117"></a>            w <span class="op">-</span> (eta<span class="op">/</span>m) <span class="op">*</span> nw</span>
-<span id="cb13-118"><a href="#cb13-118"></a>            <span class="cf">for</span> w, nw <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.weights, nabla_w)</span>
-<span id="cb13-119"><a href="#cb13-119"></a>        ]</span>
-<span id="cb13-120"><a href="#cb13-120"></a>    </span>
-<span id="cb13-121"><a href="#cb13-121"></a>    <span class="kw">def</span> back_propagation(<span class="va">self</span>, <span class="bu">input</span>, target):</span>
-<span id="cb13-122"><a href="#cb13-122"></a>        <span class="co">###############################</span></span>
-<span id="cb13-123"><a href="#cb13-123"></a>        <span class="co"># 1. forward pass</span></span>
-<span id="cb13-124"><a href="#cb13-124"></a>        <span class="co"># 1a. create variables to store the activations and z vectors for each layer</span></span>
-<span id="cb13-125"><a href="#cb13-125"></a>        <span class="co"># activation starts with the input layer activations, which is just the input data</span></span>
-<span id="cb13-126"><a href="#cb13-126"></a>        activation <span class="op">=</span> <span class="bu">input</span></span>
-<span id="cb13-127"><a href="#cb13-127"></a>        activation_list <span class="op">=</span> [<span class="bu">input</span>]  <span class="co"># initialize with input layer activations</span></span>
-<span id="cb13-128"><a href="#cb13-128"></a>        <span class="co"># weighted input start at the first hidden layer, so we initialize an empty list</span></span>
-<span id="cb13-129"><a href="#cb13-129"></a>        z_list <span class="op">=</span> []</span>
-<span id="cb13-130"><a href="#cb13-130"></a>        <span class="co"># 1b. loop over layers in forward direction, starting from the first hidden layer,</span></span>
-<span id="cb13-131"><a href="#cb13-131"></a>        <span class="co"># compute and store the activations and z vectors layer by layer</span></span>
-<span id="cb13-132"><a href="#cb13-132"></a>        <span class="co"># for the whole batch at once.</span></span>
-<span id="cb13-133"><a href="#cb13-133"></a>        <span class="cf">for</span> b, w <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, <span class="va">self</span>.weights):</span>
-<span id="cb13-134"><a href="#cb13-134"></a>            layer_size <span class="op">=</span> b.shape[<span class="dv">0</span>]</span>
-<span id="cb13-135"><a href="#cb13-135"></a>            <span class="co"># b is a vector of shape (layer_size, 1), we need to broadcast it (stack it horizontally)</span></span>
-<span id="cb13-136"><a href="#cb13-136"></a>            <span class="co"># to match the shape of the dot product w @ activation, which is (layer_size, batch_size)</span></span>
-<span id="cb13-137"><a href="#cb13-137"></a>            B <span class="op">=</span> np.broadcast_to(b, (layer_size, <span class="bu">input</span>.shape[<span class="dv">1</span>]))</span>
-<span id="cb13-138"><a href="#cb13-138"></a>            z <span class="op">=</span> np.dot(w, activation) <span class="op">+</span> B</span>
-<span id="cb13-139"><a href="#cb13-139"></a>            activation <span class="op">=</span> <span class="va">self</span>.activation_func(z)</span>
-<span id="cb13-140"><a href="#cb13-140"></a>            z_list.append(z)</span>
-<span id="cb13-141"><a href="#cb13-141"></a>            activation_list.append(activation)</span>
-<span id="cb13-142"><a href="#cb13-142"></a>        <span class="co">###############################</span></span>
-<span id="cb13-143"><a href="#cb13-143"></a>        <span class="co"># now we have all the information we need to compute the gradients in the backward pass.</span></span>
-<span id="cb13-144"><a href="#cb13-144"></a>        <span class="co">###############################</span></span>
-<span id="cb13-145"><a href="#cb13-145"></a>        <span class="co"># 2. backward pass</span></span>
-<span id="cb13-146"><a href="#cb13-146"></a>        <span class="co"># 2a. create empty lists to store the gradients for biases and weights, layer by layer</span></span>
-<span id="cb13-147"><a href="#cb13-147"></a>        nabla_b <span class="op">=</span> [np.zeros_like(b) <span class="cf">for</span> b <span class="kw">in</span> <span class="va">self</span>.biases]</span>
-<span id="cb13-148"><a href="#cb13-148"></a>        nabla_w <span class="op">=</span> [np.zeros_like(w) <span class="cf">for</span> w <span class="kw">in</span> <span class="va">self</span>.weights]</span>
-<span id="cb13-149"><a href="#cb13-149"></a>        <span class="co"># 2b. first compute the error "delta" for the output layer</span></span>
-<span id="cb13-150"><a href="#cb13-150"></a>        <span class="co"># this is what we called the "base case"</span></span>
-<span id="cb13-151"><a href="#cb13-151"></a>        delta <span class="op">=</span> <span class="va">self</span>.cost_derivative(activation_list[<span class="op">-</span><span class="dv">1</span>], target) <span class="op">*</span> <span class="va">self</span>.activation_prime(z_list[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb13-152"><a href="#cb13-152"></a>        <span class="co"># 2c. compute and store the gradients for the output layer</span></span>
-<span id="cb13-153"><a href="#cb13-153"></a>        <span class="co"># we use activation_list[-2] because the rule for updating the weights requires the activations from the previous layer,</span></span>
-<span id="cb13-154"><a href="#cb13-154"></a>        <span class="co"># which is the second to last layer in the list. The transpose is needed to match the dimensions of the matrices</span></span>
-<span id="cb13-155"><a href="#cb13-155"></a>        nabla_b[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> np.<span class="bu">sum</span>(delta, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-156"><a href="#cb13-156"></a>        nabla_w[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> np.dot(delta, activation_list[<span class="op">-</span><span class="dv">2</span>].T)</span>
-<span id="cb13-157"><a href="#cb13-157"></a>        <span class="co"># 2c. loop over layers in reverse order,</span></span>
-<span id="cb13-158"><a href="#cb13-158"></a>        <span class="co"># compute the gradients for each layer. This is the "inductive step".</span></span>
-<span id="cb13-159"><a href="#cb13-159"></a>        <span class="co"># the loop starts at the second to last layer, and goes backwards to the first hidden layer.</span></span>
-<span id="cb13-160"><a href="#cb13-160"></a>        <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="va">self</span>.number_of_layers<span class="op">+</span><span class="dv">1</span>):</span>
-<span id="cb13-161"><a href="#cb13-161"></a>            z <span class="op">=</span> z_list[<span class="op">-</span>l]</span>
-<span id="cb13-162"><a href="#cb13-162"></a>            <span class="co"># the order of the dot product and the transpose of the weights are needed</span></span>
-<span id="cb13-163"><a href="#cb13-163"></a>            <span class="co"># to match the dimensions of the matrices</span></span>
-<span id="cb13-164"><a href="#cb13-164"></a>            delta <span class="op">=</span> np.dot(<span class="va">self</span>.weights[<span class="op">-</span>l<span class="op">+</span><span class="dv">1</span>].T, delta) <span class="op">*</span> <span class="va">self</span>.activation_prime(z)</span>
-<span id="cb13-165"><a href="#cb13-165"></a>            nabla_b[<span class="op">-</span>l] <span class="op">=</span> np.<span class="bu">sum</span>(delta, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-166"><a href="#cb13-166"></a>            nabla_w[<span class="op">-</span>l] <span class="op">=</span> np.dot(delta, activation_list[<span class="op">-</span>l<span class="op">-</span><span class="dv">1</span>].T)</span>
-<span id="cb13-167"><a href="#cb13-167"></a>        <span class="cf">return</span> nabla_b, nabla_w</span>
-<span id="cb13-168"><a href="#cb13-168"></a>    </span>
-<span id="cb13-169"><a href="#cb13-169"></a>    <span class="kw">def</span> evaluate(<span class="va">self</span>, test_data):</span>
-<span id="cb13-170"><a href="#cb13-170"></a>        <span class="co">"""Return the number of correct classifications."""</span></span>
-<span id="cb13-171"><a href="#cb13-171"></a>        test_results <span class="op">=</span> [(np.argmax(<span class="va">self</span>.feedforward(x)), y)</span>
-<span id="cb13-172"><a href="#cb13-172"></a>                        <span class="cf">for</span> (x, y) <span class="kw">in</span> test_data]</span>
-<span id="cb13-173"><a href="#cb13-173"></a>        <span class="cf">return</span> <span class="bu">sum</span>(<span class="bu">int</span>(x <span class="op">==</span> y) <span class="cf">for</span> (x, y) <span class="kw">in</span> test_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="kw">def</span> sigmoid_prime(z):</span>
+<span id="cb4-10"><a href="#cb4-10"></a>    <span class="co">"""Derivative of the sigmoid function, JIT-compiled for speed."""</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>    s <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
+<span id="cb4-12"><a href="#cb4-12"></a>    <span class="cf">return</span> s <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> s)</span>
+<span id="cb4-13"><a href="#cb4-13"></a></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="kw">def</span> relu_prime(z):</span>
+<span id="cb4-15"><a href="#cb4-15"></a>    <span class="co">"""Derivative of the ReLU function, JIT-compiled for speed."""</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>    <span class="cf">return</span> np.where(z <span class="op">&gt;</span> <span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>)</span>
+<span id="cb4-17"><a href="#cb4-17"></a></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="kw">class</span> NN:</span>
+<span id="cb4-19"><a href="#cb4-19"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, layer_sizes, rand_seed<span class="op">=</span><span class="dv">0</span>, activation<span class="op">=</span><span class="st">"relu"</span>, cost<span class="op">=</span><span class="st">"mse"</span>):</span>
+<span id="cb4-20"><a href="#cb4-20"></a>        <span class="co">"""Initialize the neural network with the given layer sizes.</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">        For example, if layer_sizes = [50, 15, 20, 10], then we have a</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">        network with 50 input neurons, 15 neurons in hidden layer 0,</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co">        20 neurons in hidden layer 1, and 10 output neurons (layer 3).</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="co">        """</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a>        <span class="va">self</span>.number_of_layers <span class="op">=</span> <span class="bu">len</span>(layer_sizes) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a>        <span class="va">self</span>.layer_sizes <span class="op">=</span> layer_sizes</span>
+<span id="cb4-27"><a href="#cb4-27"></a>        <span class="va">self</span>.activation <span class="op">=</span> activation</span>
+<span id="cb4-28"><a href="#cb4-28"></a>        <span class="va">self</span>.rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>rand_seed)</span>
+<span id="cb4-29"><a href="#cb4-29"></a>        <span class="cf">if</span> activation <span class="op">==</span> <span class="st">'relu'</span>:</span>
+<span id="cb4-30"><a href="#cb4-30"></a>            <span class="va">self</span>.activation_func <span class="op">=</span> relu</span>
+<span id="cb4-31"><a href="#cb4-31"></a>            <span class="va">self</span>.activation_prime <span class="op">=</span> relu_prime</span>
+<span id="cb4-32"><a href="#cb4-32"></a>        <span class="cf">elif</span> activation <span class="op">==</span> <span class="st">'sigmoid'</span>:</span>
+<span id="cb4-33"><a href="#cb4-33"></a>            <span class="va">self</span>.activation_func <span class="op">=</span> sigmoid</span>
+<span id="cb4-34"><a href="#cb4-34"></a>            <span class="va">self</span>.activation_prime <span class="op">=</span> sigmoid_prime</span>
+<span id="cb4-35"><a href="#cb4-35"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-36"><a href="#cb4-36"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Unsupported activation function. Use 'relu' or 'sigmoid'."</span>)</span>
+<span id="cb4-37"><a href="#cb4-37"></a>        <span class="cf">if</span> cost <span class="op">==</span> <span class="st">'mse'</span>:</span>
+<span id="cb4-38"><a href="#cb4-38"></a>            <span class="va">self</span>.cost_func <span class="op">=</span> <span class="kw">lambda</span> output, target: np.mean((output <span class="op">-</span> target) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb4-39"><a href="#cb4-39"></a>            <span class="va">self</span>.cost_derivative <span class="op">=</span> <span class="kw">lambda</span> output, target: (output <span class="op">-</span> target)</span>
+<span id="cb4-40"><a href="#cb4-40"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-41"><a href="#cb4-41"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Unsupported cost function. Use 'mse'."</span>)</span>
+<span id="cb4-42"><a href="#cb4-42"></a>        <span class="co"># randomly initialize weights and biases</span></span>
+<span id="cb4-43"><a href="#cb4-43"></a>        <span class="co"># input layer has no weights nor biases, so we skip it.</span></span>
+<span id="cb4-44"><a href="#cb4-44"></a>        rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>rand_seed)</span>
+<span id="cb4-45"><a href="#cb4-45"></a>        <span class="co"># each neuron get 1 bias, so bias vector has the size of the layer</span></span>
+<span id="cb4-46"><a href="#cb4-46"></a>        <span class="co"># we skip the first (input) layer, it doesn't have biases</span></span>
+<span id="cb4-47"><a href="#cb4-47"></a>        <span class="co"># I made the biases to be matrices of shape (N_b, 1) instead of vectors of shape (N_b,)</span></span>
+<span id="cb4-48"><a href="#cb4-48"></a>        <span class="co"># to make the broadcasting work more smoothly in the feedforward and backpropagation functions.</span></span>
+<span id="cb4-49"><a href="#cb4-49"></a>        <span class="va">self</span>.biases <span class="op">=</span> [rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>(N_b, <span class="dv">1</span>))</span>
+<span id="cb4-50"><a href="#cb4-50"></a>                       <span class="cf">for</span> N_b <span class="kw">in</span> layer_sizes[<span class="dv">1</span>:]]</span>
+<span id="cb4-51"><a href="#cb4-51"></a>        <span class="co"># each neuron in layer Right is connected to all neurons in layer Left,</span></span>
+<span id="cb4-52"><a href="#cb4-52"></a>        <span class="co"># so weight matrix has the shape (size_right, size_left)</span></span>
+<span id="cb4-53"><a href="#cb4-53"></a>        <span class="co"># again, we skip the first (input) layer, it doesn't have weights</span></span>
+<span id="cb4-54"><a href="#cb4-54"></a>        <span class="co"># scale_for_weights = np.sqrt(2.0/size_left)</span></span>
+<span id="cb4-55"><a href="#cb4-55"></a>        scale_for_weights <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-56"><a href="#cb4-56"></a>        <span class="va">self</span>.weights <span class="op">=</span> [rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span>scale_for_weights, size<span class="op">=</span>(size_right, size_left))</span>
+<span id="cb4-57"><a href="#cb4-57"></a>                        <span class="cf">for</span> size_left, size_right <span class="kw">in</span></span>
+<span id="cb4-58"><a href="#cb4-58"></a>                          <span class="bu">zip</span>(layer_sizes[:<span class="op">-</span><span class="dv">1</span>],layer_sizes[<span class="dv">1</span>:])</span>
+<span id="cb4-59"><a href="#cb4-59"></a>                        ]</span>
+<span id="cb4-60"><a href="#cb4-60"></a>    </span>
+<span id="cb4-61"><a href="#cb4-61"></a>    <span class="kw">def</span> feedforward(<span class="va">self</span>, a):</span>
+<span id="cb4-62"><a href="#cb4-62"></a>        <span class="co">"""given input `a` from the first layer,</span></span>
+<span id="cb4-63"><a href="#cb4-63"></a><span class="co">           we sequencially compute the activations of each layer</span></span>
+<span id="cb4-64"><a href="#cb4-64"></a><span class="co">           `feedforward` returns the activations of last (output) layer</span></span>
+<span id="cb4-65"><a href="#cb4-65"></a><span class="co">        """</span></span>
+<span id="cb4-66"><a href="#cb4-66"></a>        <span class="cf">for</span> b, w <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, <span class="va">self</span>.weights):</span>
+<span id="cb4-67"><a href="#cb4-67"></a>            z <span class="op">=</span> np.dot(w, a) <span class="op">+</span> b</span>
+<span id="cb4-68"><a href="#cb4-68"></a>            a <span class="op">=</span> <span class="va">self</span>.activation_func(z)</span>
+<span id="cb4-69"><a href="#cb4-69"></a>        <span class="cf">return</span> a</span>
+<span id="cb4-70"><a href="#cb4-70"></a>    </span>
+<span id="cb4-71"><a href="#cb4-71"></a>    <span class="kw">def</span> stochastic_gradient_descent(<span class="va">self</span>, training_data, epochs, batch_size, eta, test_data<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb4-72"><a href="#cb4-72"></a>        n <span class="op">=</span> <span class="bu">len</span>(training_data)</span>
+<span id="cb4-73"><a href="#cb4-73"></a>        <span class="cf">try</span>:</span>
+<span id="cb4-74"><a href="#cb4-74"></a>            <span class="cf">for</span> epoch_j <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb4-75"><a href="#cb4-75"></a>                <span class="co"># shuffle training data at the beginning of each epoch</span></span>
+<span id="cb4-76"><a href="#cb4-76"></a>                <span class="va">self</span>.rng.shuffle(training_data)</span>
+<span id="cb4-77"><a href="#cb4-77"></a>                <span class="co"># split training data into batches</span></span>
+<span id="cb4-78"><a href="#cb4-78"></a>                batches <span class="op">=</span> [</span>
+<span id="cb4-79"><a href="#cb4-79"></a>                    training_data[k:k<span class="op">+</span>batch_size]</span>
+<span id="cb4-80"><a href="#cb4-80"></a>                    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n, batch_size)</span>
+<span id="cb4-81"><a href="#cb4-81"></a>                ]</span>
+<span id="cb4-82"><a href="#cb4-82"></a></span>
+<span id="cb4-83"><a href="#cb4-83"></a>                start_time <span class="op">=</span> time.perf_counter()</span>
+<span id="cb4-84"><a href="#cb4-84"></a>                <span class="co"># ASCII Progress bar with Epoch X/Y description</span></span>
+<span id="cb4-85"><a href="#cb4-85"></a>                pbar <span class="op">=</span> tqdm(batches,</span>
+<span id="cb4-86"><a href="#cb4-86"></a>                            desc<span class="op">=</span><span class="ss">f"Epoch </span><span class="sc">{</span>epoch_j<span class="op">+</span><span class="dv">1</span><span class="sc">:2}</span><span class="ss">/</span><span class="sc">{</span>epochs<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb4-87"><a href="#cb4-87"></a>                            bar_format<span class="op">=</span><span class="st">'</span><span class="sc">{desc}</span><span class="st">: </span><span class="sc">{percentage:3.0f}</span><span class="st">%|</span><span class="sc">{bar}</span><span class="st">| </span><span class="sc">{elapsed}</span><span class="st">'</span>,</span>
+<span id="cb4-88"><a href="#cb4-88"></a>                            leave<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-89"><a href="#cb4-89"></a>                    </span>
+<span id="cb4-90"><a href="#cb4-90"></a>                <span class="co"># now loop over batches, update weights</span></span>
+<span id="cb4-91"><a href="#cb4-91"></a>                <span class="cf">for</span> batch <span class="kw">in</span> pbar:</span>
+<span id="cb4-92"><a href="#cb4-92"></a>                    <span class="va">self</span>.update_params_batch(batch, eta)</span>
+<span id="cb4-93"><a href="#cb4-93"></a>                </span>
+<span id="cb4-94"><a href="#cb4-94"></a>                pbar.close()</span>
+<span id="cb4-95"><a href="#cb4-95"></a>                duration_seconds <span class="op">=</span> time.perf_counter() <span class="op">-</span> start_time</span>
+<span id="cb4-96"><a href="#cb4-96"></a>                runtime_str <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>duration_seconds<span class="sc">:.3f}</span><span class="ss"> seconds"</span></span>
+<span id="cb4-97"><a href="#cb4-97"></a>                msg <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb4-98"><a href="#cb4-98"></a>                <span class="cf">if</span> test_data:</span>
+<span id="cb4-99"><a href="#cb4-99"></a>                    accuracy <span class="op">=</span> <span class="va">self</span>.evaluate(test_data)</span>
+<span id="cb4-100"><a href="#cb4-100"></a>                    msg <span class="op">=</span> <span class="ss">f"Accuracy: </span><span class="sc">{</span>accuracy<span class="op">/</span><span class="bu">len</span>(test_data)<span class="sc">:.2%}</span><span class="ss"> | "</span>  <span class="co"># ({accuracy}/{len(test_data)})</span></span>
+<span id="cb4-101"><a href="#cb4-101"></a>                msg <span class="op">+=</span> <span class="ss">f"Runtime: </span><span class="sc">{</span>runtime_str<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb4-102"><a href="#cb4-102"></a>                <span class="bu">print</span>(msg)</span>
+<span id="cb4-103"><a href="#cb4-103"></a>                </span>
+<span id="cb4-104"><a href="#cb4-104"></a>        <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb4-105"><a href="#cb4-105"></a>            <span class="cf">if</span> <span class="st">'pbar'</span> <span class="kw">in</span> <span class="bu">locals</span>():</span>
+<span id="cb4-106"><a href="#cb4-106"></a>                pbar.close()</span>
+<span id="cb4-107"><a href="#cb4-107"></a>            <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Training interrupted by user. Weights preserved."</span>)</span>
+<span id="cb4-108"><a href="#cb4-108"></a>    </span>
+<span id="cb4-109"><a href="#cb4-109"></a>    <span class="kw">def</span> update_params_batch(<span class="va">self</span>, batch, eta):</span>
+<span id="cb4-110"><a href="#cb4-110"></a>        <span class="co"># 1. make input matrix, use column-major order, so each column is a training example, and each row is a feature.</span></span>
+<span id="cb4-111"><a href="#cb4-111"></a>        <span class="co"># input = np.array([data[0] for data in batch]).T</span></span>
+<span id="cb4-112"><a href="#cb4-112"></a>        <span class="co"># 2. make label matrix, use column-major order, so each column is a training example, and each row is a label.</span></span>
+<span id="cb4-113"><a href="#cb4-113"></a>        <span class="co"># target = np.array([data[1] for data in batch]).T</span></span>
+<span id="cb4-114"><a href="#cb4-114"></a>        <span class="bu">input</span> <span class="op">=</span> np.hstack([data[<span class="dv">0</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch])</span>
+<span id="cb4-115"><a href="#cb4-115"></a>        target <span class="op">=</span> np.hstack([data[<span class="dv">1</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch])</span>
+<span id="cb4-116"><a href="#cb4-116"></a>        <span class="co"># 3. compute the gradients for the whole batch using back propagation</span></span>
+<span id="cb4-117"><a href="#cb4-117"></a>        nabla_b, nabla_w <span class="op">=</span> <span class="va">self</span>.back_propagation(<span class="bu">input</span>, target)</span>
+<span id="cb4-118"><a href="#cb4-118"></a>        <span class="co"># update biases and weights</span></span>
+<span id="cb4-119"><a href="#cb4-119"></a>        m <span class="op">=</span> <span class="bu">len</span>(batch)</span>
+<span id="cb4-120"><a href="#cb4-120"></a>        <span class="va">self</span>.biases <span class="op">=</span> [</span>
+<span id="cb4-121"><a href="#cb4-121"></a>            b <span class="op">-</span> (eta<span class="op">/</span>m) <span class="op">*</span> nb</span>
+<span id="cb4-122"><a href="#cb4-122"></a>            <span class="cf">for</span> b, nb <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, nabla_b)</span>
+<span id="cb4-123"><a href="#cb4-123"></a>        ]</span>
+<span id="cb4-124"><a href="#cb4-124"></a>        <span class="va">self</span>.weights <span class="op">=</span> [</span>
+<span id="cb4-125"><a href="#cb4-125"></a>            w <span class="op">-</span> (eta<span class="op">/</span>m) <span class="op">*</span> nw</span>
+<span id="cb4-126"><a href="#cb4-126"></a>            <span class="cf">for</span> w, nw <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.weights, nabla_w)</span>
+<span id="cb4-127"><a href="#cb4-127"></a>        ]</span>
+<span id="cb4-128"><a href="#cb4-128"></a>    </span>
+<span id="cb4-129"><a href="#cb4-129"></a>    <span class="kw">def</span> back_propagation(<span class="va">self</span>, <span class="bu">input</span>, target):</span>
+<span id="cb4-130"><a href="#cb4-130"></a>        <span class="co">###############################</span></span>
+<span id="cb4-131"><a href="#cb4-131"></a>        <span class="co"># 1. forward pass</span></span>
+<span id="cb4-132"><a href="#cb4-132"></a>        <span class="co"># 1a. create variables to store the activations and z vectors for each layer</span></span>
+<span id="cb4-133"><a href="#cb4-133"></a>        <span class="co"># activation starts with the input layer activations, which is just the input data</span></span>
+<span id="cb4-134"><a href="#cb4-134"></a>        activation <span class="op">=</span> <span class="bu">input</span></span>
+<span id="cb4-135"><a href="#cb4-135"></a>        activation_list <span class="op">=</span> [<span class="bu">input</span>]  <span class="co"># initialize with input layer activations</span></span>
+<span id="cb4-136"><a href="#cb4-136"></a>        <span class="co"># weighted input start at the first hidden layer, so we initialize an empty list</span></span>
+<span id="cb4-137"><a href="#cb4-137"></a>        z_list <span class="op">=</span> []</span>
+<span id="cb4-138"><a href="#cb4-138"></a>        <span class="co"># 1b. loop over layers in forward direction, starting from the first hidden layer,</span></span>
+<span id="cb4-139"><a href="#cb4-139"></a>        <span class="co"># compute and store the activations and z vectors layer by layer</span></span>
+<span id="cb4-140"><a href="#cb4-140"></a>        <span class="co"># for the whole batch at once.</span></span>
+<span id="cb4-141"><a href="#cb4-141"></a>        <span class="cf">for</span> b, w <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, <span class="va">self</span>.weights):</span>
+<span id="cb4-142"><a href="#cb4-142"></a>            layer_size <span class="op">=</span> b.shape[<span class="dv">0</span>]</span>
+<span id="cb4-143"><a href="#cb4-143"></a>            <span class="co"># b is a vector of shape (layer_size, 1), we need to broadcast it (stack it horizontally)</span></span>
+<span id="cb4-144"><a href="#cb4-144"></a>            <span class="co"># to match the shape of the dot product w @ activation, which is (layer_size, batch_size)</span></span>
+<span id="cb4-145"><a href="#cb4-145"></a>            B <span class="op">=</span> np.broadcast_to(b, (layer_size, <span class="bu">input</span>.shape[<span class="dv">1</span>]))</span>
+<span id="cb4-146"><a href="#cb4-146"></a>            z <span class="op">=</span> np.dot(w, activation) <span class="op">+</span> B</span>
+<span id="cb4-147"><a href="#cb4-147"></a>            activation <span class="op">=</span> <span class="va">self</span>.activation_func(z)</span>
+<span id="cb4-148"><a href="#cb4-148"></a>            z_list.append(z)</span>
+<span id="cb4-149"><a href="#cb4-149"></a>            activation_list.append(activation)</span>
+<span id="cb4-150"><a href="#cb4-150"></a>        <span class="co">###############################</span></span>
+<span id="cb4-151"><a href="#cb4-151"></a>        <span class="co"># now we have all the information we need to compute the gradients in the backward pass.</span></span>
+<span id="cb4-152"><a href="#cb4-152"></a>        <span class="co">###############################</span></span>
+<span id="cb4-153"><a href="#cb4-153"></a>        <span class="co"># 2. backward pass</span></span>
+<span id="cb4-154"><a href="#cb4-154"></a>        <span class="co"># 2a. create empty lists to store the gradients for biases and weights, layer by layer</span></span>
+<span id="cb4-155"><a href="#cb4-155"></a>        nabla_b <span class="op">=</span> [np.zeros_like(b) <span class="cf">for</span> b <span class="kw">in</span> <span class="va">self</span>.biases]</span>
+<span id="cb4-156"><a href="#cb4-156"></a>        nabla_w <span class="op">=</span> [np.zeros_like(w) <span class="cf">for</span> w <span class="kw">in</span> <span class="va">self</span>.weights]</span>
+<span id="cb4-157"><a href="#cb4-157"></a>        <span class="co"># 2b. first compute the error "delta" for the output layer</span></span>
+<span id="cb4-158"><a href="#cb4-158"></a>        <span class="co"># this is what we called the "base case"</span></span>
+<span id="cb4-159"><a href="#cb4-159"></a>        delta <span class="op">=</span> <span class="va">self</span>.cost_derivative(activation_list[<span class="op">-</span><span class="dv">1</span>], target) <span class="op">*</span> <span class="va">self</span>.activation_prime(z_list[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-160"><a href="#cb4-160"></a>        <span class="co"># 2c. compute and store the gradients for the output layer</span></span>
+<span id="cb4-161"><a href="#cb4-161"></a>        <span class="co"># we use activation_list[-2] because the rule for updating the weights requires the activations from the previous layer,</span></span>
+<span id="cb4-162"><a href="#cb4-162"></a>        <span class="co"># which is the second to last layer in the list. The transpose is needed to match the dimensions of the matrices</span></span>
+<span id="cb4-163"><a href="#cb4-163"></a>        nabla_b[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> np.<span class="bu">sum</span>(delta, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-164"><a href="#cb4-164"></a>        nabla_w[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> np.dot(delta, activation_list[<span class="op">-</span><span class="dv">2</span>].T)</span>
+<span id="cb4-165"><a href="#cb4-165"></a>        <span class="co"># 2c. loop over layers in reverse order,</span></span>
+<span id="cb4-166"><a href="#cb4-166"></a>        <span class="co"># compute the gradients for each layer. This is the "inductive step".</span></span>
+<span id="cb4-167"><a href="#cb4-167"></a>        <span class="co"># the loop starts at the second to last layer, and goes backwards to the first hidden layer.</span></span>
+<span id="cb4-168"><a href="#cb4-168"></a>        <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="va">self</span>.number_of_layers<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb4-169"><a href="#cb4-169"></a>            z <span class="op">=</span> z_list[<span class="op">-</span>l]</span>
+<span id="cb4-170"><a href="#cb4-170"></a>            <span class="co"># the order of the dot product and the transpose of the weights are needed</span></span>
+<span id="cb4-171"><a href="#cb4-171"></a>            <span class="co"># to match the dimensions of the matrices</span></span>
+<span id="cb4-172"><a href="#cb4-172"></a>            delta <span class="op">=</span> np.dot(<span class="va">self</span>.weights[<span class="op">-</span>l<span class="op">+</span><span class="dv">1</span>].T, delta) <span class="op">*</span> <span class="va">self</span>.activation_prime(z)</span>
+<span id="cb4-173"><a href="#cb4-173"></a>            nabla_b[<span class="op">-</span>l] <span class="op">=</span> np.<span class="bu">sum</span>(delta, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-174"><a href="#cb4-174"></a>            nabla_w[<span class="op">-</span>l] <span class="op">=</span> np.dot(delta, activation_list[<span class="op">-</span>l<span class="op">-</span><span class="dv">1</span>].T)</span>
+<span id="cb4-175"><a href="#cb4-175"></a>        <span class="cf">return</span> nabla_b, nabla_w</span>
+<span id="cb4-176"><a href="#cb4-176"></a>    </span>
+<span id="cb4-177"><a href="#cb4-177"></a>    <span class="kw">def</span> evaluate(<span class="va">self</span>, test_data):</span>
+<span id="cb4-178"><a href="#cb4-178"></a>        <span class="co">"""Return the number of correct classifications."""</span></span>
+<span id="cb4-179"><a href="#cb4-179"></a>        test_results <span class="op">=</span> [(np.argmax(<span class="va">self</span>.feedforward(x)), y)</span>
+<span id="cb4-180"><a href="#cb4-180"></a>                        <span class="cf">for</span> (x, y) <span class="kw">in</span> test_data]</span>
+<span id="cb4-181"><a href="#cb4-181"></a>        <span class="cf">return</span> <span class="bu">sum</span>(<span class="bu">int</span>(x <span class="op">==</span> y) <span class="cf">for</span> (x, y) <span class="kw">in</span> test_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>I heavily commented the code above, but I still don’t expect it to be understandable. The first time I tried to convert Nielsen’s code to a vectorized version, I used Gemini or ChatGPT, and it immediately spit out a fully functioning code. The structure of this new code was very similar to the original, but I couldn’t say that I understood the details of the matrix multiplications. I then decided to code it myself, and make sure I know exactly every step of the way. I knew I was doing something right when I ran into bugs for a full day. The code either didn’t run because of a shape mismatch, or it ran but the performance didn’t change at all as epochs went by. What was missing for me was pencil and paper work. I had to write down the shapes of all the matrices and vectors involved in the feedforward and backpropagation algorithms, and make sure they all matched up. Once I did that, I knew exactly what to fix, and voilà, the code worked. I know I will forget in 10 minutes why the code works, and from now on I’ll just believe that it does what it is supposed to do, but I’ll have the confidence that I understood it once, and that’s a great feeling to have. See below one of my pencil and paper notes, as a proof of my hard work.</p>
 <p><img src="index_verification.png" class="img-fluid" width="400"></p>
-<div id="c8846159" class="cell" data-execution_count="12">
+<div id="c8846159" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>define function to load MNIST from web</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">def</span> load_mnist_from_web():</span>
-<span id="cb14-2"><a href="#cb14-2"></a>    urls <span class="op">=</span> {</span>
-<span id="cb14-3"><a href="#cb14-3"></a>        <span class="st">"train_img"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-images-idx3-ubyte.gz"</span>,</span>
-<span id="cb14-4"><a href="#cb14-4"></a>        <span class="st">"train_lbl"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-labels-idx1-ubyte.gz"</span>,</span>
-<span id="cb14-5"><a href="#cb14-5"></a>        <span class="st">"test_img"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/t10k-images-idx3-ubyte.gz"</span>,</span>
-<span id="cb14-6"><a href="#cb14-6"></a>        <span class="st">"test_lbl"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/t10k-labels-idx1-ubyte.gz"</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>    }</span>
-<span id="cb14-8"><a href="#cb14-8"></a></span>
-<span id="cb14-9"><a href="#cb14-9"></a>    data_results <span class="op">=</span> {}</span>
-<span id="cb14-10"><a href="#cb14-10"></a></span>
-<span id="cb14-11"><a href="#cb14-11"></a>    <span class="cf">for</span> key, url <span class="kw">in</span> urls.items():</span>
-<span id="cb14-12"><a href="#cb14-12"></a>        <span class="bu">print</span>(<span class="ss">f"Fetching </span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">..."</span>)</span>
-<span id="cb14-13"><a href="#cb14-13"></a>        response <span class="op">=</span> requests.get(url)</span>
-<span id="cb14-14"><a href="#cb14-14"></a>        response.raise_for_status()</span>
-<span id="cb14-15"><a href="#cb14-15"></a>        </span>
-<span id="cb14-16"><a href="#cb14-16"></a>        <span class="co"># Wrap the content in BytesIO and decompress in memory</span></span>
-<span id="cb14-17"><a href="#cb14-17"></a>        <span class="cf">with</span> gzip.GzipFile(fileobj<span class="op">=</span>io.BytesIO(response.content)) <span class="im">as</span> f:</span>
-<span id="cb14-18"><a href="#cb14-18"></a>            <span class="cf">if</span> <span class="st">"img"</span> <span class="kw">in</span> key:</span>
-<span id="cb14-19"><a href="#cb14-19"></a>                <span class="co"># Images: offset 16</span></span>
-<span id="cb14-20"><a href="#cb14-20"></a>                data_results[key] <span class="op">=</span> np.frombuffer(f.read(), np.uint8, offset<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb14-21"><a href="#cb14-21"></a>            <span class="cf">else</span>:</span>
-<span id="cb14-22"><a href="#cb14-22"></a>                <span class="co"># Labels: offset 8</span></span>
-<span id="cb14-23"><a href="#cb14-23"></a>                data_results[key] <span class="op">=</span> np.frombuffer(f.read(), np.uint8, offset<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb14-24"><a href="#cb14-24"></a></span>
-<span id="cb14-25"><a href="#cb14-25"></a>    <span class="co"># Re-format to Nielsen's expected structure</span></span>
-<span id="cb14-26"><a href="#cb14-26"></a>    <span class="kw">def</span> vectorized_result(j):</span>
-<span id="cb14-27"><a href="#cb14-27"></a>        e <span class="op">=</span> np.zeros((<span class="dv">10</span>, <span class="dv">1</span>))</span>
-<span id="cb14-28"><a href="#cb14-28"></a>        e[j] <span class="op">=</span> <span class="fl">1.0</span></span>
-<span id="cb14-29"><a href="#cb14-29"></a>        <span class="cf">return</span> e</span>
-<span id="cb14-30"><a href="#cb14-30"></a></span>
-<span id="cb14-31"><a href="#cb14-31"></a>    training_inputs <span class="op">=</span> [np.reshape(x, (<span class="dv">784</span>, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">255.0</span> <span class="cf">for</span> x <span class="kw">in</span> data_results[<span class="st">"train_img"</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">784</span>)]</span>
-<span id="cb14-32"><a href="#cb14-32"></a>    training_results <span class="op">=</span> [vectorized_result(y) <span class="cf">for</span> y <span class="kw">in</span> data_results[<span class="st">"train_lbl"</span>]]</span>
-<span id="cb14-33"><a href="#cb14-33"></a>    training_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(training_inputs, training_results))</span>
-<span id="cb14-34"><a href="#cb14-34"></a></span>
-<span id="cb14-35"><a href="#cb14-35"></a>    test_inputs <span class="op">=</span> [np.reshape(x, (<span class="dv">784</span>, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">255.0</span> <span class="cf">for</span> x <span class="kw">in</span> data_results[<span class="st">"test_img"</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">784</span>)]</span>
-<span id="cb14-36"><a href="#cb14-36"></a>    test_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(test_inputs, data_results[<span class="st">"test_lbl"</span>]))</span>
-<span id="cb14-37"><a href="#cb14-37"></a></span>
-<span id="cb14-38"><a href="#cb14-38"></a>    <span class="cf">return</span> training_data, test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> load_mnist_from_web():</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    urls <span class="op">=</span> {</span>
+<span id="cb5-3"><a href="#cb5-3"></a>        <span class="st">"train_img"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-images-idx3-ubyte.gz"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>        <span class="st">"train_lbl"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-labels-idx1-ubyte.gz"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5"></a>        <span class="st">"test_img"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/t10k-images-idx3-ubyte.gz"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6"></a>        <span class="st">"test_lbl"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/t10k-labels-idx1-ubyte.gz"</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    }</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>    data_results <span class="op">=</span> {}</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a>    <span class="cf">for</span> key, url <span class="kw">in</span> urls.items():</span>
+<span id="cb5-12"><a href="#cb5-12"></a>        <span class="bu">print</span>(<span class="ss">f"Fetching </span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">..."</span>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a>        response <span class="op">=</span> requests.get(url)</span>
+<span id="cb5-14"><a href="#cb5-14"></a>        response.raise_for_status()</span>
+<span id="cb5-15"><a href="#cb5-15"></a>        </span>
+<span id="cb5-16"><a href="#cb5-16"></a>        <span class="co"># Wrap the content in BytesIO and decompress in memory</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>        <span class="cf">with</span> gzip.GzipFile(fileobj<span class="op">=</span>io.BytesIO(response.content)) <span class="im">as</span> f:</span>
+<span id="cb5-18"><a href="#cb5-18"></a>            <span class="cf">if</span> <span class="st">"img"</span> <span class="kw">in</span> key:</span>
+<span id="cb5-19"><a href="#cb5-19"></a>                <span class="co"># Images: offset 16</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>                data_results[key] <span class="op">=</span> np.frombuffer(f.read(), np.uint8, offset<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb5-21"><a href="#cb5-21"></a>            <span class="cf">else</span>:</span>
+<span id="cb5-22"><a href="#cb5-22"></a>                <span class="co"># Labels: offset 8</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a>                data_results[key] <span class="op">=</span> np.frombuffer(f.read(), np.uint8, offset<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb5-24"><a href="#cb5-24"></a></span>
+<span id="cb5-25"><a href="#cb5-25"></a>    <span class="co"># Re-format to Nielsen's expected structure</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a>    <span class="kw">def</span> vectorized_result(j):</span>
+<span id="cb5-27"><a href="#cb5-27"></a>        e <span class="op">=</span> np.zeros((<span class="dv">10</span>, <span class="dv">1</span>))</span>
+<span id="cb5-28"><a href="#cb5-28"></a>        e[j] <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a>        <span class="cf">return</span> e</span>
+<span id="cb5-30"><a href="#cb5-30"></a></span>
+<span id="cb5-31"><a href="#cb5-31"></a>    training_inputs <span class="op">=</span> [np.reshape(x, (<span class="dv">784</span>, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">255.0</span> <span class="cf">for</span> x <span class="kw">in</span> data_results[<span class="st">"train_img"</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">784</span>)]</span>
+<span id="cb5-32"><a href="#cb5-32"></a>    training_results <span class="op">=</span> [vectorized_result(y) <span class="cf">for</span> y <span class="kw">in</span> data_results[<span class="st">"train_lbl"</span>]]</span>
+<span id="cb5-33"><a href="#cb5-33"></a>    training_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(training_inputs, training_results))</span>
+<span id="cb5-34"><a href="#cb5-34"></a></span>
+<span id="cb5-35"><a href="#cb5-35"></a>    test_inputs <span class="op">=</span> [np.reshape(x, (<span class="dv">784</span>, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">255.0</span> <span class="cf">for</span> x <span class="kw">in</span> data_results[<span class="st">"test_img"</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">784</span>)]</span>
+<span id="cb5-36"><a href="#cb5-36"></a>    test_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(test_inputs, data_results[<span class="st">"test_lbl"</span>]))</span>
+<span id="cb5-37"><a href="#cb5-37"></a></span>
+<span id="cb5-38"><a href="#cb5-38"></a>    <span class="cf">return</span> training_data, test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="118b011b" class="cell" data-execution_count="13">
+<div id="118b011b" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>load MNIST data into memory</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>training_data, test_data <span class="op">=</span> load_mnist_from_web()</span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(training_data)<span class="sc">}</span><span class="ss"> training samples directly into memory."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>training_data, test_data <span class="op">=</span> load_mnist_from_web()</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(training_data)<span class="sc">}</span><span class="ss"> training samples directly into memory."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Fetching train_img...
@@ -1372,77 +1325,199 @@ Fetching test_lbl...
 Loaded 60000 training samples directly into memory.</code></pre>
 </div>
 </div>
-<div id="0a7def0b" class="cell" data-execution_count="100">
+<div id="0a7def0b" class="cell" data-execution_count="35">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>net <span class="op">=</span> NN(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], activation<span class="op">=</span><span class="st">"sigmoid"</span>, rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb17-2"><a href="#cb17-2"></a>net.stochastic_gradient_descent(training_data<span class="op">=</span>training_data,</span>
-<span id="cb17-3"><a href="#cb17-3"></a>        epochs<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb17-4"><a href="#cb17-4"></a>        batch_size<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb17-5"><a href="#cb17-5"></a>        eta<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb17-6"><a href="#cb17-6"></a>        test_data<span class="op">=</span>test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>net <span class="op">=</span> NN(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], activation<span class="op">=</span><span class="st">"sigmoid"</span>, rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>net.stochastic_gradient_descent(training_data<span class="op">=</span>training_data,</span>
+<span id="cb8-3"><a href="#cb8-3"></a>        epochs<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb8-4"><a href="#cb8-4"></a>        batch_size<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>        eta<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>        test_data<span class="op">=</span>test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 1/10: 100%|██████████| 600/600 [00:01&lt;00:00, 497.24it/s]</code></pre>
+<pre><code>Epoch  1/10: 100%|██████████| 00:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 78.36% (7836/10000)</code></pre>
+<pre><code>Accuracy: 71.84% | Runtime: 0.970 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 2/10: 100%|██████████| 600/600 [00:01&lt;00:00, 573.09it/s]</code></pre>
+<pre><code>Epoch  2/10: 100%|██████████| 00:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 81.58% (8158/10000)</code></pre>
+<pre><code>Accuracy: 89.66% | Runtime: 0.931 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 3/10: 100%|██████████| 600/600 [00:00&lt;00:00, 622.85it/s]</code></pre>
+<pre><code>Epoch  3/10: 100%|██████████| 00:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 85.97% (8597/10000)</code></pre>
+<pre><code>Accuracy: 91.49% | Runtime: 0.981 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 4/10: 100%|██████████| 600/600 [00:01&lt;00:00, 453.76it/s]</code></pre>
+<pre><code>Epoch  4/10: 100%|██████████| 00:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 92.57% (9257/10000)</code></pre>
+<pre><code>Accuracy: 92.00% | Runtime: 0.955 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 5/10: 100%|██████████| 600/600 [00:01&lt;00:00, 386.50it/s]</code></pre>
+<pre><code>Epoch  5/10: 100%|██████████| 00:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 92.62% (9262/10000)</code></pre>
+<pre><code>Accuracy: 92.45% | Runtime: 0.999 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 6/10: 100%|██████████| 600/600 [00:01&lt;00:00, 536.86it/s]</code></pre>
+<pre><code>Epoch  6/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 93.06% (9306/10000)</code></pre>
+<pre><code>Accuracy: 92.44% | Runtime: 1.104 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 7/10: 100%|██████████| 600/600 [00:00&lt;00:00, 616.38it/s]</code></pre>
+<pre><code>Epoch  7/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 93.38% (9338/10000)</code></pre>
+<pre><code>Accuracy: 93.05% | Runtime: 1.020 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 8/10: 100%|██████████| 600/600 [00:01&lt;00:00, 536.40it/s]</code></pre>
+<pre><code>Epoch  8/10: 100%|██████████| 00:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 93.53% (9353/10000)</code></pre>
+<pre><code>Accuracy: 93.29% | Runtime: 1.001 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 9/10: 100%|██████████| 600/600 [00:01&lt;00:00, 356.56it/s]</code></pre>
+<pre><code>Epoch  9/10: 100%|██████████| 00:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 93.83% (9383/10000)</code></pre>
+<pre><code>Accuracy: 93.26% | Runtime: 0.982 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch 10/10: 100%|██████████| 600/600 [00:01&lt;00:00, 588.62it/s]</code></pre>
+<pre><code>Epoch 10/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy = 93.87% (9387/10000)</code></pre>
+<pre><code>Accuracy: 93.55% | Runtime: 1.313 seconds</code></pre>
 </div>
 </div>
+</section>
+<section id="widget" class="level2" data-number="56.8">
+<h2 data-number="56.8" class="anchored" data-anchor-id="widget"><span class="header-section-number">56.8</span> widget</h2>
+<p>Let’s play with the trained model!</p>
+<div id="390ec18a" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>export model parameters to JSON</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a>export_data <span class="op">=</span> {</span>
+<span id="cb29-2"><a href="#cb29-2"></a>    <span class="st">"weights"</span>: [w.tolist() <span class="cf">for</span> w <span class="kw">in</span> net.weights],</span>
+<span id="cb29-3"><a href="#cb29-3"></a>    <span class="st">"biases"</span>: [b.tolist() <span class="cf">for</span> b <span class="kw">in</span> net.biases],</span>
+<span id="cb29-4"><a href="#cb29-4"></a>}</span>
+<span id="cb29-5"><a href="#cb29-5"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"mnist_model.json"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb29-6"><a href="#cb29-6"></a>    json.dump(export_data, f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="digit-widget-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px; border: 1px solid #ddd; font-family: sans-serif; width: fit-content; margin: auto;">
+    
+    <div style="text-align: center;">
+        <h3 id="prediction-text" style="margin: 0; color: #333;" class="anchored">Draw a number!</h3>
+    </div>
+
+    <div id="output-viz" style="display: flex; align-items: flex-end; gap: 8px; height: 100px; padding: 10px; border-bottom: 2px solid #ccc; width: 280px; justify-content: space-between;">
+        </div>
+    
+    <canvas id="canvas" width="28" height="28" style="width: 280px; height: 280px; border: 2px solid #333; background: white; cursor: crosshair; touch-action: none; image-rendering: pixelated;"></canvas>
+    
+    <div style="display: flex; gap: 10px;">
+        <button onclick="clearCanvas()" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear</button>
+        <button onclick="runPrediction()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Predict</button>
+    </div>
+</div>
+
+<script>
+let model = null;
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+const predictionText = document.getElementById('prediction-text');
+const vizContainer = document.getElementById('output-viz');
+
+// Bars Initialization
+const bars = [];
+for (let i = 0; i < 10; i++) {
+    const wrapper = document.createElement('div');
+    wrapper.style.display = 'flex'; wrapper.style.flexDirection = 'column';
+    wrapper.style.alignItems = 'center'; wrapper.style.width = '20px';
+    const bar = document.createElement('div');
+    bar.style.width = '100%'; bar.style.height = '0px'; bar.style.backgroundColor = '#28a745';
+    bar.style.transition = 'height 0.2s'; bar.style.borderRadius = '2px 2px 0 0';
+    const label = document.createElement('span');
+    label.innerText = i; label.style.fontSize = '12px';
+    wrapper.appendChild(bar); wrapper.appendChild(label);
+    vizContainer.appendChild(wrapper);
+    bars.push(bar);
+}
+
+// Drawing Logic for 28x28
+// We need to account for the scale factor (10x) when calculating mouse position
+ctx.strokeStyle = 'black';
+ctx.lineWidth = 1.2; // Small width for 28x28 grid
+ctx.lineCap = 'round';
+
+fetch('mnist_model.json').then(r => r.json()).then(d => model = d);
+
+let isDrawing = false;
+canvas.addEventListener('mousedown', () => isDrawing = true);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', () => { isDrawing = false; ctx.beginPath(); });
+
+function draw(e) {
+    if (!isDrawing) return;
+    const rect = canvas.getBoundingClientRect();
+    // Scale the coordinates: (Actual Mouse Pos / Display Size) * Internal Size
+    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    
+    ctx.lineTo(x, y);
+    ctx.stroke();
+}
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, 28, 28);
+    predictionText.innerText = "28x28 Direct Input";
+    bars.forEach(b => b.style.height = '0px');
+}
+
+const sigmoid = (z) => 1.0 / (1.0 + Math.exp(-z));
+
+function runPrediction() {
+    if (!model) return;
+    const imgData = ctx.getImageData(0, 0, 28, 28).data;
+    const input = [];
+    
+    for (let i = 0; i < imgData.length; i += 4) {
+        // Since we draw black on a clear/white canvas, 
+        // we use the Alpha channel (index i+3) as the "ink" intensity
+        const alpha = imgData[i+3] / 255.0;
+        input.push(alpha);
+    }
+
+    // Feedforward
+    let a = input;
+    for (let i = 0; i < model.weights.length; i++) {
+        let w = model.weights[i], b = model.biases[i], next_a = [];
+        for (let row = 0; row < w.length; row++) {
+            let sum = 0;
+            for (let col = 0; col < w[row].length; col++) {
+                sum += w[row][col] * a[col];
+            }
+            next_a.push(sigmoid(sum + b[row][0]));
+        }
+        a = next_a;
+    }
+
+    const result = a.indexOf(Math.max(...a));
+    predictionText.innerText = `Prediction: ${result}`;
+
+    a.forEach((val, idx) => {
+        bars[idx].style.height = `${val * 80}px`;
+        bars[idx].style.backgroundColor = (idx === result) ? '#28a745' : '#adb5bd';
+    });
+}
+</script>
 
 
 </section>
