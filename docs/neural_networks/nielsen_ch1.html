@@ -214,6 +214,12 @@ window.Quarto = {
  <span class="menu-text">home</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sources</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -680,6 +686,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.2</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch3A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -694,13 +706,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/shap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
   </div>
 </li>
       </ul>
@@ -716,15 +728,15 @@ window.Quarto = {
    
   <ul>
   <li><a href="#loading-the-data" id="toc-loading-the-data" class="nav-link active" data-scroll-target="#loading-the-data"><span class="header-section-number">55.1</span> loading the data</a></li>
-  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise"><span class="header-section-number">55.2</span> exercise</a></li>
-  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">55.3</span> exercise</a></li>
-  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">55.4</span> exercise</a></li>
-  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="header-section-number">55.5</span> exercise</a></li>
-  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">55.6</span> exercise</a></li>
-  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="header-section-number">55.7</span> exercise</a></li>
-  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6"><span class="header-section-number">55.8</span> exercise</a></li>
+  <li><a href="#exercise-a" id="toc-exercise-a" class="nav-link" data-scroll-target="#exercise-a"><span class="header-section-number">55.2</span> exercise A</a></li>
+  <li><a href="#exercise-b" id="toc-exercise-b" class="nav-link" data-scroll-target="#exercise-b"><span class="header-section-number">55.3</span> exercise B</a></li>
+  <li><a href="#exercise-c" id="toc-exercise-c" class="nav-link" data-scroll-target="#exercise-c"><span class="header-section-number">55.4</span> exercise C</a></li>
+  <li><a href="#exercise-d" id="toc-exercise-d" class="nav-link" data-scroll-target="#exercise-d"><span class="header-section-number">55.5</span> exercise D</a></li>
+  <li><a href="#exercise-e" id="toc-exercise-e" class="nav-link" data-scroll-target="#exercise-e"><span class="header-section-number">55.6</span> exercise E</a></li>
+  <li><a href="#exercise-f" id="toc-exercise-f" class="nav-link" data-scroll-target="#exercise-f"><span class="header-section-number">55.7</span> exercise F</a></li>
+  <li><a href="#exercise-g" id="toc-exercise-g" class="nav-link" data-scroll-target="#exercise-g"><span class="header-section-number">55.8</span> exercise G</a></li>
   <li><a href="#the-code" id="toc-the-code" class="nav-link" data-scroll-target="#the-code"><span class="header-section-number">55.9</span> the code</a></li>
-  <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7"><span class="header-section-number">55.10</span> exercise</a></li>
+  <li><a href="#exercise-h" id="toc-exercise-h" class="nav-link" data-scroll-target="#exercise-h"><span class="header-section-number">55.10</span> exercise H</a></li>
   </ul>
 </nav>
     </div>
@@ -876,12 +888,17 @@ Loaded 60000 training samples directly into memory.</code></pre>
 </div>
 </div>
 </section>
-<section id="exercise" class="level2" data-number="55.2">
-<h2 data-number="55.2" class="anchored" data-anchor-id="exercise"><span class="header-section-number">55.2</span> exercise</h2>
-<div class="alert alert-info">
-<p><strong>Sigmoid neurons simulating perceptrons, part I</strong></p>
-Suppose we take all the weights and biases in a network of perceptrons, and multiply them by a positive constant, <span class="math inline">c&gt;0</span>. Show that the behaviour of the network doesn’t change.
+<section id="exercise-a" class="level2" data-number="55.2">
+<h2 data-number="55.2" class="anchored" data-anchor-id="exercise-a"><span class="header-section-number">55.2</span> exercise A</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">Sigmoid neurons simulating perceptrons, part I</span></p>
 </div>
+<div class="card-body pb-0">
+<p>Suppose we take all the weights and biases in a network of perceptrons, and multiply them by a positive constant, <span class="math inline">c&gt;0</span>. Show that the behaviour of the network doesn’t change.</p>
+</div>
+</div>
+<p><br></p>
 <p><span class="math display">
 \text{perceptron output} =
 \begin{cases}
@@ -892,12 +909,17 @@ Suppose we take all the weights and biases in a network of perceptrons, and mult
 <p>where <span class="math inline">z=\sum_{i=1}^{n} w_i x_i + b</span>.</p>
 <p>We start with the expression <span class="math inline">z=w_i x_i + b</span>. Multiplying all weights and biases by a positive constant <span class="math inline">c</span> gives us <span class="math inline">c w_i x_i + c b</span>. We can factor out the constant to get <span class="math inline">cz</span>. Since <span class="math inline">c</span> is positive, the sign of the expression remains unchanged. Therefore, the output of the perceptron will still be 1 if <span class="math inline">cz &gt; 0</span> and 0 otherwise, meaning the behavior of the network does not change.</p>
 </section>
-<section id="exercise-1" class="level2" data-number="55.3">
-<h2 data-number="55.3" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">55.3</span> exercise</h2>
-<div class="alert alert-info">
-<p><strong>Sigmoid neurons simulating perceptrons, part II</strong></p>
-Suppose we have the same setup as the last problem — a network of perceptrons. Suppose also that the overall input to the network of perceptrons has been chosen. We won’t need the actual input value, we just need the input to have been fixed. Suppose the weights and biases are such that <span class="math inline">w\cdot x+b\neq 0</span> for the input <span class="math inline">x</span> to any particular perceptron in the network. Now replace all the perceptrons in the network by sigmoid neurons, and multiply the weights and biases by a positive constant <span class="math inline">c&gt;0</span>. Show that in the limit as <span class="math inline">c\rightarrow \infty</span> the behaviour of this network of sigmoid neurons is exactly the same as the network of perceptrons. How can this fail when <span class="math inline">w\cdot x+b= 0</span> for one of the perceptrons?
+<section id="exercise-b" class="level2" data-number="55.3">
+<h2 data-number="55.3" class="anchored" data-anchor-id="exercise-b"><span class="header-section-number">55.3</span> exercise B</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">Sigmoid neurons simulating perceptrons, part II</span></p>
 </div>
+<div class="card-body pb-0">
+<p>Suppose we have the same setup as the last problem — a network of perceptrons. Suppose also that the overall input to the network of perceptrons has been chosen. We won’t need the actual input value, we just need the input to have been fixed. Suppose the weights and biases are such that <span class="math inline">w\cdot x+b\neq 0</span> for the input <span class="math inline">x</span> to any particular perceptron in the network. Now replace all the perceptrons in the network by sigmoid neurons, and multiply the weights and biases by a positive constant <span class="math inline">c&gt;0</span>. Show that in the limit as <span class="math inline">c\rightarrow \infty</span> the behaviour of this network of sigmoid neurons is exactly the same as the network of perceptrons. How can this fail when <span class="math inline">w\cdot x+b= 0</span> for one of the perceptrons?</p>
+</div>
+</div>
+<p><br></p>
 <p>Sigmoid function</p>
 <p><span class="math display">
 \sigma(z) = \frac{1}{1 + e^{-z}}
@@ -931,11 +953,17 @@ Suppose we have the same setup as the last problem — a network of perceptrons.
 </div>
 <p>However, if <span class="math inline">w\cdot x + b = 0</span>, then <span class="math inline">z=0</span> and <span class="math inline">\sigma(cz) = \sigma(0) = 0.5</span> for all values of <span class="math inline">c</span>, which does not match the behavior of a perceptron, which would output 0 in this case.</p>
 </section>
-<section id="exercise-2" class="level2" data-number="55.4">
-<h2 data-number="55.4" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">55.4</span> exercise</h2>
-<div class="alert alert-info">
-There is a way of determining the bitwise representation of a digit by adding an extra layer to the three-layer network above. The extra layer converts the output from the previous layer into a binary representation, as illustrated in the figure below. Find a set of weights and biases for the new output layer. Assume that the first 3 layers of neurons are such that the correct output in the third layer (i.e., the old output layer) has activation at least 0.99, and incorrect outputs have activation less than 0.01.
+<section id="exercise-c" class="level2" data-number="55.4">
+<h2 data-number="55.4" class="anchored" data-anchor-id="exercise-c"><span class="header-section-number">55.4</span> exercise C</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">bitwise representation</span></p>
 </div>
+<div class="card-body pb-0">
+<p>There is a way of determining the bitwise representation of a digit by adding an extra layer to the three-layer network above. The extra layer converts the output from the previous layer into a binary representation, as illustrated in the figure below. Find a set of weights and biases for the new output layer. Assume that the first 3 layers of neurons are such that the correct output in the third layer (i.e., the old output layer) has activation at least 0.99, and incorrect outputs have activation less than 0.01.</p>
+</div>
+</div>
+<p><br></p>
 <p>Instead of thinking what are the weights and biases for each of the 4 output neurons, we can think of the weights and biases for each of the 10 neurons in the previous layer. We do that by writing the binary representation of the output digit, for example:</p>
 <div id="38e04e68" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
@@ -13154,14 +13182,20 @@ dAqFQqFQugE0oFMoFAqF0g2gAZ1CoVAolG4ADegUCoVCoXQDaECnUCgUCqUbQAM6hUKhUCjdgP8H\
 </div>
 </div>
 </section>
-<section id="exercise-3" class="level2" data-number="55.5">
-<h2 data-number="55.5" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">55.5</span> exercise</h2>
+<section id="exercise-d" class="level2" data-number="55.5">
+<h2 data-number="55.5" class="anchored" data-anchor-id="exercise-d"><span class="header-section-number">55.5</span> exercise D</h2>
 <blockquote class="blockquote">
 <p>Indeed, there’s even a sense in which gradient descent is the optimal strategy for searching for a minimum. Let’s suppose that we’re trying to make a move <span class="math inline">\Delta v</span> in position so as to decrease <span class="math inline">C</span> as much as possible. This is equivalent to minimizing <span class="math inline">\Delta C≈\nabla C\cdot\Delta v</span>. We’ll constrain the size of the move so that <span class="math inline">\Vert \Delta v\Vert=\epsilon</span> for some small fixed <span class="math inline">\epsilon&gt;0</span>. In other words, we want a move that is a small step of a fixed size, and we’re trying to find the movement direction which decreases C as much as possible. It can be proved that the choice of <span class="math inline">\Delta v</span> which minimizes <span class="math inline">\nabla C\cdot\Delta v</span> is <span class="math inline">\Delta v=−\eta\nabla C</span>, where <span class="math inline">\eta=\epsilon/\Vert\nabla C\Vert</span> is determined by the size constraint <span class="math inline">\Vert\Delta v\Vert=\epsilon</span>. So gradient descent can be viewed as a way of taking small steps in the direction which does the most to immediately decrease C.</p>
 </blockquote>
-<div class="alert alert-info">
-Prove the assertion of the last paragraph. Hint: If you’re not already familiar with the <a href="http://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality">Cauchy-Schwarz inequality</a>, you may find it helpful to familiarize yourself with it.
+<div class="card bg-info mb-0">
+<div class="card-header">
+<p><span class="h3">gradient descent as an optimal strategy</span></p>
 </div>
+<div class="card-body pb-0">
+<p>Prove the assertion of the last paragraph. Hint: If you’re not already familiar with the <a href="http://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality" class="text-light">Cauchy-Schwarz inequality</a>, you may find it helpful to familiarize yourself with it.</p>
+</div>
+</div>
+<p><br></p>
 <p>The Cauchy-Schwarz inequality states that for any vectors <span class="math inline">a</span> and <span class="math inline">b</span>, we have: <span class="math display">
 |a \cdot b| \leq \Vert a \Vert \Vert b \Vert
 </span></p>
@@ -13180,23 +13214,35 @@ Prove the assertion of the last paragraph. Hint: If you’re not already familia
 </span></p>
 <p>The step in the parameter space is in the opposite direction of the unitary vector of the gradient, and its size is <span class="math inline">\epsilon</span>, which is the maximum allowed step size. This shows that gradient descent is the optimal strategy for searching for a minimum under the given constraints.</p>
 </section>
-<section id="exercise-4" class="level2" data-number="55.6">
-<h2 data-number="55.6" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">55.6</span> exercise</h2>
-<div class="alert alert-info">
-I explained gradient descent when C is a function of two variables, and when it’s a function of more than two variables. What happens when C is a function of just one variable? Can you provide a geometric interpretation of what gradient descent is doing in the one-dimensional case?
+<section id="exercise-e" class="level2" data-number="55.6">
+<h2 data-number="55.6" class="anchored" data-anchor-id="exercise-e"><span class="header-section-number">55.6</span> exercise E</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">geometric interpretation of gradient descent</span></p>
 </div>
+<div class="card-body pb-0">
+<p>I explained gradient descent when C is a function of two variables, and when it’s a function of more than two variables. What happens when C is a function of just one variable? Can you provide a geometric interpretation of what gradient descent is doing in the one-dimensional case?</p>
+</div>
+</div>
+<p><br></p>
 <p>The gradient descent algorithm in the one-dimensional case is essentially performing a simple iterative process to find the local minimum of a function. In this case, the “gradient” is just the derivative of the function with respect to the variable.</p>
 </section>
-<section id="exercise-5" class="level2" data-number="55.7">
-<h2 data-number="55.7" class="anchored" data-anchor-id="exercise-5"><span class="header-section-number">55.7</span> exercise</h2>
-<div class="alert alert-info">
-An extreme version of gradient descent is to use a mini-batch size of just 1. That is, given a training input, <span class="math inline">x</span>, we update our weights and biases according to the rules <span class="math inline">w_k\rightarrow w'_k=w_k−\eta \partial C_x/\partial w_k</span> and <span class="math inline">b_l\rightarrow b'_l=b_l−\eta\partial C_x/\partial b_l</span>. Then we choose another training input, and update the weights and biases again. And so on, repeatedly. This procedure is known as online, on-line, or incremental learning. In online learning, a neural network learns from just one training input at a time (just as human beings do). Name one advantage and one disadvantage of online learning, compared to stochastic gradient descent with a mini-batch size of, say, 20.
+<section id="exercise-f" class="level2" data-number="55.7">
+<h2 data-number="55.7" class="anchored" data-anchor-id="exercise-f"><span class="header-section-number">55.7</span> exercise F</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">pros and cons of online learning</span></p>
 </div>
+<div class="card-body pb-0">
+<p>An extreme version of gradient descent is to use a mini-batch size of just 1. That is, given a training input, <span class="math inline">x</span>, we update our weights and biases according to the rules <span class="math inline">w_k\rightarrow w'_k=w_k−\eta \partial C_x/\partial w_k</span> and <span class="math inline">b_l\rightarrow b'_l=b_l−\eta\partial C_x/\partial b_l</span>. Then we choose another training input, and update the weights and biases again. And so on, repeatedly. This procedure is known as online, on-line, or incremental learning. In online learning, a neural network learns from just one training input at a time (just as human beings do). Name one advantage and one disadvantage of online learning, compared to stochastic gradient descent with a mini-batch size of, say, 20.</p>
+</div>
+</div>
+<p><br></p>
 <p>Advantage: We have the hope of learning which weights and biases in our network are most associated with a given training input, which can be useful for interpretability and understanding the model’s behavior.</p>
 <p>Disadvantage: The path in the parameter space will by so much noisier than with a mini-batch size of 20, which can make it harder to converge to a good minimum.</p>
 </section>
-<section id="exercise-6" class="level2" data-number="55.8">
-<h2 data-number="55.8" class="anchored" data-anchor-id="exercise-6"><span class="header-section-number">55.8</span> exercise</h2>
+<section id="exercise-g" class="level2" data-number="55.8">
+<h2 data-number="55.8" class="anchored" data-anchor-id="exercise-g"><span class="header-section-number">55.8</span> exercise G</h2>
 <p>Equation 22:</p>
 <p><span class="math display">
 a'=\sigma(w\cdot a + b)
@@ -13205,9 +13251,15 @@ a'=\sigma(w\cdot a + b)
 <p><span class="math display">
 \frac{1}{1+\exp\left(-\sum_{j} w_j x_j - b\right)}
 </span></p>
-<div class="alert alert-info">
-Write out Equation (22) in component form, and verify that it gives the same result as the rule (4) for computing the output of a sigmoid neuron.
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">equivalent results</span></p>
 </div>
+<div class="card-body pb-0">
+<p>Write out Equation (22) in component form, and verify that it gives the same result as the rule (4) for computing the output of a sigmoid neuron.</p>
+</div>
+</div>
+<p><br></p>
 <p><span class="math inline">a'</span> are the activation values of the layer on the right, and <span class="math inline">a</span> are the activation values of the layer on the left. Let’s call <span class="math inline">a=x</span></p>
 <p><span class="math display">
 z = w\cdot a + b = w\cdot x + b \\
@@ -13505,10 +13557,15 @@ Average runtime per epoch: 12.53 seconds</code></pre>
 </div>
 </div>
 </section>
-<section id="exercise-7" class="level2" data-number="55.10">
-<h2 data-number="55.10" class="anchored" data-anchor-id="exercise-7"><span class="header-section-number">55.10</span> exercise</h2>
-<div class="alert alert-info">
-Try creating a network with just two layers - an input and an output layer, no hidden layer - with 784 and 10 neurons, respectively. Train the network using stochastic gradient descent. What classification accuracy can you achieve?
+<section id="exercise-h" class="level2" data-number="55.10">
+<h2 data-number="55.10" class="anchored" data-anchor-id="exercise-h"><span class="header-section-number">55.10</span> exercise H</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">NN with two layers only</span></p>
+</div>
+<div class="card-body pb-0">
+<p>Try creating a network with just two layers - an input and an output layer, no hidden layer - with 784 and 10 neurons, respectively. Train the network using stochastic gradient descent. What classification accuracy can you achieve?</p>
+</div>
 </div>
 <div id="229c546a" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>net <span class="op">=</span> Network([<span class="dv">784</span>, <span class="dv">10</span>])</span>

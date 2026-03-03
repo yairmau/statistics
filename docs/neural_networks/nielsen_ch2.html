@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../misc/trend_test.html" rel="next">
+<link href="../neural_networks/nielsen_ch3A.html" rel="next">
 <link href="../neural_networks/nielsen_ch1.html" rel="prev">
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -209,6 +209,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sources</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -677,6 +683,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.2</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch3A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -691,13 +703,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/shap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
   </div>
 </li>
       </ul>
@@ -796,7 +808,7 @@ p_\text{new} = p_\text{old} - \eta \nabla C,
 <p><span class="math display">
 z^\ell_j = \sum_k w^\ell_{jk} a^{\ell-1}_k + b^\ell_j.
 </span></p>
-<div id="898770e0" class="cell" data-execution_count="14">
+<div id="898770e0" class="cell" data-execution_count="36">
 <details class="code-fold">
 <summary>import libraries</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> os</span>
@@ -811,7 +823,7 @@ z^\ell_j = \sum_k w^\ell_{jk} a^{\ell-1}_k + b^\ell_j.
 <span id="cb1-10"><a href="#cb1-10"></a><span class="im">import</span> time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="818c90ce" class="cell" data-execution_count="2">
+<div id="818c90ce" class="cell" data-execution_count="37">
 <details class="code-fold">
 <summary>plot NN</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
@@ -967,7 +979,7 @@ a = \sigma(z),
 </span></p>
 <p>Let’s interpret this equation, using the image below to help us. We are already used to the idea that the activation of a neuron in layer <span class="math inline">\ell</span> propagates to the next layer <span class="math inline">\ell+1</span>, from left to right. This is what the blue lines in the image below represent.</p>
 <p>The conceptual jump now is to use these same lines to understand how the error in layer <span class="math inline">\ell+1</span> <strong>propagates back</strong> to layer <span class="math inline">\ell</span>, from right to left. The equation above says that the error in layer <span class="math inline">\ell</span> is the sum of the errors in layer <span class="math inline">\ell+1</span>, weighted by something that should be related to the strength of the connection between the neurons in layer <span class="math inline">\ell</span> and layer <span class="math inline">\ell+1</span>.</p>
-<div id="7eeadace" class="cell" data-execution_count="3">
+<div id="7eeadace" class="cell" data-execution_count="38">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
@@ -1083,7 +1095,7 @@ Our implementation of stochastic gradient descent loops over training examples i
 <li>You can quit training early by pressing <code>Ctrl+C</code>, the model will keep the weights without raising an error.</li>
 <li>I’ve vectorized the backpropagation algorithm to handle batches efficiently, which should speed up training significantly.</li>
 </ol>
-<div id="40afa7a0" class="cell" data-execution_count="34">
+<div id="40afa7a0" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">def</span> sigmoid(z):</span>
 <span id="cb4-2"><a href="#cb4-2"></a>    <span class="co">"""The sigmoid function, JIT-compiled for speed."""</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>    <span class="cf">return</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
@@ -1268,7 +1280,7 @@ Our implementation of stochastic gradient descent loops over training examples i
 </div>
 <p>I heavily commented the code above, but I still don’t expect it to be understandable. The first time I tried to convert Nielsen’s code to a vectorized version, I used Gemini or ChatGPT, and it immediately spit out a fully functioning code. The structure of this new code was very similar to the original, but I couldn’t say that I understood the details of the matrix multiplications. I then decided to code it myself, and make sure I know exactly every step of the way. I knew I was doing something right when I ran into bugs for a full day. The code either didn’t run because of a shape mismatch, or it ran but the performance didn’t change at all as epochs went by. What was missing for me was pencil and paper work. I had to write down the shapes of all the matrices and vectors involved in the feedforward and backpropagation algorithms, and make sure they all matched up. Once I did that, I knew exactly what to fix, and voilà, the code worked. I know I will forget in 10 minutes why the code works, and from now on I’ll just believe that it does what it is supposed to do, but I’ll have the confidence that I understood it once, and that’s a great feeling to have. See below one of my pencil and paper notes, as a proof of my hard work.</p>
 <p><img src="index_verification.png" class="img-fluid" width="400"></p>
-<div id="c8846159" class="cell" data-execution_count="6">
+<div id="c8846159" class="cell" data-execution_count="40">
 <details class="code-fold">
 <summary>define function to load MNIST from web</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> load_mnist_from_web():</span>
@@ -1311,7 +1323,7 @@ Our implementation of stochastic gradient descent loops over training examples i
 <span id="cb5-38"><a href="#cb5-38"></a>    <span class="cf">return</span> training_data, test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="118b011b" class="cell" data-execution_count="7">
+<div id="118b011b" class="cell" data-execution_count="41">
 <details class="code-fold">
 <summary>load MNIST data into memory</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>training_data, test_data <span class="op">=</span> load_mnist_from_web()</span>
@@ -1325,7 +1337,7 @@ Fetching test_lbl...
 Loaded 60000 training samples directly into memory.</code></pre>
 </div>
 </div>
-<div id="0a7def0b" class="cell" data-execution_count="35">
+<div id="0a7def0b" class="cell" data-execution_count="42">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>net <span class="op">=</span> NN(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], activation<span class="op">=</span><span class="st">"sigmoid"</span>, rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
@@ -1339,76 +1351,107 @@ Loaded 60000 training samples directly into memory.</code></pre>
 <pre><code>Epoch  1/10: 100%|██████████| 00:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 71.84% | Runtime: 0.970 seconds</code></pre>
+<pre><code>Accuracy: 86.38% | Runtime: 0.978 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Epoch  2/10: 100%|██████████| 00:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 89.66% | Runtime: 0.931 seconds</code></pre>
+<pre><code>Accuracy: 90.19% | Runtime: 0.988 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch  3/10: 100%|██████████| 00:00</code></pre>
+<pre><code>Epoch  3/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 91.49% | Runtime: 0.981 seconds</code></pre>
+<pre><code>Accuracy: 91.69% | Runtime: 1.082 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch  4/10: 100%|██████████| 00:00</code></pre>
+<pre><code>Epoch  4/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 92.00% | Runtime: 0.955 seconds</code></pre>
+<pre><code>Accuracy: 92.39% | Runtime: 1.101 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch  5/10: 100%|██████████| 00:00</code></pre>
+<pre><code>Epoch  5/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 92.45% | Runtime: 0.999 seconds</code></pre>
+<pre><code>Accuracy: 92.92% | Runtime: 1.017 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Epoch  6/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 92.44% | Runtime: 1.104 seconds</code></pre>
+<pre><code>Accuracy: 93.09% | Runtime: 1.049 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Epoch  7/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 93.05% | Runtime: 1.020 seconds</code></pre>
+<pre><code>Accuracy: 93.31% | Runtime: 1.428 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch  8/10: 100%|██████████| 00:00</code></pre>
+<pre><code>Epoch  8/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 93.29% | Runtime: 1.001 seconds</code></pre>
+<pre><code>Accuracy: 93.71% | Runtime: 1.013 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Epoch  9/10: 100%|██████████| 00:00</code></pre>
+<pre><code>Epoch  9/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 93.26% | Runtime: 0.982 seconds</code></pre>
+<pre><code>Accuracy: 93.89% | Runtime: 1.034 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Epoch 10/10: 100%|██████████| 00:01</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy: 93.55% | Runtime: 1.313 seconds</code></pre>
+<pre><code>Accuracy: 94.05% | Runtime: 1.184 seconds</code></pre>
 </div>
 </div>
+<p>Every epoch takes about 1 second, which is <em>much</em> faster than the 12 seconds it took before.</p>
+<p>I started playin around and immediately found something super weird. Taking advantage of matrix multiplications, I can now send large batches of data through the network, and the code still runs smoothly. The problem I encountered is that this causes the accuracy to drop significantly, sometimes it gets stuck at around 60%, and depending on batch size it could be as low as 10%. Of course, because of the way the code is written, when I increase batch size I also increase the learning rate, and that makes it more difficult to understand exactly where is the point of failure. Upon some conversation with an LLM, I convinced myself that most probably the problem is this. Naively, I assumed that larger batches would help me with better estimates of the gradient, and therefore better performance. The first part is true: larger batches do give better estimates of the gradient. The second part is not true: larger batches also give better estimates of the curvature of the cost landscape, and that can cause the optimization to get stuck in a local minimum. Small batches don’t suffer from this problem, because the noise they add to the optimization process allows them to escape local minima. I have read this before, but it did not occur to me, I had forgotten about it. The lesson here is that my baffledness about the performance drop translated into a real learning opportunity. I hope that going forward, I will remember this lesson, and I can’t wait to get stuck again in the future, so I can learn something new.</p>
 </section>
 <section id="widget" class="level2" data-number="56.8">
 <h2 data-number="56.8" class="anchored" data-anchor-id="widget"><span class="header-section-number">56.8</span> widget</h2>
 <p>Let’s play with the trained model!</p>
-<div id="390ec18a" class="cell" data-execution_count="12">
+<p>Before we do so, take a look at 10 images of each digit in the dataset:</p>
+<div id="ee1ad41c" class="cell" data-execution_count="54">
+<details class="code-fold">
+<summary>see some sample images</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">10</span>, <span class="dv">10</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="co"># ax = ax.flatten()</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>row <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>col <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1200</span>):</span>
+<span id="cb29-6"><a href="#cb29-6"></a>    label <span class="op">=</span> np.argmax(training_data[i][<span class="dv">1</span>])</span>
+<span id="cb29-7"><a href="#cb29-7"></a>    <span class="cf">if</span> label <span class="op">==</span> row:</span>
+<span id="cb29-8"><a href="#cb29-8"></a>        ax[row, col].imshow(training_data[i][<span class="dv">0</span>].reshape(<span class="dv">28</span>, <span class="dv">28</span>), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb29-9"><a href="#cb29-9"></a>        ax[row, col].axis(<span class="st">'off'</span>)</span>
+<span id="cb29-10"><a href="#cb29-10"></a>        col <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb29-11"><a href="#cb29-11"></a>        <span class="cf">if</span> col <span class="op">==</span> <span class="dv">10</span>:</span>
+<span id="cb29-12"><a href="#cb29-12"></a>            row <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb29-13"><a href="#cb29-13"></a>            col <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb29-14"><a href="#cb29-14"></a>        <span class="cf">if</span> row <span class="op">==</span> <span class="dv">10</span>:</span>
+<span id="cb29-15"><a href="#cb29-15"></a>            <span class="cf">break</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nielsen_ch2_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When you draw a digit in the widget below, try to make it as large and as centered as you see in the examples above. The simple neural network that we trained shows high accuracy, but if you draw digits that are small or off-center, you’ll find that the accuracy drops off the cliff. Test this: draw the digit “1” right at the center, the neural network will probably get it right. Now draw it a bit off-center.</p>
+<div id="390ec18a" class="cell" data-execution_count="43">
 <details class="code-fold">
 <summary>export model parameters to JSON</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a>export_data <span class="op">=</span> {</span>
-<span id="cb29-2"><a href="#cb29-2"></a>    <span class="st">"weights"</span>: [w.tolist() <span class="cf">for</span> w <span class="kw">in</span> net.weights],</span>
-<span id="cb29-3"><a href="#cb29-3"></a>    <span class="st">"biases"</span>: [b.tolist() <span class="cf">for</span> b <span class="kw">in</span> net.biases],</span>
-<span id="cb29-4"><a href="#cb29-4"></a>}</span>
-<span id="cb29-5"><a href="#cb29-5"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"mnist_model.json"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
-<span id="cb29-6"><a href="#cb29-6"></a>    json.dump(export_data, f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>export_data <span class="op">=</span> {</span>
+<span id="cb30-2"><a href="#cb30-2"></a>    <span class="st">"weights"</span>: [w.tolist() <span class="cf">for</span> w <span class="kw">in</span> net.weights],</span>
+<span id="cb30-3"><a href="#cb30-3"></a>    <span class="st">"biases"</span>: [b.tolist() <span class="cf">for</span> b <span class="kw">in</span> net.biases],</span>
+<span id="cb30-4"><a href="#cb30-4"></a>}</span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"mnist_model.json"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb30-6"><a href="#cb30-6"></a>    json.dump(export_data, f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="digit-widget-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px; border: 1px solid #ddd; font-family: sans-serif; width: fit-content; margin: auto;">
@@ -1454,7 +1497,7 @@ for (let i = 0; i < 10; i++) {
 // Drawing Logic for 28x28
 // We need to account for the scale factor (10x) when calculating mouse position
 ctx.strokeStyle = 'black';
-ctx.lineWidth = 1.2; // Small width for 28x28 grid
+ctx.lineWidth = 2.0; // Small width for 28x28 grid
 ctx.lineCap = 'round';
 
 fetch('mnist_model.json').then(r => r.json()).then(d => model = d);
@@ -1477,7 +1520,7 @@ function draw(e) {
 
 function clearCanvas() {
     ctx.clearRect(0, 0, 28, 28);
-    predictionText.innerText = "28x28 Direct Input";
+    predictionText.innerText = "Draw a number!";
     bars.forEach(b => b.style.height = '0px');
 }
 
@@ -1518,6 +1561,7 @@ function runPrediction() {
     });
 }
 </script>
+<p>I find it funny how badly this network performs when I am drawing the digits. I try my best to draw the best looking number 6, and the network outputs a clear 8, or 2, or whatever. This made me think of how well curated the MNIST dataset is, and how when I draw the digits myself I might be breaking many of the assumptions that the network has learned to rely on. If you’ve played with the widget above, I would be surprised if you got anywhere near the 95% accuracy that we get on the test set.</p>
 
 
 </section>
@@ -1980,8 +2024,8 @@ function runPrediction() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../misc/trend_test.html" class="pagination-link" aria-label="trend test">
-        <span class="nav-page-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">trend test</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../neural_networks/nielsen_ch3A.html" class="pagination-link" aria-label="Nielsen's NNDL, ch.3A">
+        <span class="nav-page-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

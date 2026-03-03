@@ -11,6 +11,7 @@ book:
   # date: "29.3.2025"
   chapters:
     - index.qmd
+    - sources.qmd
     - part: "data"
       chapters:
         - data/height.ipynb
@@ -91,6 +92,7 @@ book:
       chapters:
         - neural_networks/nielsen_ch1.ipynb
         - neural_networks/nielsen_ch2.ipynb
+        - neural_networks/nielsen_ch3A.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb

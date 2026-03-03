@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>57&nbsp; Nielsen’s NNDL, ch.3A – Statistics and Machine Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../misc/trend_test.html" rel="next">
+<link href="../neural_networks/nielsen_ch2.html" rel="prev">
+<link href="../archive/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TB8VQN4T5W"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
+</script>
+<!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../neural_networks/nielsen_ch1.html">neural networks</a></li><li class="breadcrumb-item"><a href="../neural_networks/nielsen_ch3A.html"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics and Machine Learning</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://yairmau.com/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
+    <a href="https://github.com/yairmau/statistics/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/height.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/weight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">hypothesis testing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/statistical_power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">statistical power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/permutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">confidence interval</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/R-squared.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">R-squared</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">correlation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">bayes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/logistic-connection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">svd and pca</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">decision trees</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">information theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">likelihood</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">generalization and model complexity</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">motivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">neural networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch3A.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/shap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">57.1</span> introduction</a></li>
+  <li><a href="#modeling-the-networks-output" id="toc-modeling-the-networks-output" class="nav-link" data-scroll-target="#modeling-the-networks-output"><span class="header-section-number">57.2</span> modeling the network’s output</a>
+  <ul class="collapse">
+  <li><a href="#gaussian-model" id="toc-gaussian-model" class="nav-link" data-scroll-target="#gaussian-model"><span class="header-section-number">57.2.1</span> gaussian model</a></li>
+  </ul></li>
+  <li><a href="#bernoulli-model" id="toc-bernoulli-model" class="nav-link" data-scroll-target="#bernoulli-model"><span class="header-section-number">57.3</span> bernoulli model</a></li>
+  <li><a href="#multi-label-classification" id="toc-multi-label-classification" class="nav-link" data-scroll-target="#multi-label-classification"><span class="header-section-number">57.4</span> multi-label classification</a></li>
+  <li><a href="#single-label-classification" id="toc-single-label-classification" class="nav-link" data-scroll-target="#single-label-classification"><span class="header-section-number">57.5</span> single-label classification</a></li>
+  <li><a href="#softmax" id="toc-softmax" class="nav-link" data-scroll-target="#softmax"><span class="header-section-number">57.6</span> softmax</a></li>
+  <li><a href="#binary-or-categorical" id="toc-binary-or-categorical" class="nav-link" data-scroll-target="#binary-or-categorical"><span class="header-section-number">57.7</span> binary or categorical</a></li>
+  <li><a href="#exercise-a" id="toc-exercise-a" class="nav-link" data-scroll-target="#exercise-a"><span class="header-section-number">57.8</span> exercise A</a></li>
+  <li><a href="#gradient-of-mse-and-cross-entropy-cost-functions" id="toc-gradient-of-mse-and-cross-entropy-cost-functions" class="nav-link" data-scroll-target="#gradient-of-mse-and-cross-entropy-cost-functions"><span class="header-section-number">57.9</span> gradient of MSE and cross-entropy cost functions</a></li>
+  <li><a href="#exercise-b" id="toc-exercise-b" class="nav-link" data-scroll-target="#exercise-b"><span class="header-section-number">57.10</span> exercise B</a></li>
+  <li><a href="#exercise-c" id="toc-exercise-c" class="nav-link" data-scroll-target="#exercise-c"><span class="header-section-number">57.11</span> exercise C</a></li>
+  <li><a href="#exercise-d" id="toc-exercise-d" class="nav-link" data-scroll-target="#exercise-d"><span class="header-section-number">57.12</span> exercise D</a></li>
+  <li><a href="#exercise-e" id="toc-exercise-e" class="nav-link" data-scroll-target="#exercise-e"><span class="header-section-number">57.13</span> exercise E</a></li>
+  <li><a href="#exercise-f" id="toc-exercise-f" class="nav-link" data-scroll-target="#exercise-f"><span class="header-section-number">57.14</span> exercise F</a></li>
+  <li><a href="#exercise-g" id="toc-exercise-g" class="nav-link" data-scroll-target="#exercise-g"><span class="header-section-number">57.15</span> exercise G</a></li>
+  <li><a href="#exercise-h" id="toc-exercise-h" class="nav-link" data-scroll-target="#exercise-h"><span class="header-section-number">57.16</span> exercise H</a></li>
+  <li><a href="#exercise-i" id="toc-exercise-i" class="nav-link" data-scroll-target="#exercise-i"><span class="header-section-number">57.17</span> exercise I</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../neural_networks/nielsen_ch1.html">neural networks</a></li><li class="breadcrumb-item"><a href="../neural_networks/nielsen_ch3A.html"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/neural_networks/nielsen_ch3A.ipynb">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="57.1">
+<h2 data-number="57.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">57.1</span> introduction</h2>
+<p>Nielsen’s chapter 3 is quite long, so in this part A I will discuss only the subject of how to model the output of our neural network, and the impact this has on the cost function we use to train our network.</p>
+<p>Nielsen discusses the usage of cross entropy as a better cost function for our classification problem. He argues why it does a better job at avoiding training slowdown due to neuron saturation, and gives some intuition of why the formula makes sense. I’ll give below my own take on this subject, starting from something deeper than the cost function: how we choose to model the output our neural network gives us.</p>
+</section>
+<section id="modeling-the-networks-output" class="level2" data-number="57.2">
+<h2 data-number="57.2" class="anchored" data-anchor-id="modeling-the-networks-output"><span class="header-section-number">57.2</span> modeling the network’s output</h2>
+<p>Our fundamental task is to interpret the output the neural network gives us. Once we choose an interpretation, we can use the idea of maximizing the likelihood as the central optimization procedure.</p>
+<p>Let’s define a few variables, they will make our discussion more efficient.</p>
+<ul>
+<li><span class="math inline">X</span> is the random variable representing the input, here the images of written digits. <span class="math inline">x</span> is a specific value of <span class="math inline">X</span>, meaning a specific image of a written digit.</li>
+<li><span class="math inline">Y</span> is the random variable representing the output, meaning the activation values in the output layer. <span class="math inline">y</span> is a specific value of <span class="math inline">Y</span>, meaning a specific vector of activation values in the output layer.</li>
+<li><span class="math inline">\theta</span> is the set of parameters of our neural network, meaning the weights and biases.</li>
+<li><span class="math inline">f_\theta(x)</span> is the function that our neural network computes. Given an input <span class="math inline">x</span> and a set of parameters <span class="math inline">\theta</span>, it gives us the output of the network, which is a vector of activations in the output layer.</li>
+</ul>
+<section id="gaussian-model" class="level3" data-number="57.2.1">
+<h3 data-number="57.2.1" class="anchored" data-anchor-id="gaussian-model"><span class="header-section-number">57.2.1</span> gaussian model</h3>
+<p>We could choose to model the output of our network with a gaussian distribution. In this case, we would write:</p>
+<p><span class="math display">
+Y \mid (X=x) \sim \mathcal{N}(f_\theta(X), \sigma^2).
+</span></p>
+<p>Let’s translate that into words: we are saying that the output of our network, given a specific input <span class="math inline">x</span>, is a random variable that follows a normal distribution with mean <span class="math inline">f_\theta(x)</span> and variance <span class="math inline">\sigma^2</span>. In other words, we are modeling the output of our network as a noisy version of the function <span class="math inline">f_\theta(x)</span>, where the noise is normally distributed with mean 0 and variance <span class="math inline">\sigma^2</span>.</p>
+<p>There is something important to say here: the neural network is a deterministic function, meaning that given an input <span class="math inline">x</span> and a set of parameters <span class="math inline">\theta</span>, it will always give us the same output. However, we are <strong>modeling</strong> the output as a random variable. Doing so allows us to use the tools of probability to analyze and optimize our network.</p>
+<p>As we discussed in the chapter on <a href="../likelihood/MLE_and_summary_statistics.html#normal-distribution">maximum likelihood estimation</a>, when we model our data as a normal distribution, the log-likelihood of our data is proportional to the negative MSE. This means that maximizing the log-likelihood is equivalent to minimizing the MSE.</p>
+<p>The take-home message here is that when we choose the MSE as our cost function, we are implicitly modeling the output of our network as a gaussian distribution. Did we have good reasons to choose this model? No, we will see in a while a much more sensible choice. The point here is that any choice of cost function corresponds to a choice of model for the output of our network, whether we are aware of it or not.</p>
+</section>
+</section>
+<section id="bernoulli-model" class="level2" data-number="57.3">
+<h2 data-number="57.3" class="anchored" data-anchor-id="bernoulli-model"><span class="header-section-number">57.3</span> bernoulli model</h2>
+<p>We are dealing with a classification problem. Every input image has one unique label, which is the digit that the image represents. The output layer of our network has 10 neurons, each one representing a digit from 0 to 9. We can interpret the activation value in each of these neurons as a Bernoulli trial. We discussed Bernoulli processes in the chapter about <a href="../bayes/conjugate-prior.html#modeling-the-likelihood">conjugate priors</a>, where we used Bayes’ theorem to update our belief about the probability of rainfall. Fundamentally, a Bernoulli trial is a process that yields only two possible outcomes: success (1) or failure (0). In the context of rainfall, success meant that it did rain in a given day, and failure meant that it didn’t. In our digit classification problem, success at the neuron 0 of our output layer means that the network identifies the input <span class="math inline">x</span> as representing the digit 0, and failure means that the network does not identify it. More generally, success at the <span class="math inline">j</span> neuron means that the network identifies the digit <span class="math inline">j</span>.</p>
+<p>Once more, it is important to remember that our network is absolutely deterministic, but for convenience we choose to model the output as a random process. When modeling the output as a Bernoulli trial whose probability of success is <span class="math inline">p</span>, we write the following probability distribution:</p>
+<p><span class="math display">
+P(Y_j = y \mid X=x) = a_j(x)^y (1 - a_j(x))^{1-y}.
+</span></p>
+<p>Let’s break this down. <span class="math inline">y=1</span> represents success, meaning that the network identifies the input <span class="math inline">x</span> as representing the digit <span class="math inline">j</span>. Plugging <span class="math inline">y=1</span> into the formula gives us <span class="math inline">a_j(x)^1 (1 - a_j(x))^{1-1} = a_j(x)</span>. In this case, the probability of success is <span class="math inline">a_j(x)</span>, which is the activation value of the <span class="math inline">j</span> neuron in the output layer. On the other hand, <span class="math inline">y=0</span> represents failure, meaning that the network does not identify the input <span class="math inline">x</span> as representing the digit <span class="math inline">j</span>. In this case, plugging <span class="math inline">y=0</span> into the formula gives us <span class="math inline">a_j(x)^0 (1 - a_j(x))^{1-0} = 1 - a_j(x)</span>. The probability of failure is therefore <span class="math inline">1 - a_j(x)</span>.</p>
+<p>We now have two choices to go forward, depending if we want to allow for multiple neurons to be active at the same time or not.</p>
+</section>
+<section id="multi-label-classification" class="level2" data-number="57.4">
+<h2 data-number="57.4" class="anchored" data-anchor-id="multi-label-classification"><span class="header-section-number">57.4</span> multi-label classification</h2>
+<p>Sometimes, classification problems do allow for multiple labels to be active at the same time. For example, if we are classifying images of animals, we could be interested in identifying if the image contains a cat, a dog, a bear, a rabbit, etc. Some pictures will only contain one of these animals, but others could contain more than one, and still others could contain none of them. In this case, we treat each of the output neurons as an <strong>independent</strong> Bernoulli trial. For example, success at the neuron 0 means that the network identifies a cat in the image, success at the neuron 1 means that the network identifies a dog, failure at the neuron 2 means that the network does not identify a bear, and so on. The presence or absence of one animal does not affect the presence or absence of the others, so we can model each neuron as an independent Bernoulli trial. Because of this independence, the probability distribution of the output of our network is the product of the probability distributions of each neuron:</p>
+<p><span class="math display">
+P(Y = y \mid X=x) = \prod_{j=0}^{9} a_j(x)^{y_j} (1 - a_j(x))^{1-y_j}.
+</span></p>
+<p>Finally, using the idea of maximizing the log-likelihood to optimize our network, we can derive the cost function that we will use to train our network. The log-likelihood of our data is given by:</p>
+<p><span class="math display">
+\log P(Y = y \mid X=x) = \sum_{j=0}^{9} \left[y_j \log a_j + (1 - y_j) \log (1 - a_j)\right].
+</span></p>
+<p>Instead of maximizing the log-likelihood, we can minimize the negative log-likelihood, which gives us the following cost function:</p>
+<p><span class="math display">
+C = -\sum_{j} \left[y_j \log a_j + (1 - y_j) \log (1 - a_j)\right].
+</span></p>
+<p>This is the cost function for a specific training example <span class="math inline">x</span>. To get the cost function for the entire training set, we take the average over all training examples:</p>
+<p><span class="math display">
+C = -\frac{1}{n} \sum_{x} \sum_{j} \left[y_j \log a_j + (1 - y_j) \log (1 - a_j)\right].
+</span></p>
+<p>And this is equation (63) in Nielsen’s book. This is called the binary cross-entropy cost function.</p>
+</section>
+<section id="single-label-classification" class="level2" data-number="57.5">
+<h2 data-number="57.5" class="anchored" data-anchor-id="single-label-classification"><span class="header-section-number">57.5</span> single-label classification</h2>
+<p>As the name suggests, only one label can be active at the same time. In our digit classification problem, this means that the input image can only represent one digit, so only one of the output neurons can be active at the same time. In this case, we can model the output of our network as a categorical distribution, which is a generalization of the Bernoulli distribution for more than two outcomes. The probability distribution of the output of our network is given by:</p>
+<p><span class="math display">
+P(Y = y \mid X=x) = \prod_{j=0}^{9} a_j(x)^{y_j}.
+</span></p>
+<p>The difference between this formula and the one we had for the multi-label classification is that we don’t have the term <span class="math inline">(1 - a_j(x))^{1-y_j}</span>, which represents the probability of failure. This is because in single-label classification, we are not interested in modeling the probability of failure, since only one label can be active at the same time. Let’s give an example to make this clearer. If the input image represents the digit 3, then <span class="math inline">y_3</span> will be 1 and all the other <span class="math inline">y_j</span> will be 0. This is how hot one encoding works. Our the label vector and activation vector in the output layer will be something like:</p>
+<p><span class="math display">
+y_j(x)
+=
+\begin{bmatrix}
+0 \\
+0 \\
+0 \\
+1 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0 \\
+0
+\end{bmatrix}
+\qquad
+a_j(x)
+=
+\begin{bmatrix}
+0.0 \\
+0.1 \\
+0.0 \\
+0.7 \\
+0.1 \\
+0.1 \\
+0.0 \\
+0.0 \\
+0.0 \\
+0.0
+\end{bmatrix}
+</span></p>
+<p>It’s easy to see that the probability of success in this case is <span class="math inline">a_3(x) = 0.7</span>, which is the activation value of the neuron representing the digit 3, since all other activation values are raised to the power of 0 and therefore do not contribute to the product.</p>
+<p>The log-likelihood of our data is given by:</p>
+<p><span class="math display">
+\log P(Y = y \mid X=x) = \sum_{j=0}^{9} y_j \log a_j.
+</span></p>
+<p>We can define the cost function as the negative log-likelihood, which gives us:</p>
+<p><span class="math display">
+C = -\sum_{j} y_j \log a_j,
+</span></p>
+<p>which is equation (80) in Nielsen’s book. This is called the categorical cross-entropy cost function.</p>
+</section>
+<section id="softmax" class="level2" data-number="57.6">
+<h2 data-number="57.6" class="anchored" data-anchor-id="softmax"><span class="header-section-number">57.6</span> softmax</h2>
+<p>We made an assumption in the case of single-label classification: the activation vector in the output layer is a valid probability distribution, meaning that all activation values are between 0 and 1, and they sum to 1. If this is not the case, we can use the softmax function to transform the activation vector into a valid probability distribution. The softmax function is defined as follows:</p>
+<p><span class="math display">
+a_j(x) = \frac{e^{z_j}}{\sum_{k=0}^{9} e^{z_k}},
+</span></p>
+<p>where <span class="math inline">z_j</span> is the weighted input to the <span class="math inline">j</span> neuron in the output layer.</p>
+<p>It is easy to see why this procedure produces a valid probability distribution.</p>
+<ol type="1">
+<li>All activation values are positive, since the exponential function is always positive.</li>
+<li>The sum of all activation values is 1, since: <span class="math display">
+\sum_{j=0}^{9} a_j(x) = \sum_{j=0}^{9} \frac{e^{z_j}}{\sum_{k=0}^{9} e^{z_k}} = \frac{\sum_{j=0}^{9} e^{z_j}}{\sum_{k=0}^{9} e^{z_k}} = 1.
+</span></li>
+</ol>
+<p>Because we can apply the softmax function directly to the weighted input of the output layer, we don’t need anymore the sigmoid function. The whole idea of the sigmoid was to squash the activation values between 0 and 1. The softmax does that, and it also ensures that the activation values sum to 1, which is a requirement for a valid probability distribution.</p>
+</section>
+<section id="binary-or-categorical" class="level2" data-number="57.7">
+<h2 data-number="57.7" class="anchored" data-anchor-id="binary-or-categorical"><span class="header-section-number">57.7</span> binary or categorical</h2>
+<p>Let’s summarize what we have seen so far.</p>
+<ol type="1">
+<li>If we choose to model the output of our network as a gaussian distribution, we get the MSE cost function. This is a bad choice, because the gaussian distribution is not a good model for the output of our network in a classification problem.</li>
+<li>If we choose to model the output of our network as a Bernoulli distribution, we get the binary cross-entropy cost function. This is a good choice for multi-label classification problems, where multiple labels can be active at the same time. In that case all we have to guarantee is that the activation values are between 0 and 1, which is easy to achieve with a sigmoid function.</li>
+<li>If we choose to model the output of our network as a categorical distribution, we get the categorical cross-entropy cost function. This is a good choice for single-label classification problems, where only one label can be active at the same time. In that case we have to guarantee that the activation values are between 0 and 1 and they sum to 1, which is easy to achieve with a softmax function.</li>
+</ol>
+<p>In our digit classification problem, we are dealing with a single-label classification problem, since each input image can only represent one digit. Therefore, the most sensible choice is to model the output of our network as a categorical distribution, which gives us the categorical cross-entropy cost function. However, choosing the binary cross-entropy cost function also works. All the examples in the dataset have only one label active at the same time, so the cost function will only take into account the activation value of the neuron representing the correct digit, and it will ignore the activation values of the other neurons. Therefore, in this specific case, both cost functions should give us the same result. However, in general, it is better to choose the cost function that corresponds to the model we have for our data, which in this case is the categorical distribution.</p>
+</section>
+<section id="exercise-a" class="level2" data-number="57.8">
+<h2 data-number="57.8" class="anchored" data-anchor-id="exercise-a"><span class="header-section-number">57.8</span> exercise A</h2>
+<p>Given</p>
+<p><span class="math display">
+\sigma(z) = \frac{1}{1 + e^{-z}},
+</span></p>
+<div class="card bg-info card-body pb-0">
+<p>Verify that <span class="math display">
+\sigma'(z)=\sigma(z)(1−\sigma(z)).
+</span></p>
+</div>
+<p><br></p>
+<p><span class="math display">\begin{align*}
+\frac{d}{dz} \sigma(z) &amp;= \frac{d}{dz} \left( \frac{1}{1 + e^{-z}} \right) \\
+&amp;= \frac{-e^{-z}}{-(1 + e^{-z})^2} \\
+&amp;= \underbrace{\frac{1}{1 + e^{-z}}}_{\sigma(z)} \cdot \frac{e^{-z}}{1 + e^{-z}} \\
+&amp;= \sigma(z) \left[\frac{1 + e^{-z} - 1}{1 + e^{-z}} \right] = \sigma(z) \left[1 - \frac{1}{1 + e^{-z}} \right]\\
+&amp;= \sigma(z)(1 - \sigma(z)).
+\end{align*}</span></p>
+</section>
+<section id="gradient-of-mse-and-cross-entropy-cost-functions" class="level2" data-number="57.9">
+<h2 data-number="57.9" class="anchored" data-anchor-id="gradient-of-mse-and-cross-entropy-cost-functions"><span class="header-section-number">57.9</span> gradient of MSE and cross-entropy cost functions</h2>
+<p>Let’s start with the MSE cost function, as defined in the previous chapter:</p>
+<p><span class="math display">
+C_x = \frac{1}{2} \sum_j \left( y_j - a^L_j\right)^2.
+</span></p>
+<p>The gradient of this cost function with respect to the parameters of the network at the output layer is given by:</p>
+<p><span class="math display">
+\nabla C_x = \left( \frac{\partial C_x}{\partial w^L_{jk}}, \frac{\partial C_x}{\partial b^L_{j}} \right)
+</span></p>
+<p>Let’s use the chain rule to compute the partial derivatives. We have:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial C_x}{\partial w^L_{jk}} &amp;= \frac{\partial C_x}{\partial a^L_j} \cdot \frac{\partial a^L_j}{\partial z^L_j} \cdot \frac{\partial z^L_j}{\partial w^L_{jk}} \\
+&amp;= (a^L_j - y_j) \cdot \sigma'(z^L_j) \cdot a^{L-1}_k,
+\end{align*}</span></p>
+<p>Doing the same for the bias, we get:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial C_x}{\partial b^L_{j}} &amp;= \frac{\partial C_x}{\partial a^L_j} \cdot \frac{\partial a^L_j}{\partial z^L_j} \cdot \frac{\partial z^L_j}{\partial b^L_{j}} \\
+&amp;= (a^L_j - y_j) \cdot \sigma'(z^L_j) \cdot 1.
+\end{align*}</span></p>
+<p>This derivation is different from Nielsen’s, because he considers a neural network with only one layer made of a single neuron. This really helps to simplify the math and show his point, but the same can be understood for our more general case.</p>
+<p>The important point is what happens to this gradient as the sigmoid function saturates, either because <span class="math inline">z^L_j</span> is very large or because it is very small. See the graph below.</p>
+<div id="2672870b" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="4b3346aa" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>plot sigmoid</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb2-2"><a href="#cb2-2"></a>z <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>sigma <span class="op">=</span> <span class="kw">lambda</span> z: <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
+<span id="cb2-4"><a href="#cb2-4"></a>z_star <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>ax.plot(z, sigma(z))</span>
+<span id="cb2-6"><a href="#cb2-6"></a>ax.plot([z_star, <span class="op">-</span>z_star], [sigma(z_star), sigma(<span class="op">-</span>z_star)], <span class="st">'ro'</span>)</span>
+<span id="cb2-7"><a href="#cb2-7"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb2-8"><a href="#cb2-8"></a>       ylabel<span class="op">=</span><span class="st">'sigma(z)'</span>,</span>
+<span id="cb2-9"><a href="#cb2-9"></a>       title<span class="op">=</span><span class="st">'sigmoid function'</span>,</span>
+<span id="cb2-10"><a href="#cb2-10"></a>       xticks<span class="op">=</span>[<span class="op">-</span><span class="dv">10</span>, <span class="op">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>],)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nielsen_ch3A_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If <span class="math inline">z</span> is high enough (way to the right), or low enough (way to the left), the derivative <span class="math inline">\sigma'(z)</span> approaches zero. We already proved that <span class="math inline">\sigma'(z) = \sigma(z)(1 - \sigma(z))</span>. As the absolute value of <span class="math inline">z</span> increases, either <span class="math inline">\sigma</span> or <span class="math inline">1-\sigma</span> is guaranteed to approach zero, making the whole product <span class="math inline">\sigma(1 - \sigma)</span> approach zero.</p>
+<p>This explains why the MSE cost function can lead to training slowdown due to neuron saturation.</p>
+<p>Now let’s compute the gradient of the binary cross-entropy cost function. Using the chain rule, we have the same expression as before:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial C_x}{\partial w^L_{jk}} &amp;= \frac{\partial C_x}{\partial a^L_j} \cdot \frac{\partial a^L_j}{\partial z^L_j} \cdot \frac{\partial z^L_j}{\partial w^L_{jk}} \\
+\frac{\partial C_x}{\partial b^L_{j}} &amp;= \frac{\partial C_x}{\partial a^L_j} \cdot \frac{\partial a^L_j}{\partial z^L_j} \cdot \frac{\partial z^L_j}{\partial b^L_{j}}
+\end{align*}</span></p>
+<p>Now let’s compute the partial derivative <span class="math inline">\partial C_x / \partial a^L_j</span>:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial C_x}{\partial a^L_j} &amp;=
+\frac{\partial}{\partial a^L_j} \left( - \left[y_j \log a_j + (1 - y_j) \log (1 - a_j)\right] \right)\\
+&amp;= -\frac{y_j}{a_j} + \frac{1 - y_j}{1 - a_j} \\
+&amp;= \frac{a_j - y_j}{a_j(1 - a_j)}\\
+&amp; = \frac{\sigma(z_j) - y_j}{\sigma(z_j)(1 - \sigma(z_j))}.
+\end{align*}</span></p>
+<p>In the last step, we used the fact that <span class="math inline">a_j = \sigma(z_j)</span>.</p>
+<p>Now the partial derivative <span class="math inline">\partial a^L_j / \partial z^L_j</span>:</p>
+<p><span class="math display">
+\frac{\partial a^L_j}{\partial z^L_j} = \frac{\partial}{\partial z^L_j} \sigma(z^L_j) = \sigma'(z^L_j) = \sigma(z^L_j)(1-\sigma(z^L_j)).
+</span></p>
+<p>Lastly, we have that <span class="math inline">\partial z^L_j / \partial w^L_{jk} = a^{L-1}_k</span>, and <span class="math inline">\partial z^L_j / \partial b^L_{j} = 1</span>.</p>
+<p>Putting everything together, we get:</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial C_x}{\partial w^L_{jk}}
+&amp;=
+\frac{\sigma(z_j^L) - y_j}{\sigma(z_j^L)(1 - \sigma(z_j^L))}
+\sigma(z^L_j)(1-\sigma(z^L_j))
+a^{L-1}_k \\
+&amp;= (a_j^L - y_j)a^{L-1}_k
+\end{align*}</span></p>
+<p>and</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial C_x}{\partial b^L_{j}}
+&amp;=
+\frac{\sigma(z_j^L) - y_j}{\sigma(z_j^L)(1 - \sigma(z_j^L))}
+\sigma(z^L_j)(1-\sigma(z^L_j)) \\
+&amp;= a_j^L - y_j
+\end{align*}</span></p>
+<p>Note that I converted <span class="math inline">\sigma(z_j)</span> to <span class="math inline">a_j</span> in the last step, since they are the same thing.</p>
+<p>That’s incredible! This expression is <em>much</em> simpler that the one for the MSE! Let’s see them side by side in a table:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cost function</th>
+<th>Gradient with respect to weights</th>
+<th>Gradient with respect to biases</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MSE</td>
+<td><span class="math inline">(a^L_j - y_j) \cdot a^{L-1}_k \cdot \sigma'(z^L_j)</span></td>
+<td><span class="math inline">(a^L_j - y_j) \cdot \sigma'(z^L_j)</span></td>
+</tr>
+<tr class="even">
+<td>Binary cross-entropy</td>
+<td><span class="math inline">(a_j^L - y_j)\cdot a^{L-1}_k</span></td>
+<td><span class="math inline">a_j^L - y_j</span></td>
+</tr>
+</tbody>
+</table>
+<p>The expressions are exactly the same, but for the absence of <span class="math inline">\sigma'(z^L_j)</span> in the binary cross-entropy case. The gradient for the cross-entropy is directly proportional to the error <span class="math inline">a_j^L - y_j</span>: if the estimated probability <span class="math inline">a_j^L</span> is far from the true label <span class="math inline">y_j</span>, the gradient will be large, and we will make a big update to the weights and biases. If the estimated probability is close to the true label, the gradient will be small, and we will make a small update.</p>
+</section>
+<section id="exercise-b" class="level2" data-number="57.10">
+<h2 data-number="57.10" class="anchored" data-anchor-id="exercise-b"><span class="header-section-number">57.10</span> exercise B</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">what’s the right order?</span></p>
+</div>
+<div class="card-body pb-0">
+<p>One gotcha with the cross-entropy is that it can be difficult at first to remember the respective roles of the <span class="math inline">y</span>s and the <span class="math inline">a</span>s. It’s easy to get confused about whether the right form is <span class="math display">
+−[y \ln a+(1−y)\ln(1−a)]
+</span></p>
+<p>or</p>
+<p><span class="math display">
+−[a\ln y+(1−a)\ln(1−y)].
+</span></p>
+<p>What happens to the second of these expressions when <span class="math inline">y=0</span> or <span class="math inline">1</span>? Does this problem afflict the first expression? Why or why not?</p>
+</div>
+</div>
+<p><br></p>
+<p>In the second expression, if <span class="math inline">y</span> is 0 or 1, we get a zero argument inside one of the logarithms, which is undefined. In the first expression, if <span class="math inline">y</span> is 0 or 1, we simply turn off one of the terms.</p>
+</section>
+<section id="exercise-c" class="level2" data-number="57.11">
+<h2 data-number="57.11" class="anchored" data-anchor-id="exercise-c"><span class="header-section-number">57.11</span> exercise C</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">header here</span></p>
+</div>
+<div class="card-body pb-0">
+<p>In the single-neuron discussion at the start of this section, I argued that the cross-entropy is small if <span class="math inline">\sigma(z)\sim y</span> for all training inputs. The argument relied on y being equal to either 0 or 1. This is usually true in classification problems, but for other problems (e.g., regression problems) y can sometimes take values intermediate between 0 and 1. Show that the cross-entropy is still minimized when <span class="math inline">\sigma(z)=y</span> for all training inputs. When this is the case the cross-entropy has the value: <span class="math display">
+C=−\frac{1}{n}\sum_x[y\ln y+(1−y)\ln(1−y)]
+</span></p>
+<p>The quantity <span class="math inline">−[y\ln y+(1−y)\ln(1−y)]</span> is sometimes known as the binary entropy.</p>
+</div>
+</div>
+<p><br></p>
+<p>To show that the cross-entropy is minimized when <span class="math inline">\sigma(z) = y</span> for all training inputs, we can take the derivative of the cross-entropy cost function with respect to <span class="math inline">\sigma(z)</span> and set it to zero. The cross-entropy cost function for a single training example is given by:</p>
+<p><span class="math display">
+C = -\left[y \ln \sigma(z) + (1 - y) \ln (1 - \sigma(z))\right].
+</span></p>
+<p>Taking the derivative with respect to <span class="math inline">\sigma(z)</span>, would be the same as taking the derivative with respect to <span class="math inline">a</span>, since <span class="math inline">a = \sigma(z)</span>. Since we already did that in the previous exercise, we can just reuse the result:</p>
+<p><span class="math display">
+\frac{dC}{d\sigma(z)} = \frac{\sigma(z) - y}{\sigma(z)(1 - \sigma(z))}.
+</span></p>
+<p>Setting this derivative to zero, we get:</p>
+<p><span class="math display">
+\frac{\sigma(z) - y}{\sigma(z)(1 - \sigma(z))} = 0.
+</span></p>
+<p>This implies that <span class="math inline">\sigma(z) - y = 0</span>, which means that <span class="math inline">\sigma(z) = y</span>. Therefore, the cross-entropy is minimized when <span class="math inline">\sigma(z) = y</span> for all training inputs.</p>
+<p>When <span class="math inline">\sigma(z) = y</span>, the cross-entropy cost function becomes:</p>
+<p><span class="math display">
+C = -\left[y \ln y + (1 - y) \ln (1 - y)\right].
+</span></p>
+</section>
+<section id="exercise-d" class="level2" data-number="57.12">
+<h2 data-number="57.12" class="anchored" data-anchor-id="exercise-d"><span class="header-section-number">57.12</span> exercise D</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">header here</span></p>
+</div>
+<div class="card-body pb-0">
+<p>We’ve discussed at length the learning slowdown that can occur when output neurons saturate, in networks using the quadratic cost to train. Another factor that may inhibit learning is the presence of the <span class="math inline">x_j</span> term in Equation (61). Because of this term, when an input <span class="math inline">x_j</span> is near to zero, the corresponding weight <span class="math inline">w_j</span> will learn slowly. Explain why it is not possible to eliminate the <span class="math inline">x_j</span> term through a clever choice of cost function.</p>
+</div>
+</div>
+<p><br></p>
+<p>Nielsen is referring to the equation</p>
+<p><span class="math display">
+\frac{\partial C}{\partial w_j} = \frac{1}{n}\sum_x x_j \left(\sigma(z) - y\right),
+</span></p>
+<p>which for us looks like this: <span class="math inline">(a_j^L - y_j)\cdot a^{L-1}_k</span>. We write <span class="math inline">a^{L-1}_k</span> instead of <span class="math inline">x_j</span> because Nielsen considered the very simplest case of a neural network with only one layer made of a single neuron. In any case, the answer will be the same for both cases.</p>
+<p>The reason that a “clever choice” of cost function cannot eliminate the <span class="math inline">x_j</span> term (or the <span class="math inline">a^{L-1}_k</span> term) stems from the expression for the chain rule:</p>
+<p><span class="math display">
+\frac{\partial C_x}{\partial w^L_{jk}} = \frac{\partial C_x}{\partial a^L_j} \cdot \frac{\partial a^L_j}{\partial z^L_j} \cdot \frac{\partial z^L_j}{\partial w^L_{jk}}.
+</span></p>
+<p>Changing our choice of cost function will affect the first partial derivative only, but we know that the last partial derivative is the one responsible for the presence of the <span class="math inline">x_j</span> term, so nothing will help.</p>
+</section>
+<section id="exercise-e" class="level2" data-number="57.13">
+<h2 data-number="57.13" class="anchored" data-anchor-id="exercise-e"><span class="header-section-number">57.13</span> exercise E</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">activations <span class="math inline">\neq</span> pdf</span></p>
+</div>
+<div class="card-body pb-0">
+<p>Construct an example showing explicitly that in a network with a sigmoid output layer, the output activations aLj won’t always sum to 1.</p>
+</div>
+</div>
+<p><br></p>
+<p>I don’t feel like coming up with a specific example. Instead, I’ll just run the code we wrote in the previous chapter and show this for a specific input image.</p>
+<div id="da5f8b8f" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="im">import</span> io</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="im">import</span> gzip</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="im">import</span> requests</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="im">import</span> json</span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="im">import</span> time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="84004b78" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>code for the NN</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">def</span> sigmoid(z):</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="co">"""The sigmoid function, JIT-compiled for speed."""</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="cf">return</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="kw">def</span> relu(z):</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    <span class="co">"""The ReLU function, JIT-compiled for speed."""</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>    <span class="cf">return</span> np.maximum(<span class="dv">0</span>, z)</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="kw">def</span> sigmoid_prime(z):</span>
+<span id="cb4-10"><a href="#cb4-10"></a>    <span class="co">"""Derivative of the sigmoid function, JIT-compiled for speed."""</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>    s <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
+<span id="cb4-12"><a href="#cb4-12"></a>    <span class="cf">return</span> s <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> s)</span>
+<span id="cb4-13"><a href="#cb4-13"></a></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="kw">def</span> relu_prime(z):</span>
+<span id="cb4-15"><a href="#cb4-15"></a>    <span class="co">"""Derivative of the ReLU function, JIT-compiled for speed."""</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>    <span class="cf">return</span> np.where(z <span class="op">&gt;</span> <span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>)</span>
+<span id="cb4-17"><a href="#cb4-17"></a></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="kw">class</span> NN:</span>
+<span id="cb4-19"><a href="#cb4-19"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, layer_sizes, rand_seed<span class="op">=</span><span class="dv">0</span>, activation<span class="op">=</span><span class="st">"relu"</span>, cost<span class="op">=</span><span class="st">"mse"</span>):</span>
+<span id="cb4-20"><a href="#cb4-20"></a>        <span class="co">"""Initialize the neural network with the given layer sizes.</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">        For example, if layer_sizes = [50, 15, 20, 10], then we have a</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">        network with 50 input neurons, 15 neurons in hidden layer 0,</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co">        20 neurons in hidden layer 1, and 10 output neurons (layer 3).</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="co">        """</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a>        <span class="va">self</span>.number_of_layers <span class="op">=</span> <span class="bu">len</span>(layer_sizes) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a>        <span class="va">self</span>.layer_sizes <span class="op">=</span> layer_sizes</span>
+<span id="cb4-27"><a href="#cb4-27"></a>        <span class="va">self</span>.activation <span class="op">=</span> activation</span>
+<span id="cb4-28"><a href="#cb4-28"></a>        <span class="va">self</span>.rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>rand_seed)</span>
+<span id="cb4-29"><a href="#cb4-29"></a>        <span class="cf">if</span> activation <span class="op">==</span> <span class="st">'relu'</span>:</span>
+<span id="cb4-30"><a href="#cb4-30"></a>            <span class="va">self</span>.activation_func <span class="op">=</span> relu</span>
+<span id="cb4-31"><a href="#cb4-31"></a>            <span class="va">self</span>.activation_prime <span class="op">=</span> relu_prime</span>
+<span id="cb4-32"><a href="#cb4-32"></a>        <span class="cf">elif</span> activation <span class="op">==</span> <span class="st">'sigmoid'</span>:</span>
+<span id="cb4-33"><a href="#cb4-33"></a>            <span class="va">self</span>.activation_func <span class="op">=</span> sigmoid</span>
+<span id="cb4-34"><a href="#cb4-34"></a>            <span class="va">self</span>.activation_prime <span class="op">=</span> sigmoid_prime</span>
+<span id="cb4-35"><a href="#cb4-35"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-36"><a href="#cb4-36"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Unsupported activation function. Use 'relu' or 'sigmoid'."</span>)</span>
+<span id="cb4-37"><a href="#cb4-37"></a>        <span class="cf">if</span> cost <span class="op">==</span> <span class="st">'mse'</span>:</span>
+<span id="cb4-38"><a href="#cb4-38"></a>            <span class="va">self</span>.cost_func <span class="op">=</span> <span class="kw">lambda</span> output, target: np.mean((output <span class="op">-</span> target) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb4-39"><a href="#cb4-39"></a>            <span class="va">self</span>.cost_derivative <span class="op">=</span> <span class="kw">lambda</span> output, target: (output <span class="op">-</span> target)</span>
+<span id="cb4-40"><a href="#cb4-40"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-41"><a href="#cb4-41"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Unsupported cost function. Use 'mse'."</span>)</span>
+<span id="cb4-42"><a href="#cb4-42"></a>        <span class="co"># randomly initialize weights and biases</span></span>
+<span id="cb4-43"><a href="#cb4-43"></a>        <span class="co"># input layer has no weights nor biases, so we skip it.</span></span>
+<span id="cb4-44"><a href="#cb4-44"></a>        rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>rand_seed)</span>
+<span id="cb4-45"><a href="#cb4-45"></a>        <span class="co"># each neuron get 1 bias, so bias vector has the size of the layer</span></span>
+<span id="cb4-46"><a href="#cb4-46"></a>        <span class="co"># we skip the first (input) layer, it doesn't have biases</span></span>
+<span id="cb4-47"><a href="#cb4-47"></a>        <span class="co"># I made the biases to be matrices of shape (N_b, 1) instead of vectors of shape (N_b,)</span></span>
+<span id="cb4-48"><a href="#cb4-48"></a>        <span class="co"># to make the broadcasting work more smoothly in the feedforward and backpropagation functions.</span></span>
+<span id="cb4-49"><a href="#cb4-49"></a>        <span class="va">self</span>.biases <span class="op">=</span> [rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>(N_b, <span class="dv">1</span>))</span>
+<span id="cb4-50"><a href="#cb4-50"></a>                       <span class="cf">for</span> N_b <span class="kw">in</span> layer_sizes[<span class="dv">1</span>:]]</span>
+<span id="cb4-51"><a href="#cb4-51"></a>        <span class="co"># each neuron in layer Right is connected to all neurons in layer Left,</span></span>
+<span id="cb4-52"><a href="#cb4-52"></a>        <span class="co"># so weight matrix has the shape (size_right, size_left)</span></span>
+<span id="cb4-53"><a href="#cb4-53"></a>        <span class="co"># again, we skip the first (input) layer, it doesn't have weights</span></span>
+<span id="cb4-54"><a href="#cb4-54"></a>        <span class="co"># scale_for_weights = np.sqrt(2.0/size_left)</span></span>
+<span id="cb4-55"><a href="#cb4-55"></a>        scale_for_weights <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-56"><a href="#cb4-56"></a>        <span class="va">self</span>.weights <span class="op">=</span> [rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span>scale_for_weights, size<span class="op">=</span>(size_right, size_left))</span>
+<span id="cb4-57"><a href="#cb4-57"></a>                        <span class="cf">for</span> size_left, size_right <span class="kw">in</span></span>
+<span id="cb4-58"><a href="#cb4-58"></a>                          <span class="bu">zip</span>(layer_sizes[:<span class="op">-</span><span class="dv">1</span>],layer_sizes[<span class="dv">1</span>:])</span>
+<span id="cb4-59"><a href="#cb4-59"></a>                        ]</span>
+<span id="cb4-60"><a href="#cb4-60"></a>    </span>
+<span id="cb4-61"><a href="#cb4-61"></a>    <span class="kw">def</span> feedforward(<span class="va">self</span>, a):</span>
+<span id="cb4-62"><a href="#cb4-62"></a>        <span class="co">"""given input `a` from the first layer,</span></span>
+<span id="cb4-63"><a href="#cb4-63"></a><span class="co">           we sequencially compute the activations of each layer</span></span>
+<span id="cb4-64"><a href="#cb4-64"></a><span class="co">           `feedforward` returns the activations of last (output) layer</span></span>
+<span id="cb4-65"><a href="#cb4-65"></a><span class="co">        """</span></span>
+<span id="cb4-66"><a href="#cb4-66"></a>        <span class="cf">for</span> b, w <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, <span class="va">self</span>.weights):</span>
+<span id="cb4-67"><a href="#cb4-67"></a>            z <span class="op">=</span> np.dot(w, a) <span class="op">+</span> b</span>
+<span id="cb4-68"><a href="#cb4-68"></a>            a <span class="op">=</span> <span class="va">self</span>.activation_func(z)</span>
+<span id="cb4-69"><a href="#cb4-69"></a>        <span class="cf">return</span> a</span>
+<span id="cb4-70"><a href="#cb4-70"></a>    </span>
+<span id="cb4-71"><a href="#cb4-71"></a>    <span class="kw">def</span> stochastic_gradient_descent(<span class="va">self</span>, training_data, epochs, batch_size, eta, test_data<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb4-72"><a href="#cb4-72"></a>        n <span class="op">=</span> <span class="bu">len</span>(training_data)</span>
+<span id="cb4-73"><a href="#cb4-73"></a>        <span class="cf">try</span>:</span>
+<span id="cb4-74"><a href="#cb4-74"></a>            <span class="cf">for</span> epoch_j <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb4-75"><a href="#cb4-75"></a>                <span class="co"># shuffle training data at the beginning of each epoch</span></span>
+<span id="cb4-76"><a href="#cb4-76"></a>                <span class="va">self</span>.rng.shuffle(training_data)</span>
+<span id="cb4-77"><a href="#cb4-77"></a>                <span class="co"># split training data into batches</span></span>
+<span id="cb4-78"><a href="#cb4-78"></a>                batches <span class="op">=</span> [</span>
+<span id="cb4-79"><a href="#cb4-79"></a>                    training_data[k:k<span class="op">+</span>batch_size]</span>
+<span id="cb4-80"><a href="#cb4-80"></a>                    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n, batch_size)</span>
+<span id="cb4-81"><a href="#cb4-81"></a>                ]</span>
+<span id="cb4-82"><a href="#cb4-82"></a></span>
+<span id="cb4-83"><a href="#cb4-83"></a>                start_time <span class="op">=</span> time.perf_counter()</span>
+<span id="cb4-84"><a href="#cb4-84"></a>                <span class="co"># ASCII Progress bar with Epoch X/Y description</span></span>
+<span id="cb4-85"><a href="#cb4-85"></a>                pbar <span class="op">=</span> tqdm(batches,</span>
+<span id="cb4-86"><a href="#cb4-86"></a>                            desc<span class="op">=</span><span class="ss">f"Epoch </span><span class="sc">{</span>epoch_j<span class="op">+</span><span class="dv">1</span><span class="sc">:2}</span><span class="ss">/</span><span class="sc">{</span>epochs<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb4-87"><a href="#cb4-87"></a>                            bar_format<span class="op">=</span><span class="st">'</span><span class="sc">{desc}</span><span class="st">: </span><span class="sc">{percentage:3.0f}</span><span class="st">%|</span><span class="sc">{bar}</span><span class="st">| </span><span class="sc">{elapsed}</span><span class="st">'</span>,</span>
+<span id="cb4-88"><a href="#cb4-88"></a>                            leave<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-89"><a href="#cb4-89"></a>                    </span>
+<span id="cb4-90"><a href="#cb4-90"></a>                <span class="co"># now loop over batches, update weights</span></span>
+<span id="cb4-91"><a href="#cb4-91"></a>                <span class="cf">for</span> batch <span class="kw">in</span> pbar:</span>
+<span id="cb4-92"><a href="#cb4-92"></a>                    <span class="va">self</span>.update_params_batch(batch, eta)</span>
+<span id="cb4-93"><a href="#cb4-93"></a>                </span>
+<span id="cb4-94"><a href="#cb4-94"></a>                pbar.close()</span>
+<span id="cb4-95"><a href="#cb4-95"></a>                duration_seconds <span class="op">=</span> time.perf_counter() <span class="op">-</span> start_time</span>
+<span id="cb4-96"><a href="#cb4-96"></a>                runtime_str <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>duration_seconds<span class="sc">:.3f}</span><span class="ss"> seconds"</span></span>
+<span id="cb4-97"><a href="#cb4-97"></a>                msg <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb4-98"><a href="#cb4-98"></a>                <span class="cf">if</span> test_data:</span>
+<span id="cb4-99"><a href="#cb4-99"></a>                    accuracy <span class="op">=</span> <span class="va">self</span>.evaluate(test_data)</span>
+<span id="cb4-100"><a href="#cb4-100"></a>                    msg <span class="op">=</span> <span class="ss">f"Accuracy: </span><span class="sc">{</span>accuracy<span class="op">/</span><span class="bu">len</span>(test_data)<span class="sc">:.2%}</span><span class="ss"> | "</span>  <span class="co"># ({accuracy}/{len(test_data)})</span></span>
+<span id="cb4-101"><a href="#cb4-101"></a>                msg <span class="op">+=</span> <span class="ss">f"Runtime: </span><span class="sc">{</span>runtime_str<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb4-102"><a href="#cb4-102"></a>                <span class="bu">print</span>(msg)</span>
+<span id="cb4-103"><a href="#cb4-103"></a>                </span>
+<span id="cb4-104"><a href="#cb4-104"></a>        <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb4-105"><a href="#cb4-105"></a>            <span class="cf">if</span> <span class="st">'pbar'</span> <span class="kw">in</span> <span class="bu">locals</span>():</span>
+<span id="cb4-106"><a href="#cb4-106"></a>                pbar.close()</span>
+<span id="cb4-107"><a href="#cb4-107"></a>            <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Training interrupted by user. Weights preserved."</span>)</span>
+<span id="cb4-108"><a href="#cb4-108"></a>    </span>
+<span id="cb4-109"><a href="#cb4-109"></a>    <span class="kw">def</span> update_params_batch(<span class="va">self</span>, batch, eta):</span>
+<span id="cb4-110"><a href="#cb4-110"></a>        <span class="co"># 1. make input matrix, use column-major order, so each column is a training example, and each row is a feature.</span></span>
+<span id="cb4-111"><a href="#cb4-111"></a>        <span class="co"># input = np.array([data[0] for data in batch]).T</span></span>
+<span id="cb4-112"><a href="#cb4-112"></a>        <span class="co"># 2. make label matrix, use column-major order, so each column is a training example, and each row is a label.</span></span>
+<span id="cb4-113"><a href="#cb4-113"></a>        <span class="co"># target = np.array([data[1] for data in batch]).T</span></span>
+<span id="cb4-114"><a href="#cb4-114"></a>        <span class="bu">input</span> <span class="op">=</span> np.hstack([data[<span class="dv">0</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch])</span>
+<span id="cb4-115"><a href="#cb4-115"></a>        target <span class="op">=</span> np.hstack([data[<span class="dv">1</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch])</span>
+<span id="cb4-116"><a href="#cb4-116"></a>        <span class="co"># 3. compute the gradients for the whole batch using back propagation</span></span>
+<span id="cb4-117"><a href="#cb4-117"></a>        nabla_b, nabla_w <span class="op">=</span> <span class="va">self</span>.back_propagation(<span class="bu">input</span>, target)</span>
+<span id="cb4-118"><a href="#cb4-118"></a>        <span class="co"># update biases and weights</span></span>
+<span id="cb4-119"><a href="#cb4-119"></a>        m <span class="op">=</span> <span class="bu">len</span>(batch)</span>
+<span id="cb4-120"><a href="#cb4-120"></a>        <span class="va">self</span>.biases <span class="op">=</span> [</span>
+<span id="cb4-121"><a href="#cb4-121"></a>            b <span class="op">-</span> (eta<span class="op">/</span>m) <span class="op">*</span> nb</span>
+<span id="cb4-122"><a href="#cb4-122"></a>            <span class="cf">for</span> b, nb <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, nabla_b)</span>
+<span id="cb4-123"><a href="#cb4-123"></a>        ]</span>
+<span id="cb4-124"><a href="#cb4-124"></a>        <span class="va">self</span>.weights <span class="op">=</span> [</span>
+<span id="cb4-125"><a href="#cb4-125"></a>            w <span class="op">-</span> (eta<span class="op">/</span>m) <span class="op">*</span> nw</span>
+<span id="cb4-126"><a href="#cb4-126"></a>            <span class="cf">for</span> w, nw <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.weights, nabla_w)</span>
+<span id="cb4-127"><a href="#cb4-127"></a>        ]</span>
+<span id="cb4-128"><a href="#cb4-128"></a>    </span>
+<span id="cb4-129"><a href="#cb4-129"></a>    <span class="kw">def</span> back_propagation(<span class="va">self</span>, <span class="bu">input</span>, target):</span>
+<span id="cb4-130"><a href="#cb4-130"></a>        <span class="co">###############################</span></span>
+<span id="cb4-131"><a href="#cb4-131"></a>        <span class="co"># 1. forward pass</span></span>
+<span id="cb4-132"><a href="#cb4-132"></a>        <span class="co"># 1a. create variables to store the activations and z vectors for each layer</span></span>
+<span id="cb4-133"><a href="#cb4-133"></a>        <span class="co"># activation starts with the input layer activations, which is just the input data</span></span>
+<span id="cb4-134"><a href="#cb4-134"></a>        activation <span class="op">=</span> <span class="bu">input</span></span>
+<span id="cb4-135"><a href="#cb4-135"></a>        activation_list <span class="op">=</span> [<span class="bu">input</span>]  <span class="co"># initialize with input layer activations</span></span>
+<span id="cb4-136"><a href="#cb4-136"></a>        <span class="co"># weighted input start at the first hidden layer, so we initialize an empty list</span></span>
+<span id="cb4-137"><a href="#cb4-137"></a>        z_list <span class="op">=</span> []</span>
+<span id="cb4-138"><a href="#cb4-138"></a>        <span class="co"># 1b. loop over layers in forward direction, starting from the first hidden layer,</span></span>
+<span id="cb4-139"><a href="#cb4-139"></a>        <span class="co"># compute and store the activations and z vectors layer by layer</span></span>
+<span id="cb4-140"><a href="#cb4-140"></a>        <span class="co"># for the whole batch at once.</span></span>
+<span id="cb4-141"><a href="#cb4-141"></a>        <span class="cf">for</span> b, w <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, <span class="va">self</span>.weights):</span>
+<span id="cb4-142"><a href="#cb4-142"></a>            layer_size <span class="op">=</span> b.shape[<span class="dv">0</span>]</span>
+<span id="cb4-143"><a href="#cb4-143"></a>            <span class="co"># b is a vector of shape (layer_size, 1), we need to broadcast it (stack it horizontally)</span></span>
+<span id="cb4-144"><a href="#cb4-144"></a>            <span class="co"># to match the shape of the dot product w @ activation, which is (layer_size, batch_size)</span></span>
+<span id="cb4-145"><a href="#cb4-145"></a>            B <span class="op">=</span> np.broadcast_to(b, (layer_size, <span class="bu">input</span>.shape[<span class="dv">1</span>]))</span>
+<span id="cb4-146"><a href="#cb4-146"></a>            z <span class="op">=</span> np.dot(w, activation) <span class="op">+</span> B</span>
+<span id="cb4-147"><a href="#cb4-147"></a>            activation <span class="op">=</span> <span class="va">self</span>.activation_func(z)</span>
+<span id="cb4-148"><a href="#cb4-148"></a>            z_list.append(z)</span>
+<span id="cb4-149"><a href="#cb4-149"></a>            activation_list.append(activation)</span>
+<span id="cb4-150"><a href="#cb4-150"></a>        <span class="co">###############################</span></span>
+<span id="cb4-151"><a href="#cb4-151"></a>        <span class="co"># now we have all the information we need to compute the gradients in the backward pass.</span></span>
+<span id="cb4-152"><a href="#cb4-152"></a>        <span class="co">###############################</span></span>
+<span id="cb4-153"><a href="#cb4-153"></a>        <span class="co"># 2. backward pass</span></span>
+<span id="cb4-154"><a href="#cb4-154"></a>        <span class="co"># 2a. create empty lists to store the gradients for biases and weights, layer by layer</span></span>
+<span id="cb4-155"><a href="#cb4-155"></a>        nabla_b <span class="op">=</span> [np.zeros_like(b) <span class="cf">for</span> b <span class="kw">in</span> <span class="va">self</span>.biases]</span>
+<span id="cb4-156"><a href="#cb4-156"></a>        nabla_w <span class="op">=</span> [np.zeros_like(w) <span class="cf">for</span> w <span class="kw">in</span> <span class="va">self</span>.weights]</span>
+<span id="cb4-157"><a href="#cb4-157"></a>        <span class="co"># 2b. first compute the error "delta" for the output layer</span></span>
+<span id="cb4-158"><a href="#cb4-158"></a>        <span class="co"># this is what we called the "base case"</span></span>
+<span id="cb4-159"><a href="#cb4-159"></a>        delta <span class="op">=</span> <span class="va">self</span>.cost_derivative(activation_list[<span class="op">-</span><span class="dv">1</span>], target) <span class="op">*</span> <span class="va">self</span>.activation_prime(z_list[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-160"><a href="#cb4-160"></a>        <span class="co"># 2c. compute and store the gradients for the output layer</span></span>
+<span id="cb4-161"><a href="#cb4-161"></a>        <span class="co"># we use activation_list[-2] because the rule for updating the weights requires the activations from the previous layer,</span></span>
+<span id="cb4-162"><a href="#cb4-162"></a>        <span class="co"># which is the second to last layer in the list. The transpose is needed to match the dimensions of the matrices</span></span>
+<span id="cb4-163"><a href="#cb4-163"></a>        nabla_b[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> np.<span class="bu">sum</span>(delta, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-164"><a href="#cb4-164"></a>        nabla_w[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> np.dot(delta, activation_list[<span class="op">-</span><span class="dv">2</span>].T)</span>
+<span id="cb4-165"><a href="#cb4-165"></a>        <span class="co"># 2c. loop over layers in reverse order,</span></span>
+<span id="cb4-166"><a href="#cb4-166"></a>        <span class="co"># compute the gradients for each layer. This is the "inductive step".</span></span>
+<span id="cb4-167"><a href="#cb4-167"></a>        <span class="co"># the loop starts at the second to last layer, and goes backwards to the first hidden layer.</span></span>
+<span id="cb4-168"><a href="#cb4-168"></a>        <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="va">self</span>.number_of_layers<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb4-169"><a href="#cb4-169"></a>            z <span class="op">=</span> z_list[<span class="op">-</span>l]</span>
+<span id="cb4-170"><a href="#cb4-170"></a>            <span class="co"># the order of the dot product and the transpose of the weights are needed</span></span>
+<span id="cb4-171"><a href="#cb4-171"></a>            <span class="co"># to match the dimensions of the matrices</span></span>
+<span id="cb4-172"><a href="#cb4-172"></a>            delta <span class="op">=</span> np.dot(<span class="va">self</span>.weights[<span class="op">-</span>l<span class="op">+</span><span class="dv">1</span>].T, delta) <span class="op">*</span> <span class="va">self</span>.activation_prime(z)</span>
+<span id="cb4-173"><a href="#cb4-173"></a>            nabla_b[<span class="op">-</span>l] <span class="op">=</span> np.<span class="bu">sum</span>(delta, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-174"><a href="#cb4-174"></a>            nabla_w[<span class="op">-</span>l] <span class="op">=</span> np.dot(delta, activation_list[<span class="op">-</span>l<span class="op">-</span><span class="dv">1</span>].T)</span>
+<span id="cb4-175"><a href="#cb4-175"></a>        <span class="cf">return</span> nabla_b, nabla_w</span>
+<span id="cb4-176"><a href="#cb4-176"></a>    </span>
+<span id="cb4-177"><a href="#cb4-177"></a>    <span class="kw">def</span> evaluate(<span class="va">self</span>, test_data):</span>
+<span id="cb4-178"><a href="#cb4-178"></a>        <span class="co">"""Return the number of correct classifications."""</span></span>
+<span id="cb4-179"><a href="#cb4-179"></a>        test_results <span class="op">=</span> [(np.argmax(<span class="va">self</span>.feedforward(x)), y)</span>
+<span id="cb4-180"><a href="#cb4-180"></a>                        <span class="cf">for</span> (x, y) <span class="kw">in</span> test_data]</span>
+<span id="cb4-181"><a href="#cb4-181"></a>        <span class="cf">return</span> <span class="bu">sum</span>(<span class="bu">int</span>(x <span class="op">==</span> y) <span class="cf">for</span> (x, y) <span class="kw">in</span> test_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="252f6557" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>define function to load MNIST from web</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> load_mnist_from_web():</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    urls <span class="op">=</span> {</span>
+<span id="cb5-3"><a href="#cb5-3"></a>        <span class="st">"train_img"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-images-idx3-ubyte.gz"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>        <span class="st">"train_lbl"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-labels-idx1-ubyte.gz"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5"></a>        <span class="st">"test_img"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/t10k-images-idx3-ubyte.gz"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6"></a>        <span class="st">"test_lbl"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/t10k-labels-idx1-ubyte.gz"</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    }</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>    data_results <span class="op">=</span> {}</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a>    <span class="cf">for</span> key, url <span class="kw">in</span> urls.items():</span>
+<span id="cb5-12"><a href="#cb5-12"></a>        <span class="bu">print</span>(<span class="ss">f"Fetching </span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">..."</span>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a>        response <span class="op">=</span> requests.get(url)</span>
+<span id="cb5-14"><a href="#cb5-14"></a>        response.raise_for_status()</span>
+<span id="cb5-15"><a href="#cb5-15"></a>        </span>
+<span id="cb5-16"><a href="#cb5-16"></a>        <span class="co"># Wrap the content in BytesIO and decompress in memory</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>        <span class="cf">with</span> gzip.GzipFile(fileobj<span class="op">=</span>io.BytesIO(response.content)) <span class="im">as</span> f:</span>
+<span id="cb5-18"><a href="#cb5-18"></a>            <span class="cf">if</span> <span class="st">"img"</span> <span class="kw">in</span> key:</span>
+<span id="cb5-19"><a href="#cb5-19"></a>                <span class="co"># Images: offset 16</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>                data_results[key] <span class="op">=</span> np.frombuffer(f.read(), np.uint8, offset<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb5-21"><a href="#cb5-21"></a>            <span class="cf">else</span>:</span>
+<span id="cb5-22"><a href="#cb5-22"></a>                <span class="co"># Labels: offset 8</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a>                data_results[key] <span class="op">=</span> np.frombuffer(f.read(), np.uint8, offset<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb5-24"><a href="#cb5-24"></a></span>
+<span id="cb5-25"><a href="#cb5-25"></a>    <span class="co"># Re-format to Nielsen's expected structure</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a>    <span class="kw">def</span> vectorized_result(j):</span>
+<span id="cb5-27"><a href="#cb5-27"></a>        e <span class="op">=</span> np.zeros((<span class="dv">10</span>, <span class="dv">1</span>))</span>
+<span id="cb5-28"><a href="#cb5-28"></a>        e[j] <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a>        <span class="cf">return</span> e</span>
+<span id="cb5-30"><a href="#cb5-30"></a></span>
+<span id="cb5-31"><a href="#cb5-31"></a>    training_inputs <span class="op">=</span> [np.reshape(x, (<span class="dv">784</span>, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">255.0</span> <span class="cf">for</span> x <span class="kw">in</span> data_results[<span class="st">"train_img"</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">784</span>)]</span>
+<span id="cb5-32"><a href="#cb5-32"></a>    training_results <span class="op">=</span> [vectorized_result(y) <span class="cf">for</span> y <span class="kw">in</span> data_results[<span class="st">"train_lbl"</span>]]</span>
+<span id="cb5-33"><a href="#cb5-33"></a>    training_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(training_inputs, training_results))</span>
+<span id="cb5-34"><a href="#cb5-34"></a></span>
+<span id="cb5-35"><a href="#cb5-35"></a>    test_inputs <span class="op">=</span> [np.reshape(x, (<span class="dv">784</span>, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">255.0</span> <span class="cf">for</span> x <span class="kw">in</span> data_results[<span class="st">"test_img"</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">784</span>)]</span>
+<span id="cb5-36"><a href="#cb5-36"></a>    test_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(test_inputs, data_results[<span class="st">"test_lbl"</span>]))</span>
+<span id="cb5-37"><a href="#cb5-37"></a></span>
+<span id="cb5-38"><a href="#cb5-38"></a>    <span class="cf">return</span> training_data, test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="3f95a451" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>load MNIST data into memory</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>training_data, test_data <span class="op">=</span> load_mnist_from_web()</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(training_data)<span class="sc">}</span><span class="ss"> training samples directly into memory."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fetching train_img...
+Fetching train_lbl...
+Fetching test_img...
+Fetching test_lbl...
+Loaded 60000 training samples directly into memory.</code></pre>
+</div>
+</div>
+<div id="e4a46ed5" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>net <span class="op">=</span> NN(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], activation<span class="op">=</span><span class="st">"sigmoid"</span>, rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>net.stochastic_gradient_descent(training_data<span class="op">=</span>training_data,</span>
+<span id="cb8-3"><a href="#cb8-3"></a>        epochs<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb8-4"><a href="#cb8-4"></a>        batch_size<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>        eta<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>        test_data<span class="op">=</span>test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch  1/10: 100%|██████████| 00:01</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 86.38% | Runtime: 1.808 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch  2/10: 100%|██████████| 00:02</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 90.19% | Runtime: 2.318 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch  3/10: 100%|██████████| 00:02</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 91.69% | Runtime: 2.491 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch  4/10: 100%|██████████| 00:01</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 92.39% | Runtime: 1.217 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch  5/10: 100%|██████████| 00:00</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 92.92% | Runtime: 1.003 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch  6/10: 100%|██████████| 00:01</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 93.09% | Runtime: 1.075 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch  7/10: 100%|██████████| 00:00</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 93.31% | Runtime: 0.988 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch  8/10: 100%|██████████| 00:01</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 93.71% | Runtime: 1.040 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch  9/10: 100%|██████████| 00:01</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 93.89% | Runtime: 1.088 seconds</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Epoch 10/10: 100%|██████████| 00:01</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 94.05% | Runtime: 1.219 seconds</code></pre>
+</div>
+</div>
+<div id="48ac5c85" class="cell" data-execution_count="43">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), sharex<span class="op">=</span><span class="st">"col"</span>, sharey<span class="op">=</span><span class="st">"col"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a>ax[<span class="dv">0</span>,<span class="dv">0</span>].imshow(test_data[<span class="dv">0</span>][<span class="dv">0</span>].reshape(<span class="dv">28</span>, <span class="dv">28</span>), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb29-4"><a href="#cb29-4"></a>ax[<span class="dv">1</span>,<span class="dv">0</span>].imshow(test_data[<span class="dv">8</span>][<span class="dv">0</span>].reshape(<span class="dv">28</span>, <span class="dv">28</span>), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb29-5"><a href="#cb29-5"></a>ax[<span class="dv">0</span>,<span class="dv">0</span>].<span class="bu">set</span>(xticks<span class="op">=</span>[],</span>
+<span id="cb29-6"><a href="#cb29-6"></a>            yticks<span class="op">=</span>[],</span>
+<span id="cb29-7"><a href="#cb29-7"></a>            )</span>
+<span id="cb29-8"><a href="#cb29-8"></a>bars0 <span class="op">=</span> net.feedforward(test_data[<span class="dv">0</span>][<span class="dv">0</span>]).flatten()</span>
+<span id="cb29-9"><a href="#cb29-9"></a>bars1 <span class="op">=</span> net.feedforward(test_data[<span class="dv">8</span>][<span class="dv">0</span>]).flatten()</span>
+<span id="cb29-10"><a href="#cb29-10"></a>ax[<span class="dv">0</span>,<span class="dv">1</span>].bar(<span class="bu">range</span>(<span class="dv">10</span>), bars0)</span>
+<span id="cb29-11"><a href="#cb29-11"></a>ax[<span class="dv">1</span>,<span class="dv">1</span>].bar(<span class="bu">range</span>(<span class="dv">10</span>), bars1)</span>
+<span id="cb29-12"><a href="#cb29-12"></a></span>
+<span id="cb29-13"><a href="#cb29-13"></a>ax[<span class="dv">0</span>,<span class="dv">1</span>].text(<span class="fl">0.5</span>, <span class="fl">0.97</span>, <span class="vs">r"sum={:</span><span class="dv">.</span><span class="vs">2f}"</span>.<span class="bu">format</span>(bars0.<span class="bu">sum</span>()), transform<span class="op">=</span>ax[<span class="dv">0</span>,<span class="dv">1</span>].transAxes,</span>
+<span id="cb29-14"><a href="#cb29-14"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,</span>
+<span id="cb29-15"><a href="#cb29-15"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb29-16"><a href="#cb29-16"></a></span>
+<span id="cb29-17"><a href="#cb29-17"></a>ax[<span class="dv">1</span>,<span class="dv">1</span>].text(<span class="fl">0.5</span>, <span class="fl">0.97</span>, <span class="vs">r"sum={:</span><span class="dv">.</span><span class="vs">2f}"</span>.<span class="bu">format</span>(bars1.<span class="bu">sum</span>()), transform<span class="op">=</span>ax[<span class="dv">1</span>,<span class="dv">1</span>].transAxes,</span>
+<span id="cb29-18"><a href="#cb29-18"></a>         horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'top'</span>,</span>
+<span id="cb29-19"><a href="#cb29-19"></a>         fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb29-20"><a href="#cb29-20"></a></span>
+<span id="cb29-21"><a href="#cb29-21"></a></span>
+<span id="cb29-22"><a href="#cb29-22"></a>ax[<span class="dv">0</span>,<span class="dv">1</span>].<span class="bu">set</span>(xticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">10</span>),</span>
+<span id="cb29-23"><a href="#cb29-23"></a>            title<span class="op">=</span><span class="st">"output layer activations"</span></span>
+<span id="cb29-24"><a href="#cb29-24"></a>            )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nielsen_ch3A_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Surprisingly, most test images yielded activations that sum very close to 1, even without applying the softmax function. The second image in the figure above is not very readable, and maybe because of that the activations sum to only 0.15. See below the sum of the activations in the output layer for the first 20 test images:</p>
+<div id="016f24ee" class="cell" data-execution_count="46">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb30-2"><a href="#cb30-2"></a>    bars <span class="op">=</span> net.feedforward(test_data[i][<span class="dv">0</span>]).flatten()</span>
+<span id="cb30-3"><a href="#cb30-3"></a>    <span class="bu">print</span>(<span class="ss">f"Image </span><span class="sc">{</span>i<span class="sc">:2d}</span><span class="ss">: Sum of activations = </span><span class="sc">{</span>bars<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Image  0: Sum of activations = 1.00
+Image  1: Sum of activations = 1.00
+Image  2: Sum of activations = 0.99
+Image  3: Sum of activations = 0.99
+Image  4: Sum of activations = 1.01
+Image  5: Sum of activations = 1.09
+Image  6: Sum of activations = 0.99
+Image  7: Sum of activations = 1.02
+Image  8: Sum of activations = 0.15
+Image  9: Sum of activations = 1.03
+Image 10: Sum of activations = 1.00
+Image 11: Sum of activations = 0.99
+Image 12: Sum of activations = 1.01
+Image 13: Sum of activations = 1.00
+Image 14: Sum of activations = 1.00
+Image 15: Sum of activations = 0.65
+Image 16: Sum of activations = 1.04
+Image 17: Sum of activations = 1.00
+Image 18: Sum of activations = 0.30
+Image 19: Sum of activations = 1.00</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-f" class="level2" data-number="57.14">
+<h2 data-number="57.14" class="anchored" data-anchor-id="exercise-f"><span class="header-section-number">57.14</span> exercise F</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">Monotonicity of softmax</span></p>
+</div>
+<div class="card-body pb-0">
+<p>Show that <span class="math inline">{\partial a^L_j}/{\partial z^L_k}</span> is positive if <span class="math inline">j=k</span> and negative if <span class="math inline">j \neq k</span>. As a consequence, increasing <span class="math inline">z^L_j</span> is guaranteed to increase the corresponding output activation, <span class="math inline">a^L_j</span>, and will decrease all the other output activations. We already saw this empirically with the sliders, but this is a rigorous proof.</p>
+</div>
+</div>
+<p><br></p>
+<p>The formula for the softmax is given by</p>
+<p><span class="math display">
+a_j = \frac{e^{z_j}}{\sum_{k=0}^{9} e^{z_k}}.
+</span></p>
+<p>Without loss of generality, assume we are varying the weighted output <span class="math inline">z_0</span>. How will <span class="math inline">a_0</span> respond?</p>
+<p><span class="math display">
+\frac{\partial a_0}{\partial z_0} = \frac{\partial}{\partial z_0} \frac{e^{z_0}}{e^{z_0} + C},
+</span></p>
+<p>where the constant above is simply the sum <span class="math inline">\sum_{k=1}^9e^{z_k}</span>.</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial a_0}{\partial z_0} &amp;= \frac{\partial}{\partial z_0}\frac{e^{z_0}}{e^{z_0} + C} \\
+&amp;= \frac{e^{z_0}(e^{z_0} + C) - e^{z_0}e^{z_0}}{(e^{z_0} + C)^2} \\
+&amp;= \frac{e^{z_0}C}{(e^{z_0} + C)^2} \\
+&amp;&gt; 0.
+\end{align*}</span></p>
+<p>Now, how will <span class="math inline">a_1</span> respond to an increase in <span class="math inline">z_0</span>?</p>
+<p><span class="math display">\begin{align*}
+\frac{\partial a_1}{\partial z_0} &amp;=
+\frac{\partial}{\partial z_0} \frac{e^{z_1}}{e^{z_0} + C} \\
+&amp;= \frac{-e^{z_1}e^{z_0}}{(e^{z_0} + C)^2} \\
+&amp;&lt; 0.
+\end{align*}</span></p>
+</section>
+<section id="exercise-g" class="level2" data-number="57.15">
+<h2 data-number="57.15" class="anchored" data-anchor-id="exercise-g"><span class="header-section-number">57.15</span> exercise G</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">Non-locality of softmax</span></p>
+</div>
+<div class="card-body pb-0">
+<p>A nice thing about sigmoid layers is that the output <span class="math inline">a^L_j</span> is a function of the corresponding weighted input, <span class="math inline">a^L_j = \sigma(z^L_j)</span>. Explain why this is not the case for a softmax layer: any particular output activation <span class="math inline">a^L_j</span> depends on all the weighted inputs.</p>
+</div>
+</div>
+<p><br></p>
+<p>This is easy to see from the formula for the softmax:</p>
+<p><span class="math display">
+a_j = \frac{e^{z_j}}{\sum_{k=0}^{9} e^{z_k}}.
+</span></p>
+<p>The denominator is the same for all output activations, so changing any of the weighted inputs <span class="math inline">z_k</span> will affect all the output activations <span class="math inline">a_j</span>.</p>
+</section>
+<section id="exercise-h" class="level2" data-number="57.16">
+<h2 data-number="57.16" class="anchored" data-anchor-id="exercise-h"><span class="header-section-number">57.16</span> exercise H</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">Inverting the softmax layer</span></p>
+</div>
+<div class="card-body pb-0">
+<p>Suppose we have a neural network with a softmax output layer, and the activations <span class="math inline">a^L_j</span> are known. Show that the corresponding weighted inputs have the form <span class="math inline">z^L_j = \ln(a^L_j) + C</span>, for some constant <span class="math inline">C</span> that is independent of <span class="math inline">j</span>.</p>
+</div>
+</div>
+<p><br></p>
+<p>The formula for the softmax is given by <span class="math display">
+a_j = \frac{e^{z_j}}{\sum_{k=0}^{9} e^{z_k}} = \frac{e^{z_j}}{Z},
+</span></p>
+<p>where <span class="math inline">Z</span> is the normalization constant defined as <span class="math inline">Z = \sum_{k=0}^{9} e^{z_k}</span>. Solving the equation above for <span class="math inline">z_j</span>, we get:</p>
+<p><span class="math display">
+z_j = \ln(a_j) + \ln(Z) = \ln(a_j) + C,
+</span></p>
+<p>which proves the statement.</p>
+</section>
+<section id="exercise-i" class="level2" data-number="57.17">
+<h2 data-number="57.17" class="anchored" data-anchor-id="exercise-i"><span class="header-section-number">57.17</span> exercise I</h2>
+<div class="card bg-info">
+<div class="card-header">
+<p><span class="h3">Where does the “softmax” name come from?</span></p>
+</div>
+<div class="card-body pb-0">
+<p>Suppose we change the softmax function so the output activations are given by</p>
+<p><span class="math display">
+a^L_j = \frac{e^{cz^L_j}}{\sum_k e^{cz^L_k}}
+</span></p>
+<p>where <span class="math inline">c</span> is a positive constant. Note that <span class="math inline">c=1</span> corresponds to the standard softmax function. But if we use a different value of <span class="math inline">c</span> we get a different function, which is nonetheless qualitatively rather similar to the softmax. In particular, show that the output activations form a probability distribution, just as for the usual softmax. Suppose we allow <span class="math inline">c</span> to become large, i.e., <span class="math inline">c→∞</span>. What is the limiting value for the output activations <span class="math inline">a^L_j</span>? After solving this problem it should be clear to you why we think of the <span class="math inline">c=1</span> function as a “softened” version of the maximum function. This is the origin of the term “softmax”.</p>
+</div>
+</div>
+<p><br></p>
+<p>To show that the output activations form a pdf, we need to show that each activation is a positive number, and that the sum of all activations is 1.</p>
+<ul>
+<li>From the formula, it is clear that all activations are positive, since the exponential function is positive.</li>
+<li>Let’s compute <span class="math inline">\sum a_j</span>: <span class="math display">
+\sum_j a_j = \sum_j \frac{e^{c z_j}}{\sum_k e^{c z_k}} = \frac{\sum_j e^{c z_j}}{\sum_k e^{c z_k}} = 1.
+</span> This is true regardless of the value of <span class="math inline">c</span>.</li>
+</ul>
+<p>Now, let’s see what happens when <span class="math inline">c</span> becomes large. As <span class="math inline">c \to \infty</span>, the term <span class="math inline">e^{c z_j}</span> will dominate the sum in the denominator for the largest value of <span class="math inline">z_j</span>. Let’s denote <span class="math inline">z_{max} = \max_j z_j</span>. Then, as <span class="math inline">c \to \infty</span>, we have: <span class="math display">
+a_j = \frac{e^{c z_j}}{\sum_k e^{c z_k}} \approx \frac{e^{c z_j}}{e^{c z_{max}}} = e^{c (z_j - z_{max})}.
+</span> If <span class="math inline">z_j &lt; z_{max}</span>, then <span class="math inline">z_j - z_{max} &lt; 0</span>, and as <span class="math inline">c \to \infty</span>, <span class="math inline">e^{c (z_j - z_{max})} \to 0</span>. If <span class="math inline">z_j = z_{max}</span>, then <span class="math inline">z_j - z_{max} = 0</span>, and <span class="math inline">e^{c (z_j - z_{max})} = 1</span>. Therefore, in the limit as <span class="math inline">c \to \infty</span>, we have: <span class="math display">a_j \to
+\begin{cases}
+1 &amp; \text{if } z_j = z_{max} \\
+0 &amp; \text{if } z_j &lt; z_{max}
+\end{cases}
+</span></p>
+<p>This means that as <span class="math inline">c</span> becomes large, the output activations will approach a one-hot encoding of the index of the maximum <span class="math inline">z_j</span>. In other words, the output will be 1 for the index corresponding to the largest <span class="math inline">z_j</span>, and 0 for all other indices. This is why we think of the softmax function as a “softened” version of the maximum function: it produces a probability distribution that is more spread out than a one-hot encoding, but as we increase <span class="math inline">c</span>, it becomes more and more similar to a one-hot encoding.</p>
+<div id="aa3d0f59" class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a>z <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>, <span class="fl">0.2</span>, <span class="fl">0.05</span>,</span>
+<span id="cb32-2"><a href="#cb32-2"></a>              <span class="fl">0.3</span>, <span class="fl">0.8</span>, <span class="fl">0.1</span>, <span class="fl">0.0</span>, <span class="fl">0.2</span> ])</span>
+<span id="cb32-3"><a href="#cb32-3"></a>z</span>
+<span id="cb32-4"><a href="#cb32-4"></a></span>
+<span id="cb32-5"><a href="#cb32-5"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">2</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb32-6"><a href="#cb32-6"></a></span>
+<span id="cb32-7"><a href="#cb32-7"></a>softmax <span class="op">=</span> <span class="kw">lambda</span> z, c: np.exp(c<span class="op">*</span>z) <span class="op">/</span> np.<span class="bu">sum</span>(np.exp(c<span class="op">*</span>z))</span>
+<span id="cb32-8"><a href="#cb32-8"></a></span>
+<span id="cb32-9"><a href="#cb32-9"></a>c_list <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">50</span>]</span>
+<span id="cb32-10"><a href="#cb32-10"></a>ax[<span class="dv">0</span>].bar(<span class="bu">range</span>(<span class="dv">10</span>), z)</span>
+<span id="cb32-11"><a href="#cb32-11"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">"weighted outputs (z)"</span>)</span>
+<span id="cb32-12"><a href="#cb32-12"></a><span class="cf">for</span> axx <span class="kw">in</span> ax:</span>
+<span id="cb32-13"><a href="#cb32-13"></a>    axx.<span class="bu">set</span>(xticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">10</span>),)</span>
+<span id="cb32-14"><a href="#cb32-14"></a></span>
+<span id="cb32-15"><a href="#cb32-15"></a><span class="cf">for</span> i,axx <span class="kw">in</span> <span class="bu">enumerate</span>(ax[<span class="dv">1</span>:]):</span>
+<span id="cb32-16"><a href="#cb32-16"></a>    ax[i<span class="op">+</span><span class="dv">1</span>].bar(<span class="bu">range</span>(<span class="dv">10</span>), softmax(z, c<span class="op">=</span>c_list[i]), color<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
+<span id="cb32-17"><a href="#cb32-17"></a>    ax[i<span class="op">+</span><span class="dv">1</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="ss">f"softmax: c=</span><span class="sc">{</span>c_list[i]<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nielsen_ch3A_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../neural_networks/nielsen_ch2.html" class="pagination-link" aria-label="Nielsen's NNDL, ch.2">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.2</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../misc/trend_test.html" class="pagination-link" aria-label="trend test">
+        <span class="nav-page-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">trend test</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
