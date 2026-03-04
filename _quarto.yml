@@ -93,6 +93,7 @@ book:
         - neural_networks/nielsen_ch1.ipynb
         - neural_networks/nielsen_ch2.ipynb
         - neural_networks/nielsen_ch3A.ipynb
+        - neural_networks/nielsen_ch3B.ipynb
     - part: "miscellaneous"
       chapters:
         - misc/trend_test.ipynb
