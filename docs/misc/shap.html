@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>59&nbsp; SHAP values – Statistics and Machine Learning</title>
+<title>60&nbsp; SHAP values – Statistics and Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -172,7 +172,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/shap.html"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">SHAP values</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/shap.html"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">SHAP values</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -688,6 +688,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch3B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3B</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -702,13 +708,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/shap.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
   </div>
 </li>
       </ul>
@@ -723,24 +729,24 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#simple-practical-example" id="toc-simple-practical-example" class="nav-link active" data-scroll-target="#simple-practical-example"><span class="header-section-number">59.1</span> simple practical example</a></li>
-  <li><a href="#conditional-vs.-marginal-expectations" id="toc-conditional-vs.-marginal-expectations" class="nav-link" data-scroll-target="#conditional-vs.-marginal-expectations"><span class="header-section-number">59.2</span> conditional vs.&nbsp;marginal expectations</a>
+  <li><a href="#simple-practical-example" id="toc-simple-practical-example" class="nav-link active" data-scroll-target="#simple-practical-example"><span class="header-section-number">60.1</span> simple practical example</a></li>
+  <li><a href="#conditional-vs.-marginal-expectations" id="toc-conditional-vs.-marginal-expectations" class="nav-link" data-scroll-target="#conditional-vs.-marginal-expectations"><span class="header-section-number">60.2</span> conditional vs.&nbsp;marginal expectations</a>
   <ul class="collapse">
-  <li><a href="#marginal-expectation" id="toc-marginal-expectation" class="nav-link" data-scroll-target="#marginal-expectation"><span class="header-section-number">59.2.1</span> marginal expectation</a></li>
-  <li><a href="#conditional-expectation" id="toc-conditional-expectation" class="nav-link" data-scroll-target="#conditional-expectation"><span class="header-section-number">59.2.2</span> conditional expectation</a></li>
-  <li><a href="#the-hidden-assumption" id="toc-the-hidden-assumption" class="nav-link" data-scroll-target="#the-hidden-assumption"><span class="header-section-number">59.2.3</span> the hidden assumption</a></li>
+  <li><a href="#marginal-expectation" id="toc-marginal-expectation" class="nav-link" data-scroll-target="#marginal-expectation"><span class="header-section-number">60.2.1</span> marginal expectation</a></li>
+  <li><a href="#conditional-expectation" id="toc-conditional-expectation" class="nav-link" data-scroll-target="#conditional-expectation"><span class="header-section-number">60.2.2</span> conditional expectation</a></li>
+  <li><a href="#the-hidden-assumption" id="toc-the-hidden-assumption" class="nav-link" data-scroll-target="#the-hidden-assumption"><span class="header-section-number">60.2.3</span> the hidden assumption</a></li>
   </ul></li>
-  <li><a href="#more-than-2-features" id="toc-more-than-2-features" class="nav-link" data-scroll-target="#more-than-2-features"><span class="header-section-number">59.3</span> more than 2 features</a></li>
-  <li><a href="#unfinished" id="toc-unfinished" class="nav-link" data-scroll-target="#unfinished"><span class="header-section-number">59.4</span> unfinished</a></li>
+  <li><a href="#more-than-2-features" id="toc-more-than-2-features" class="nav-link" data-scroll-target="#more-than-2-features"><span class="header-section-number">60.3</span> more than 2 features</a></li>
+  <li><a href="#unfinished" id="toc-unfinished" class="nav-link" data-scroll-target="#unfinished"><span class="header-section-number">60.4</span> unfinished</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/shap.html"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">SHAP values</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../misc/trend_test.html">miscellaneous</a></li><li class="breadcrumb-item"><a href="../misc/shap.html"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">SHAP values</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">SHAP values</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/misc/shap.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">SHAP values</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/misc/shap.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -757,8 +763,8 @@ window.Quarto = {
 </header>
 
 
-<section id="simple-practical-example" class="level2" data-number="59.1">
-<h2 data-number="59.1" class="anchored" data-anchor-id="simple-practical-example"><span class="header-section-number">59.1</span> simple practical example</h2>
+<section id="simple-practical-example" class="level2" data-number="60.1">
+<h2 data-number="60.1" class="anchored" data-anchor-id="simple-practical-example"><span class="header-section-number">60.1</span> simple practical example</h2>
 <p>Let’s say I want to know what impacts the price of a car. I have a model that takes into account 2 features, the car’s age (<span class="math inline">x_1</span>) and the car’s mileage (<span class="math inline">x_2</span>). In a mathematical notation, we can say that <span class="math inline">p</span> is the total number of features (<span class="math inline">p=2</span> in our case), and that <span class="math inline">\mathcal{F} = \{x_1, x_2\}</span> is the set of all features.</p>
 <p>Assume that we have a dataset with <span class="math inline">n</span> cars, and we somehow arrived at a model <span class="math inline">f(x_1, x_2)</span> that predicts the price of a car based on its age and mileage. See below a visualization of this model: the predicted price of a car is the color in a 2D space where the axes are age and mileage. The black dots are the cars in our dataset. Don’t take the axes and the values too seriously, I just cooked up this example so we have an image in mind while learning about SHAP values.</p>
 <div id="d366f8f7" class="cell" data-execution_count="1">
@@ -1406,11 +1412,11 @@ phi_2 = -2.004</code></pre>
 </div>
 </div>
 </section>
-<section id="conditional-vs.-marginal-expectations" class="level2" data-number="59.2">
-<h2 data-number="59.2" class="anchored" data-anchor-id="conditional-vs.-marginal-expectations"><span class="header-section-number">59.2</span> conditional vs.&nbsp;marginal expectations</h2>
+<section id="conditional-vs.-marginal-expectations" class="level2" data-number="60.2">
+<h2 data-number="60.2" class="anchored" data-anchor-id="conditional-vs.-marginal-expectations"><span class="header-section-number">60.2</span> conditional vs.&nbsp;marginal expectations</h2>
 <p>In the calculation for <span class="math inline">\phi_1</span> we had to compute <span class="math inline">f(\{x_1\})</span>, that is, the expected price of a car whose age is known but its milage is unknown. We need to define what prediction we shall assign in this case. We have two options.</p>
-<section id="marginal-expectation" class="level3" data-number="59.2.1">
-<h3 data-number="59.2.1" class="anchored" data-anchor-id="marginal-expectation"><span class="header-section-number">59.2.1</span> marginal expectation</h3>
+<section id="marginal-expectation" class="level3" data-number="60.2.1">
+<h3 data-number="60.2.1" class="anchored" data-anchor-id="marginal-expectation"><span class="header-section-number">60.2.1</span> marginal expectation</h3>
 <p>We will treat the missing feature (milage) as a random draw from the overall empirical milage distribution. The steps are:</p>
 <ol type="1">
 <li>Freeze the car’s age: <span class="math inline">x_1=x_1^\star</span>.</li>
@@ -1423,8 +1429,8 @@ f(\{x_1\}) = \int f(x_1^\star, x_2) p(x_2) dx_2.
 <p>We are weighing the car prices <span class="math inline">f</span> according to the distribution in <span class="math inline">x_2</span>.</p>
 <p>There’s a problem here. Assume that our car is 15 years old, that is, <span class="math inline">x_1^\star=15</span>. This means that when computing <span class="math inline">f(x_1^\star,x_2)</span>, we will plug into it a bunch of values for low-milage cars. To make this point sharper, assume that 20% of the cars in our dataset have milage below 20k miles. This means that in our estimation of <span class="math inline">f(\{x_1\})</span>, 20% of the estimated prices are for 15-year-old cars with an extremely low milage. That’s absurd! It’s extremely rare that such cars exist, how can we not take into account the age of the car here? Well, if we want to do better, then we shouldn’t be using the marginal expectation, we should be using the conditional expectation.</p>
 </section>
-<section id="conditional-expectation" class="level3" data-number="59.2.2">
-<h3 data-number="59.2.2" class="anchored" data-anchor-id="conditional-expectation"><span class="header-section-number">59.2.2</span> conditional expectation</h3>
+<section id="conditional-expectation" class="level3" data-number="60.2.2">
+<h3 data-number="60.2.2" class="anchored" data-anchor-id="conditional-expectation"><span class="header-section-number">60.2.2</span> conditional expectation</h3>
 <p>Now, the random drawing of values for the milage is age-aware.</p>
 <ol type="1">
 <li>Freeze the car’s age: <span class="math inline">x_1=x_1^\star</span>.</li>
@@ -1440,8 +1446,8 @@ p(x_2 \mid x_1^\star) = \frac{p(x_1^\star, x_2)}{p(x_1^\star)}.
 </span></p>
 <p>If our dataset is small, the region of the feature space where <span class="math inline">x_1^\star</span> is located might be very sparse, and we won’t have enough data to estimate <span class="math inline">p(x_2 \mid x_1^\star)</span> accurately. Another problem arises in high-dimensional data, where we have many features. If we had 10 features instead of 2, and we wanted to compute the SHAP value for one of them, we would need to estimate the conditional distribution of that feature given the other 9 features. This is a much more complex task than estimating the marginal distribution of a single feature, one that would require an extremely large number of samples, which we often don’t have.</p>
 </section>
-<section id="the-hidden-assumption" class="level3" data-number="59.2.3">
-<h3 data-number="59.2.3" class="anchored" data-anchor-id="the-hidden-assumption"><span class="header-section-number">59.2.3</span> the hidden assumption</h3>
+<section id="the-hidden-assumption" class="level3" data-number="60.2.3">
+<h3 data-number="60.2.3" class="anchored" data-anchor-id="the-hidden-assumption"><span class="header-section-number">60.2.3</span> the hidden assumption</h3>
 <p>When is it ok to substitute the conditional expectation with the marginal expectation? The answer is when the features are independent. If <span class="math inline">x_1</span> and <span class="math inline">x_2</span> are independent, then <span class="math display">
 p(x_1, x_2) = p(x_1)p(x_2).
 </span></p>
@@ -1461,8 +1467,8 @@ p(x_2 \mid x_1) = p(x_2).
 </ul>
 </section>
 </section>
-<section id="more-than-2-features" class="level2" data-number="59.3">
-<h2 data-number="59.3" class="anchored" data-anchor-id="more-than-2-features"><span class="header-section-number">59.3</span> more than 2 features</h2>
+<section id="more-than-2-features" class="level2" data-number="60.3">
+<h2 data-number="60.3" class="anchored" data-anchor-id="more-than-2-features"><span class="header-section-number">60.3</span> more than 2 features</h2>
 <p>The simple example of the car price took us quite far in understanding the basics of SHAP values. I’ll just add for completeness what happens when we have more than 2 features. Let’s assume a model <span class="math inline">f</span> with 5 features (<span class="math inline">p=5</span>), and we want to compute the SHAP value for feature <span class="math inline">x_1</span>. The set of all features is <span class="math inline">\mathcal{F} = \{x_1, x_2, x_3, x_4, x_5\}</span>, and the set of all features except <span class="math inline">x_1</span> is <span class="math inline">\mathcal{F} \setminus \{x_1\} = \{x_2, x_3, x_4, x_5\}</span>. The subsets of <span class="math inline">\mathcal{F} \setminus \{x_1\}</span> are:</p>
 <ul>
 <li><span class="math inline">S_0 = \{\}</span> (the empty set)</li>
@@ -1524,8 +1530,8 @@ f(\{x_1, x_3, x_4\}) = \frac{1}{n^2} \sum_{i=1}^{n} \sum_{j=1}^{n} f(x_1^\star, 
 </span></p>
 <p>There is not much I can learn from an example with more than 2 features, othen than the fact that there are many combinations to consider, but essentially each term is still conceptually the same.</p>
 </section>
-<section id="unfinished" class="level2" data-number="59.4">
-<h2 data-number="59.4" class="anchored" data-anchor-id="unfinished"><span class="header-section-number">59.4</span> unfinished</h2>
+<section id="unfinished" class="level2" data-number="60.4">
+<h2 data-number="60.4" class="anchored" data-anchor-id="unfinished"><span class="header-section-number">60.4</span> unfinished</h2>
 <ul>
 <li>Now I need to discuss the general case, when we have more than 2 features.</li>
 <li>Discuss the properties of SHAP values, show its decomposition.</li>
@@ -1994,7 +2000,7 @@ f(x) = \phi_0 + \sum_{j=1}^n \phi_j,
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../misc/trend_test.html" class="pagination-link" aria-label="trend test">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">trend test</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">trend test</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
