@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -130,7 +165,7 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -719,15 +754,17 @@ window.Quarto = {
   <li><a href="#support" id="toc-support" class="nav-link" data-scroll-target="#support"><span class="header-section-number">3.3</span> support</a></li>
   <li><a href="#random-variable" id="toc-random-variable" class="nav-link" data-scroll-target="#random-variable"><span class="header-section-number">3.4</span> random variable</a></li>
   <li><a href="#realization-and-probability-of-an-event" id="toc-realization-and-probability-of-an-event" class="nav-link" data-scroll-target="#realization-and-probability-of-an-event"><span class="header-section-number">3.5</span> realization and probability of an event</a></li>
+  <li><a href="#probability-mass" id="toc-probability-mass" class="nav-link" data-scroll-target="#probability-mass"><span class="header-section-number">3.6</span> probability mass</a></li>
+  <li><a href="#continuous-random-variables" id="toc-continuous-random-variables" class="nav-link" data-scroll-target="#continuous-random-variables"><span class="header-section-number">3.7</span> continuous random variables</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/language-of-random-variables.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/language-of-random-variables.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">the language of random variables</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">the language of random variables</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/foundations/language-of-random-variables.ipynb"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">the language of random variables</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/foundations/language-of-random-variables.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -758,7 +795,7 @@ window.Quarto = {
 <p>We call <span class="math inline">\Omega</span> (omega) the sample space, it answers the question above. That’s it.</p>
 <p>In more general terms, the sample space is the set of all possible outcomes of an experiment.</p>
 </section>
-<section id="support" class="level2" data-number="3.3">
+<section id="support" class="level2 page-columns page-full" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="support"><span class="header-section-number">3.3</span> support</h2>
 <p>Let’s say that I’m interested in three things about the die roll:</p>
 <ol type="1">
@@ -777,9 +814,12 @@ window.Quarto = {
 Y \in \{\text{even}, \text{odd}\}
 </span></p>
 <p>We call <span class="math inline">\{ \text{even}, \text{odd} \}</span> the support of <span class="math inline">Y</span>. That’s just a name. No big deal. It’s the answer to the question “what are the possible values of <span class="math inline">Y</span>?”.</p>
-<p>What’s the support of <span class="math inline">X</span>? It’s <span class="math inline">\{1, 2, 3, 4, 5, 6\}</span>. Easy.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>A more precise statement would be “what are the possible values of <span class="math inline">Y</span> that have non-zero probability?” But for now, let’s keep it simple.</p>
+</div></div><p>What’s the support of <span class="math inline">X</span>? It’s <span class="math inline">\{1, 2, 3, 4, 5, 6\}</span>. Easy.</p>
 <p>What’s the support of <span class="math inline">Z</span>? It’s <span class="math inline">\{0, 1, 2\}</span>, because the English words for the numbers 1 to 6 are <code>one</code>, <code>two</code>, <code>three</code>, <code>four</code>, <code>five</code>, <code>six</code>, and they contain 0, 1, or 2 “E”s.</p>
-<p>Sadly, there isn’t a common symbol to denote “support”. Sometimes we denote the support of <span class="math inline">X</span> as <span class="math inline">\operatorname{supp}(X)</span>, and that’s what we will do here.</p>
+<p>There is no universally standardized symbol for support, but the common notation is <span class="math inline">\operatorname{supp}(X)</span>.</p>
 </section>
 <section id="random-variable" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="random-variable"><span class="header-section-number">3.4</span> random variable</h2>
@@ -795,11 +835,12 @@ Y:\qquad
 6 &amp;\longrightarrow &amp; \text{even} \\
 \end{matrix}
 </span></p>
-<p>Remember, <span class="math inline">Y</span> means “whether the number is even or odd”. What we wrote above is how we get the answer to that question. We take the number that came up on the die, and we map it to either “even” or “odd”. This mapping is what we call a random variable. A random variable is a function that maps outcomes in the sample space to values in the support. In mathematical notation, we write:</p>
+<p>Remember, <span class="math inline">Y</span> means “whether the number is even or odd”. What we wrote above is how we get the answer to that question. We take the number that came up on the die, and we map it to either “even” or “odd”.</p>
+<p>A random variable is a function that maps outcomes in the sample space to values in the support. In mathematical notation, we write:</p>
 <p><span class="math display">
 Y: \Omega \to \operatorname{supp}(Y)
 </span></p>
-<p>When I say that <span class="math inline">Z</span> is a random variable, I mean that <span class="math inline">Z</span> is the function that maps the outcomes in the sample space (numbers 1 to 6) to the number of “E”s in the word for that number. Explicitly, the random variable <span class="math inline">Z</span> is defined as:</p>
+<p>Saying that <span class="math inline">Z</span> is a random variable means that <span class="math inline">Z</span> is the function that maps each outcome in the sample space to the number of “E”s in the word for that number. Explicitly, the random variable <span class="math inline">Z</span> is defined as:</p>
 <p><span class="math display">
 Z:\qquad
 \begin{matrix}
@@ -824,6 +865,7 @@ X:\qquad
 \end{matrix}
 </span></p>
 <p>I didn’t start with <span class="math inline">X</span> because the rule above is so trivial that one might ask what’s the point of defining it as a random variable, if the element in the sample space is the same as the element in the support. The examples for <span class="math inline">Y</span> and <span class="math inline">Z</span> show the difference between sample space and support in a way that <span class="math inline">X</span> doesn’t.</p>
+<p>What’s <strong>random</strong> about a random variable? The functions we saw above are deterministic. If we know the outcome of the die roll, we can determine the value of <span class="math inline">X</span>, <span class="math inline">Y</span> and <span class="math inline">Z</span> with certainty. The randomness comes from the fact that we don’t know the outcome of the die roll in advance. The random variable is a way to connect the uncertainty in the sample space to a more structured set of values in the support.</p>
 </section>
 <section id="realization-and-probability-of-an-event" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="realization-and-probability-of-an-event"><span class="header-section-number">3.5</span> realization and probability of an event</h2>
@@ -832,7 +874,75 @@ X:\qquad
 P(Y = \text{even}) = \frac{1}{2}
 </span></p>
 <p>The capital <span class="math inline">P</span> stands for probability of an event. The event is what we write inside the parentheses, <span class="math inline">Y = \text{even}</span>.</p>
-<p>Sometimes, instead of writing a specific value for <span class="math inline">Y</span>, we write a general realization of <span class="math inline">Y</span>, which we denote as <span class="math inline">y</span>. In that case, we write <span class="math inline">P(Y=y)</span>. And this brings us to one of the most</p>
+<p>Sometimes, instead of writing a specific value for <span class="math inline">Y</span>, we write a general realization of <span class="math inline">Y</span>, which we denote as <span class="math inline">y</span>. In that case, we write <span class="math inline">P(Y=y)</span>. And this brings us to one of the most vexing notational issues in probability theory, which is the difference between <span class="math inline">Y</span> and <span class="math inline">y</span>. The capital <span class="math inline">Y</span> is the random variable, which is a function that maps outcomes in the sample space to values in the support. The lowercase <span class="math inline">y</span> is a specific value in the support of <span class="math inline">Y</span>. When we write <span class="math inline">P(Y=y)</span>, we are talking about the probability that the random variable <span class="math inline">Y</span> takes on the specific value <span class="math inline">y</span>.</p>
+<p>A good way of knowing which is the correct to use is the following:</p>
+<ul>
+<li>If you can substitute the symbol by a word or a phrase, then it’s a random variable. For example, I could write <span class="math inline">P(\text{parity} = y)</span>, so I know I should use a capital letter for the random variable, <span class="math inline">Y</span>.</li>
+<li>If you can substitute the symbol by a number, or more generally, a value, then it’s a realization. For example, I could write <span class="math inline">P(Y = \text{odd})</span>, or even <span class="math inline">P(Y = 1)</span>, so I know I should use a lowercase letter for the realization, <span class="math inline">y</span>. I know that I just said that if you can substitute the symbol by a word , then it’s a random variable, but in this case, the word “odd” is just a value in the support of <span class="math inline">Y</span>, so it should be a realization.</li>
+</ul>
+</section>
+<section id="probability-mass" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="probability-mass"><span class="header-section-number">3.6</span> probability mass</h2>
+<p>Assume that our die is fair, so each outcome in the sample space has the same probability. What is the probability that <span class="math inline">Z</span> takes on each of the values in its support?</p>
+<p><span class="math display">
+P(Z=0) = \frac{1}{2}, \qquad P(Z=1) = \frac{1}{3}, \qquad P(Z=2) = \frac{1}{6}
+</span></p>
+<p>Instead of writing the probabilities of each event separately, we can write them in a more compact form using the probability mass function (PMF) of <span class="math inline">Z</span>, which we denote as <span class="math inline">p_Z(z)</span>:</p>
+<p><span class="math display">
+p_Z(z) = \begin{cases}
+\frac{1}{2} &amp; \text{if } z = 0 \\
+\frac{1}{3} &amp; \text{if } z = 1 \\
+\frac{1}{6} &amp; \text{if } z = 2 \\
+0 &amp; \text{otherwise}
+\end{cases}
+</span></p>
+<p>Pay attention to where we write capital letters and where we write lowercase letters.</p>
+<ul>
+<li>The PMF is a function, so we write it with a lowercase letter, <span class="math inline">p</span>. Capital <span class="math inline">P</span> is reserved for the probability of an event, which is a number, not a function.</li>
+<li>The PMF has a “theme”, in this case, the number of “E”s in each outcome of the die roll. Instead of writing <span class="math inline">p_\text{number of Es}</span>, we use the symbol <span class="math inline">Z</span> to represent that theme, and we write <span class="math inline">p_Z</span> to indicate that this is the PMF for the random variable <span class="math inline">Z</span>.</li>
+<li>The PMF takes a realization as input, so we write <span class="math inline">p_Z(z)</span>, where the lowercase <span class="math inline">z</span> is a specific value in the support of <span class="math inline">Z</span>.</li>
+</ul>
+<p>Let’s see this PMF on a graph.</p>
+<div id="2646c74b" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="3d3170df" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>plot PMF of Z</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>support <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
+<span id="cb2-2"><a href="#cb2-2"></a>pmf <span class="op">=</span> np.array([<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb2-3"><a href="#cb2-3"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<span id="cb2-4"><a href="#cb2-4"></a>ax.bar(support, pmf)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>       ylabel<span class="op">=</span><span class="vs">r'</span><span class="dv">$</span><span class="vs">p_Z</span><span class="kw">(</span><span class="vs">z</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb2-7"><a href="#cb2-7"></a>       title<span class="op">=</span><span class="st">'PMF of Z, the number of Es in a die outcome'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="language-of-random-variables_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The support of <span class="math inline">Z</span> is <span class="math inline">\{0, 1, 2\}</span>, but I wanted to plot the PMF for all values between 0 and 4. This will help me clarify the definition of support.</p>
+<p>The support of a random variable is the set of values that have non-zero probability. In this case, the support of <span class="math inline">Z</span> is <span class="math inline">\{0, 1, 2\}</span> because those are the only values for which <span class="math inline">p_Z(z)</span> is greater than zero. The values 3 and 4 are not in the support because <span class="math inline">p_Z(3) = 0</span> and <span class="math inline">p_Z(4) = 0</span>.</p>
+<p>The number “three hundred” has 3 times the letter “E”, but it is not in the support because 300 is not a possible outcome of the die roll. Similarly, the number “dezessete” has 4 times the letter “E”, but it is not in the support because we established before that the numbers must be written in English (not Portuguese), and also 17 is not a possible outcome of the die roll.</p>
+</section>
+<section id="continuous-random-variables" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="continuous-random-variables"><span class="header-section-number">3.7</span> continuous random variables</h2>
+<p>Until now the example of the die roll has served us well to introduce the concepts of sample space, support, random variable, realization, and probability mass. However, there are many situations where the random variable can take on an infinite number of values, such as the time it takes for a computer to complete a task, or the weight of a person. In these cases, we need to update a bit our language. Let’s take as an example the weight of a person.</p>
+<ul>
+<li>Let’s say a person’s weight is measured in kilograms, and I’m interested in the weight in pounds. We will call <span class="math inline">W</span> the random variable corresponding to the weight in pounds.</li>
+<li>the sample space <span class="math inline">\Omega</span> is the set of all possible outcomes of measuring a person’s weight in kilograms. This could be any non-negative real number, so we can write <span class="math inline">\Omega = [0, \infty)</span>.</li>
+<li>To get the weight in pounds, I multiply the weight in kilograms by 2.2, approximately. The support of <span class="math inline">W</span> is also <span class="math inline">[0, \infty)</span>.</li>
+</ul>
+<p>When we have a continuous random variable, we can’t use the PMF to describe the probabilities, because the PMF is only defined for discrete random variables. Instead, we need to</p>
+<p>use a different mathematical tool to describe the probabilities, which is called the probability density function (PDF). The PDF is a function that describes the relative likelihood of a random variable taking on a specific value. The PDF is denoted as <span class="math inline">f_X(x)</span> for a random variable <span class="math inline">X</span>.</p>
 
 
 </section>
