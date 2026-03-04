@@ -16,6 +16,9 @@ book:
       chapters:
         - data/height.ipynb
         - data/weight.ipynb
+    - part: "foundations"
+      chapters:
+        - foundations/language-of-random-variables.ipynb
     - part: "hypothesis testing"
       chapters:
         - hypothesis_testing/t_test_one_sample.ipynb
