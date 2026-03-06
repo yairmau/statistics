@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -147,7 +146,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -189,8 +188,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -865,7 +863,7 @@ X:\qquad
 \end{matrix}
 </span></p>
 <p>I didn’t start with <span class="math inline">X</span> because the rule above is so trivial that one might ask what’s the point of defining it as a random variable, if the element in the sample space is the same as the element in the support. The examples for <span class="math inline">Y</span> and <span class="math inline">Z</span> show the difference between sample space and support in a way that <span class="math inline">X</span> doesn’t.</p>
-<p>What’s <strong>random</strong> about a random variable? The functions we saw above are deterministic. If we know the outcome of the die roll, we can determine the value of <span class="math inline">X</span>, <span class="math inline">Y</span> and <span class="math inline">Z</span> with certainty. The randomness comes from the fact that we don’t know the outcome of the die roll in advance. The random variable is a way to connect the uncertainty in the sample space to a more structured set of values in the support.</p>
+<p>What’s <strong>random</strong> about a random variable? The functions we saw above are <strong>deterministic</strong>. If we know the outcome of the die roll, we can determine the value of <span class="math inline">X</span>, <span class="math inline">Y</span> and <span class="math inline">Z</span> with certainty. The randomness comes from the fact that we don’t know the outcome of the die roll in advance, the input to the function is random.</p>
 </section>
 <section id="realization-and-probability-of-an-event" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="realization-and-probability-of-an-event"><span class="header-section-number">3.5</span> realization and probability of an event</h2>
@@ -874,7 +872,12 @@ X:\qquad
 P(Y = \text{even}) = \frac{1}{2}
 </span></p>
 <p>The capital <span class="math inline">P</span> stands for probability of an event. The event is what we write inside the parentheses, <span class="math inline">Y = \text{even}</span>.</p>
-<p>Sometimes, instead of writing a specific value for <span class="math inline">Y</span>, we write a general realization of <span class="math inline">Y</span>, which we denote as <span class="math inline">y</span>. In that case, we write <span class="math inline">P(Y=y)</span>. And this brings us to one of the most vexing notational issues in probability theory, which is the difference between <span class="math inline">Y</span> and <span class="math inline">y</span>. The capital <span class="math inline">Y</span> is the random variable, which is a function that maps outcomes in the sample space to values in the support. The lowercase <span class="math inline">y</span> is a specific value in the support of <span class="math inline">Y</span>. When we write <span class="math inline">P(Y=y)</span>, we are talking about the probability that the random variable <span class="math inline">Y</span> takes on the specific value <span class="math inline">y</span>.</p>
+<p>Sometimes, instead of writing a specific value for <span class="math inline">Y</span>, we write a general realization of <span class="math inline">Y</span>, which we denote as <span class="math inline">y</span>. In that case, we write <span class="math inline">P(Y=y)</span>. Let me give you an example of how to use this notation.</p>
+<p><span class="math display">
+\sum_{y \in \operatorname{supp}(Y)} P(Y=y) = P(Y=\text{even}) + P(Y=\text{odd})  = 1
+</span></p>
+<p>Let’s translate that into words. We are summing over all possible values of <span class="math inline">Y</span> (its support, which is <span class="math inline">\{\text{even},\text{odd}\}</span>, and we are adding up the probabilities that <span class="math inline">Y</span> takes on each of those values. The sum of those probabilities must equal 1.</p>
+<p>And this brings us to one of the most vexing notational issues in probability theory, which is the difference between <span class="math inline">Y</span> and <span class="math inline">y</span>. The capital <span class="math inline">Y</span> is the random variable, which is a function that maps outcomes in the sample space to values in the support. The lowercase <span class="math inline">y</span> is a specific value in the support of <span class="math inline">Y</span>. When we write <span class="math inline">P(Y=y)</span>, we are talking about the probability that the random variable <span class="math inline">Y</span> takes on the specific value <span class="math inline">y</span>.</p>
 <p>A good way of knowing which is the correct to use is the following:</p>
 <ul>
 <li>If you can substitute the symbol by a word or a phrase, then it’s a random variable. For example, I could write <span class="math inline">P(\text{parity} = y)</span>, so I know I should use a capital letter for the random variable, <span class="math inline">Y</span>.</li>
@@ -883,7 +886,7 @@ P(Y = \text{even}) = \frac{1}{2}
 </section>
 <section id="probability-mass" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="probability-mass"><span class="header-section-number">3.6</span> probability mass</h2>
-<p>Assume that our die is fair, so each outcome in the sample space has the same probability. What is the probability that <span class="math inline">Z</span> takes on each of the values in its support?</p>
+<p>Assume that our die is fair, so each outcome in the sample space <span class="math inline">\Omega=\{1,2,3,4,5,6\}</span> has the same probability. What is the probability that <span class="math inline">Z</span> takes on each of the values in its support?</p>
 <p><span class="math display">
 P(Z=0) = \frac{1}{2}, \qquad P(Z=1) = \frac{1}{3}, \qquad P(Z=2) = \frac{1}{6}
 </span></p>
@@ -906,20 +909,20 @@ p_Z(z) = \begin{cases}
 <div id="2646c74b" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="3d3170df" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>plot PMF of Z</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>support <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>support <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
 <span id="cb2-2"><a href="#cb2-2"></a>pmf <span class="op">=</span> np.array([<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">0</span>])</span>
 <span id="cb2-3"><a href="#cb2-3"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
 <span id="cb2-4"><a href="#cb2-4"></a>ax.bar(support, pmf)</span>
 <span id="cb2-5"><a href="#cb2-5"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'z'</span>,</span>
 <span id="cb2-6"><a href="#cb2-6"></a>       ylabel<span class="op">=</span><span class="vs">r'</span><span class="dv">$</span><span class="vs">p_Z</span><span class="kw">(</span><span class="vs">z</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
-<span id="cb2-7"><a href="#cb2-7"></a>       title<span class="op">=</span><span class="st">'PMF of Z, the number of Es in a die outcome'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-7"><a href="#cb2-7"></a>       title<span class="op">=</span><span class="st">'PMF of Z, the number of Es in a die outcome'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -929,20 +932,63 @@ p_Z(z) = \begin{cases}
 </div>
 </div>
 </div>
-<p>The support of <span class="math inline">Z</span> is <span class="math inline">\{0, 1, 2\}</span>, but I wanted to plot the PMF for all values between 0 and 4. This will help me clarify the definition of support.</p>
+<p>The support of <span class="math inline">Z</span> is <span class="math inline">\{0, 1, 2\}</span>, but I wanted to plot the PMF for all values between 0 and 4. This will help me clarify and update the definition of support.</p>
 <p>The support of a random variable is the set of values that have non-zero probability. In this case, the support of <span class="math inline">Z</span> is <span class="math inline">\{0, 1, 2\}</span> because those are the only values for which <span class="math inline">p_Z(z)</span> is greater than zero. The values 3 and 4 are not in the support because <span class="math inline">p_Z(3) = 0</span> and <span class="math inline">p_Z(4) = 0</span>.</p>
-<p>The number “three hundred” has 3 times the letter “E”, but it is not in the support because 300 is not a possible outcome of the die roll. Similarly, the number “dezessete” has 4 times the letter “E”, but it is not in the support because we established before that the numbers must be written in English (not Portuguese), and also 17 is not a possible outcome of the die roll.</p>
+<p>The number 300 (<code>three hundred</code>) has 3 times the letter “E”, and 17 (<code>seventeen</code>) has 4 times the letter “E”, but 3 and 4 are not in the support of <span class="math inline">Z</span> because the probability of getting 300 or 17 from a die roll is zero.</p>
 </section>
 <section id="continuous-random-variables" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="continuous-random-variables"><span class="header-section-number">3.7</span> continuous random variables</h2>
-<p>Until now the example of the die roll has served us well to introduce the concepts of sample space, support, random variable, realization, and probability mass. However, there are many situations where the random variable can take on an infinite number of values, such as the time it takes for a computer to complete a task, or the weight of a person. In these cases, we need to update a bit our language. Let’s take as an example the weight of a person.</p>
+<p>Until now the example of the die roll has served us well to introduce the concepts of sample space, support, random variable, realization, and probability mass. However, there are many situations where the random variable can take any value in a continuous range. As an example see the graph below, which shows the probability density function (PDF) for the height of adult males.</p>
+<div id="dca02b03" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="ed535cbb" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>load data</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>df_boys <span class="op">=</span> pd.read_csv(<span class="st">'../archive/data/height/boys_height_stats.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>mu_boys <span class="op">=</span> df_boys.loc[<span class="fl">20.0</span>, <span class="st">'mu'</span>]</span>
+<span id="cb4-3"><a href="#cb4-3"></a>sigma_boys <span class="op">=</span> df_boys.loc[<span class="fl">20.0</span>, <span class="st">'sigma'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="57665889" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>plot pdf</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>))</span>
+<span id="cb5-2"><a href="#cb5-2"></a>x <span class="op">=</span> np.linspace(mu_boys <span class="op">-</span> <span class="dv">3</span><span class="op">*</span>sigma_boys, mu_boys <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>sigma_boys, <span class="dv">100</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>pdf <span class="op">=</span> norm.pdf(x, loc<span class="op">=</span>mu_boys, scale<span class="op">=</span>sigma_boys)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>ax.plot(x, pdf)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'height (cm)'</span>,</span>
+<span id="cb5-6"><a href="#cb5-6"></a>       ylabel<span class="op">=</span><span class="vs">r'</span><span class="dv">$</span><span class="vs">p_X</span><span class="kw">(</span><span class="vs">x</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>,</span>
+<span id="cb5-7"><a href="#cb5-7"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">0.06</span>),</span>
+<span id="cb5-8"><a href="#cb5-8"></a>      )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="language-of-random-variables_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Using the example above, let’s update the definition of various concepts to accommodate continuous random variables.</p>
 <ul>
-<li>Let’s say a person’s weight is measured in kilograms, and I’m interested in the weight in pounds. We will call <span class="math inline">W</span> the random variable corresponding to the weight in pounds.</li>
-<li>the sample space <span class="math inline">\Omega</span> is the set of all possible outcomes of measuring a person’s weight in kilograms. This could be any non-negative real number, so we can write <span class="math inline">\Omega = [0, \infty)</span>.</li>
-<li>To get the weight in pounds, I multiply the weight in kilograms by 2.2, approximately. The support of <span class="math inline">W</span> is also <span class="math inline">[0, \infty)</span>.</li>
+<li>Let’s call <span class="math inline">H</span> the random variable that represents the height <span class="math inline">h</span> of adult males.</li>
+<li>The sample space <span class="math inline">\Omega</span> is still the set of all possible outcomes of an experiment. If the outcome of the experiment is the height itself, then <span class="math display">
+\Omega = \{h \in \mathbb{R} : h &gt; 0\}.
+</span> That is to say that the sample space is the set of all positive real numbers.</li>
+<li>The support of <span class="math inline">H</span> is the set of values that have non-zero probability density. If you look at the code for the figure above, you will see that the blue curve is modelled as a normal distribution, which mathematically assign density to all real numbers, including negative values. However, negative heights are not part of the sample space, so they cannot occur. Therefore <span class="math display">
+\operatorname{supp}(H) = \{h \in \mathbb{R} : h &gt; 0\}.
+</span> In this case, the support of <span class="math inline">H</span> coincides with the sample space.</li>
+<li>Instead of a probability mass function (PMF), in the continuous case we have a probability density function (PDF), which we denote as <span class="math inline">p_H(h)</span>. The big difference is that, for a given realization in the discrete case, <span class="math inline">p_Z(z)</span> gives us the probability that <span class="math inline">Z</span> takes on that specific value. In the continuous case, <span class="math inline">p_H(h)</span> does not give us the probability that <span class="math inline">H</span> takes on the specific value <span class="math inline">h</span>, because in a continuous distribution, the probability of any specific value is zero. What’s the probability that a given adult male has a height of <strong>exactly</strong> 175 cm? The answer is zero, because if we measure with infinite precision, we’ll never hit that exact value. Instead, <span class="math inline">p_H(h)</span> gives us the <strong>density</strong> at that point, and we can use it to calculate probabilities over intervals. For example, the probability that <span class="math inline">H</span> takes on a value between 170 cm and 180 cm is given by the integral of the PDF over that interval: <span class="math display">
+P(170 &lt; H &lt; 180) = \int_{170}^{180} p_H(h) \, dh.
+</span></li>
 </ul>
-<p>When we have a continuous random variable, we can’t use the PMF to describe the probabilities, because the PMF is only defined for discrete random variables. Instead, we need to</p>
-<p>use a different mathematical tool to describe the probabilities, which is called the probability density function (PDF). The PDF is a function that describes the relative likelihood of a random variable taking on a specific value. The PDF is denoted as <span class="math inline">f_X(x)</span> for a random variable <span class="math inline">X</span>.</p>
 
 
 </section>
@@ -999,14 +1045,13 @@ p_Z(z) = \begin{cases}
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

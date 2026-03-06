@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -147,7 +146,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -189,8 +188,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -973,14 +971,14 @@ C_x = \frac{1}{2} \sum_j \left( y_j - a^L_j\right)^2.
 <div id="2672870b" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="4b3346aa" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>plot sigmoid</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a>z <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>sigma <span class="op">=</span> <span class="kw">lambda</span> z: <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
 <span id="cb2-4"><a href="#cb2-4"></a>z_star <span class="op">=</span> <span class="dv">5</span></span>
@@ -989,7 +987,7 @@ C_x = \frac{1}{2} \sum_j \left( y_j - a^L_j\right)^2.
 <span id="cb2-7"><a href="#cb2-7"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'z'</span>,</span>
 <span id="cb2-8"><a href="#cb2-8"></a>       ylabel<span class="op">=</span><span class="st">'sigma(z)'</span>,</span>
 <span id="cb2-9"><a href="#cb2-9"></a>       title<span class="op">=</span><span class="st">'sigmoid function'</span>,</span>
-<span id="cb2-10"><a href="#cb2-10"></a>       xticks<span class="op">=</span>[<span class="op">-</span><span class="dv">10</span>, <span class="op">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>],)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-10"><a href="#cb2-10"></a>       xticks<span class="op">=</span>[<span class="op">-</span><span class="dv">10</span>, <span class="op">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>],)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1157,7 +1155,7 @@ C = -\left[y \ln y + (1 - y) \ln (1 - y)\right].
 <div id="da5f8b8f" class="cell">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> os</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="im">import</span> io</span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="im">import</span> gzip</span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1168,14 +1166,14 @@ C = -\left[y \ln y + (1 - y) \ln (1 - y)\right].
 <span id="cb3-9"><a href="#cb3-9"></a><span class="im">import</span> json</span>
 <span id="cb3-10"><a href="#cb3-10"></a><span class="im">import</span> time</span>
 <span id="cb3-11"><a href="#cb3-11"></a></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="im">from</span> ch2_code <span class="im">import</span> <span class="op">*</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="im">from</span> ch2_code <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="3f95a451" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>load MNIST data into memory</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>training_data, test_data <span class="op">=</span> load_mnist_from_web()</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(training_data)<span class="sc">}</span><span class="ss"> training samples directly into memory."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>training_data, test_data <span class="op">=</span> load_mnist_from_web()</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(training_data)<span class="sc">}</span><span class="ss"> training samples directly into memory."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Fetching train_img...
@@ -1188,12 +1186,12 @@ Loaded 60000 training samples directly into memory.</code></pre>
 <div id="e4a46ed5" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>net <span class="op">=</span> NN(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], activation<span class="op">=</span><span class="st">"sigmoid"</span>, rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>net <span class="op">=</span> NN(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], activation<span class="op">=</span><span class="st">"sigmoid"</span>, rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb6-2"><a href="#cb6-2"></a>net.stochastic_gradient_descent(training_data<span class="op">=</span>training_data,</span>
 <span id="cb6-3"><a href="#cb6-3"></a>        epochs<span class="op">=</span><span class="dv">10</span>,</span>
 <span id="cb6-4"><a href="#cb6-4"></a>        batch_size<span class="op">=</span><span class="dv">100</span>,</span>
 <span id="cb6-5"><a href="#cb6-5"></a>        eta<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb6-6"><a href="#cb6-6"></a>        test_data<span class="op">=</span>test_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-6"><a href="#cb6-6"></a>        test_data<span class="op">=</span>test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Epoch  1/10: 100%|██████████| 00:01</code></pre>
@@ -1259,7 +1257,7 @@ Loaded 60000 training samples directly into memory.</code></pre>
 <div id="48ac5c85" class="cell" data-execution_count="43">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), sharex<span class="op">=</span><span class="st">"col"</span>, sharey<span class="op">=</span><span class="st">"col"</span>)</span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), sharex<span class="op">=</span><span class="st">"col"</span>, sharey<span class="op">=</span><span class="st">"col"</span>)</span>
 <span id="cb27-2"><a href="#cb27-2"></a></span>
 <span id="cb27-3"><a href="#cb27-3"></a>ax[<span class="dv">0</span>,<span class="dv">0</span>].imshow(test_data[<span class="dv">0</span>][<span class="dv">0</span>].reshape(<span class="dv">28</span>, <span class="dv">28</span>), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
 <span id="cb27-4"><a href="#cb27-4"></a>ax[<span class="dv">1</span>,<span class="dv">0</span>].imshow(test_data[<span class="dv">8</span>][<span class="dv">0</span>].reshape(<span class="dv">28</span>, <span class="dv">28</span>), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
@@ -1282,7 +1280,7 @@ Loaded 60000 training samples directly into memory.</code></pre>
 <span id="cb27-21"><a href="#cb27-21"></a></span>
 <span id="cb27-22"><a href="#cb27-22"></a>ax[<span class="dv">0</span>,<span class="dv">1</span>].<span class="bu">set</span>(xticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">10</span>),</span>
 <span id="cb27-23"><a href="#cb27-23"></a>            title<span class="op">=</span><span class="st">"output layer activations"</span></span>
-<span id="cb27-24"><a href="#cb27-24"></a>            )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-24"><a href="#cb27-24"></a>            )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1296,9 +1294,9 @@ Loaded 60000 training samples directly into memory.</code></pre>
 <div id="016f24ee" class="cell" data-execution_count="46">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
 <span id="cb28-2"><a href="#cb28-2"></a>    bars <span class="op">=</span> net.feedforward(test_data[i][<span class="dv">0</span>]).flatten()</span>
-<span id="cb28-3"><a href="#cb28-3"></a>    <span class="bu">print</span>(<span class="ss">f"Image </span><span class="sc">{</span>i<span class="sc">:2d}</span><span class="ss">: Sum of activations = </span><span class="sc">{</span>bars<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-3"><a href="#cb28-3"></a>    <span class="bu">print</span>(<span class="ss">f"Image </span><span class="sc">{</span>i<span class="sc">:2d}</span><span class="ss">: Sum of activations = </span><span class="sc">{</span>bars<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Image  0: Sum of activations = 1.00
@@ -1429,7 +1427,7 @@ a_j = \frac{e^{c z_j}}{\sum_k e^{c z_k}} \approx \frac{e^{c z_j}}{e^{c z_{max}}}
 <div id="aa3d0f59" class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>z <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>, <span class="fl">0.2</span>, <span class="fl">0.05</span>,</span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>z <span class="op">=</span> np.array([<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>, <span class="fl">0.2</span>, <span class="fl">0.05</span>,</span>
 <span id="cb30-2"><a href="#cb30-2"></a>              <span class="fl">0.3</span>, <span class="fl">0.8</span>, <span class="fl">0.1</span>, <span class="fl">0.0</span>, <span class="fl">0.2</span> ])</span>
 <span id="cb30-3"><a href="#cb30-3"></a>z</span>
 <span id="cb30-4"><a href="#cb30-4"></a></span>
@@ -1445,7 +1443,7 @@ a_j = \frac{e^{c z_j}}{\sum_k e^{c z_k}} \approx \frac{e^{c z_j}}{e^{c z_{max}}}
 <span id="cb30-14"><a href="#cb30-14"></a></span>
 <span id="cb30-15"><a href="#cb30-15"></a><span class="cf">for</span> i,axx <span class="kw">in</span> <span class="bu">enumerate</span>(ax[<span class="dv">1</span>:]):</span>
 <span id="cb30-16"><a href="#cb30-16"></a>    ax[i<span class="op">+</span><span class="dv">1</span>].bar(<span class="bu">range</span>(<span class="dv">10</span>), softmax(z, c<span class="op">=</span>c_list[i]), color<span class="op">=</span><span class="st">'tab:orange'</span>)</span>
-<span id="cb30-17"><a href="#cb30-17"></a>    ax[i<span class="op">+</span><span class="dv">1</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="ss">f"softmax: c=</span><span class="sc">{</span>c_list[i]<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb30-17"><a href="#cb30-17"></a>    ax[i<span class="op">+</span><span class="dv">1</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="ss">f"softmax: c=</span><span class="sc">{</span>c_list[i]<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1511,14 +1509,13 @@ a_j = \frac{e^{c z_j}}{\sum_k e^{c z_k}} \approx \frac{e^{c z_j}}{e^{c z_{max}}}
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

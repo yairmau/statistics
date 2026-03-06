@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>29&nbsp; conjugate prior – Statistics and Machine Learning</title>
+<title>30&nbsp; conjugate prior – Statistics and Machine Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../archive/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0c95d3abc9ace739f1471016b109f4e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d7c03b1f6bc86bbf11e5bf7775f7eb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -147,7 +146,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -174,7 +173,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/conjugate-prior.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">conjugate prior</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/conjugate-prior.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">conjugate prior</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -189,8 +188,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
-      <img src="../archive/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
@@ -245,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">hypothesis testing</span></a>
+ <span class="menu-text">foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -253,44 +251,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hypothesis_testing/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hypothesis_testing/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hypothesis_testing/statistical_power.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">statistical power</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hypothesis_testing/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hypothesis_testing/permutation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hypothesis_testing/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hypothesis_testing/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+  <a href="../foundations/language-of-random-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">the language of random variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -298,7 +260,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">confidence interval</span></a>
+ <span class="menu-text">hypothesis testing</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -306,20 +268,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+  <a href="../hypothesis_testing/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+  <a href="../hypothesis_testing/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+  <a href="../hypothesis_testing/statistical_power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">statistical power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/permutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
   </div>
 </li>
       </ul>
@@ -327,7 +313,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">regression</span></a>
+ <span class="menu-text">confidence interval</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -335,50 +321,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+  <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/R-squared.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">R-squared</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
+  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
   </div>
 </li>
       </ul>
@@ -386,7 +342,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">correlation</span></a>
+ <span class="menu-text">regression</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -394,26 +350,50 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+  <a href="../regression/R-squared.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">R-squared</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
   </div>
 </li>
       </ul>
@@ -421,7 +401,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">bayes</span></a>
+ <span class="menu-text">correlation</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -429,44 +409,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
+  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../bayes/logistic-connection.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
   </div>
 </li>
       </ul>
@@ -474,7 +436,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">svd and pca</span></a>
+ <span class="menu-text">bayes</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -482,14 +444,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/logistic-connection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
   </div>
 </li>
       </ul>
@@ -497,7 +489,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text">decision trees</span></a>
+ <span class="menu-text">svd and pca</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -505,20 +497,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+  <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+  <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -526,7 +512,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text">information theory</span></a>
+ <span class="menu-text">decision trees</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -534,14 +520,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+  <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+  <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
   </div>
 </li>
       </ul>
@@ -549,7 +541,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">likelihood</span></a>
+ <span class="menu-text">information theory</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -557,50 +549,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+  <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+  <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
   </div>
 </li>
       </ul>
@@ -608,7 +564,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
- <span class="menu-text">generalization and model complexity</span></a>
+ <span class="menu-text">likelihood</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -616,50 +572,50 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../generalization/motivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">motivation</span></span></a>
+  <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
+  <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
+  <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+  <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+  <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+  <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+  <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
+  <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -667,7 +623,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
- <span class="menu-text">neural networks</span></a>
+ <span class="menu-text">generalization and model complexity</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -675,26 +631,50 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../neural_networks/nielsen_ch1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.1</span></span></a>
+  <a href="../generalization/motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">motivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../neural_networks/nielsen_ch2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.2</span></span></a>
+  <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../neural_networks/nielsen_ch3A.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></span></a>
+  <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../neural_networks/nielsen_ch3B.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3B</span></span></a>
+  <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
   </div>
 </li>
       </ul>
@@ -702,7 +682,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
- <span class="menu-text">miscellaneous</span></a>
+ <span class="menu-text">neural networks</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -710,14 +690,49 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch3A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch3B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3B</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../misc/shap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
   </div>
 </li>
       </ul>
@@ -732,29 +747,29 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question"><span class="header-section-number">29.1</span> question</a></li>
-  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">29.2</span> bayes’ theorem</a></li>
-  <li><a href="#modeling-the-likelihood" id="toc-modeling-the-likelihood" class="nav-link" data-scroll-target="#modeling-the-likelihood"><span class="header-section-number">29.3</span> modeling the likelihood</a></li>
-  <li><a href="#modeling-the-prior" id="toc-modeling-the-prior" class="nav-link" data-scroll-target="#modeling-the-prior"><span class="header-section-number">29.4</span> modeling the prior</a></li>
-  <li><a href="#posterior-looks-like-an-updated-prior" id="toc-posterior-looks-like-an-updated-prior" class="nav-link" data-scroll-target="#posterior-looks-like-an-updated-prior"><span class="header-section-number">29.5</span> posterior looks like an updated prior</a></li>
-  <li><a href="#iterative-updating-of-beliefs" id="toc-iterative-updating-of-beliefs" class="nav-link" data-scroll-target="#iterative-updating-of-beliefs"><span class="header-section-number">29.6</span> iterative updating of beliefs</a></li>
-  <li><a href="#comparison-with-frequentist-approach" id="toc-comparison-with-frequentist-approach" class="nav-link" data-scroll-target="#comparison-with-frequentist-approach"><span class="header-section-number">29.7</span> comparison with frequentist approach</a></li>
-  <li><a href="#conjugate-pairs" id="toc-conjugate-pairs" class="nav-link" data-scroll-target="#conjugate-pairs"><span class="header-section-number">29.8</span> conjugate pairs</a>
+  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question"><span class="header-section-number">30.1</span> question</a></li>
+  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">30.2</span> bayes’ theorem</a></li>
+  <li><a href="#modeling-the-likelihood" id="toc-modeling-the-likelihood" class="nav-link" data-scroll-target="#modeling-the-likelihood"><span class="header-section-number">30.3</span> modeling the likelihood</a></li>
+  <li><a href="#modeling-the-prior" id="toc-modeling-the-prior" class="nav-link" data-scroll-target="#modeling-the-prior"><span class="header-section-number">30.4</span> modeling the prior</a></li>
+  <li><a href="#posterior-looks-like-an-updated-prior" id="toc-posterior-looks-like-an-updated-prior" class="nav-link" data-scroll-target="#posterior-looks-like-an-updated-prior"><span class="header-section-number">30.5</span> posterior looks like an updated prior</a></li>
+  <li><a href="#iterative-updating-of-beliefs" id="toc-iterative-updating-of-beliefs" class="nav-link" data-scroll-target="#iterative-updating-of-beliefs"><span class="header-section-number">30.6</span> iterative updating of beliefs</a></li>
+  <li><a href="#comparison-with-frequentist-approach" id="toc-comparison-with-frequentist-approach" class="nav-link" data-scroll-target="#comparison-with-frequentist-approach"><span class="header-section-number">30.7</span> comparison with frequentist approach</a></li>
+  <li><a href="#conjugate-pairs" id="toc-conjugate-pairs" class="nav-link" data-scroll-target="#conjugate-pairs"><span class="header-section-number">30.8</span> conjugate pairs</a>
   <ul class="collapse">
-  <li><a href="#poisson-distribution" id="toc-poisson-distribution" class="nav-link" data-scroll-target="#poisson-distribution"><span class="header-section-number">29.8.1</span> Poisson distribution</a></li>
-  <li><a href="#normal-distribution-known-variance" id="toc-normal-distribution-known-variance" class="nav-link" data-scroll-target="#normal-distribution-known-variance"><span class="header-section-number">29.8.2</span> normal distribution (known variance)</a></li>
-  <li><a href="#categorical-multinomial-distribution" id="toc-categorical-multinomial-distribution" class="nav-link" data-scroll-target="#categorical-multinomial-distribution"><span class="header-section-number">29.8.3</span> categorical / multinomial distribution</a></li>
+  <li><a href="#poisson-distribution" id="toc-poisson-distribution" class="nav-link" data-scroll-target="#poisson-distribution"><span class="header-section-number">30.8.1</span> Poisson distribution</a></li>
+  <li><a href="#normal-distribution-known-variance" id="toc-normal-distribution-known-variance" class="nav-link" data-scroll-target="#normal-distribution-known-variance"><span class="header-section-number">30.8.2</span> normal distribution (known variance)</a></li>
+  <li><a href="#categorical-multinomial-distribution" id="toc-categorical-multinomial-distribution" class="nav-link" data-scroll-target="#categorical-multinomial-distribution"><span class="header-section-number">30.8.3</span> categorical / multinomial distribution</a></li>
   </ul></li>
-  <li><a href="#uniform-distribution-known-bounds" id="toc-uniform-distribution-known-bounds" class="nav-link" data-scroll-target="#uniform-distribution-known-bounds"><span class="header-section-number">29.9</span> uniform distribution (known bounds)</a></li>
+  <li><a href="#uniform-distribution-known-bounds" id="toc-uniform-distribution-known-bounds" class="nav-link" data-scroll-target="#uniform-distribution-known-bounds"><span class="header-section-number">30.9</span> uniform distribution (known bounds)</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/conjugate-prior.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">conjugate prior</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bayes/from-the-ground-up.html">bayes</a></li><li class="breadcrumb-item"><a href="../bayes/conjugate-prior.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">conjugate prior</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">conjugate prior</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/bayes/conjugate-prior.ipynb">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">conjugate prior</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/bayes/conjugate-prior.ipynb">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -772,16 +787,16 @@ window.Quarto = {
 
 
 <p>We will learn about conjugate priors in Bayesian statistics from a concrete example. Once we understand it, we will generalize the idea.</p>
-<section id="question" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="question"><span class="header-section-number">29.1</span> question</h2>
+<section id="question" class="level2" data-number="30.1">
+<h2 data-number="30.1" class="anchored" data-anchor-id="question"><span class="header-section-number">30.1</span> question</h2>
 <p>Let’s use here the same example from the chapter on <a href="../information_theory/cross-entropy.html">cross-entropy and KL divergence</a>:</p>
 <blockquote class="blockquote">
 <p>Assume I live in city A, where it rains 50% of the days. A friend of mine lives in city B, where it rains 10% of the days. What happens when my friend visits me in city A and, not knowing any better, assumes that it rains 10% of the days?</p>
 </blockquote>
 <p>The specific question we want to answer is: how can my friend update their belief about the probability of rain when they arrive in city A?</p>
 </section>
-<section id="bayes-theorem" class="level2" data-number="29.2">
-<h2 data-number="29.2" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">29.2</span> bayes’ theorem</h2>
+<section id="bayes-theorem" class="level2" data-number="30.2">
+<h2 data-number="30.2" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">30.2</span> bayes’ theorem</h2>
 <p>We will use Bayes’ theorem to update our friend’s belief. To makes things easier to remember, let’s call the hypothesis <span class="math inline">p</span> (the probability of rain), and the evidence <span class="math inline">R</span> (a specific observation of rain or no rain). Thus, Bayes’ theorem can be rewritten as:</p>
 <p><span class="math display">\begin{align}
 P(p|R) &amp;= \frac{P(R|p)\cdot P(p)}{P(R)} \\
@@ -797,8 +812,8 @@ P(p|R) &amp;= \frac{P(R|p)\cdot P(p)}{P(R)} \\
 <li><span class="math inline">P(p|R)</span> is the posterior probability, this is what we want to find: our friend’s updated belief about the probability of rain <span class="math inline">p</span> after observing the evidence.</li>
 </ul>
 </section>
-<section id="modeling-the-likelihood" class="level2" data-number="29.3">
-<h2 data-number="29.3" class="anchored" data-anchor-id="modeling-the-likelihood"><span class="header-section-number">29.3</span> modeling the likelihood</h2>
+<section id="modeling-the-likelihood" class="level2" data-number="30.3">
+<h2 data-number="30.3" class="anchored" data-anchor-id="modeling-the-likelihood"><span class="header-section-number">30.3</span> modeling the likelihood</h2>
 <p>In this problem, every day that passes it either rains or it does not rain. This can be understood as a Bernoulli process, where each day is an independent trial with two possible outcomes. “Success” would be ocurrence of rain (<span class="math inline">R=1</span>), which happens with probability <span class="math inline">p</span>. “Failure” would be no rain (<span class="math inline">R=0</span>), which happens with probability <span class="math inline">1-p</span>. In mathematical terms, the likelihood can be modeled as:</p>
 <p><span class="math display">
 P(R=r|p) =
@@ -817,24 +832,24 @@ P(R=k|p) = \binom{n}{k} p^k (1-p)^{n-k}.
 </span></p>
 <p>This is the time to be more precise. When we previously said that “<span class="math inline">p</span> is the hypothesis, the probability of rain”, we left behind the modeling aspect. We assumed here a generative model, the Bernoulli process. Rephrasing the statement more precisely: “<span class="math inline">p</span> is the parameter of the generative model (Bernoulli process) that generates the observations of rain and no rain”.</p>
 </section>
-<section id="modeling-the-prior" class="level2" data-number="29.4">
-<h2 data-number="29.4" class="anchored" data-anchor-id="modeling-the-prior"><span class="header-section-number">29.4</span> modeling the prior</h2>
+<section id="modeling-the-prior" class="level2" data-number="30.4">
+<h2 data-number="30.4" class="anchored" data-anchor-id="modeling-the-prior"><span class="header-section-number">30.4</span> modeling the prior</h2>
 <p>The prior in the Bayesian framework is not a single value. From the question above, we might think that our friend’s prior belief about the probability of rain is simply <span class="math inline">0.1=10\%</span>. However, in Bayesian statistics, the prior is represented as a probability distribution over all possible values of <span class="math inline">p</span>. In would make sense to choose a probability distribution that is highest around <span class="math inline">0.1</span> and lower elsewhere. There are infinite possible distributions that could represent this belief, so which should we choose? See below three examples of possible prior distributions, all have their mean at <span class="math inline">0.1</span>.</p>
 <div id="5ef90770" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>import libraries</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib <span class="im">as</span> mpl</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> matplotlib.gridspec <span class="im">as</span> grid_spec</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">from</span> matplotlib.lines <span class="im">import</span> Line2D</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.stats <span class="im">import</span> beta, norm, uniform, binom</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.stats <span class="im">import</span> beta, norm, uniform, binom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="36fcfe1d" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>plot various possible distributions</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb2-2"><a href="#cb2-2"></a>location <span class="op">=</span> <span class="fl">0.1</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>p <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>)</span>
 <span id="cb2-4"><a href="#cb2-4"></a>ax.plot(p, beta.pdf(p, <span class="dv">2</span>, <span class="dv">2</span><span class="op">/</span>location<span class="op">-</span><span class="dv">2</span>), label<span class="op">=</span><span class="st">'Beta(2, 18)'</span>, color<span class="op">=</span><span class="st">"black"</span>)</span>
@@ -843,7 +858,7 @@ P(R=k|p) = \binom{n}{k} p^k (1-p)^{n-k}.
 <span id="cb2-7"><a href="#cb2-7"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb2-8"><a href="#cb2-8"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Probability of rain (p)'</span>,</span>
 <span id="cb2-9"><a href="#cb2-9"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb2-10"><a href="#cb2-10"></a>       title<span class="op">=</span><span class="st">'Possible prior distributions for the probability of rain'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-10"><a href="#cb2-10"></a>       title<span class="op">=</span><span class="st">'Possible prior distributions for the probability of rain'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -873,7 +888,7 @@ P(R=k|p) = \binom{n}{k} p^k (1-p)^{n-k}.
 <div id="c62caa2a" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>three beta distributions</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a>location <span class="op">=</span> <span class="fl">0.1</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>p <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>ax.plot(p, beta.pdf(p, <span class="dv">2</span>, <span class="dv">2</span><span class="op">/</span>location<span class="op">-</span><span class="dv">2</span>), label<span class="op">=</span><span class="st">'Beta(2, 18)'</span>, color<span class="op">=</span><span class="st">"black"</span>)</span>
@@ -882,7 +897,7 @@ P(R=k|p) = \binom{n}{k} p^k (1-p)^{n-k}.
 <span id="cb3-7"><a href="#cb3-7"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb3-8"><a href="#cb3-8"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Probability of rain (p)'</span>,</span>
 <span id="cb3-9"><a href="#cb3-9"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb3-10"><a href="#cb3-10"></a>       title<span class="op">=</span><span class="st">'Beta prior distributions with mean at 0.1'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-10"><a href="#cb3-10"></a>       title<span class="op">=</span><span class="st">'Beta prior distributions with mean at 0.1'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -893,8 +908,8 @@ P(R=k|p) = \binom{n}{k} p^k (1-p)^{n-k}.
 </div>
 </div>
 </section>
-<section id="posterior-looks-like-an-updated-prior" class="level2" data-number="29.5">
-<h2 data-number="29.5" class="anchored" data-anchor-id="posterior-looks-like-an-updated-prior"><span class="header-section-number">29.5</span> posterior looks like an updated prior</h2>
+<section id="posterior-looks-like-an-updated-prior" class="level2" data-number="30.5">
+<h2 data-number="30.5" class="anchored" data-anchor-id="posterior-looks-like-an-updated-prior"><span class="header-section-number">30.5</span> posterior looks like an updated prior</h2>
 <p>Why is this distribution particulary convenient? Note that it has the factors <span class="math inline">p^{\alpha - 1}</span> and <span class="math inline">(1-p)^{\beta - 1}</span>, which are similar to the factors in the likelihood function <span class="math inline">p^k (1-p)^{n-k}</span>.</p>
 <p>According to Bayes’ theorem, the posterior distribution is proportional to the product of the likelihood and the prior. Thus, if we choose a Beta distribution as the prior, the posterior distribution will also be a Beta distribution, but with updated parameters. Let’s see how this works mathematically:</p>
 <p><span class="math display">\begin{align*}
@@ -910,20 +925,20 @@ P(p|R=k) &amp;= \frac{1}{\underbrace{P(R=k)}_{\text{evidence}}} \cdot \underbrac
 <li><strong>Intuitive Interpretation:</strong> The parameters of the posterior distribution can be interpreted as updated counts of successes and failures, making it easy to understand how new data influences our beliefs.</li>
 </ul>
 </section>
-<section id="iterative-updating-of-beliefs" class="level2" data-number="29.6">
-<h2 data-number="29.6" class="anchored" data-anchor-id="iterative-updating-of-beliefs"><span class="header-section-number">29.6</span> iterative updating of beliefs</h2>
+<section id="iterative-updating-of-beliefs" class="level2" data-number="30.6">
+<h2 data-number="30.6" class="anchored" data-anchor-id="iterative-updating-of-beliefs"><span class="header-section-number">30.6</span> iterative updating of beliefs</h2>
 <p>Let’s say that my friends Bob and Alice move to city A, where it rains on 50% of the days. Bob has a prior belief modeled as a Beta distribution with parameters <span class="math inline">\alpha=2</span> and <span class="math inline">\beta=18</span>, reflecting his initial belief that it rains 10% of the days, but with a low level of confidence. Alice, however, has an initial belief closer to the truth, 20%, but with a much higher level of confidence, modeled as a Beta distribution with parameters <span class="math inline">\alpha=100</span> and <span class="math inline">\beta=400</span>. Every week that passes, they observe the weather and write down the number of rainy days, thus collecting the following data over 52 weeks (one year):</p>
 <div id="e1cb0ea1" class="cell">
 <details class="code-fold">
 <summary>generate binomial data for 52 weeks</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>np.random.seed(<span class="dv">6</span>)</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>np.random.seed(<span class="dv">6</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a>N_weeks <span class="op">=</span> <span class="dv">52</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>success_array_daily <span class="op">=</span> binom.rvs(n<span class="op">=</span><span class="dv">1</span>, p<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span>N_weeks<span class="op">*</span><span class="dv">7</span>)  <span class="co"># first generate daily data</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>success_array <span class="op">=</span> success_array_daily.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">7</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)  <span class="co"># aggragate to weekly data</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="co"># success_array = binom.rvs(n=7, p=0.5, size=N_weeks)  # do this if you don't need daily data</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a>failure_array <span class="op">=</span> <span class="dv">7</span> <span class="op">-</span> success_array</span>
 <span id="cb4-7"><a href="#cb4-7"></a>sf_array <span class="op">=</span> np.vstack([success_array, failure_array]).T</span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="bu">print</span>(success_array)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="bu">print</span>(success_array)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[4 4 5 6 4 4 2 3 5 4 2 3 5 3 3 5 4 3 1 3 4 4 2 2 3 5 1 2 6 4 3 2 3 5 6 3 4
@@ -934,7 +949,7 @@ P(p|R=k) &amp;= \frac{1}{\underbrace{P(R=k)}_{\text{evidence}}} \cdot \underbrac
 <div id="f2faabeb" class="cell" data-execution_count="134">
 <details class="code-fold">
 <summary>update priors over 52 weeks and print parameters</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>bobs_parameters <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">18</span>]])</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>bobs_parameters <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">18</span>]])</span>
 <span id="cb6-2"><a href="#cb6-2"></a>alices_parameters <span class="op">=</span> np.array([[<span class="dv">100</span>, <span class="dv">400</span>]])</span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\t\t</span><span class="st">Bob</span><span class="ch">\t\t</span><span class="st">Bob</span><span class="ch">\t\t</span><span class="st">Alice</span><span class="ch">\t</span><span class="st">Alice"</span>)</span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="bu">print</span>(<span class="st">"week</span><span class="ch">\t</span><span class="st">alpha</span><span class="ch">\t</span><span class="st">beta</span><span class="ch">\t</span><span class="st">alpha</span><span class="ch">\t</span><span class="st">beta"</span>)</span>
@@ -948,7 +963,7 @@ P(p|R=k) &amp;= \frac{1}{\underbrace{P(R=k)}_{\text{evidence}}} \cdot \underbrac
 <span id="cb6-12"><a href="#cb6-12"></a>    alices_this_weeks_parameters <span class="op">=</span> alices_last_weeks_parameters <span class="op">+</span> sf_array[week]</span>
 <span id="cb6-13"><a href="#cb6-13"></a>    alices_parameters <span class="op">=</span> np.vstack([alices_parameters, alices_this_weeks_parameters])</span>
 <span id="cb6-14"><a href="#cb6-14"></a></span>
-<span id="cb6-15"><a href="#cb6-15"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>week<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>bobs_this_weeks_parameters[<span class="dv">0</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>bobs_this_weeks_parameters[<span class="dv">1</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>alices_this_weeks_parameters[<span class="dv">0</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>alices_this_weeks_parameters[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>week<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>bobs_this_weeks_parameters[<span class="dv">0</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>bobs_this_weeks_parameters[<span class="dv">1</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>alices_this_weeks_parameters[<span class="dv">0</span>]<span class="sc">}</span><span class="ch">\t\t</span><span class="sc">{</span>alices_this_weeks_parameters[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Bob     Bob     Alice   Alice
@@ -1012,7 +1027,7 @@ week    alpha   beta    alpha   beta
 <div id="ce792617" class="cell">
 <details class="code-fold">
 <summary>ridge plot</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>N_weeks <span class="op">=</span> <span class="dv">52</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>N_weeks <span class="op">=</span> <span class="dv">52</span></span>
 <span id="cb8-2"><a href="#cb8-2"></a>N_panels <span class="op">=</span> N_weeks <span class="op">+</span> <span class="dv">1</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>gs <span class="op">=</span> grid_spec.GridSpec(N_panels,<span class="dv">1</span>)</span>
 <span id="cb8-4"><a href="#cb8-4"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">12</span>))</span>
@@ -1078,7 +1093,7 @@ week    alpha   beta    alpha   beta
 <span id="cb8-64"><a href="#cb8-64"></a>    line <span class="op">=</span> Line2D([fig_coord[<span class="dv">0</span>], fig_coord[<span class="dv">0</span>]],     <span class="co"># x coordinates</span></span>
 <span id="cb8-65"><a href="#cb8-65"></a>                [fig_coord[<span class="dv">1</span>], pos_top[<span class="dv">1</span>]],          <span class="co"># y coordinates</span></span>
 <span id="cb8-66"><a href="#cb8-66"></a>                transform<span class="op">=</span>fig.transFigure, color<span class="op">=</span><span class="st">'black'</span>, ls<span class="op">=</span><span class="st">':'</span>, lw<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb8-67"><a href="#cb8-67"></a>    fig.add_artist(line)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-67"><a href="#cb8-67"></a>    fig.add_artist(line)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1096,7 +1111,7 @@ week    alpha   beta    alpha   beta
 <div id="01315d6d" class="cell">
 <details class="code-fold">
 <summary>Bob and Alice’s estimates over time</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
 <span id="cb9-2"><a href="#cb9-2"></a>t <span class="op">=</span> np.arange(N_weeks<span class="op">+</span><span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3"></a></span>
 <span id="cb9-4"><a href="#cb9-4"></a><span class="kw">def</span> beta_mean(alpha, beta):</span>
@@ -1126,7 +1141,7 @@ week    alpha   beta    alpha   beta
 <span id="cb9-28"><a href="#cb9-28"></a>       ylabel<span class="op">=</span><span class="st">'Estimated Expected Probability of Rain'</span>,</span>
 <span id="cb9-29"><a href="#cb9-29"></a>       title<span class="op">=</span><span class="st">'Convergence of Bob and Alice</span><span class="ch">\'</span><span class="st">s Estimates Over Time'</span>,</span>
 <span id="cb9-30"><a href="#cb9-30"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">0.6</span>),</span>
-<span id="cb9-31"><a href="#cb9-31"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,N_weeks))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-31"><a href="#cb9-31"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,N_weeks))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1137,8 +1152,8 @@ week    alpha   beta    alpha   beta
 </div>
 </div>
 </section>
-<section id="comparison-with-frequentist-approach" class="level2" data-number="29.7">
-<h2 data-number="29.7" class="anchored" data-anchor-id="comparison-with-frequentist-approach"><span class="header-section-number">29.7</span> comparison with frequentist approach</h2>
+<section id="comparison-with-frequentist-approach" class="level2" data-number="30.7">
+<h2 data-number="30.7" class="anchored" data-anchor-id="comparison-with-frequentist-approach"><span class="header-section-number">30.7</span> comparison with frequentist approach</h2>
 <p>Let’s add to the graph above one more line, for Charlie, who follows a frequentist approach to estimate the probability of rain over time. Charlie doesn’t have any prior belief; instead, he simply counts the number of rainy days observed so far (<span class="math inline">k</span>) and divides it by the total number of days that passed (<span class="math inline">n</span>). As shown in the chapter <a href="../likelihood/MLE_and_summary_statistics.html#binomial-distribution">MLE and summary statistics</a>, when assuming a generative model that is a Bernoulli process (or Binomial distribution for multiple trials), the maximum likelihood estimate (MLE) of the probability of success (rain) is given by the ratio of the number of successes to the total number of trials:</p>
 <p><span class="math display">
 \hat{p} = \frac{k}{n}.
@@ -1148,7 +1163,7 @@ week    alpha   beta    alpha   beta
 <div id="938ec66b" class="cell">
 <details class="code-fold">
 <summary>compute daily parameter updates for Bob and Alice</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>failure_array_daily <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> success_array_daily</span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>failure_array_daily <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> success_array_daily</span>
 <span id="cb10-2"><a href="#cb10-2"></a>sf_array_daily <span class="op">=</span> np.vstack([success_array_daily, failure_array_daily]).T</span>
 <span id="cb10-3"><a href="#cb10-3"></a></span>
 <span id="cb10-4"><a href="#cb10-4"></a>bobs_parameters_daily <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">18</span>]])</span>
@@ -1160,13 +1175,13 @@ week    alpha   beta    alpha   beta
 <span id="cb10-10"><a href="#cb10-10"></a>    bobs_parameters_daily <span class="op">=</span> np.vstack([bobs_parameters_daily, bobs_todays_parameters])</span>
 <span id="cb10-11"><a href="#cb10-11"></a>    alices_yesterdays_parameters <span class="op">=</span> alices_parameters_daily[<span class="op">-</span><span class="dv">1</span>]</span>
 <span id="cb10-12"><a href="#cb10-12"></a>    alices_todays_parameters <span class="op">=</span> alices_yesterdays_parameters <span class="op">+</span> sf_array_daily[day]</span>
-<span id="cb10-13"><a href="#cb10-13"></a>    alices_parameters_daily <span class="op">=</span> np.vstack([alices_parameters_daily, alices_todays_parameters])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-13"><a href="#cb10-13"></a>    alices_parameters_daily <span class="op">=</span> np.vstack([alices_parameters_daily, alices_todays_parameters])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="c8a1e3cc" class="cell" data-execution_count="156">
 <details class="code-fold">
 <summary>frequentist vs Bayesian daily updates</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
 <span id="cb11-2"><a href="#cb11-2"></a></span>
 <span id="cb11-3"><a href="#cb11-3"></a>t <span class="op">=</span> <span class="dv">7</span><span class="op">*</span>np.arange(N_weeks<span class="op">+</span><span class="dv">1</span>)</span>
 <span id="cb11-4"><a href="#cb11-4"></a>t_day<span class="op">=</span> np.arange(N_weeks<span class="op">*</span><span class="dv">7</span><span class="op">+</span><span class="dv">1</span>)</span>
@@ -1199,7 +1214,7 @@ week    alpha   beta    alpha   beta
 <span id="cb11-31"><a href="#cb11-31"></a>       title<span class="op">=</span><span class="st">'Frequentist vs Bayesian Daily Updates'</span>,</span>
 <span id="cb11-32"><a href="#cb11-32"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>),</span>
 <span id="cb11-33"><a href="#cb11-33"></a>       xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">150</span>)</span>
-<span id="cb11-34"><a href="#cb11-34"></a>       )<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-34"><a href="#cb11-34"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1221,7 +1236,7 @@ week    alpha   beta    alpha   beta
 <div id="439b5a19" class="cell" data-execution_count="155">
 <details class="code-fold">
 <summary>Laplace vs frequentist vs Bayesian daily updates</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>laplaces_parameters_daily <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">1</span>]])</span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>laplaces_parameters_daily <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">1</span>]])</span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="cf">for</span> day <span class="kw">in</span> np.arange(N_weeks<span class="op">*</span><span class="dv">7</span>):</span>
 <span id="cb12-3"><a href="#cb12-3"></a>    laplaces_yesterdays_parameters <span class="op">=</span> laplaces_parameters_daily[<span class="op">-</span><span class="dv">1</span>]</span>
 <span id="cb12-4"><a href="#cb12-4"></a>    laplaces_todays_parameters <span class="op">=</span> laplaces_yesterdays_parameters <span class="op">+</span> sf_array_daily[day]</span>
@@ -1267,7 +1282,7 @@ week    alpha   beta    alpha   beta
 <span id="cb12-44"><a href="#cb12-44"></a>ax[<span class="dv">1</span>].legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb12-45"><a href="#cb12-45"></a>ax[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Probability of rain (p)'</span>,</span>
 <span id="cb12-46"><a href="#cb12-46"></a>       ylabel<span class="op">=</span><span class="st">'Probability Density'</span>,</span>
-<span id="cb12-47"><a href="#cb12-47"></a>       title<span class="op">=</span><span class="st">'Beta prior distributions with mean at 0.1'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-47"><a href="#cb12-47"></a>       title<span class="op">=</span><span class="st">'Beta prior distributions with mean at 0.1'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1279,8 +1294,8 @@ week    alpha   beta    alpha   beta
 </div>
 <p>Laplace’s estimate doesn’t suffer from Charlie’s extreme initial estimate. Just after a few days, however, it is almost indistinguishable from Charlie’s estimate.</p>
 </section>
-<section id="conjugate-pairs" class="level2" data-number="29.8">
-<h2 data-number="29.8" class="anchored" data-anchor-id="conjugate-pairs"><span class="header-section-number">29.8</span> conjugate pairs</h2>
+<section id="conjugate-pairs" class="level2" data-number="30.8">
+<h2 data-number="30.8" class="anchored" data-anchor-id="conjugate-pairs"><span class="header-section-number">30.8</span> conjugate pairs</h2>
 <p>In the example above, we saw how convenient it is to use a prior function that is conjugate to the likelihood function. The generating process behind the observations was a Bernoulli process (or Binomial distribution for multiple trials), so we chose its conjugate, the Beta distribution.</p>
 <p>Some examples of processes that can be described by a Binomial distribution (or Bernoulli process) are:</p>
 <ul>
@@ -1289,8 +1304,8 @@ week    alpha   beta    alpha   beta
 <li><strong>Medical Trials:</strong> A researcher has a prior belief about the effectiveness of a new drug (Success) vs.&nbsp;ineffectiveness (Failure) based on preliminary studies.</li>
 </ul>
 <p>What if the generating process was different?</p>
-<section id="poisson-distribution" class="level3" data-number="29.8.1">
-<h3 data-number="29.8.1" class="anchored" data-anchor-id="poisson-distribution"><span class="header-section-number">29.8.1</span> Poisson distribution</h3>
+<section id="poisson-distribution" class="level3" data-number="30.8.1">
+<h3 data-number="30.8.1" class="anchored" data-anchor-id="poisson-distribution"><span class="header-section-number">30.8.1</span> Poisson distribution</h3>
 <p>The Poisson distribution models the number of events occurring in a fixed interval of time or space (the “count”). The Gamma distribution is its conjugate prior because it is defined for positive values (0 to <span class="math inline">\infty</span>), making it perfect for modeling the rate (<span class="math inline">\lambda</span>) at which these events happen. It can be used in scenarios such as:</p>
 <ul>
 <li><strong>Ecohydrology:</strong> Modeling the number of rainfall pulses in a desert ecosystem during the growing season.</li>
@@ -1298,8 +1313,8 @@ week    alpha   beta    alpha   beta
 <li><strong>Radioactive Decay:</strong> Predicting the number of particles emitted by a substance over a specific duration.</li>
 </ul>
 </section>
-<section id="normal-distribution-known-variance" class="level3" data-number="29.8.2">
-<h3 data-number="29.8.2" class="anchored" data-anchor-id="normal-distribution-known-variance"><span class="header-section-number">29.8.2</span> normal distribution (known variance)</h3>
+<section id="normal-distribution-known-variance" class="level3" data-number="30.8.2">
+<h3 data-number="30.8.2" class="anchored" data-anchor-id="normal-distribution-known-variance"><span class="header-section-number">30.8.2</span> normal distribution (known variance)</h3>
 <p>When you assume your data follows a Normal distribution (like measurement errors) and you know the variance, the conjugate prior for the mean is also a Normal distribution. This creates a beautiful “weighted average” effect: the posterior mean will sit somewhere between your prior guess and the data’s mean, depending on which one is more certain. It is useful in scenarios such as:</p>
 <ul>
 <li><strong>Measurement Errors:</strong> Estimating the true value of a physical quantity when measurements are subject to random errors.</li>
@@ -1307,8 +1322,8 @@ week    alpha   beta    alpha   beta
 <li><strong>Psychometrics:</strong> Estimating the average score of a psychological test when individual scores are normally distributed with known variance.</li>
 </ul>
 </section>
-<section id="categorical-multinomial-distribution" class="level3" data-number="29.8.3">
-<h3 data-number="29.8.3" class="anchored" data-anchor-id="categorical-multinomial-distribution"><span class="header-section-number">29.8.3</span> categorical / multinomial distribution</h3>
+<section id="categorical-multinomial-distribution" class="level3" data-number="30.8.3">
+<h3 data-number="30.8.3" class="anchored" data-anchor-id="categorical-multinomial-distribution"><span class="header-section-number">30.8.3</span> categorical / multinomial distribution</h3>
 <p>This is the multi-dimensional version of the Beta distribution. Instead of just “Success/Failure,” you have multiple categories (e.g., “Rain/Sun/Clouds”). The Dirichlet distribution allows you to track the probabilities of all these categories simultaneously. It is useful in scenarios such as:</p>
 <ul>
 <li><strong>Topic Modeling:</strong> In Machine Learning, determining the “theme” of a document by looking at the frequency of different words (each word is a category).</li>
@@ -1317,8 +1332,8 @@ week    alpha   beta    alpha   beta
 </ul>
 </section>
 </section>
-<section id="uniform-distribution-known-bounds" class="level2" data-number="29.9">
-<h2 data-number="29.9" class="anchored" data-anchor-id="uniform-distribution-known-bounds"><span class="header-section-number">29.9</span> uniform distribution (known bounds)</h2>
+<section id="uniform-distribution-known-bounds" class="level2" data-number="30.9">
+<h2 data-number="30.9" class="anchored" data-anchor-id="uniform-distribution-known-bounds"><span class="header-section-number">30.9</span> uniform distribution (known bounds)</h2>
 <p>This is used when you are trying to find the maximum possible value (<span class="math inline">\theta</span>) of a process. If you assume the data is spread evenly (Uniform) up to some unknown limit, the Pareto distribution is the conjugate prior that helps you “narrow in” on where that upper limit actually sits. It is useful in scenarios such as:</p>
 <ul>
 <li><strong>The German Tank Problem:</strong> Estimating the total number of tanks produced by an enemy based on the highest serial number found on captured tanks.</li>
@@ -1382,14 +1397,13 @@ week    alpha   beta    alpha   beta
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1785,12 +1799,12 @@ week    alpha   beta    alpha   beta
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../bayes/logistic-connection.html" class="pagination-link" aria-label="logistic connection">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">logistic connection</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">logistic connection</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../bayes/boy-girl-paradox.html" class="pagination-link" aria-label="the boy-girl paradox">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
