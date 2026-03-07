@@ -759,14 +759,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#definition" id="toc-definition" class="nav-link active" data-scroll-target="#definition"><span class="header-section-number">4.1</span> definition</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">4.1</span> motivation</a></li>
+  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition"><span class="header-section-number">4.2</span> definition</a>
   <ul class="collapse">
-  <li><a href="#die-roll" id="toc-die-roll" class="nav-link" data-scroll-target="#die-roll"><span class="header-section-number">4.1.1</span> die roll</a></li>
-  <li><a href="#height" id="toc-height" class="nav-link" data-scroll-target="#height"><span class="header-section-number">4.1.2</span> height</a></li>
+  <li><a href="#die-roll" id="toc-die-roll" class="nav-link" data-scroll-target="#die-roll"><span class="header-section-number">4.2.1</span> die roll</a></li>
+  <li><a href="#height" id="toc-height" class="nav-link" data-scroll-target="#height"><span class="header-section-number">4.2.2</span> height</a></li>
   </ul></li>
-  <li><a href="#weighted-average" id="toc-weighted-average" class="nav-link" data-scroll-target="#weighted-average"><span class="header-section-number">4.2</span> weighted average</a></li>
-  <li><a href="#etextanything" id="toc-etextanything" class="nav-link" data-scroll-target="#etextanything"><span class="header-section-number">4.3</span> <span class="math inline">E[\text{anything}]</span></a></li>
-  <li><a href="#proof-of-lotus" id="toc-proof-of-lotus" class="nav-link" data-scroll-target="#proof-of-lotus"><span class="header-section-number">4.4</span> proof of LOTUS</a></li>
+  <li><a href="#weighted-average-and-center-of-mass" id="toc-weighted-average-and-center-of-mass" class="nav-link" data-scroll-target="#weighted-average-and-center-of-mass"><span class="header-section-number">4.3</span> weighted average and center of mass</a></li>
+  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity"><span class="header-section-number">4.4</span> linearity</a></li>
+  <li><a href="#etextanything" id="toc-etextanything" class="nav-link" data-scroll-target="#etextanything"><span class="header-section-number">4.5</span> <span class="math inline">E[\text{anything}]</span></a></li>
+  <li><a href="#proof-of-lotus" id="toc-proof-of-lotus" class="nav-link" data-scroll-target="#proof-of-lotus"><span class="header-section-number">4.6</span> proof of LOTUS</a></li>
   </ul>
 </nav>
     </div>
@@ -792,9 +794,37 @@ window.Quarto = {
 </header>
 
 
+<section id="motivation" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">4.1</span> motivation</h2>
+<p><strong>Example 1</strong></p>
+<p>Say I’m registered to a course, and I got these grades in the three assignments: 92, 85, 100. What will be my final grade?</p>
+<p>One sensible answer is to calculate the average of the three grades, which is</p>
+<p><span class="math display">
+\frac{92 + 85 + 100}{3} = 92.3.
+</span></p>
+<p>But what if the course instructor told us that the weights of the three assignments are 20%, 30%, and 50% respectively? In that case, we would calculate the final grade as a weighted average:</p>
+<p><span class="math display">
+0.2 \cdot 92 + 0.3 \cdot 85 + 0.5 \cdot 100 = 93.9.
+</span></p>
+<p>This is the fundamental idea behind the concept of expectation. We have several outcomes, and we want to describe the typical value of these outcomes. To do that, we take their weighted average.</p>
+<p><strong>Example 2</strong></p>
+<p>True story. My child studies in a classroom with 33 other children (yes, class sizes in Israel are quite large). I once asked her how many brothers and sisters do her classmates have, and although I don’t quite remember the exact numbers, they were close to the following:</p>
+<ul>
+<li>2 children have no siblings, so their family has 1 child.</li>
+<li>10 children have 1 sibling, so their families have 2 children.</li>
+<li>15 children have 2 siblings, so their families have 3 children.</li>
+<li>7 children have 3 siblings, so their families have 4 children.</li>
+</ul>
+<p>These numbers always surprise my friends from Europe, North America, China, etc, where families are smaller.</p>
+<p>Question: what is the typical number of children per family in my child’s classroom? Again, we can calculate the weighted average:</p>
+<p><span class="math display">
+\frac{2}{34}\cdot 1 + \frac{10}{34}\cdot 2 + \frac{15}{34}\cdot 3 + \frac{7}{34}\cdot 4 = 2.8.
+</span></p>
+<p>This example is still closer to the idea of expectation of random variables. Again we computed a weighted average, but this time the weights are given by the relative frequencies of the different family sizes.</p>
+</section>
+<section id="definition" class="level2 page-columns page-full" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="definition"><span class="header-section-number">4.2</span> definition</h2>
 <p>The expectation is probably one of the most fundamental concepts in statistics. In simple language, it quantifies the typical value of a random variable. In mathematical language, we write the expectation of a random variable <span class="math inline">X</span> as <span class="math inline">E[X]</span>.</p>
-<section id="definition" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">4.1</span> definition</h2>
 <p>If I know the probability distribution of <span class="math inline">X</span>, I can calculate the expectation of <span class="math inline">X</span> using the following formula:</p>
 <p><span class="math display">
 E[X] = \sum_{x\in \operatorname{supp}(X)} x f_X(x)
@@ -805,8 +835,8 @@ E[X] = \int_{\operatorname{supp}(X)} x f_X(x) dx
 </span></p>
 <p>for continuous random variables.</p>
 <p>Using two of the examples from the previous chapter, we can calculate the expectation of the random variable <span class="math inline">X</span> that represents the outcome of a die roll, and the expectation of the random variable <span class="math inline">H</span> that represents the height of an adult male.</p>
-<section id="die-roll" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="die-roll"><span class="header-section-number">4.1.1</span> die roll</h3>
+<section id="die-roll" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="die-roll"><span class="header-section-number">4.2.1</span> die roll</h3>
 <p>For the die roll, the probability mass function <span class="math inline">f_X(x)</span> is given by:</p>
 <p><span class="math display">
 f_X(x) = \frac{1}{6}, \quad x \in \{1, 2, 3, 4, 5, 6\}
@@ -826,8 +856,8 @@ E[X] &amp;= \sum_{x=1}^{6} x f_X(x) \\
 <li>I wrote “many times” in the previous paragraph. This is because we use the probability distribution to calculate the expectation, and this distribution describes a population. This sentence is incomprehensible at this point, but I just wanted to point that out and say that I will expand on that in the next chapter.</li>
 </ul>
 </section>
-<section id="height" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="height"><span class="header-section-number">4.1.2</span> height</h3>
+<section id="height" class="level3 page-columns page-full" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="height"><span class="header-section-number">4.2.2</span> height</h3>
 <p>For the height of an adult male, we assume a normal distribution with two parameters: <em>location</em> <span class="math inline">\mu</span> and <em>scale</em> <span class="math inline">\sigma</span>. The probability density function <span class="math inline">f_H(h)</span> is given by:</p>
 <p><span class="math display">
 f_H(h) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2} \left(\frac{h - \mu}{\sigma}\right)^2}
@@ -847,15 +877,18 @@ E[H] &amp;= \int_{-\infty}^{\infty} h f_H(h) dh \\
 <li>term 1: this is an integral over a symmetric domain (from <span class="math inline">-\infty</span> to <span class="math inline">+\infty</span>) of the product of an odd function (<span class="math inline">u</span>) and an even function (<span class="math inline">e^{-u^2}</span>), therefore term 1 is zero.</li>
 <li>term 2: pay attention, I did not include <span class="math inline">\mu</span> in term 2. This integral evaluates to <span class="math inline">1</span>.</li>
 </ul>
-<p>So we found out that</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>An even function is a function that satisfies <span class="math inline">f(x) = f(-x)</span> for all <span class="math inline">x</span>. An odd function is a function that satisfies <span class="math inline">f(x) = -f(-x)</span> for all <span class="math inline">x</span>. Just like in arithmetic, the product of an even function and an odd function is an odd function, and the integral of an odd function over a symmetric domain is zero, because the negative area on one side of the y-axis exactly cancels out the positive area on the other side.</p>
+</div></div><p>So we found out that</p>
 <p><span class="math display">
 E[H] = \mu
 </span></p>
 <p>In words, we say that the expected value of the height of an adult male is <span class="math inline">\mu</span>, which we call the mean.</p>
 </section>
 </section>
-<section id="weighted-average" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="weighted-average"><span class="header-section-number">4.2</span> weighted average</h2>
+<section id="weighted-average-and-center-of-mass" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="weighted-average-and-center-of-mass"><span class="header-section-number">4.3</span> weighted average and center of mass</h2>
 <p>In the example of the die roll, <span class="math inline">E[X]=3.5</span>, which is simply the regular mean of all the possible values <span class="math inline">X</span> can have. This is a regular average because in this particular case, the die is fair, and every outcome has equal weight.</p>
 <p>In a more general example, such as the height of adult males, not every height should be considered equally when computing the expectation. There are a lot fewer men whose height is between 160 and 165 cm than between 175 and 180 cm, see the graph below.</p>
 <div id="abbf03ac" class="cell" data-execution_count="1">
@@ -910,8 +943,18 @@ E[H] = \int_{-\infty}^{\infty} h f_H(h) dh,
 <p>we are saying that we take into consideration every possible height <span class="math inline">h</span>, but we give more weight to heights that are more common (i.e., have higher <span class="math inline">f_H(h)</span>) and less weight to heights that are less common (lower <span class="math inline">f_H(h)</span>). So the expectation is a weighted average, and the weights are given by the probability distribution.</p>
 <p>Another interpretation that is less common in statistics but it is absolutely the same concept, is that the expectation is the <strong>center of mass</strong> of the probability distribution. If the pdf were a physical object (imagine a uniform metal sheet shaped like the probability density above), the expectation would be the point at which you can balance it on the tip of a pencil.</p>
 </section>
-<section id="etextanything" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="etextanything"><span class="header-section-number">4.3</span> <span class="math inline">E[\text{anything}]</span></h2>
+<section id="linearity" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="linearity"><span class="header-section-number">4.4</span> linearity</h2>
+<p>The most useful property of the expectation is that it is a linear operator, fulfilling the following properties:</p>
+<ul>
+<li><span class="math inline">E[aX] = aE[X]</span> for any constant <span class="math inline">a</span>. This is called homogeneity. Example: the average height is the same if we first measure heights in centimeters and then convert to inches, or if we first convert to inches and then calculate the average.</li>
+<li><span class="math inline">E[X+Y] = E[X] + E[Y]</span> for any two random variables <span class="math inline">X</span> and <span class="math inline">Y</span>. This is called additivity. Example: the typical combined income of a couple is the sum of the typical income of each partner.</li>
+<li><span class="math inline">E[b] = b</span> for any constant <span class="math inline">b</span>. This follows from the fact that a constant has only one value in its support, so <span class="math inline">E[b]=b\cdot 1=b</span>. Example: the typical number of players in a string quartet is 4. Every quartet has 4 players.</li>
+<li><span class="math inline">E[aX+bY] = aE[X] + bE[Y]</span> for any two random variables <span class="math inline">X</span> and <span class="math inline">Y</span> and any two constants <span class="math inline">a</span> and <span class="math inline">b</span>. This is a direct consequence of the two first properties.</li>
+</ul>
+</section>
+<section id="etextanything" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="etextanything"><span class="header-section-number">4.5</span> <span class="math inline">E[\text{anything}]</span></h2>
 <p>Say that, for whatever reason, I’m interested in the expectation of the square of the outcome of a die roll (<span class="math inline">E[X^2]</span>), or in the expectation of the square of the height of a person (<span class="math inline">E[H^2]</span>). Can I calculate that? Yes, no problem at all. In the discrete and continuous cases, I just apply the formulas below:</p>
 <p><span class="math display">\begin{align*}
 E[X^2] &amp;= \sum_{x} x^2 f_X(x)  \tag{LOTUS 1} \\
@@ -937,11 +980,11 @@ E[X^2] &amp;= \sum_{x} g(x) f_X(x) \\
 &amp;= \sum_{x=1}^{6} x^2 \cdot \frac{1}{6} \\
 &amp;= \frac{1}{6} \sum_{x=1}^{6} x^2 \\
 &amp;= \frac{1}{6} \cdot 91 \\
-&amp;\sim 15.16
+&amp;\approx 15.16
 \end{align*}</span></p>
 </section>
-<section id="proof-of-lotus" class="level2 page-columns page-full" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="proof-of-lotus"><span class="header-section-number">4.4</span> proof of LOTUS</h2>
+<section id="proof-of-lotus" class="level2 page-columns page-full" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="proof-of-lotus"><span class="header-section-number">4.6</span> proof of LOTUS</h2>
 <p>I’ll prove LOTUS for the discrete case, using the random variables <span class="math inline">X</span> and <span class="math inline">Y</span> from the previous chapter. <span class="math inline">X</span> was simply the outcome of a die roll, and <span class="math inline">Y</span> is the parity of the outcome of a die roll, so it maps the outcomes <span class="math inline">\{1,3,5\}</span> to “odd” and the outcomes <span class="math inline">\{2,4,6\}</span> to “even”. I’ll replace the values “odd” and “even” with numbers, so that we can do the calculations: “odd” will be 1 and “even” will be 0. As a result, the support of <span class="math inline">Y</span> is <span class="math inline">\{0,1\}</span>. Let’s write explicitly both <span class="math inline">X</span> and <span class="math inline">Y</span>:</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
