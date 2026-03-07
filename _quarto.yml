@@ -19,6 +19,8 @@ book:
     - part: "foundations"
       chapters:
         - foundations/language-of-random-variables.ipynb
+        - foundations/expectation.ipynb
+        - foundations/population_and_samples.ipynb
     - part: "hypothesis testing"
       chapters:
         - hypothesis_testing/t_test_one_sample.ipynb
