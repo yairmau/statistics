@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; variance and moments – Statistics and Machine Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../foundations/population_and_samples.html" rel="next">
+<link href="../foundations/expectation.html" rel="prev">
+<link href="../archive/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TB8VQN4T5W"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
+</script>
+<!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating slimcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/language-of-random-variables.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/variance-and-moments.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">variance and moments</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Statistics and Machine Learning</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://yairmau.com/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
+    <a href="https://github.com/yairmau/statistics/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/height.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">height data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/weight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">weight data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/language-of-random-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">the language of random variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/expectation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">expectation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/variance-and-moments.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">variance and moments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../foundations/population_and_samples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">population and samples</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">hypothesis testing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/t_test_one_sample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">one-sample t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/t_test_independent_samples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">independent samples t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/statistical_power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">statistical power</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/problem-with-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">the problem with t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/permutation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">permutation test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/numpy-vs-pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">numpy vs pandas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hypothesis_testing/exact-vs-montecarlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">exact vs.&nbsp;Monte Carlo permutation tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">confidence interval</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/basic_concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">basic concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/analytical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">analytical confidence interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../confidence_interval/empirical_confidence_interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">empirical confidence interval</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/geometry-of-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">the geometry of regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/least-squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/partitioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">partitioning of the sum of squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/R-squared.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">R-squared</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">equivalence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/mixed-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">linear mixed effect model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">logistic regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic_2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">logistic 2d</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">correlation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">correlation and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/cosine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">cosine</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../correlation/significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">significance (p-value)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">bayes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/from-the-ground-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Bayes’ theorem from the ground up</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/parametric-generative-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">parametric generative classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/odds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">odds and log likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/logistic-connection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">logistic connection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/conjugate-prior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">conjugate prior</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/boy-girl-paradox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">the boy-girl paradox</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bayes/monty-hall.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">monty hall</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">svd and pca</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../svd_and_pca/svd_image_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">SVD for image compression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../svd_and_pca/svd_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">SVD for regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">decision trees</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/CART_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">CART: classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/CART_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">CART: regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../decision_trees/random_forest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">random forest</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">information theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../information_theory/entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">entropy</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../information_theory/cross-entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">cross-entropy and KL divergence</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">likelihood</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/probability_and_likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">probability and likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">maximum likelihood estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_summary_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">MLE and summary statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">MLE and linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_information_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">MLE and information theory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">MLE and regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">MLE and classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../likelihood/MLE_and_bayesian_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">MLE and bayesian inference</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">generalization and model complexity</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">motivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/bias-variance-tradeoff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">bias-variance tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/overfitting-and-underfitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">overfitting and underfitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">cross-validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/data-splitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">data splitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">regularization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/more-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">when more data changes the tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../generalization/double-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">double descent</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">neural networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch3A.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3A</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../neural_networks/nielsen_ch3B.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title">Nielsen’s NNDL, ch.3B</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text">miscellaneous</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/trend_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">trend test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../misc/shap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">SHAP values</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#weird-dice" id="toc-weird-dice" class="nav-link active" data-scroll-target="#weird-dice"><span class="header-section-number">5.1</span> weird dice</a></li>
+  <li><a href="#variance" id="toc-variance" class="nav-link" data-scroll-target="#variance"><span class="header-section-number">5.2</span> variance</a></li>
+  <li><a href="#moments" id="toc-moments" class="nav-link" data-scroll-target="#moments"><span class="header-section-number">5.3</span> moments</a>
+  <ul class="collapse">
+  <li><a href="#raw" id="toc-raw" class="nav-link" data-scroll-target="#raw"><span class="header-section-number">5.3.1</span> raw</a></li>
+  <li><a href="#central" id="toc-central" class="nav-link" data-scroll-target="#central"><span class="header-section-number">5.3.2</span> central</a></li>
+  <li><a href="#standardized" id="toc-standardized" class="nav-link" data-scroll-target="#standardized"><span class="header-section-number">5.3.3</span> standardized</a></li>
+  </ul></li>
+  <li><a href="#visualizing-the-moments" id="toc-visualizing-the-moments" class="nav-link" data-scroll-target="#visualizing-the-moments"><span class="header-section-number">5.4</span> visualizing the moments</a>
+  <ul class="collapse">
+  <li><a href="#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean"><span class="header-section-number">5.4.1</span> mean</a></li>
+  <li><a href="#variance-1" id="toc-variance-1" class="nav-link" data-scroll-target="#variance-1"><span class="header-section-number">5.4.2</span> variance</a></li>
+  <li><a href="#skewness" id="toc-skewness" class="nav-link" data-scroll-target="#skewness"><span class="header-section-number">5.4.3</span> skewness</a></li>
+  </ul></li>
+  <li><a href="#kurtosis" id="toc-kurtosis" class="nav-link" data-scroll-target="#kurtosis"><span class="header-section-number">5.5</span> kurtosis</a></li>
+  <li><a href="#physics" id="toc-physics" class="nav-link" data-scroll-target="#physics"><span class="header-section-number">5.6</span> Physics</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../foundations/language-of-random-variables.html">foundations</a></li><li class="breadcrumb-item"><a href="../foundations/variance-and-moments.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">variance and moments</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">variance and moments</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button" data-quarto-source-url="https://github.com/yairmau/statistics/blob/main/foundations/variance-and-moments.ipynb">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="weird-dice" class="level2 page-columns page-full" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="weird-dice"><span class="header-section-number">5.1</span> weird dice</h2>
+<p>Let’s say I 3d print a weird die: three of the faces are 1s, and three of the faces are 6s. What is the expected value of a roll of this die?</p>
+<p>Let’s call <span class="math inline">X2</span> the random variable representing the outcome of a roll of this 3d printed die. The support of <span class="math inline">X2</span> is <span class="math inline">\{1, 6\}</span>, and if the die is fair, then <span class="math inline">P(X2=1) = P(X2=6) = 0.5</span>. Therefore, we can compute the expectation of <span class="math inline">X2</span> as follows:</p>
+<p><span class="math display">
+E[X2] = 1 \cdot P(X2=1) + 6 \cdot P(X2=6) = 1 \cdot 0.5 + 6 \cdot 0.5 = 3.5
+</span></p>
+<p>This is the same expected value we got for a regular die!</p>
+<p>Just to push the point to the limit, I now 3d print a new die, whose six faces all show <span class="math inline">3.5</span>. Clearly the expected value of this die is also <span class="math inline">3.5</span>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Let’s prove this. Let’s call <span class="math inline">X3</span> the random variable representing the outcome of a roll of this new die. The support of <span class="math inline">X3</span> is <span class="math inline">\{3.5\}</span>, and <span class="math inline">P(X3=3.5) = 1</span>. Therefore, the expectation of <span class="math inline">X3</span> is <span class="math inline">E[X3] = \sum_{r \in \{3.5\}} r \cdot P(X3=r) = 3.5 \cdot 1 = 3.5</span>.</p>
+</div></div><p>I’m trying to make the point that just the mean (the expected value) of a random variable is not enough to capture all the information about the distribution of that random variable.</p>
+<div id="248dbd67" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>import libraries</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="f8dfd1c1" class="cell" data-execution_count="49">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="fl">2.5</span>), sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>ax[<span class="dv">0</span>].bar(np.arange(<span class="dv">1</span>,<span class="dv">7</span>), [<span class="dv">1</span><span class="op">/</span><span class="dv">6</span>]<span class="op">*</span><span class="dv">6</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>ax[<span class="dv">1</span>].bar([<span class="dv">1</span>, <span class="dv">6</span>], [<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>])</span>
+<span id="cb2-4"><a href="#cb2-4"></a>ax[<span class="dv">2</span>].bar([<span class="fl">3.5</span>], [<span class="dv">1</span>])</span>
+<span id="cb2-5"><a href="#cb2-5"></a>ax[<span class="dv">0</span>].<span class="bu">set</span>(xticks<span class="op">=</span>np.arange(<span class="dv">1</span>,<span class="dv">7</span>),</span>
+<span id="cb2-6"><a href="#cb2-6"></a>          ylabel<span class="op">=</span><span class="st">'probability distribution'</span>,</span>
+<span id="cb2-7"><a href="#cb2-7"></a>          ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">1.1</span>),</span>
+<span id="cb2-8"><a href="#cb2-8"></a>          yticks<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">6</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span>],</span>
+<span id="cb2-9"><a href="#cb2-9"></a>          yticklabels<span class="op">=</span>[<span class="st">'0'</span>, <span class="st">'1/6'</span>, <span class="st">'1/2'</span>, <span class="st">'1'</span>],)<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="cf">for</span> axx <span class="kw">in</span> ax:</span>
+<span id="cb2-11"><a href="#cb2-11"></a>    axx.axvline(<span class="fl">3.5</span>, color<span class="op">=</span><span class="st">'k'</span>, ls<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12"></a>    axx.text(<span class="fl">3.55</span>, <span class="fl">1.07</span>, <span class="st">'mean'</span>, ha<span class="op">=</span><span class="st">'left'</span>, va<span class="op">=</span><span class="st">'top'</span>, rotation<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb2-13"><a href="#cb2-13"></a>    axx.grid(axis<span class="op">=</span><span class="st">'y'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb2-14"><a href="#cb2-14"></a>ax[<span class="dv">0</span>].set_title(<span class="st">'regular die, $X$'</span>)</span>
+<span id="cb2-15"><a href="#cb2-15"></a>ax[<span class="dv">1</span>].set_title(<span class="st">'weird die, $X2$'</span>)</span>
+<span id="cb2-16"><a href="#cb2-16"></a>ax[<span class="dv">2</span>].set_title(<span class="st">'weirder die, $X3$'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="variance-and-moments_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="variance" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="variance"><span class="header-section-number">5.2</span> variance</h2>
+<p>Looking at the graph above, we get a sense that it is a lot more probable that the outcome of <span class="math inline">X2</span> will be further away from the mean than the outcome of <span class="math inline">X</span>. The outcome of <span class="math inline">X3</span> will never deviate from the mean at all. We can capture this intuition by computing the expected squared deviation of the random variable from its mean, which is called the variance. It is squared because we don’t want positive and negative deviations to cancel each other out.</p>
+<p>For a generic random variable <span class="math inline">X</span>, its variance is defined as follows:</p>
+<p><span class="math display">
+\operatorname{Var}(X) = E[(X - E[X])^2] = E[(X - \mu)^2]
+</span></p>
+<p>Now that we have the LOTUS formula under our belt, we can compute the variance of each of the three random variables we have been looking at. I’ll do it in python.</p>
+<div id="9994c1a4" class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">def</span> compute_mean_and_variance(supp, pmf, name):</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    mean <span class="op">=</span> np.<span class="bu">sum</span>(supp <span class="op">*</span> pmf)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    var <span class="op">=</span> np.<span class="bu">sum</span>((supp <span class="op">-</span> mean)<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> pmf)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="bu">print</span>(<span class="ss">f'mean of </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>mean<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="bu">print</span>(<span class="ss">f'variance of </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>var<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="bu">print</span>(<span class="st">"---"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># regular die X</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>compute_mean_and_variance(supp<span class="op">=</span>np.arange(<span class="dv">1</span>, <span class="dv">7</span>),</span>
+<span id="cb3-9"><a href="#cb3-9"></a>                          pmf<span class="op">=</span>np.ones(<span class="dv">6</span>) <span class="op">/</span> <span class="dv">6</span>,</span>
+<span id="cb3-10"><a href="#cb3-10"></a>                          name<span class="op">=</span><span class="st">'X'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co"># weird die X2</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>compute_mean_and_variance(supp<span class="op">=</span>np.array([<span class="dv">1</span>, <span class="dv">6</span>]),</span>
+<span id="cb3-13"><a href="#cb3-13"></a>                          pmf<span class="op">=</span>np.ones(<span class="dv">2</span>) <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb3-14"><a href="#cb3-14"></a>                          name<span class="op">=</span><span class="st">'X2'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># weirder die X3</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>compute_mean_and_variance(supp<span class="op">=</span>np.array([<span class="fl">3.5</span>]),</span>
+<span id="cb3-17"><a href="#cb3-17"></a>                          pmf<span class="op">=</span>np.ones(<span class="dv">1</span>),</span>
+<span id="cb3-18"><a href="#cb3-18"></a>                          name<span class="op">=</span><span class="st">'X3'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mean of X: 3.50
+variance of X: 2.92
+---
+mean of X2: 3.50
+variance of X2: 6.25
+---
+mean of X3: 3.50
+variance of X3: 0.00
+---</code></pre>
+</div>
+</div>
+<p>The variance quantifies how much the values of a random variable are spread out around the mean. The higher the variance, the more spread out the values are. If the variance is zero, then all the values of the random variable are the same (and equal to the mean).</p>
+<p>Note that the variance has units that are the square of the units of the random variable. If <span class="math inline">X</span> has units of cm, then <span class="math inline">\operatorname{Var}</span> has units of cm<span class="math inline">^2</span>. This can make the variance hard to interpret. To get around this problem, we can take the square root of the variance, which is called the standard deviation. The standard deviation has the same units as the random variable, and it is often easier to interpret than the variance.</p>
+<p>The standard symbol for the variance of a random variable <span class="math inline">X</span> is <span class="math inline">\sigma^2</span>, and the standard symbol for the standard deviation is <span class="math inline">\sigma</span>.</p>
+<p>Let’s play a little bit with the formula for the definition of variance.</p>
+<p><span class="math display">\begin{align*}
+\operatorname{Var} &amp;= E[(X - E[X])^2] \\
+&amp;= E[(X - \mu)^2] \\
+&amp;= E[X^2 - 2\mu X + \mu^2] \\
+&amp;= E[X^2] - 2\mu E[X] + \mu^2 \\
+&amp;= E[X^2] - 2\mu^2 + \mu^2 \\
+&amp;= E[X^2] - \mu^2 \\
+&amp;= E[X^2] - (E[X])^2
+\end{align*}</span></p>
+<p>This is a useful formula for computing the variance! In a little while I’ll give names for the two terms in this formula. For now, let’s remember that we already calculated these two quantities in the previous chapter, when dealing with a regular die. We found that <span class="math inline">E[X] = 3.5</span> and <span class="math inline">E[X^2] = 91/6</span>. Therefore, we can compute the variance of a roll of a regular die as follows:</p>
+<p><span class="math display">
+\operatorname{Var} = E[X^2] - (E[X])^2 = \frac{91}{6} - (3.5)^2 = \frac{35}{12} \approx 2.92
+</span></p>
+<p>This is the same value we got before with the Python code!</p>
+<p>One last thing about the variance: it is always positive. This is intuitive, since the raw material for the variance is the squared deviation from the mean, and squares are always positive. We can also see this from the formula <span class="math inline">\operatorname{Var}(X) = E[X^2] - (E[X])^2</span>. The term <span class="math inline">E[X^2]</span> is always greater than or equal to <span class="math inline">(E[X])^2</span>, which means that <span class="math inline">\operatorname{Var}(X)</span> is always greater than or equal to zero. How do we know this last fact? That is a consequence of Jensen’s inequality, which states that for any convex function <span class="math inline">f</span> and any random variable <span class="math inline">X</span>, we have <span class="math inline">E[f(X)] \geq f(E[X])</span>. The function <span class="math inline">f(x) = x^2</span> is convex, so we have <span class="math inline">E[X^2] \geq (E[X])^2</span>, which implies that <span class="math inline">\operatorname{Var}(X) \geq 0</span>.</p>
+<p>See the graph below, I think it shows well what we are talking about. The black curve is <span class="math inline">y=x^2</span>. I plotted as red circles this function evaluated at the points <span class="math inline">x = 1</span> and <span class="math inline">x = 6</span>, which are the two possible outcomes of <span class="math inline">X2</span>, the first weird 3d printed die. For simplicity I’ll write just <span class="math inline">X</span>. The red curve is the line that goes through these two red circles and its midpoint is at <span class="math inline">(\mu, E[X^2])</span>, that is, the point at the average of their <span class="math inline">x</span> coordinates and the average of their <span class="math inline">y</span> coordinates. I also marked as a hollow circle the point <span class="math inline">(\mu, (E[X])^2)</span>. Because the parabola <span class="math inline">y=x^2</span> is convex, the line connecting the two red circles lies above the parabola, which guarantees that <span class="math inline">E[X^2] \geq (E[X])^2</span>. The variance in this case is simply the vertical distance between the two blue circles.</p>
+<div id="afb23b5d" class="cell" data-execution_count="78">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb5-2"><a href="#cb5-2"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">100</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>x2 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">6</span>])</span>
+<span id="cb5-4"><a href="#cb5-4"></a>square <span class="op">=</span> <span class="kw">lambda</span> x: x<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>E_X2 <span class="op">=</span> np.mean(square(x2))</span>
+<span id="cb5-6"><a href="#cb5-6"></a>EX_2 <span class="op">=</span> square(<span class="fl">3.5</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>ax.plot(x, square(x), label<span class="op">=</span><span class="st">'$f(x) = x^2$'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>ax.plot(x2, square(x2), ls<span class="op">=</span><span class="st">"-"</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9"></a>ax.plot(x2, square(x2), ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"red"</span>, mec<span class="op">=</span><span class="st">"xkcd:vermillion"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10"></a>ax.plot([<span class="fl">3.5</span>], [EX_2], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"white"</span>, mec<span class="op">=</span><span class="st">"xkcd:cerulean"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11"></a>ax.plot([<span class="fl">3.5</span>], [E_X2], ls<span class="op">=</span><span class="st">"None"</span>, marker<span class="op">=</span><span class="st">'o'</span>, mfc<span class="op">=</span><span class="st">"xkcd:cerulean"</span>, mec<span class="op">=</span><span class="st">"xkcd:cerulean"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12"></a>ax.text(<span class="fl">3.5</span>, EX_2<span class="op">*</span><span class="fl">0.95</span>, <span class="vs">r'</span><span class="dv">$</span><span class="kw">(</span><span class="vs">E</span><span class="pp">[X]</span><span class="kw">)</span><span class="dv">^</span><span class="vs">2</span><span class="dv">$</span><span class="vs">'</span>, ha<span class="op">=</span><span class="st">'left'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a>ax.text(<span class="fl">3.5</span>, E_X2<span class="op">*</span><span class="fl">1.2</span>, <span class="vs">r'</span><span class="dv">$</span><span class="vs">E</span><span class="pp">[X^2]</span><span class="dv">$</span><span class="vs">'</span>, ha<span class="op">=</span><span class="st">'right'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb5-14"><a href="#cb5-14"></a>ax.annotate(</span>
+<span id="cb5-15"><a href="#cb5-15"></a>    <span class="st">""</span>,</span>
+<span id="cb5-16"><a href="#cb5-16"></a>    xy<span class="op">=</span>(<span class="fl">4.0</span>, EX_2),</span>
+<span id="cb5-17"><a href="#cb5-17"></a>    xytext<span class="op">=</span>(<span class="fl">4.0</span>, E_X2),</span>
+<span id="cb5-18"><a href="#cb5-18"></a>    arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"&lt;-&gt;"</span>, color<span class="op">=</span><span class="st">"xkcd:cerulean"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, shrinkA<span class="op">=</span><span class="dv">0</span>, shrinkB<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb5-19"><a href="#cb5-19"></a>)</span>
+<span id="cb5-20"><a href="#cb5-20"></a>ax.text(<span class="fl">4.05</span>, (E_X2 <span class="op">+</span> EX_2) <span class="op">/</span> <span class="dv">2</span>, <span class="vs">r"</span><span class="dv">$\m</span><span class="vs">athrm{Var}</span><span class="kw">(</span><span class="vs">X</span><span class="kw">)</span><span class="dv">$</span><span class="vs">"</span>, color<span class="op">=</span><span class="st">"xkcd:cerulean"</span>, va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21"></a>mu <span class="op">=</span> <span class="fl">3.5</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a>ax.<span class="bu">set</span>(xlim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">6.5</span>),</span>
+<span id="cb5-23"><a href="#cb5-23"></a>       ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">43</span>),</span>
+<span id="cb5-24"><a href="#cb5-24"></a>       xlabel<span class="op">=</span><span class="st">'$x$'</span>,</span>
+<span id="cb5-25"><a href="#cb5-25"></a>       title<span class="op">=</span><span class="st">"A visualization of Jensen's inequality,</span><span class="ch">\n</span><span class="st">and the positive nature of variance"</span>,</span>
+<span id="cb5-26"><a href="#cb5-26"></a>       )<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="variance-and-moments_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="moments" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="moments"><span class="header-section-number">5.3</span> moments</h2>
+<section id="raw" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="raw"><span class="header-section-number">5.3.1</span> raw</h3>
+<p>Previously, we saw an expression for the variance:</p>
+<p><span class="math display">
+\operatorname{Var}(X) = E[X^2] - (E[X])^2.
+</span></p>
+<p>I promised to give names to the two terms in this expression. Each of them is called a moment of the random variable <span class="math inline">X</span>. In general terms, the <span class="math inline">k</span>-th moment of a random variable <span class="math inline">X</span> is defined as</p>
+<p><span class="math display">
+\mu'_k = E[X^k].
+</span></p>
+<p>For this we have that <span class="math inline">\mu'_1 = E[X]</span> is the first moment, and <span class="math inline">\mu'_2 = E[X^2]</span> is the second moment. The variance, expressed in terms of moments, is <span class="math inline">\operatorname{Var} = \mu'_2 - (\mu'_1)^2</span>.</p>
+<p>There are a few kinds of moments. What we defined above is called the raw moment.</p>
+</section>
+<section id="central" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="central"><span class="header-section-number">5.3.2</span> central</h3>
+<p>The central moments are defined as follows:</p>
+<p><span class="math display">
+\mu_k = E[(X - E[X])^k] = E[(X - \mu)^k].
+</span></p>
+<p>This is almost the same as the raw moment, the difference is that we subtract the mean from <span class="math inline">X</span> before raising it to the power of <span class="math inline">k</span>. This is useful because we can say that the variance is simply the second central moment, that is, <span class="math inline">Var(X) = \mu_2</span>.</p>
+</section>
+<section id="standardized" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="standardized"><span class="header-section-number">5.3.3</span> standardized</h3>
+<p>A third kind of moments are the standardized moments, which are defined as follows:</p>
+<p><span class="math display">
+\mu''_k = \frac{E[(X - E[X])^k]}{(\operatorname{Var}(X))^{k/2}} = \frac{\mu_k}{\sigma^k}.
+</span></p>
+<p>This is basically the central moment divided by the standard deviation raised to the power of <span class="math inline">k</span>.</p>
+<p>Standardized moments are useful because they give us a way to compare the shape of different distributions, regardless of their scale. For example, the standardized third moment is called the skewness, and it measures how asymmetric a distribution is. The standardized fourth moment is called the kurtosis, and it measures how heavy-tailed a distribution is.</p>
+</section>
+</section>
+<section id="visualizing-the-moments" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="visualizing-the-moments"><span class="header-section-number">5.4</span> visualizing the moments</h2>
+<section id="mean" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="mean"><span class="header-section-number">5.4.1</span> mean</h3>
+<p>Changing the mean of a distribution shifts the distribution left or right, but it does not change the shape of the distribution.</p>
+<div id="607f03c8" class="cell" data-execution_count="126">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="im">from</span> palettable.colorbrewer.sequential <span class="im">import</span> GnBu_5</span>
+<span id="cb6-3"><a href="#cb6-3"></a>colors <span class="op">=</span> GnBu_5.hex_colors</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a>mean <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
+<span id="cb6-7"><a href="#cb6-7"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">300</span>)</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="cf">for</span> i, m <span class="kw">in</span> <span class="bu">enumerate</span>(mean):</span>
+<span id="cb6-9"><a href="#cb6-9"></a>    y <span class="op">=</span> norm.pdf(x, loc<span class="op">=</span>m, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-10"><a href="#cb6-10"></a>    ax[i].plot(x, y, color<span class="op">=</span>colors[i<span class="op">+</span><span class="dv">1</span>], label<span class="op">=</span><span class="vs">fr'mean</span><span class="dv">$</span><span class="vs">=</span><span class="sc">{</span>m<span class="sc">}</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11"></a>    ax[i].legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-12"><a href="#cb6-12"></a>ax[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'$x$'</span>,)</span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="cf">for</span> axx <span class="kw">in</span> ax[:]:</span>
+<span id="cb6-14"><a href="#cb6-14"></a>    axx.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb6-15"><a href="#cb6-15"></a>    axx.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb6-16"><a href="#cb6-16"></a></span>
+<span id="cb6-17"><a href="#cb6-17"></a>ax[<span class="dv">0</span>].spines[<span class="st">'bottom'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb6-18"><a href="#cb6-18"></a>ax[<span class="dv">0</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, which<span class="op">=</span><span class="st">'both'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>, labelbottom<span class="op">=</span><span class="va">False</span>, labelleft<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-19"><a href="#cb6-19"></a>ax[<span class="dv">1</span>].spines[<span class="st">'bottom'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb6-20"><a href="#cb6-20"></a>ax[<span class="dv">1</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, which<span class="op">=</span><span class="st">'both'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>, labelbottom<span class="op">=</span><span class="va">False</span>, labelleft<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-21"><a href="#cb6-21"></a></span>
+<span id="cb6-22"><a href="#cb6-22"></a>fig.supylabel(<span class="st">"probability distribution"</span>, y<span class="op">=</span><span class="fl">0.50</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb6-23"><a href="#cb6-23"></a>fig.suptitle(<span class="st">"distributions with varying mean"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="variance-and-moments_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="variance-1" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="variance-1"><span class="header-section-number">5.4.2</span> variance</h3>
+<p>Variance is a measure of the spread of a distribution, and it is defined as the standardized second moment:</p>
+<p><span class="math display">
+\operatorname{var}(X) = \frac{\mathbb{E}[(X - \mu)^2]}{\sigma^2}.
+</span></p>
+<p>Changing the variance of a distribution stretches or compresses the distribution along the x-axis, but it does not change the location of the center of the distribution.</p>
+<div id="bea181ad" class="cell" data-execution_count="127">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>var <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>]</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(var):</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    y <span class="op">=</span> norm.pdf(x, loc<span class="op">=</span><span class="dv">4</span>, scale<span class="op">=</span>np.sqrt(v))</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    ax[i].plot(x, y, color<span class="op">=</span>colors[i<span class="op">+</span><span class="dv">1</span>], label<span class="op">=</span><span class="vs">fr'var</span><span class="dv">$</span><span class="vs">=</span><span class="sc">{</span>v<span class="sc">}</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    ax[i].legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-7"><a href="#cb7-7"></a>ax[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'$x$'</span>,)</span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="cf">for</span> axx <span class="kw">in</span> ax[:]:</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    axx.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    axx.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a>ax[<span class="dv">0</span>].spines[<span class="st">'bottom'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb7-13"><a href="#cb7-13"></a>ax[<span class="dv">0</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, which<span class="op">=</span><span class="st">'both'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>, labelbottom<span class="op">=</span><span class="va">False</span>, labelleft<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-14"><a href="#cb7-14"></a>ax[<span class="dv">1</span>].spines[<span class="st">'bottom'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a>ax[<span class="dv">1</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, which<span class="op">=</span><span class="st">'both'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>, labelbottom<span class="op">=</span><span class="va">False</span>, labelleft<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-16"><a href="#cb7-16"></a></span>
+<span id="cb7-17"><a href="#cb7-17"></a>fig.supylabel(<span class="st">"probability distribution"</span>, y<span class="op">=</span><span class="fl">0.50</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb7-18"><a href="#cb7-18"></a>fig.suptitle(<span class="st">"distributions with varying variance"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="variance-and-moments_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="skewness" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="skewness"><span class="header-section-number">5.4.3</span> skewness</h3>
+<p>Skewness is a measure of the asymmetry of a distribution, and it is defined as the standardized third moment:</p>
+<p><span class="math display">
+\operatorname{skew} = \frac{\mathbb{E}[(X - \mu)^3]}{\sigma^3}.
+</span></p>
+<p>Increasing the magnitude of the skewness of a distribution makes the distribution more asymmetric, with a longer tail on one side than on the other. Decreasing the magnitude of the skewness makes the distribution more symmetric. A distribution with zero skewness is perfectly symmetric around its mean.</p>
+<p>A positive skewness is called right skewness, meaning that the longer tail is on the right side of the distribution. A negative skewness is called left skewness, meaning that the longer tail is on the left side of the distribution.</p>
+<div id="ec71d380" class="cell" data-execution_count="128">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> skewnorm</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>sk <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">3</span>, <span class="op">-</span><span class="dv">10</span>]</span>
+<span id="cb8-4"><a href="#cb8-4"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="cf">for</span> i, s <span class="kw">in</span> <span class="bu">enumerate</span>(sk):</span>
+<span id="cb8-6"><a href="#cb8-6"></a>    y <span class="op">=</span> skewnorm.pdf(x, a<span class="op">=</span>s, loc<span class="op">=</span><span class="dv">4</span>, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-7"><a href="#cb8-7"></a>    mean, std, skew <span class="op">=</span> skewnorm.stats(a<span class="op">=</span>s, loc<span class="op">=</span><span class="dv">4</span>, scale<span class="op">=</span><span class="dv">1</span>, moments<span class="op">=</span><span class="st">'mvs'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>    ax[i].plot(x, y, color<span class="op">=</span>colors[i<span class="op">+</span><span class="dv">1</span>], label<span class="op">=</span><span class="vs">fr'skewness</span><span class="dv">$</span><span class="vs">=</span><span class="sc">{</span>skew<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>    ax[i].legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-10"><a href="#cb8-10"></a>ax[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'$x$'</span>,)</span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="cf">for</span> axx <span class="kw">in</span> ax[:]:</span>
+<span id="cb8-12"><a href="#cb8-12"></a>    axx.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb8-13"><a href="#cb8-13"></a>    axx.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>ax[<span class="dv">0</span>].spines[<span class="st">'bottom'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb8-16"><a href="#cb8-16"></a>ax[<span class="dv">0</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, which<span class="op">=</span><span class="st">'both'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>, labelbottom<span class="op">=</span><span class="va">False</span>, labelleft<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-17"><a href="#cb8-17"></a>ax[<span class="dv">1</span>].spines[<span class="st">'bottom'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb8-18"><a href="#cb8-18"></a>ax[<span class="dv">1</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, which<span class="op">=</span><span class="st">'both'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>, labelbottom<span class="op">=</span><span class="va">False</span>, labelleft<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-19"><a href="#cb8-19"></a></span>
+<span id="cb8-20"><a href="#cb8-20"></a>fig.supylabel(<span class="st">"probability distribution"</span>, y<span class="op">=</span><span class="fl">0.50</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb8-21"><a href="#cb8-21"></a>fig.suptitle(<span class="st">"distributions with varying skewness"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="variance-and-moments_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="kurtosis" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="kurtosis"><span class="header-section-number">5.5</span> kurtosis</h2>
+<p>Kurtosis is a measure of the heaviness of the tails of a distribution. The higher the kurtosis, the higher the probability of observing values far away from the mean, or outliers. Kurtosis is defined as the standardized fourth moment:</p>
+<p><span class="math display">
+\operatorname{kurt} = \frac{\mathbb{E}[(X - \mu)^4]}{\sigma^4}.
+</span></p>
+<div id="6b3d427d" class="cell" data-execution_count="132">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>degrees_of_freedom <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">1000</span>]</span>
+<span id="cb9-4"><a href="#cb9-4"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># for axx in ax:</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#     axx.set_yscale('log')</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="cf">for</span> i, df <span class="kw">in</span> <span class="bu">enumerate</span>(degrees_of_freedom):</span>
+<span id="cb9-8"><a href="#cb9-8"></a>    y <span class="op">=</span> t.pdf(x, df, loc<span class="op">=</span><span class="dv">4</span>, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-9"><a href="#cb9-9"></a>    kurt <span class="op">=</span> t.stats(df, moments<span class="op">=</span><span class="st">'k'</span>)  <span class="co"># excess kurtosis</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>    ax[i].plot(x, y, color<span class="op">=</span>colors[i<span class="op">+</span><span class="dv">1</span>], label<span class="op">=</span><span class="vs">fr'excess kurtosis</span><span class="dv">$</span><span class="vs">=</span><span class="sc">{</span>kurt<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb9-11"><a href="#cb9-11"></a>    ax[i].legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-12"><a href="#cb9-12"></a>ax[<span class="dv">2</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'$x$'</span>)</span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="cf">for</span> axx <span class="kw">in</span> ax[:]:</span>
+<span id="cb9-14"><a href="#cb9-14"></a>    axx.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb9-15"><a href="#cb9-15"></a>    axx.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb9-16"><a href="#cb9-16"></a></span>
+<span id="cb9-17"><a href="#cb9-17"></a>ax[<span class="dv">0</span>].spines[<span class="st">'bottom'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb9-18"><a href="#cb9-18"></a>ax[<span class="dv">0</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, which<span class="op">=</span><span class="st">'both'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>, labelbottom<span class="op">=</span><span class="va">False</span>, labelleft<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-19"><a href="#cb9-19"></a>ax[<span class="dv">1</span>].spines[<span class="st">'bottom'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb9-20"><a href="#cb9-20"></a>ax[<span class="dv">1</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, which<span class="op">=</span><span class="st">'both'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>, labelbottom<span class="op">=</span><span class="va">False</span>, labelleft<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-21"><a href="#cb9-21"></a>fig.supylabel(<span class="st">"probability distribution"</span>, y<span class="op">=</span><span class="fl">0.50</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb9-22"><a href="#cb9-22"></a>fig.suptitle(<span class="st">"distributions with varying kurtosis"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="variance-and-moments_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It is quite hard to see the effect of kurtosis on the shape of a distribution, so let’s plot the same curves on a log scale.</p>
+<div id="143aec87" class="cell" data-execution_count="131">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>degrees_of_freedom <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">1000</span>]</span>
+<span id="cb10-2"><a href="#cb10-2"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="cf">for</span> i, df <span class="kw">in</span> <span class="bu">enumerate</span>(degrees_of_freedom):</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    y <span class="op">=</span> t.pdf(x, df, loc<span class="op">=</span><span class="dv">4</span>, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-6"><a href="#cb10-6"></a>    kurt <span class="op">=</span> t.stats(df, moments<span class="op">=</span><span class="st">'k'</span>)  <span class="co"># excess kurtosis</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>    ax.plot(x, y, color<span class="op">=</span>colors[i<span class="op">+</span><span class="dv">1</span>], label<span class="op">=</span><span class="vs">fr'excess kurtosis</span><span class="dv">$</span><span class="vs">=</span><span class="sc">{</span>kurt<span class="sc">:.2f}</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb10-8"><a href="#cb10-8"></a>    ax.legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-9"><a href="#cb10-9"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'$x$'</span>,</span>
+<span id="cb10-10"><a href="#cb10-10"></a>       ylabel<span class="op">=</span><span class="st">'probability distribution'</span>,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>       title<span class="op">=</span><span class="st">"distributions with varying kurtosis,</span><span class="ch">\n</span><span class="st">on a log scale to show the tails"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="variance-and-moments_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="physics" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="physics"><span class="header-section-number">5.6</span> Physics</h2>
+<p>The word “moment” reminds us of “moment of inertia” in Physics. Is there a connection?</p>
+<p>Yes! Karl Pearson named moments after the moments in physics.</p>
+<p>In Physics, a moment is a weighted sum of the form</p>
+<p><span class="math display">
+\sum_i m_i r_i^k,
+</span></p>
+<p>where <span class="math inline">r</span> is a distance from some reference point, <span class="math inline">m</span> is a mass (or force, or charge density), and the sum is over all particles. The <span class="math inline">k</span> power tells us the order of the moment:</p>
+<ul>
+<li><span class="math inline">k=0</span>: total mass, <span class="math display">
+\sum m = M.
+</span></li>
+<li><span class="math inline">k=1</span>, first moment, <span class="math display">
+  \sum m r,
+  </span> gives the center of mass when divided by the total mass (<span class="math inline">\bar{r} = \frac{\sum m r}{M}</span>)</li>
+<li><span class="math inline">k=2</span>, second moment, <span class="math display">
+  \sum m r^2,
+  </span> gives the moment of inertia. Let’s call this <span class="math inline">I=\sum m r^2</span>.</li>
+</ul>
+<p>If we calculate the second central moment in the context of physics, we get the following:</p>
+<p><span class="math display">\begin{align*}
+\mu_2 &amp;= \sum m \left(r - \bar{r}\right)^2 \\
+&amp;= \sum m r^2 + \sum m (\bar{r})^2 - 2 \sum m r \bar{r} \\
+&amp;= I + \bar{r}^2 M - 2 \bar{r} \sum m r \\
+&amp;= I + \bar{r}^2 M - 2 \bar{r} \bar{r} M \\
+&amp;= I - \bar{r}^2 M \\
+&amp;= I - I_{\text{cm}},
+\end{align*}</span></p>
+<p>where <span class="math inline">I_{\text{cm}}</span> is the moment of inertia of the system about an axis through the center of mass. Just by applying the definition of the second central moment, we have derived the <a href="https://en.wikipedia.org/wiki/Parallel_axis_theorem" target="_blank">Parallel Axis Theorem</a>!</p>
+<p>This theorem states that the moment of inertia of a body about <strong>any</strong> axis (<span class="math inline">I</span>) is equal to the moment of inertia of the body about a parallel axis through the center of mass (<span class="math inline">I_\text{cm}</span>) plus the product of the mass of the body and the square of the distance between the two axes. In other words, if we know the moment of inertia of a body about an axis through its center of mass, we can calculate its moment of inertia about any other axis by adding <span class="math inline">M d^2</span>, where <span class="math inline">d</span> is the distance between the two axes.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../foundations/expectation.html" class="pagination-link" aria-label="expectation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">expectation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../foundations/population_and_samples.html" class="pagination-link" aria-label="population and samples">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">population and samples</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

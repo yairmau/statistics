@@ -20,6 +20,7 @@ book:
       chapters:
         - foundations/language-of-random-variables.ipynb
         - foundations/expectation.ipynb
+        - foundations/variance-and-moments.ipynb
         - foundations/population_and_samples.ipynb
     - part: "hypothesis testing"
       chapters:
