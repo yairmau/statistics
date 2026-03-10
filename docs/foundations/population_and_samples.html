@@ -83,6 +83,49 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"> -->
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -682,8 +725,17 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#height" id="toc-height" class="nav-link active" data-scroll-target="#height"><span class="header-section-number">6.1</span> height</a></li>
+  <li><a href="#temperature" id="toc-temperature" class="nav-link" data-scroll-target="#temperature"><span class="header-section-number">6.2</span> temperature</a></li>
+  <li><a href="#extracting-information" id="toc-extracting-information" class="nav-link" data-scroll-target="#extracting-information"><span class="header-section-number">6.3</span> extracting information</a></li>
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation"><span class="header-section-number">6.4</span> notation</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -707,8 +759,36 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </header>
 
 
+<p>When we do an experiment, we think of the measured results as a sample from a population.</p>
+<section id="height" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="height"><span class="header-section-number">6.1</span> height</h2>
+<p>Here the population is literally the population of people. Every person whose height we measure is a sample from this population. When we are done measuring, we also call the whole set of measurements a sample.</p>
+</section>
+<section id="temperature" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="temperature"><span class="header-section-number">6.2</span> temperature</h2>
+<p>The same idea applies here. However, we don’t have an already-existing population of temperatures just waiting to be measured. Instead, we have a process that generates temperatures (the weather), and every time we measure the temperature, we are taking a sample from the population of all possible temperatures that this process can generate.</p>
+</section>
+<section id="extracting-information" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="extracting-information"><span class="header-section-number">6.3</span> extracting information</h2>
+<p>If we had unlimited time and resources, we could measure the height of every person in the world, or we could ask everyone in the country who they will vote for, or we could take an infinite number of temperature measurements. In that case, we would have the entire population. We could then answer any question we want about the population, and we would have no uncertainty in our answers.</p>
+<p>In reality, we have limited time and resources, so we can only take a finite sample from the population. Our job is to learn as much as we can about the population from the sample. Many questions arise from taking a sample:</p>
+<ul>
+<li>Is the sample representative of the population? Maybe we measured the height of 20 people, but we did so in a basketball court, so our sample is biased towards taller people.</li>
+<li>Is every measurement in the sample independent of the others? Maybe we measured the height of 20 people, but they are all from the same extended family, so their heights are not independent.</li>
+<li>If we were to take another sample from the population, would we get roughtly the same results? Maybe we measured the height of 20 people, but if we were to measure another 20 people, we would get a very different average height. Is a sample of 20 people enough to learn what I want?</li>
+<li>Suppose I have a machine (a camera hooked up to a computer) that automatically measures the height of 5-year-olds as they enter a kid’s play. When analyzing the data, I find a measurement of 180 cm. Maybe the machine measured by mistake the height of one of the parents? What to do with this outlier?</li>
+</ul>
+</section>
+<section id="notation" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="notation"><span class="header-section-number">6.4</span> notation</h2>
+<p>When talking about means and standard deviations, we give different letters to the population and to the sample:</p>
+<ul>
+<li><strong>Popuation</strong>. We use Greek letters: <span class="math inline">\mu</span> for the mean, and <span class="math inline">\sigma</span> for the standard deviation.</li>
+<li><strong>Sample</strong>. We use Latin letters: <span class="math inline">\bar{x}</span> for the mean, and <span class="math inline">s</span> for the standard deviation. Of course, if we call what we are measuring <span class="math inline">h</span> instead of <span class="math inline">x</span>, then <span class="math inline">\bar{h}</span> would represent the sample mean.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

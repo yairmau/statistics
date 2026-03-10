@@ -897,6 +897,20 @@ variance of X3: 0.00
 <p>The variance quantifies how much the values of a random variable are spread out around the mean. The higher the variance, the more spread out the values are. If the variance is zero, then all the values of the random variable are the same (and equal to the mean).</p>
 <p>Note that the variance has units that are the square of the units of the random variable. If <span class="math inline">X</span> has units of cm, then <span class="math inline">\operatorname{Var}</span> has units of cm<span class="math inline">^2</span>. This can make the variance hard to interpret. To get around this problem, we can take the square root of the variance, which is called the standard deviation. The standard deviation has the same units as the random variable, and it is often easier to interpret than the variance.</p>
 <p>The standard symbol for the variance of a random variable <span class="math inline">X</span> is <span class="math inline">\sigma^2</span>, and the standard symbol for the standard deviation is <span class="math inline">\sigma</span>.</p>
+<p>A useful property of the variance is this:</p>
+<p><span class="math display">
+\operatorname{Var}(aX+b) = a^2 \operatorname{Var}(X)
+</span></p>
+<p>Using the definition of variance, it is easy to see why this is true:</p>
+<p><span class="math display">\begin{align*}
+\operatorname{Var}(aX+b) &amp;= E[((aX+b) - E[aX+b])^2] \\
+&amp;= E[(aX+b - (aE[X]+b))^2] \\
+&amp;= E[aX + b - aE[X] - b]^2 \\
+&amp;= E[(a(X - E[X]))^2] \\
+&amp;= a^2 E[(X - E[X])^2] \\
+&amp;= a^2 \operatorname{Var}(X)
+\end{align*}</span></p>
+<p>This means that if we multiply a random variable by a constant, the variance is multiplied by the square of that constant. If we add a constant to a random variable, the variance does not change.</p>
 <p>Let’s play a little bit with the formula for the definition of variance.</p>
 <p><span class="math display">\begin{align*}
 \operatorname{Var} &amp;= E[(X - E[X])^2] \\
@@ -974,13 +988,13 @@ variance of X3: 0.00
 <p><span class="math display">
 \mu_k = E[(X - E[X])^k] = E[(X - \mu)^k].
 </span></p>
-<p>This is almost the same as the raw moment, the difference is that we subtract the mean from <span class="math inline">X</span> before raising it to the power of <span class="math inline">k</span>. This is useful because we can say that the variance is simply the second central moment, that is, <span class="math inline">Var(X) = \mu_2</span>.</p>
+<p>This is almost the same as the raw moment, the difference is that we subtract the mean from <span class="math inline">X</span> before raising it to the power of <span class="math inline">k</span>. This is useful because we can say that the variance is simply the second central moment, that is, <span class="math inline">\operatorname{Var}(X) = \mu_2</span>.</p>
 </section>
 <section id="standardized" class="level3" data-number="5.3.3">
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="standardized"><span class="header-section-number">5.3.3</span> standardized</h3>
 <p>A third kind of moments are the standardized moments, which are defined as follows:</p>
 <p><span class="math display">
-\mu''_k = \frac{E[(X - E[X])^k]}{(\operatorname{Var}(X))^{k/2}} = \frac{\mu_k}{\sigma^k}.
+\tilde{\mu}_k = \frac{E[(X - E[X])^k]}{(\operatorname{Var}(X))^{k/2}} = \frac{\mu_k}{\sigma^k}.
 </span></p>
 <p>This is basically the central moment divided by the standard deviation raised to the power of <span class="math inline">k</span>.</p>
 <p>Standardized moments are useful because they give us a way to compare the shape of different distributions, regardless of their scale. For example, the standardized third moment is called the skewness, and it measures how asymmetric a distribution is. The standardized fourth moment is called the kurtosis, and it measures how heavy-tailed a distribution is.</p>
@@ -1029,9 +1043,9 @@ variance of X3: 0.00
 </section>
 <section id="variance-1" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="variance-1"><span class="header-section-number">5.4.2</span> variance</h3>
-<p>Variance is a measure of the spread of a distribution, and it is defined as the standardized second moment:</p>
+<p>Variance is a measure of the spread of a distribution, and it is defined as the central second moment:</p>
 <p><span class="math display">
-\operatorname{var}(X) = \frac{\mathbb{E}[(X - \mu)^2]}{\sigma^2}.
+\operatorname{var}(X) = \mathbb{E}[(X - \mu)^2].
 </span></p>
 <p>Changing the variance of a distribution stretches or compresses the distribution along the x-axis, but it does not change the location of the center of the distribution.</p>
 <div id="bea181ad" class="cell" data-execution_count="127">
@@ -1111,9 +1125,11 @@ variance of X3: 0.00
 <section id="kurtosis" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="kurtosis"><span class="header-section-number">5.5</span> kurtosis</h2>
 <p>Kurtosis is a measure of the heaviness of the tails of a distribution. The higher the kurtosis, the higher the probability of observing values far away from the mean, or outliers. Kurtosis is defined as the standardized fourth moment:</p>
-<p><span class="math display">
-\operatorname{kurt} = \frac{\mathbb{E}[(X - \mu)^4]}{\sigma^4}.
-</span></p>
+<p><span class="math display">\begin{align*}
+\operatorname{kurt} &amp;= \frac{\mathbb{E}[(X - \mu)^4]}{\sigma^4}.
+\operatorname{excess kurt} &amp;= \frac{\mathbb{E}[(X - \mu)^4]}{\sigma^4} - 3.
+\end{align*}</span></p>
+<p>The kurtosis of a normal distribution is 3, so we often talk about the excess kurtosis, which is the kurtosis minus 3. A distribution with positive (negative) excess kurtosis has fatter (skinnier) tails than a normal distribution.</p>
 <div id="6b3d427d" class="cell" data-execution_count="132">
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -1148,7 +1164,7 @@ variance of X3: 0.00
 </div>
 </div>
 </div>
-<p>It is quite hard to see the effect of kurtosis on the shape of a distribution, so let’s plot the same curves on a log scale.</p>
+<p>It is quite hard to see the effect of kurtosis on the shape of a distribution, since we need to see what’s going on in the tails of the distribution, and the tails are often very close to zero. Let’s plot the same curves on a log scale, that will help us visualize the differences in the tails.</p>
 <div id="143aec87" class="cell" data-execution_count="131">
 <details class="code-fold">
 <summary>Show the code</summary>
