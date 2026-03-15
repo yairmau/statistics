@@ -721,8 +721,20 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#updated-code" id="toc-updated-code" class="nav-link active" data-scroll-target="#updated-code"><span class="header-section-number">62.1</span> updated code</a></li>
+  <li><a href="#regularization" id="toc-regularization" class="nav-link" data-scroll-target="#regularization"><span class="header-section-number">62.2</span> regularization</a>
+  <ul class="collapse">
+  <li><a href="#ridge-regularization-l2" id="toc-ridge-regularization-l2" class="nav-link" data-scroll-target="#ridge-regularization-l2"><span class="header-section-number">62.2.1</span> ridge regularization (L2)</a></li>
+  <li><a href="#lasso-regularization-l1" id="toc-lasso-regularization-l1" class="nav-link" data-scroll-target="#lasso-regularization-l1"><span class="header-section-number">62.2.2</span> lasso regularization (L1)</a></li>
+  </ul></li>
+  <li><a href="#dropout" id="toc-dropout" class="nav-link" data-scroll-target="#dropout"><span class="header-section-number">62.3</span> dropout</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -746,28 +758,32 @@ gtag('config', 'G-TB8VQN4T5W', { 'anonymize_ip': true});
 </header>
 
 
-<div id="213ca2f8" class="cell" data-execution_count="7">
+<section id="updated-code" class="level2" data-number="62.1">
+<h2 data-number="62.1" class="anchored" data-anchor-id="updated-code"><span class="header-section-number">62.1</span> updated code</h2>
+<p>New new code has the following updates with respect to the last version:</p>
+<ul>
+<li>When we import data, we make sure that all labels are one-hot encoded, for both training and test data. This greatly simplifies the code, we don’t need to check everytime what we are dealing with.</li>
+<li>We can use either cross entropy or quadratic cost.</li>
+<li>We have the option to implement regularization.</li>
+<li>We can use either a sigmoid or ReLU as activation functions.</li>
+<li>We can monitor the accuracy and cost on both training and test data, at the end of each epoch, so we can later plot them. This is very useful to check if we are overfitting or not.</li>
+<li>The progress bar is simplified and cleaner.</li>
+</ul>
+<div id="213ca2f8" class="cell" data-execution_count="1">
 <details class="code-fold">
-<summary>Show the code</summary>
+<summary>import libraries and modules</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">%</span>load_ext autoreload</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="op">%</span>autoreload <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>The autoreload extension is already loaded. To reload it, use:
-  %reload_ext autoreload</code></pre>
-</div>
-</div>
-<div id="4e07c703" class="cell" data-execution_count="8">
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> ch3_code</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> ch3_code</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="b340b651" class="cell" data-execution_count="3">
+<div id="b340b651" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>load MNIST data into memory</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>training_data, test_data <span class="op">=</span> ch3_code.load_mnist_from_web()</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(training_data)<span class="sc">}</span><span class="ss"> training samples directly into memory."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>training_data, test_data <span class="op">=</span> ch3_code.load_mnist_from_web()</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(training_data)<span class="sc">}</span><span class="ss"> training samples directly into memory."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Fetching train_img...
@@ -777,365 +793,185 @@ Fetching test_lbl...
 Loaded 60000 training samples directly into memory.</code></pre>
 </div>
 </div>
-<div id="13c8e0da" class="cell" data-execution_count="5">
-<details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>net <span class="op">=</span> ch3_code.NN2(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], activation<span class="op">=</span><span class="st">"sigmoid"</span>, rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb6-2"><a href="#cb6-2"></a>res <span class="op">=</span> net.stochastic_gradient_descent(</span>
-<span id="cb6-3"><a href="#cb6-3"></a>    training_data<span class="op">=</span>training_data[:<span class="dv">1000</span>],</span>
-<span id="cb6-4"><a href="#cb6-4"></a>    test_data<span class="op">=</span>test_data,</span>
-<span id="cb6-5"><a href="#cb6-5"></a>    epochs<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb6-6"><a href="#cb6-6"></a>    batch_size<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb6-7"><a href="#cb6-7"></a>    eta<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb6-8"><a href="#cb6-8"></a>    monitoring<span class="op">=</span><span class="va">True</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<p>Let’s see what we get when we train the network with only 1000 training examples, for 100 epochs, with a batch size of 10, and a learning rate of 0.5:</p>
+<div id="13c8e0da" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>net <span class="op">=</span> ch3_code.NN2(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>res <span class="op">=</span> net.stochastic_gradient_descent(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    training_data<span class="op">=</span>training_data[:<span class="dv">1000</span>],</span>
+<span id="cb4-4"><a href="#cb4-4"></a>    test_data<span class="op">=</span>test_data,</span>
+<span id="cb4-5"><a href="#cb4-5"></a>    epochs<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    batch_size<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb4-7"><a href="#cb4-7"></a>    eta<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb4-8"><a href="#cb4-8"></a>    monitoring<span class="op">=</span><span class="va">True</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"06ca04dbd5714666b79331ab04f1d370","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"3c062e2441bb4fef921be69bbdccba96","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 </div>
-<div id="f6b9e77f" class="cell" data-execution_count="18">
+<div id="f6b9e77f" class="cell" data-execution_count="10">
 <details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb7-2"><a href="#cb7-2"></a></span>
-<span id="cb7-3"><a href="#cb7-3"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
-<span id="cb7-4"><a href="#cb7-4"></a>fig.subplots_adjust(wspace<span class="op">=</span><span class="fl">0.35</span>)</span>
-<span id="cb7-5"><a href="#cb7-5"></a>ax[<span class="dv">0</span>].plot(res[<span class="st">"epoch"</span>], res[<span class="st">"train_accuracy"</span>], label<span class="op">=</span><span class="st">"Train"</span>)</span>
-<span id="cb7-6"><a href="#cb7-6"></a>ax[<span class="dv">0</span>].plot(res[<span class="st">"epoch"</span>], res[<span class="st">"test_accuracy"</span>], label<span class="op">=</span><span class="st">"Test"</span>)</span>
-<span id="cb7-7"><a href="#cb7-7"></a>ax[<span class="dv">0</span>].set_xlabel(<span class="st">"Epoch"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Accuracy"</span>)</span>
-<span id="cb7-9"><a href="#cb7-9"></a>ax[<span class="dv">0</span>].set_title(<span class="st">"Train and Test Accuracy over Epochs"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10"></a>ax[<span class="dv">0</span>].legend() </span>
-<span id="cb7-11"><a href="#cb7-11"></a></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co"># ax[1].plot(res["epoch"], res["train_cost"], label="Train Cost")</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a>ax[<span class="dv">1</span>].plot(res[<span class="st">"epoch"</span>], res[<span class="st">"test_cost"</span>], label<span class="op">=</span><span class="st">"Test Cost"</span>, color<span class="op">=</span><span class="st">"tab:orange"</span>)</span>
-<span id="cb7-14"><a href="#cb7-14"></a>ax[<span class="dv">1</span>].set_xlabel(<span class="st">"Epoch"</span>)</span>
-<span id="cb7-15"><a href="#cb7-15"></a>ax[<span class="dv">1</span>].set_ylabel(<span class="st">"Cost"</span>)</span>
-<span id="cb7-16"><a href="#cb7-16"></a>ax[<span class="dv">1</span>].set_title(<span class="st">"Train and Test Cost over Epochs"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<summary>plot the results</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
+<span id="cb5-2"><a href="#cb5-2"></a>fig.subplots_adjust(wspace<span class="op">=</span><span class="fl">0.35</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>ax[<span class="dv">0</span>].plot(res[<span class="st">"epoch"</span>], res[<span class="st">"train_accuracy"</span>], label<span class="op">=</span><span class="st">"Train"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>ax[<span class="dv">0</span>].plot(res[<span class="st">"epoch"</span>], res[<span class="st">"test_accuracy"</span>], label<span class="op">=</span><span class="st">"Test"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>ax[<span class="dv">0</span>].set_xlabel(<span class="st">"Epoch"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Accuracy"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>ax[<span class="dv">0</span>].set_title(<span class="st">"Train and Test Accuracy over Epochs"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>ax[<span class="dv">0</span>].legend()</span>
+<span id="cb5-9"><a href="#cb5-9"></a>axins <span class="op">=</span> ax[<span class="dv">0</span>].inset_axes([<span class="fl">0.55</span>, <span class="fl">0.15</span>, <span class="fl">0.4</span>, <span class="fl">0.4</span>])  <span class="co"># [x0, y0, width, height] in axes fraction</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>axins.plot(res[<span class="st">"epoch"</span>][<span class="dv">100</span>:], res[<span class="st">"test_accuracy"</span>][<span class="dv">100</span>:], color<span class="op">=</span><span class="st">"tab:orange"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11"></a>axins.set_title(<span class="st">"Test"</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb5-12"><a href="#cb5-12"></a>axins.tick_params(labelsize<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a>ax[<span class="dv">1</span>].plot(res[<span class="st">"epoch"</span>], res[<span class="st">"train_cost"</span>], label<span class="op">=</span><span class="st">"Train Cost"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15"></a>ax[<span class="dv">1</span>].plot(res[<span class="st">"epoch"</span>], res[<span class="st">"test_cost"</span>], label<span class="op">=</span><span class="st">"Test Cost"</span>, color<span class="op">=</span><span class="st">"tab:orange"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16"></a>ax[<span class="dv">1</span>].set_xlabel(<span class="st">"Epoch"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17"></a>ax[<span class="dv">1</span>].set_ylabel(<span class="st">"Cost"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18"></a>ax[<span class="dv">1</span>].set_title(<span class="st">"Train and Test Cost over Epochs"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="nielsen_ch3B_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="nielsen_ch3B_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="34e4541c" class="cell">
+</section>
+<section id="regularization" class="level2" data-number="62.2">
+<h2 data-number="62.2" class="anchored" data-anchor-id="regularization"><span class="header-section-number">62.2</span> regularization</h2>
+<section id="ridge-regularization-l2" class="level3" data-number="62.2.1">
+<h3 data-number="62.2.1" class="anchored" data-anchor-id="ridge-regularization-l2"><span class="header-section-number">62.2.1</span> ridge regularization (L2)</h3>
+<div id="e536680d" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>net <span class="op">=</span> ch3_code.NN2(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>res2 <span class="op">=</span> net.stochastic_gradient_descent(</span>
+<span id="cb6-3"><a href="#cb6-3"></a>     training_data<span class="op">=</span>training_data[:<span class="dv">1000</span>],</span>
+<span id="cb6-4"><a href="#cb6-4"></a>     test_data<span class="op">=</span>test_data,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>     epochs<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>     lmbda_L1<span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>     lmbda_L2<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb6-8"><a href="#cb6-8"></a>     batch_size<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb6-9"><a href="#cb6-9"></a>     eta<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb6-10"><a href="#cb6-10"></a>     monitoring<span class="op">=</span><span class="va">True</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>     )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"cfcee31d5dde4e6eb6a2bc805922ffb4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div id="1f730d0b" class="cell" data-execution_count="25">
 <details class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">import</span> sys</span>
-<span id="cb8-2"><a href="#cb8-2"></a>sys.stdout.flush()</span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="im">import</span> os</span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="im">import</span> io</span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="im">import</span> gzip</span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="im">import</span> requests</span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="im">from</span> tqdm.notebook <span class="im">import</span> tqdm</span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> patches</span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="im">import</span> json</span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="im">import</span> time</span>
-<span id="cb8-13"><a href="#cb8-13"></a></span>
-<span id="cb8-14"><a href="#cb8-14"></a></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="kw">class</span> CrossEntropyCost:</span>
-<span id="cb8-16"><a href="#cb8-16"></a>    <span class="at">@staticmethod</span></span>
-<span id="cb8-17"><a href="#cb8-17"></a>    <span class="kw">def</span> fn(a, y):</span>
-<span id="cb8-18"><a href="#cb8-18"></a>        <span class="cf">return</span> np.<span class="bu">sum</span>(</span>
-<span id="cb8-19"><a href="#cb8-19"></a>            np.nan_to_num(    <span class="co"># ensures numerical stability</span></span>
-<span id="cb8-20"><a href="#cb8-20"></a>                <span class="op">-</span> y <span class="op">*</span> np.log(a) <span class="op">-</span> (<span class="dv">1</span><span class="op">-</span>y) <span class="op">*</span> np.log(<span class="dv">1</span><span class="op">-</span>a)</span>
-<span id="cb8-21"><a href="#cb8-21"></a>            )</span>
-<span id="cb8-22"><a href="#cb8-22"></a>        )</span>
-<span id="cb8-23"><a href="#cb8-23"></a>    </span>
-<span id="cb8-24"><a href="#cb8-24"></a>    <span class="at">@staticmethod</span></span>
-<span id="cb8-25"><a href="#cb8-25"></a>    <span class="kw">def</span> delta(z, a, y, activation):   <span class="co"># z is kept for compatibility / consistency</span></span>
-<span id="cb8-26"><a href="#cb8-26"></a>        <span class="cf">if</span> activation <span class="op">==</span> SigmoidActivation:</span>
-<span id="cb8-27"><a href="#cb8-27"></a>            <span class="cf">return</span> (a <span class="op">-</span> y)</span>
-<span id="cb8-28"><a href="#cb8-28"></a>        <span class="cf">return</span> (a <span class="op">-</span> y) <span class="op">/</span> (a <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> a)) <span class="op">*</span> activation.prime(z)</span>
-<span id="cb8-29"><a href="#cb8-29"></a></span>
-<span id="cb8-30"><a href="#cb8-30"></a><span class="kw">class</span> QuadraticCost:</span>
-<span id="cb8-31"><a href="#cb8-31"></a>    <span class="at">@staticmethod</span></span>
-<span id="cb8-32"><a href="#cb8-32"></a>    <span class="kw">def</span> fn(a, y):</span>
-<span id="cb8-33"><a href="#cb8-33"></a>        <span class="cf">return</span> np.linalg.norm(a<span class="op">-</span>y)<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb8-34"><a href="#cb8-34"></a>    </span>
-<span id="cb8-35"><a href="#cb8-35"></a>    <span class="at">@staticmethod</span></span>
-<span id="cb8-36"><a href="#cb8-36"></a>    <span class="kw">def</span> delta(z, a, y, activation):</span>
-<span id="cb8-37"><a href="#cb8-37"></a>        <span class="cf">return</span> (a <span class="op">-</span> y) <span class="op">*</span> activation.prime(z)</span>
-<span id="cb8-38"><a href="#cb8-38"></a></span>
-<span id="cb8-39"><a href="#cb8-39"></a><span class="kw">class</span> SigmoidActivation:</span>
-<span id="cb8-40"><a href="#cb8-40"></a>    <span class="at">@staticmethod</span></span>
-<span id="cb8-41"><a href="#cb8-41"></a>    <span class="kw">def</span> fn(z):</span>
-<span id="cb8-42"><a href="#cb8-42"></a>        <span class="cf">return</span> <span class="fl">1.0</span> <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">+</span> np.exp(<span class="op">-</span>z))</span>
-<span id="cb8-43"><a href="#cb8-43"></a></span>
-<span id="cb8-44"><a href="#cb8-44"></a>    <span class="at">@staticmethod</span></span>
-<span id="cb8-45"><a href="#cb8-45"></a>    <span class="kw">def</span> prime(z):</span>
-<span id="cb8-46"><a href="#cb8-46"></a>        s <span class="op">=</span> SigmoidActivation.fn(z)</span>
-<span id="cb8-47"><a href="#cb8-47"></a>        <span class="cf">return</span> s <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> s)</span>
-<span id="cb8-48"><a href="#cb8-48"></a></span>
-<span id="cb8-49"><a href="#cb8-49"></a><span class="kw">class</span> ReLUActivation:</span>
-<span id="cb8-50"><a href="#cb8-50"></a>    <span class="at">@staticmethod</span></span>
-<span id="cb8-51"><a href="#cb8-51"></a>    <span class="kw">def</span> fn(z):</span>
-<span id="cb8-52"><a href="#cb8-52"></a>        <span class="cf">return</span> np.maximum(<span class="dv">0</span>, z)</span>
-<span id="cb8-53"><a href="#cb8-53"></a>    </span>
-<span id="cb8-54"><a href="#cb8-54"></a>    <span class="at">@staticmethod</span></span>
-<span id="cb8-55"><a href="#cb8-55"></a>    <span class="kw">def</span> prime(z):</span>
-<span id="cb8-56"><a href="#cb8-56"></a>        <span class="cf">return</span> np.where(z <span class="op">&gt;</span> <span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>)</span>
-<span id="cb8-57"><a href="#cb8-57"></a></span>
-<span id="cb8-58"><a href="#cb8-58"></a><span class="kw">class</span> NN2:</span>
-<span id="cb8-59"><a href="#cb8-59"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, layer_sizes, rand_seed<span class="op">=</span><span class="dv">0</span>, activation<span class="op">=</span>SigmoidActivation, cost<span class="op">=</span>CrossEntropyCost):</span>
-<span id="cb8-60"><a href="#cb8-60"></a>        <span class="co">"""Initialize the neural network with the given layer sizes.</span></span>
-<span id="cb8-61"><a href="#cb8-61"></a><span class="co">        For example, if layer_sizes = [50, 15, 20, 10], then we have a</span></span>
-<span id="cb8-62"><a href="#cb8-62"></a><span class="co">        network with 50 input neurons, 15 neurons in hidden layer 0,</span></span>
-<span id="cb8-63"><a href="#cb8-63"></a><span class="co">        20 neurons in hidden layer 1, and 10 output neurons (layer 3).</span></span>
-<span id="cb8-64"><a href="#cb8-64"></a><span class="co">        """</span></span>
-<span id="cb8-65"><a href="#cb8-65"></a>        <span class="va">self</span>.number_of_layers <span class="op">=</span> <span class="bu">len</span>(layer_sizes) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb8-66"><a href="#cb8-66"></a>        <span class="va">self</span>.layer_sizes <span class="op">=</span> layer_sizes</span>
-<span id="cb8-67"><a href="#cb8-67"></a>        <span class="va">self</span>.rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span>rand_seed)</span>
-<span id="cb8-68"><a href="#cb8-68"></a>        <span class="va">self</span>.activation <span class="op">=</span> activation</span>
-<span id="cb8-69"><a href="#cb8-69"></a>        <span class="va">self</span>.cost <span class="op">=</span> cost</span>
-<span id="cb8-70"><a href="#cb8-70"></a>        <span class="va">self</span>.default_weight_initializer()</span>
-<span id="cb8-71"><a href="#cb8-71"></a></span>
-<span id="cb8-72"><a href="#cb8-72"></a>    <span class="kw">def</span> default_weight_initializer(<span class="va">self</span>):</span>
-<span id="cb8-73"><a href="#cb8-73"></a>        <span class="co"># input layer has no weights nor biases, so we skip it.</span></span>
-<span id="cb8-74"><a href="#cb8-74"></a></span>
-<span id="cb8-75"><a href="#cb8-75"></a>        <span class="co"># each neuron get 1 bias, so bias vector has the size of the layer</span></span>
-<span id="cb8-76"><a href="#cb8-76"></a>        <span class="co"># we skip the first (input) layer, it doesn't have biases</span></span>
-<span id="cb8-77"><a href="#cb8-77"></a>        <span class="co"># I made the biases to be matrices of shape (N_b, 1) instead of vectors of shape (N_b,)</span></span>
-<span id="cb8-78"><a href="#cb8-78"></a>        <span class="co"># to make the broadcasting work more smoothly in the feedforward and backpropagation functions.</span></span>
-<span id="cb8-79"><a href="#cb8-79"></a>        <span class="va">self</span>.biases <span class="op">=</span> [<span class="va">self</span>.rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>(N_b, <span class="dv">1</span>))</span>
-<span id="cb8-80"><a href="#cb8-80"></a>                       <span class="cf">for</span> N_b <span class="kw">in</span> <span class="va">self</span>.layer_sizes[<span class="dv">1</span>:]]</span>
-<span id="cb8-81"><a href="#cb8-81"></a>        <span class="co"># each neuron in layer Right is connected to all neurons in layer Left,</span></span>
-<span id="cb8-82"><a href="#cb8-82"></a>        <span class="co"># so weight matrix has the shape (size_right, size_left)</span></span>
-<span id="cb8-83"><a href="#cb8-83"></a>        <span class="co"># again, we skip the first (input) layer, it doesn't have weights</span></span>
-<span id="cb8-84"><a href="#cb8-84"></a>        <span class="co"># scale_for_weights = 1 / np.sqrt(size_left)</span></span>
-<span id="cb8-85"><a href="#cb8-85"></a>        <span class="va">self</span>.weights <span class="op">=</span> [<span class="va">self</span>.rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span><span class="op">/</span>np.sqrt(size_left), size<span class="op">=</span>(size_right, size_left))</span>
-<span id="cb8-86"><a href="#cb8-86"></a>                        <span class="cf">for</span> size_left, size_right <span class="kw">in</span></span>
-<span id="cb8-87"><a href="#cb8-87"></a>                          <span class="bu">zip</span>(<span class="va">self</span>.layer_sizes[:<span class="op">-</span><span class="dv">1</span>],<span class="va">self</span>.layer_sizes[<span class="dv">1</span>:])</span>
-<span id="cb8-88"><a href="#cb8-88"></a>                        ]</span>
-<span id="cb8-89"><a href="#cb8-89"></a>    </span>
-<span id="cb8-90"><a href="#cb8-90"></a>    <span class="kw">def</span> large_weight_initializer(<span class="va">self</span>):</span>
-<span id="cb8-91"><a href="#cb8-91"></a>        <span class="co">"""same logic as above"""</span></span>
-<span id="cb8-92"><a href="#cb8-92"></a>        <span class="va">self</span>.biases <span class="op">=</span> [<span class="va">self</span>.rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>(N_b, <span class="dv">1</span>))</span>
-<span id="cb8-93"><a href="#cb8-93"></a>                       <span class="cf">for</span> N_b <span class="kw">in</span> <span class="va">self</span>.layer_sizes[<span class="dv">1</span>:]]</span>
-<span id="cb8-94"><a href="#cb8-94"></a>        <span class="va">self</span>.weights <span class="op">=</span> [<span class="va">self</span>.rng.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>, size<span class="op">=</span>(size_right, size_left))</span>
-<span id="cb8-95"><a href="#cb8-95"></a>                        <span class="cf">for</span> size_left, size_right <span class="kw">in</span></span>
-<span id="cb8-96"><a href="#cb8-96"></a>                          <span class="bu">zip</span>(<span class="va">self</span>.layer_sizes[:<span class="op">-</span><span class="dv">1</span>],<span class="va">self</span>.layer_sizes[<span class="dv">1</span>:])</span>
-<span id="cb8-97"><a href="#cb8-97"></a>                        ]</span>
-<span id="cb8-98"><a href="#cb8-98"></a></span>
-<span id="cb8-99"><a href="#cb8-99"></a>    </span>
-<span id="cb8-100"><a href="#cb8-100"></a>    <span class="kw">def</span> feedforward(<span class="va">self</span>, a):</span>
-<span id="cb8-101"><a href="#cb8-101"></a>        <span class="co">"""given input `a` from the first layer,</span></span>
-<span id="cb8-102"><a href="#cb8-102"></a><span class="co">           we sequencially compute the activations of each layer</span></span>
-<span id="cb8-103"><a href="#cb8-103"></a><span class="co">           `feedforward` returns the activations of last (output) layer</span></span>
-<span id="cb8-104"><a href="#cb8-104"></a><span class="co">        """</span></span>
-<span id="cb8-105"><a href="#cb8-105"></a>        <span class="cf">for</span> b, w <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, <span class="va">self</span>.weights):</span>
-<span id="cb8-106"><a href="#cb8-106"></a>            z <span class="op">=</span> np.dot(w, a) <span class="op">+</span> b</span>
-<span id="cb8-107"><a href="#cb8-107"></a>            a <span class="op">=</span> <span class="va">self</span>.activation.fn(z)</span>
-<span id="cb8-108"><a href="#cb8-108"></a>        <span class="cf">return</span> a</span>
-<span id="cb8-109"><a href="#cb8-109"></a>    </span>
-<span id="cb8-110"><a href="#cb8-110"></a>    <span class="kw">def</span> stochastic_gradient_descent(<span class="va">self</span>,</span>
-<span id="cb8-111"><a href="#cb8-111"></a>                                    training_data,</span>
-<span id="cb8-112"><a href="#cb8-112"></a>                                    test_data,</span>
-<span id="cb8-113"><a href="#cb8-113"></a>                                    epochs,</span>
-<span id="cb8-114"><a href="#cb8-114"></a>                                    batch_size,</span>
-<span id="cb8-115"><a href="#cb8-115"></a>                                    eta,</span>
-<span id="cb8-116"><a href="#cb8-116"></a>                                    lmbda <span class="op">=</span> <span class="fl">0.0</span>,</span>
-<span id="cb8-117"><a href="#cb8-117"></a>                                    monitoring<span class="op">=</span><span class="va">False</span>):</span>
-<span id="cb8-118"><a href="#cb8-118"></a>        n <span class="op">=</span> <span class="bu">len</span>(training_data)</span>
-<span id="cb8-119"><a href="#cb8-119"></a>        lambda_over_n <span class="op">=</span> lmbda <span class="op">/</span> n</span>
-<span id="cb8-120"><a href="#cb8-120"></a>        <span class="cf">try</span>:</span>
-<span id="cb8-121"><a href="#cb8-121"></a>            <span class="cf">if</span> monitoring:</span>
-<span id="cb8-122"><a href="#cb8-122"></a>                monitoring_dict <span class="op">=</span> {</span>
-<span id="cb8-123"><a href="#cb8-123"></a>                    <span class="st">"epoch"</span>: [],</span>
-<span id="cb8-124"><a href="#cb8-124"></a>                    <span class="st">"runtime_seconds"</span>: [],</span>
-<span id="cb8-125"><a href="#cb8-125"></a>                    <span class="st">"test_cost"</span>: [],</span>
-<span id="cb8-126"><a href="#cb8-126"></a>                    <span class="st">"test_accuracy"</span>: [],</span>
-<span id="cb8-127"><a href="#cb8-127"></a>                    <span class="st">"train_cost"</span>: [],</span>
-<span id="cb8-128"><a href="#cb8-128"></a>                    <span class="st">"train_accuracy"</span>: []</span>
-<span id="cb8-129"><a href="#cb8-129"></a>                }</span>
-<span id="cb8-130"><a href="#cb8-130"></a>                x_train <span class="op">=</span> np.hstack([x <span class="cf">for</span> x, y <span class="kw">in</span> training_data])</span>
-<span id="cb8-131"><a href="#cb8-131"></a>                y_train <span class="op">=</span> np.hstack([y <span class="cf">for</span> x, y <span class="kw">in</span> training_data])</span>
-<span id="cb8-132"><a href="#cb8-132"></a>                x_test <span class="op">=</span> np.hstack([x <span class="cf">for</span> x, y <span class="kw">in</span> test_data])</span>
-<span id="cb8-133"><a href="#cb8-133"></a>                y_test <span class="op">=</span> np.hstack([y <span class="cf">for</span> x, y <span class="kw">in</span> test_data])</span>
-<span id="cb8-134"><a href="#cb8-134"></a>            pbar <span class="op">=</span> tqdm(</span>
-<span id="cb8-135"><a href="#cb8-135"></a>                <span class="bu">range</span>(<span class="dv">1</span>, epochs <span class="op">+</span> <span class="dv">1</span>),</span>
-<span id="cb8-136"><a href="#cb8-136"></a>                total<span class="op">=</span>epochs,</span>
-<span id="cb8-137"><a href="#cb8-137"></a>                bar_format<span class="op">=</span><span class="st">"</span><span class="sc">{desc}</span><span class="st"> </span><span class="sc">{bar}</span><span class="st"> ETA:</span><span class="sc">{remaining}</span><span class="st"> </span><span class="sc">{postfix}</span><span class="st">"</span>, </span>
-<span id="cb8-138"><a href="#cb8-138"></a>                leave<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-139"><a href="#cb8-139"></a>                mininterval<span class="op">=</span><span class="fl">0.0</span>,   <span class="co"># update every epoch</span></span>
-<span id="cb8-140"><a href="#cb8-140"></a>                maxinterval<span class="op">=</span><span class="fl">0.0</span></span>
-<span id="cb8-141"><a href="#cb8-141"></a>            )</span>
-<span id="cb8-142"><a href="#cb8-142"></a>            pbar.container.children[<span class="dv">1</span>].layout.width <span class="op">=</span> <span class="st">"150px"</span></span>
-<span id="cb8-143"><a href="#cb8-143"></a>            <span class="cf">for</span> epoch_j <span class="kw">in</span> pbar:</span>
-<span id="cb8-144"><a href="#cb8-144"></a>                <span class="co"># shuffle training data at the beginning of each epoch</span></span>
-<span id="cb8-145"><a href="#cb8-145"></a>                <span class="va">self</span>.rng.shuffle(training_data)</span>
-<span id="cb8-146"><a href="#cb8-146"></a>                <span class="co"># split training data into batches</span></span>
-<span id="cb8-147"><a href="#cb8-147"></a>                batches <span class="op">=</span> [</span>
-<span id="cb8-148"><a href="#cb8-148"></a>                    training_data[k:k<span class="op">+</span>batch_size]</span>
-<span id="cb8-149"><a href="#cb8-149"></a>                    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n, batch_size)</span>
-<span id="cb8-150"><a href="#cb8-150"></a>                ]</span>
-<span id="cb8-151"><a href="#cb8-151"></a></span>
-<span id="cb8-152"><a href="#cb8-152"></a>                start_time <span class="op">=</span> time.perf_counter()</span>
-<span id="cb8-153"><a href="#cb8-153"></a>                <span class="co"># now loop over batches, update weights</span></span>
-<span id="cb8-154"><a href="#cb8-154"></a>                <span class="cf">for</span> batch <span class="kw">in</span> batches:</span>
-<span id="cb8-155"><a href="#cb8-155"></a>                    <span class="va">self</span>.update_params_batch(batch, eta, lambda_over_n)</span>
-<span id="cb8-156"><a href="#cb8-156"></a>                duration_seconds <span class="op">=</span> time.perf_counter() <span class="op">-</span> start_time</span>
-<span id="cb8-157"><a href="#cb8-157"></a>                accuracy <span class="op">=</span> <span class="va">self</span>.evaluate(test_data) <span class="op">/</span> <span class="bu">len</span>(test_data)</span>
-<span id="cb8-158"><a href="#cb8-158"></a>                pbar.set_description(<span class="ss">f"Epoch: </span><span class="sc">{</span>epoch_j<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>epochs<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-159"><a href="#cb8-159"></a>                pbar.set_postfix_str(</span>
-<span id="cb8-160"><a href="#cb8-160"></a>                    <span class="ss">f"test acc = </span><span class="sc">{</span>accuracy<span class="sc">:.2%}</span><span class="ss">, time/epoch = </span><span class="sc">{</span>duration_seconds<span class="sc">:.2f}</span><span class="ss">s"</span></span>
-<span id="cb8-161"><a href="#cb8-161"></a>                )</span>
-<span id="cb8-162"><a href="#cb8-162"></a>                <span class="cf">if</span> monitoring:</span>
-<span id="cb8-163"><a href="#cb8-163"></a>                    monitoring_dict[<span class="st">"epoch"</span>].append(epoch_j)</span>
-<span id="cb8-164"><a href="#cb8-164"></a>                    monitoring_dict[<span class="st">"runtime_seconds"</span>].append(duration_seconds)</span>
-<span id="cb8-165"><a href="#cb8-165"></a>                    monitoring_dict[<span class="st">"train_accuracy"</span>].append(<span class="va">self</span>.evaluate(training_data)<span class="op">/</span><span class="bu">len</span>(training_data))</span>
-<span id="cb8-166"><a href="#cb8-166"></a>                    monitoring_dict[<span class="st">"test_accuracy"</span>].append(accuracy)</span>
-<span id="cb8-167"><a href="#cb8-167"></a>                    monitoring_dict[<span class="st">"train_cost"</span>].append(<span class="va">self</span>.cost_func(<span class="va">self</span>.feedforward(x_train), y_train))</span>
-<span id="cb8-168"><a href="#cb8-168"></a>                    monitoring_dict[<span class="st">"test_cost"</span>].append(<span class="va">self</span>.cost_func(<span class="va">self</span>.feedforward(x_test), y_test))</span>
-<span id="cb8-169"><a href="#cb8-169"></a>            <span class="cf">if</span> monitoring:</span>
-<span id="cb8-170"><a href="#cb8-170"></a>                <span class="cf">return</span> monitoring_dict</span>
-<span id="cb8-171"><a href="#cb8-171"></a>        <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
-<span id="cb8-172"><a href="#cb8-172"></a>            <span class="cf">if</span> <span class="st">'pbar'</span> <span class="kw">in</span> <span class="bu">locals</span>():</span>
-<span id="cb8-173"><a href="#cb8-173"></a>                pbar.close()</span>
-<span id="cb8-174"><a href="#cb8-174"></a>            <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Training interrupted by user. Weights preserved."</span>)</span>
-<span id="cb8-175"><a href="#cb8-175"></a>    </span>
-<span id="cb8-176"><a href="#cb8-176"></a>    <span class="kw">def</span> update_params_batch(<span class="va">self</span>, batch, eta, lambda_over_n):</span>
-<span id="cb8-177"><a href="#cb8-177"></a>        <span class="co"># 1. make input matrix, use column-major order, so each column is a training example, and each row is a feature.</span></span>
-<span id="cb8-178"><a href="#cb8-178"></a>        <span class="co"># input = np.array([data[0] for data in batch]).T</span></span>
-<span id="cb8-179"><a href="#cb8-179"></a>        <span class="co"># 2. make label matrix, use column-major order, so each column is a training example, and each row is a label.</span></span>
-<span id="cb8-180"><a href="#cb8-180"></a>        <span class="co"># target = np.array([data[1] for data in batch]).T</span></span>
-<span id="cb8-181"><a href="#cb8-181"></a>        <span class="bu">input</span> <span class="op">=</span> np.hstack([data[<span class="dv">0</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch])</span>
-<span id="cb8-182"><a href="#cb8-182"></a>        target <span class="op">=</span> np.hstack([data[<span class="dv">1</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="cf">for</span> data <span class="kw">in</span> batch])</span>
-<span id="cb8-183"><a href="#cb8-183"></a>        <span class="co"># 3. compute the gradients for the whole batch using back propagation</span></span>
-<span id="cb8-184"><a href="#cb8-184"></a>        nabla_b, nabla_w <span class="op">=</span> <span class="va">self</span>.back_propagation(<span class="bu">input</span>, target)</span>
-<span id="cb8-185"><a href="#cb8-185"></a>        <span class="co"># update biases and weights</span></span>
-<span id="cb8-186"><a href="#cb8-186"></a>        m <span class="op">=</span> <span class="bu">len</span>(batch)</span>
-<span id="cb8-187"><a href="#cb8-187"></a>        <span class="va">self</span>.biases <span class="op">=</span> [</span>
-<span id="cb8-188"><a href="#cb8-188"></a>            b <span class="op">-</span> (eta<span class="op">/</span>m) <span class="op">*</span> nb</span>
-<span id="cb8-189"><a href="#cb8-189"></a>            <span class="cf">for</span> b, nb <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, nabla_b)</span>
-<span id="cb8-190"><a href="#cb8-190"></a>        ]</span>
-<span id="cb8-191"><a href="#cb8-191"></a>        <span class="va">self</span>.weights <span class="op">=</span> [</span>
-<span id="cb8-192"><a href="#cb8-192"></a>            w <span class="op">-</span> (eta<span class="op">/</span>m) <span class="op">*</span> nw <span class="op">-</span> eta <span class="op">*</span> lambda_over_n <span class="op">*</span> w</span>
-<span id="cb8-193"><a href="#cb8-193"></a>            <span class="cf">for</span> w, nw <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.weights, nabla_w)</span>
-<span id="cb8-194"><a href="#cb8-194"></a>        ]</span>
-<span id="cb8-195"><a href="#cb8-195"></a>    </span>
-<span id="cb8-196"><a href="#cb8-196"></a>    <span class="kw">def</span> back_propagation(<span class="va">self</span>, <span class="bu">input</span>, target):</span>
-<span id="cb8-197"><a href="#cb8-197"></a>        <span class="co">###############################</span></span>
-<span id="cb8-198"><a href="#cb8-198"></a>        <span class="co"># 1. forward pass</span></span>
-<span id="cb8-199"><a href="#cb8-199"></a>        <span class="co"># 1a. create variables to store the activations and z vectors for each layer</span></span>
-<span id="cb8-200"><a href="#cb8-200"></a>        <span class="co"># activation starts with the input layer activations, which is just the input data</span></span>
-<span id="cb8-201"><a href="#cb8-201"></a>        activation <span class="op">=</span> <span class="bu">input</span></span>
-<span id="cb8-202"><a href="#cb8-202"></a>        activation_list <span class="op">=</span> [<span class="bu">input</span>]  <span class="co"># initialize with input layer activations</span></span>
-<span id="cb8-203"><a href="#cb8-203"></a>        <span class="co"># weighted input start at the first hidden layer, so we initialize an empty list</span></span>
-<span id="cb8-204"><a href="#cb8-204"></a>        z_list <span class="op">=</span> []</span>
-<span id="cb8-205"><a href="#cb8-205"></a>        <span class="co"># 1b. loop over layers in forward direction, starting from the first hidden layer,</span></span>
-<span id="cb8-206"><a href="#cb8-206"></a>        <span class="co"># compute and store the activations and z vectors layer by layer</span></span>
-<span id="cb8-207"><a href="#cb8-207"></a>        <span class="co"># for the whole batch at once.</span></span>
-<span id="cb8-208"><a href="#cb8-208"></a>        <span class="cf">for</span> b, w <span class="kw">in</span> <span class="bu">zip</span>(<span class="va">self</span>.biases, <span class="va">self</span>.weights):</span>
-<span id="cb8-209"><a href="#cb8-209"></a>            layer_size <span class="op">=</span> b.shape[<span class="dv">0</span>]</span>
-<span id="cb8-210"><a href="#cb8-210"></a>            <span class="co"># b is a vector of shape (layer_size, 1), we need to broadcast it (stack it horizontally)</span></span>
-<span id="cb8-211"><a href="#cb8-211"></a>            <span class="co"># to match the shape of the dot product w @ activation, which is (layer_size, batch_size)</span></span>
-<span id="cb8-212"><a href="#cb8-212"></a>            B <span class="op">=</span> np.broadcast_to(b, (layer_size, <span class="bu">input</span>.shape[<span class="dv">1</span>]))</span>
-<span id="cb8-213"><a href="#cb8-213"></a>            z <span class="op">=</span> np.dot(w, activation) <span class="op">+</span> B</span>
-<span id="cb8-214"><a href="#cb8-214"></a>            activation <span class="op">=</span> <span class="va">self</span>.activation.fn(z)</span>
-<span id="cb8-215"><a href="#cb8-215"></a>            z_list.append(z)</span>
-<span id="cb8-216"><a href="#cb8-216"></a>            activation_list.append(activation)</span>
-<span id="cb8-217"><a href="#cb8-217"></a>        <span class="co">###############################</span></span>
-<span id="cb8-218"><a href="#cb8-218"></a>        <span class="co"># now we have all the information we need to compute the gradients in the backward pass.</span></span>
-<span id="cb8-219"><a href="#cb8-219"></a>        <span class="co">###############################</span></span>
-<span id="cb8-220"><a href="#cb8-220"></a>        <span class="co"># 2. backward pass</span></span>
-<span id="cb8-221"><a href="#cb8-221"></a>        <span class="co"># 2a. create empty lists to store the gradients for biases and weights, layer by layer</span></span>
-<span id="cb8-222"><a href="#cb8-222"></a>        nabla_b <span class="op">=</span> [np.zeros_like(b) <span class="cf">for</span> b <span class="kw">in</span> <span class="va">self</span>.biases]</span>
-<span id="cb8-223"><a href="#cb8-223"></a>        nabla_w <span class="op">=</span> [np.zeros_like(w) <span class="cf">for</span> w <span class="kw">in</span> <span class="va">self</span>.weights]</span>
-<span id="cb8-224"><a href="#cb8-224"></a>        <span class="co"># 2b. first compute the error "delta" for the output layer</span></span>
-<span id="cb8-225"><a href="#cb8-225"></a>        <span class="co"># this is what we called the "base case"</span></span>
-<span id="cb8-226"><a href="#cb8-226"></a>        delta <span class="op">=</span> <span class="va">self</span>.cost.delta(z_list[<span class="op">-</span><span class="dv">1</span>], activation_list[<span class="op">-</span><span class="dv">1</span>], target, <span class="va">self</span>.activation)</span>
-<span id="cb8-227"><a href="#cb8-227"></a>        <span class="co"># 2c. compute and store the gradients for the output layer</span></span>
-<span id="cb8-228"><a href="#cb8-228"></a>        <span class="co"># we use activation_list[-2] because the rule for updating the weights requires the activations from the previous layer,</span></span>
-<span id="cb8-229"><a href="#cb8-229"></a>        <span class="co"># which is the second to last layer in the list. The transpose is needed to match the dimensions of the matrices</span></span>
-<span id="cb8-230"><a href="#cb8-230"></a>        nabla_b[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> np.<span class="bu">sum</span>(delta, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-231"><a href="#cb8-231"></a>        nabla_w[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> np.dot(delta, activation_list[<span class="op">-</span><span class="dv">2</span>].T)</span>
-<span id="cb8-232"><a href="#cb8-232"></a>        <span class="co"># 2c. loop over layers in reverse order,</span></span>
-<span id="cb8-233"><a href="#cb8-233"></a>        <span class="co"># compute the gradients for each layer. This is the "inductive step".</span></span>
-<span id="cb8-234"><a href="#cb8-234"></a>        <span class="co"># the loop starts at the second to last layer, and goes backwards to the first hidden layer.</span></span>
-<span id="cb8-235"><a href="#cb8-235"></a>        <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="va">self</span>.number_of_layers<span class="op">+</span><span class="dv">1</span>):</span>
-<span id="cb8-236"><a href="#cb8-236"></a>            z <span class="op">=</span> z_list[<span class="op">-</span>l]</span>
-<span id="cb8-237"><a href="#cb8-237"></a>            <span class="co"># the order of the dot product and the transpose of the weights are needed</span></span>
-<span id="cb8-238"><a href="#cb8-238"></a>            <span class="co"># to match the dimensions of the matrices</span></span>
-<span id="cb8-239"><a href="#cb8-239"></a>            delta <span class="op">=</span> np.dot(<span class="va">self</span>.weights[<span class="op">-</span>l<span class="op">+</span><span class="dv">1</span>].T, delta) <span class="op">*</span> <span class="va">self</span>.activation.prime(z)</span>
-<span id="cb8-240"><a href="#cb8-240"></a>            nabla_b[<span class="op">-</span>l] <span class="op">=</span> np.<span class="bu">sum</span>(delta, axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-241"><a href="#cb8-241"></a>            nabla_w[<span class="op">-</span>l] <span class="op">=</span> np.dot(delta, activation_list[<span class="op">-</span>l<span class="op">-</span><span class="dv">1</span>].T)</span>
-<span id="cb8-242"><a href="#cb8-242"></a>        <span class="cf">return</span> nabla_b, nabla_w</span>
-<span id="cb8-243"><a href="#cb8-243"></a>    </span>
-<span id="cb8-244"><a href="#cb8-244"></a>    <span class="kw">def</span> evaluate_old(<span class="va">self</span>, test_data):</span>
-<span id="cb8-245"><a href="#cb8-245"></a>        <span class="co">"""Return the number of correct classifications."""</span></span>
-<span id="cb8-246"><a href="#cb8-246"></a>        test_results <span class="op">=</span> [(np.argmax(<span class="va">self</span>.feedforward(x)), y)</span>
-<span id="cb8-247"><a href="#cb8-247"></a>                        <span class="cf">for</span> (x, y) <span class="kw">in</span> test_data]</span>
-<span id="cb8-248"><a href="#cb8-248"></a>        <span class="cf">return</span> <span class="bu">sum</span>(<span class="bu">int</span>(x <span class="op">==</span> y) <span class="cf">for</span> (x, y) <span class="kw">in</span> test_results)</span>
-<span id="cb8-249"><a href="#cb8-249"></a></span>
-<span id="cb8-250"><a href="#cb8-250"></a>    <span class="kw">def</span> evaluate(<span class="va">self</span>, test_data):</span>
-<span id="cb8-251"><a href="#cb8-251"></a>        <span class="co">"""Return the number of correct classifications.</span></span>
-<span id="cb8-252"><a href="#cb8-252"></a><span class="co">        Works whether y is a scalar label or a one-hot encoded vector.</span></span>
-<span id="cb8-253"><a href="#cb8-253"></a><span class="co">        """</span></span>
-<span id="cb8-254"><a href="#cb8-254"></a>        test_results <span class="op">=</span> []</span>
-<span id="cb8-255"><a href="#cb8-255"></a>        <span class="cf">for</span> (x, y) <span class="kw">in</span> test_data:</span>
-<span id="cb8-256"><a href="#cb8-256"></a>            <span class="co"># Get the network's prediction</span></span>
-<span id="cb8-257"><a href="#cb8-257"></a>            prediction <span class="op">=</span> np.argmax(<span class="va">self</span>.feedforward(x))</span>
-<span id="cb8-258"><a href="#cb8-258"></a>            </span>
-<span id="cb8-259"><a href="#cb8-259"></a>            <span class="co"># Determine the true label</span></span>
-<span id="cb8-260"><a href="#cb8-260"></a>            <span class="co"># If y is iterable (one-hot), get the index of the 1.</span></span>
-<span id="cb8-261"><a href="#cb8-261"></a>            <span class="co"># Otherwise, assume y is already the integer label.</span></span>
-<span id="cb8-262"><a href="#cb8-262"></a>            true_label <span class="op">=</span> np.argmax(y) <span class="cf">if</span> np.ndim(y) <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> y</span>
-<span id="cb8-263"><a href="#cb8-263"></a>            </span>
-<span id="cb8-264"><a href="#cb8-264"></a>            test_results.append((prediction, true_label))</span>
-<span id="cb8-265"><a href="#cb8-265"></a></span>
-<span id="cb8-266"><a href="#cb8-266"></a>        <span class="cf">return</span> <span class="bu">sum</span>(<span class="bu">int</span>(x <span class="op">==</span> y) <span class="cf">for</span> (x, y) <span class="kw">in</span> test_results)</span>
-<span id="cb8-267"><a href="#cb8-267"></a></span>
-<span id="cb8-268"><a href="#cb8-268"></a><span class="kw">def</span> load_mnist_from_web():</span>
-<span id="cb8-269"><a href="#cb8-269"></a>    urls <span class="op">=</span> {</span>
-<span id="cb8-270"><a href="#cb8-270"></a>        <span class="st">"train_img"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-images-idx3-ubyte.gz"</span>,</span>
-<span id="cb8-271"><a href="#cb8-271"></a>        <span class="st">"train_lbl"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/train-labels-idx1-ubyte.gz"</span>,</span>
-<span id="cb8-272"><a href="#cb8-272"></a>        <span class="st">"test_img"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/t10k-images-idx3-ubyte.gz"</span>,</span>
-<span id="cb8-273"><a href="#cb8-273"></a>        <span class="st">"test_lbl"</span>: <span class="st">"https://storage.googleapis.com/cvdf-datasets/mnist/t10k-labels-idx1-ubyte.gz"</span></span>
-<span id="cb8-274"><a href="#cb8-274"></a>    }</span>
-<span id="cb8-275"><a href="#cb8-275"></a></span>
-<span id="cb8-276"><a href="#cb8-276"></a>    data_results <span class="op">=</span> {}</span>
-<span id="cb8-277"><a href="#cb8-277"></a></span>
-<span id="cb8-278"><a href="#cb8-278"></a>    <span class="cf">for</span> key, url <span class="kw">in</span> urls.items():</span>
-<span id="cb8-279"><a href="#cb8-279"></a>        <span class="bu">print</span>(<span class="ss">f"Fetching </span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">..."</span>)</span>
-<span id="cb8-280"><a href="#cb8-280"></a>        response <span class="op">=</span> requests.get(url)</span>
-<span id="cb8-281"><a href="#cb8-281"></a>        response.raise_for_status()</span>
-<span id="cb8-282"><a href="#cb8-282"></a>        </span>
-<span id="cb8-283"><a href="#cb8-283"></a>        <span class="co"># Wrap the content in BytesIO and decompress in memory</span></span>
-<span id="cb8-284"><a href="#cb8-284"></a>        <span class="cf">with</span> gzip.GzipFile(fileobj<span class="op">=</span>io.BytesIO(response.content)) <span class="im">as</span> f:</span>
-<span id="cb8-285"><a href="#cb8-285"></a>            <span class="cf">if</span> <span class="st">"img"</span> <span class="kw">in</span> key:</span>
-<span id="cb8-286"><a href="#cb8-286"></a>                <span class="co"># Images: offset 16</span></span>
-<span id="cb8-287"><a href="#cb8-287"></a>                data_results[key] <span class="op">=</span> np.frombuffer(f.read(), np.uint8, offset<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb8-288"><a href="#cb8-288"></a>            <span class="cf">else</span>:</span>
-<span id="cb8-289"><a href="#cb8-289"></a>                <span class="co"># Labels: offset 8</span></span>
-<span id="cb8-290"><a href="#cb8-290"></a>                data_results[key] <span class="op">=</span> np.frombuffer(f.read(), np.uint8, offset<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb8-291"><a href="#cb8-291"></a></span>
-<span id="cb8-292"><a href="#cb8-292"></a>    <span class="co"># Re-format to Nielsen's expected structure</span></span>
-<span id="cb8-293"><a href="#cb8-293"></a>    <span class="kw">def</span> vectorized_result(j):</span>
-<span id="cb8-294"><a href="#cb8-294"></a>        e <span class="op">=</span> np.zeros((<span class="dv">10</span>, <span class="dv">1</span>))</span>
-<span id="cb8-295"><a href="#cb8-295"></a>        e[j] <span class="op">=</span> <span class="fl">1.0</span></span>
-<span id="cb8-296"><a href="#cb8-296"></a>        <span class="cf">return</span> e</span>
-<span id="cb8-297"><a href="#cb8-297"></a></span>
-<span id="cb8-298"><a href="#cb8-298"></a>    training_inputs <span class="op">=</span> [np.reshape(x, (<span class="dv">784</span>, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">255.0</span> <span class="cf">for</span> x <span class="kw">in</span> data_results[<span class="st">"train_img"</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">784</span>)]</span>
-<span id="cb8-299"><a href="#cb8-299"></a>    training_results <span class="op">=</span> [vectorized_result(y) <span class="cf">for</span> y <span class="kw">in</span> data_results[<span class="st">"train_lbl"</span>]]</span>
-<span id="cb8-300"><a href="#cb8-300"></a>    training_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(training_inputs, training_results))</span>
-<span id="cb8-301"><a href="#cb8-301"></a></span>
-<span id="cb8-302"><a href="#cb8-302"></a>    test_inputs <span class="op">=</span> [np.reshape(x, (<span class="dv">784</span>, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">255.0</span> <span class="cf">for</span> x <span class="kw">in</span> data_results[<span class="st">"test_img"</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">784</span>)]</span>
-<span id="cb8-303"><a href="#cb8-303"></a>    test_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(test_inputs, data_results[<span class="st">"test_lbl"</span>]))</span>
-<span id="cb8-304"><a href="#cb8-304"></a></span>
-<span id="cb8-305"><a href="#cb8-305"></a>    <span class="cf">return</span> training_data, test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<summary>plot the results</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
+<span id="cb7-2"><a href="#cb7-2"></a>fig.subplots_adjust(wspace<span class="op">=</span><span class="fl">0.35</span>)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>ax[<span class="dv">0</span>].plot(res2[<span class="st">"epoch"</span>], res2[<span class="st">"train_accuracy"</span>], label<span class="op">=</span><span class="st">"Train"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>ax[<span class="dv">0</span>].plot(res2[<span class="st">"epoch"</span>], res2[<span class="st">"test_accuracy"</span>], label<span class="op">=</span><span class="st">"Test"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>ax[<span class="dv">0</span>].set_xlabel(<span class="st">"Epoch"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Accuracy"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7"></a>ax[<span class="dv">0</span>].set_title(<span class="st">"Train and Test Accuracy over Epochs"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>ax[<span class="dv">0</span>].legend()</span>
+<span id="cb7-9"><a href="#cb7-9"></a>axins <span class="op">=</span> ax[<span class="dv">0</span>].inset_axes([<span class="fl">0.55</span>, <span class="fl">0.15</span>, <span class="fl">0.4</span>, <span class="fl">0.4</span>])  <span class="co"># [x0, y0, width, height] in axes fraction</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>axins.plot(res2[<span class="st">"epoch"</span>][<span class="dv">100</span>:], res2[<span class="st">"test_accuracy"</span>][<span class="dv">100</span>:], color<span class="op">=</span><span class="st">"tab:orange"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>axins.set_title(<span class="st">"Test"</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>axins.tick_params(labelsize<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb7-13"><a href="#cb7-13"></a></span>
+<span id="cb7-14"><a href="#cb7-14"></a>ax[<span class="dv">1</span>].plot(res2[<span class="st">"epoch"</span>], res2[<span class="st">"train_cost"</span>], label<span class="op">=</span><span class="st">"Train Cost"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a>ax[<span class="dv">1</span>].plot(res2[<span class="st">"epoch"</span>], res2[<span class="st">"test_cost"</span>], label<span class="op">=</span><span class="st">"Test Cost"</span>, color<span class="op">=</span><span class="st">"tab:orange"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16"></a>ax[<span class="dv">1</span>].set_xlabel(<span class="st">"Epoch"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17"></a>ax[<span class="dv">1</span>].set_ylabel(<span class="st">"Cost"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18"></a>ax[<span class="dv">1</span>].set_title(<span class="st">"Train and Test Cost over Epochs"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nielsen_ch3B_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="lasso-regularization-l1" class="level3" data-number="62.2.2">
+<h3 data-number="62.2.2" class="anchored" data-anchor-id="lasso-regularization-l1"><span class="header-section-number">62.2.2</span> lasso regularization (L1)</h3>
+<div id="ee0e09bb" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>net <span class="op">=</span> ch3_code.NN2(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>res3 <span class="op">=</span> net.stochastic_gradient_descent(</span>
+<span id="cb8-3"><a href="#cb8-3"></a>     training_data<span class="op">=</span>training_data[:<span class="dv">1000</span>],</span>
+<span id="cb8-4"><a href="#cb8-4"></a>     test_data<span class="op">=</span>test_data,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>     epochs<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>     lmbda_L1<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb8-7"><a href="#cb8-7"></a>     lmbda_L2<span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb8-8"><a href="#cb8-8"></a>     batch_size<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb8-9"><a href="#cb8-9"></a>     eta<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb8-10"><a href="#cb8-10"></a>     monitoring<span class="op">=</span><span class="va">True</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>     )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"8392ab28bacb4bf2b9f8065cef50e6a6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div id="c4ff9df4" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>plot the results</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">3</span>))</span>
+<span id="cb9-2"><a href="#cb9-2"></a>fig.subplots_adjust(wspace<span class="op">=</span><span class="fl">0.35</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>ax[<span class="dv">0</span>].plot(res3[<span class="st">"epoch"</span>], res3[<span class="st">"train_accuracy"</span>], label<span class="op">=</span><span class="st">"Train"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>ax[<span class="dv">0</span>].plot(res3[<span class="st">"epoch"</span>], res3[<span class="st">"test_accuracy"</span>], label<span class="op">=</span><span class="st">"Test"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>ax[<span class="dv">0</span>].set_xlabel(<span class="st">"Epoch"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Accuracy"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7"></a>ax[<span class="dv">0</span>].set_title(<span class="st">"Train and Test Accuracy over Epochs"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8"></a>ax[<span class="dv">0</span>].legend()</span>
+<span id="cb9-9"><a href="#cb9-9"></a>axins <span class="op">=</span> ax[<span class="dv">0</span>].inset_axes([<span class="fl">0.55</span>, <span class="fl">0.15</span>, <span class="fl">0.4</span>, <span class="fl">0.4</span>])  <span class="co"># [x0, y0, width, height] in axes fraction</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>axins.plot(res3[<span class="st">"epoch"</span>][<span class="dv">100</span>:], res3[<span class="st">"test_accuracy"</span>][<span class="dv">100</span>:], color<span class="op">=</span><span class="st">"tab:orange"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11"></a>axins.set_title(<span class="st">"Test"</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb9-12"><a href="#cb9-12"></a>axins.tick_params(labelsize<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb9-13"><a href="#cb9-13"></a></span>
+<span id="cb9-14"><a href="#cb9-14"></a>ax[<span class="dv">1</span>].plot(res3[<span class="st">"epoch"</span>], res3[<span class="st">"train_cost"</span>], label<span class="op">=</span><span class="st">"Train Cost"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15"></a>ax[<span class="dv">1</span>].plot(res3[<span class="st">"epoch"</span>], res3[<span class="st">"test_cost"</span>], label<span class="op">=</span><span class="st">"Test Cost"</span>, color<span class="op">=</span><span class="st">"tab:orange"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16"></a>ax[<span class="dv">1</span>].set_xlabel(<span class="st">"Epoch"</span>)</span>
+<span id="cb9-17"><a href="#cb9-17"></a>ax[<span class="dv">1</span>].set_ylabel(<span class="st">"Cost"</span>)</span>
+<span id="cb9-18"><a href="#cb9-18"></a>ax[<span class="dv">1</span>].set_title(<span class="st">"Train and Test Cost over Epochs"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nielsen_ch3B_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is fascinating! We’re seeing a whole new kind of behavior. We now see sudden spikes in the accuracy and cost. What could be causing them?</p>
+<p>I’m not sure, but it probably is because the L1 regularization pushes all weights to smaller absolute values with equal strength, regardless of their current value. This means that sometimes the weight updating may overshoot and cause the sign of the weight to flip. Add to that the fact that the L1 regularization tends to make many weights exactly zero. This is relavant, because a sudden change in the sign of the (few?) nonzero weights might cause a sudden change in the output of the network.</p>
+</section>
+</section>
+<section id="dropout" class="level2" data-number="62.3">
+<h2 data-number="62.3" class="anchored" data-anchor-id="dropout"><span class="header-section-number">62.3</span> dropout</h2>
+<div id="a711eb20" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>net <span class="op">=</span> ch3_code.NN2(layer_sizes<span class="op">=</span>[<span class="dv">784</span>, <span class="dv">30</span>, <span class="dv">10</span>], rand_seed<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>res4 <span class="op">=</span> net.stochastic_gradient_descent(</span>
+<span id="cb10-3"><a href="#cb10-3"></a>     training_data<span class="op">=</span>training_data[:<span class="dv">1000</span>],</span>
+<span id="cb10-4"><a href="#cb10-4"></a>     test_data<span class="op">=</span>test_data,</span>
+<span id="cb10-5"><a href="#cb10-5"></a>     epochs<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>     lmbda_L1<span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>     lmbda_L2<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb10-8"><a href="#cb10-8"></a>     batch_size<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb10-9"><a href="#cb10-9"></a>     eta<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb10-10"><a href="#cb10-10"></a>     dropout_prob<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>     monitoring<span class="op">=</span><span class="va">True</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>     )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"7d63e9bbc31440248aea4066d0ebd371","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

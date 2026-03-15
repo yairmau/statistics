@@ -733,7 +733,8 @@ window.Quarto = {
   <li><a href="#height" id="toc-height" class="nav-link active" data-scroll-target="#height"><span class="header-section-number">6.1</span> height</a></li>
   <li><a href="#temperature" id="toc-temperature" class="nav-link" data-scroll-target="#temperature"><span class="header-section-number">6.2</span> temperature</a></li>
   <li><a href="#extracting-information" id="toc-extracting-information" class="nav-link" data-scroll-target="#extracting-information"><span class="header-section-number">6.3</span> extracting information</a></li>
-  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation"><span class="header-section-number">6.4</span> notation</a></li>
+  <li><a href="#large-sample-behavior" id="toc-large-sample-behavior" class="nav-link" data-scroll-target="#large-sample-behavior"><span class="header-section-number">6.4</span> large sample behavior</a></li>
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation"><span class="header-section-number">6.5</span> notation</a></li>
   </ul>
 </nav>
     </div>
@@ -759,14 +760,14 @@ window.Quarto = {
 </header>
 
 
-<p>When we do an experiment, we think of the measured results as a sample from a population.</p>
+<p>When we do an experiment, we take measurements. The complete set of all individual outcomes I’m interested in is called the <strong>population</strong>. The set of measurements that I actually take is called a <strong>sample</strong> from the population.</p>
 <section id="height" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="height"><span class="header-section-number">6.1</span> height</h2>
 <p>Here the population is literally the population of people. Every person whose height we measure is a sample from this population. When we are done measuring, we also call the whole set of measurements a sample.</p>
 </section>
 <section id="temperature" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="temperature"><span class="header-section-number">6.2</span> temperature</h2>
-<p>The same idea applies here. However, we don’t have an already-existing population of temperatures just waiting to be measured. Instead, we have a process that generates temperatures (the weather), and every time we measure the temperature, we are taking a sample from the population of all possible temperatures that this process can generate.</p>
+<p>The same idea applies here. However, we don’t have an already-existing population of temperatures just waiting to be measured. Instead, we have a process that generates temperatures (the weather), and every time we measure the temperature, we are taking a sample from the population of all possible temperatures that this process can generate. In the temperature case, and in many other cases, the population is conceptually infinite, since the process can generate an infinite number of outcomes.</p>
 </section>
 <section id="extracting-information" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="extracting-information"><span class="header-section-number">6.3</span> extracting information</h2>
@@ -776,15 +777,21 @@ window.Quarto = {
 <li>Is the sample representative of the population? Maybe we measured the height of 20 people, but we did so in a basketball court, so our sample is biased towards taller people.</li>
 <li>Is every measurement in the sample independent of the others? Maybe we measured the height of 20 people, but they are all from the same extended family, so their heights are not independent.</li>
 <li>If we were to take another sample from the population, would we get roughtly the same results? Maybe we measured the height of 20 people, but if we were to measure another 20 people, we would get a very different average height. Is a sample of 20 people enough to learn what I want?</li>
-<li>Suppose I have a machine (a camera hooked up to a computer) that automatically measures the height of 5-year-olds as they enter a kid’s play. When analyzing the data, I find a measurement of 180 cm. Maybe the machine measured by mistake the height of one of the parents? What to do with this outlier?</li>
+<li>Suppose I have a machine (a camera hooked up to a computer) that automatically measures the height of 5-year-olds as they enter a kid’s play. When analyzing the data, I find an outlier measurement of 180 cm. This might mean that the machine accidentally measured a parent, that is, the measurement was sampled from a different population thatn the one we care about (5-year-olds). What I’m trying to say here is that ouliers are not only extreme values, but evidence from contamination from an unintended population.</li>
 </ul>
 </section>
-<section id="notation" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="notation"><span class="header-section-number">6.4</span> notation</h2>
+<section id="large-sample-behavior" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="large-sample-behavior"><span class="header-section-number">6.4</span> large sample behavior</h2>
+<p>There are mathematical theorems that tell us what happens when we take larger and larger samples from the population.</p>
+<p>For example, the law of large numbers tells us that as we take larger and larger samples, the sample mean will get closer and closer to the population mean.</p>
+<p>The central limit theorem tells us that as we take larger samples, the distribution of the sample mean will get closer to a normal distribution. This is true regardless of the distribution of the population, as long as the population has a finite mean and variance.</p>
+</section>
+<section id="notation" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="notation"><span class="header-section-number">6.5</span> notation</h2>
 <p>When talking about means and standard deviations, we give different letters to the population and to the sample:</p>
 <ul>
-<li><strong>Popuation</strong>. We use Greek letters: <span class="math inline">\mu</span> for the mean, and <span class="math inline">\sigma</span> for the standard deviation.</li>
-<li><strong>Sample</strong>. We use Latin letters: <span class="math inline">\bar{x}</span> for the mean, and <span class="math inline">s</span> for the standard deviation. Of course, if we call what we are measuring <span class="math inline">h</span> instead of <span class="math inline">x</span>, then <span class="math inline">\bar{h}</span> would represent the sample mean.</li>
+<li><strong>Population</strong>. We use Greek letters: <span class="math inline">\mu</span> for the mean, and <span class="math inline">\sigma</span> for the standard deviation. When the population size is known, we can call it <span class="math inline">N</span>.</li>
+<li><strong>Sample</strong>. We use Latin letters: <span class="math inline">\bar{x}</span> for the mean, and <span class="math inline">s</span> for the standard deviation. Of course, if we call what we are measuring <span class="math inline">h</span> instead of <span class="math inline">x</span>, then <span class="math inline">\bar{h}</span> would represent the sample mean. The sample size is usually denoted by <span class="math inline">n</span>.</li>
 </ul>
 
 
