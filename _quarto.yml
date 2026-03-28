@@ -138,6 +138,3 @@ format:
   #   documentclass: scrreprt
   #   include-in-header:
   #     - latex_preamble.tex
-
-
-
