@@ -77,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-a588049bcf6ba0aff1d03aeee07a0105.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2c63ad6a8cffefe8536d13eabcc001d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-93f6f7bf05cf03a0782a799cf914e8c8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -185,7 +185,9 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="quarto-sidebar-header"><div class="sidebar-header-item">
+<p><a href="https://yairmau.com/" class="back-home">← Back to yairmau.com</a></p>
+</div></div>
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
       <img src="../archive/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -193,7 +195,6 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Statistics and Machine Learning</a> 
         <div class="sidebar-tools-main">
-    <a href="https://yairmau.com/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
     <a href="https://github.com/yairmau/statistics/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
@@ -943,6 +944,7 @@ L(\beta_0, \beta_1) = \prod_{i=1}^{N} p(x_i; \beta_0, \beta_1)^{y_i} (1-p(x_i; \
 \ell(\beta_0, \beta_1) = \sum_{i=1}^{N} y_i \log(p(x_i; \beta_0, \beta_1)) + (1-y_i) \log(1-p(x_i; \beta_0, \beta_1)).
 </span></p>
 <p>This expression, multiplied by minus one, is called the cross-entropy cost function, and it is the cost function that we will minimize to find the best parameters <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span> for our logistic regression model.</p>
+<p>It is not possible to use the tools of linear regression to find the parameters <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span> because the relationship between the predictors and the response is nonlinear. Instead, we will use an optimization algorithm called gradient descent to find the parameters that minimize the cost function. The cross-entropy cost function is convex, which means that it has a single global minimum, and gradient descent will converge to it.</p>
 </section>
 <section id="wrapping-up" class="level2" data-number="23.4">
 <h2 data-number="23.4" class="anchored" data-anchor-id="wrapping-up"><span class="header-section-number">23.4</span> wrapping up</h2>
@@ -951,7 +953,7 @@ L(\beta_0, \beta_1) = \prod_{i=1}^{N} p(x_i; \beta_0, \beta_1)^{y_i} (1-p(x_i; \
 <li>What is the probability that a person whose height is 180 cm is a man?</li>
 <li>If we had to choose one height to discriminate between men and women, what would it be? Let’s assume that we want to choose a height such that the probability of being a man is 0.5.</li>
 </ul>
-<p>Let’s run the code for the logistic regression again:</p>
+<p>Let’s use scipy’s <code>LogisticRegression</code> to find the parameters <span class="math inline">\beta_0</span> and <span class="math inline">\beta_1</span> that best fit the data, and then we will use these parameters to answer the questions above.</p>
 <div id="cell-11" class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>log_reg <span class="op">=</span> LogisticRegression(penalty<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb7-2"><a href="#cb7-2"></a>                             solver<span class="op">=</span><span class="st">'newton-cg'</span>,</span>

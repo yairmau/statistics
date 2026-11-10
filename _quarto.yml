@@ -107,9 +107,7 @@ book:
     # - references.qmd
   sidebar:
     collapse-level: 2
-    tools:
-      - icon: house-fill
-        href: https://yairmau.com/
+    header: "[← Back to yairmau.com](https://yairmau.com/){.back-home}"
     logo: archive/logo.png
   search: true
 
